@@ -1,49 +1,49 @@
 insert into servissite.categories
 (name, ParentId)
 values 
-("Electronics", 0),
+("Electronics", null),
 ("Computers & tablets", 1),
 ("Cameras & photo", 1),
 ("TV, audio & surveillance", 1),
 ("Cell-phones & accessories", 1),
 
-("Entertainment", 0),
+("Entertainment", null),
 ("Video games & consoles", 6),
 ("Music", 6),
 ("DVDs & movies", 6),
 ("Tickets", 6),
 
-("Fashion", 0),
+("Fashion", null),
 ("Women", 11),
 ("Men", 11),
 ("Jewelry & watches", 11),
 ("Shoes", 11),
 
-("Home & garden", 0),
+("Home & garden", null),
 ("Yard, garden & outdoor", 16),
 ("Crafts", 16),
 ("Home improvement", 16),
 ("Pet supplies", 16),
 
-("Motors", 0),
+("Motors", null),
 ("Parts & accessories", 21),
 ("Cars & trucks", 21),
 ("Motorcycles", 21),
 ("Passenger vehicles", 21),
 
-("Sporting goods", 0),
+("Sporting goods", null),
 ("Outdoor sports", 26), 
 ("Team sports", 26),
 ("Exercise & fitness", 26),
 ("Golf", 26),
 
-("Toys & hobbies", 0),
+("Toys & hobbies", null),
 ("Collector & hobbyist toys", 31),
 ("Kids toys", 31),
 ("Action figures", 31),
 ("Dolls & bears", 31),
 
-("Other categories", 0),
+("Other categories", null),
 ("Books", 36),
 ("Health & beauty", 36),
 ("Musical instruments & gear", 36),
