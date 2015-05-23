@@ -66,6 +66,7 @@ CREATE TABLE categories (
 	name varchar(150),
     ParentId int default null,
 	primary key(ID),
+	  unique(name,ParentId),
       FOREIGN KEY (ParentId) REFERENCES categories(ID)
 );
 
