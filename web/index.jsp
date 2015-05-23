@@ -9,8 +9,10 @@
 <html>
   <head>
     <title></title>
+    <script src="registration.js"></script>
   </head>
   <body>
 
+  <%@include file="login.jsp" %>
   </body>
 </html>
