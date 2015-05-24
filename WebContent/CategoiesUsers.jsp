@@ -4,11 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script  src = "NextCategories.js"></script>
 <script>
-function makeNextCatfegories(){
+function makeNextCategories(id){
 	alert('it works!');
-	document.getElementById('categories').innerHTML = Date();
-	//document.getElementById('categories').innerHTML = Date();
+	var list = document.getElementById("categories");
+	list.innerHTML=id;
+
+	
+
+alert(items.length);
 }
 </script>
 <title>Categories</title>
@@ -20,21 +25,33 @@ function makeNextCatfegories(){
 <%@ page  import="java.util.List" %>
 <%@ page  import="java.io.PrintWriter" %>
 
-<ul id="categories">
+
+
 
 <%
 CategoryTreeInterface categories = (CategoryTreeInterface)request.getServletContext().getAttribute("categories");
 List<CategoryInterface> roots = categories.getRoots();
 PrintWriter writer = response.getWriter();
+writer.print("<ul id=\"categories\" >");
 for(int i=0; i<roots.size(); i++){
-	writer.println("<li>");
+	writer.print("<li>");
 	
-	writer.println("<a href='#' onclick=\"makeNextCatfegories();\"> "+ roots.get(i).getName()+" </a>");
-	writer.println("</li>");
+	writer.print("<a href='#' onclick=\"makeNextCategories("+roots.get(i).getId()+");\"> "+ roots.get(i).getName()+" </a>");
+	writer.print("</li>");
 	
 }
+writer.print("</ul>");
+
+
 %>
 
+
+<ul id="foo">
+  <li>
+  <a href="#">First </a>
+  </li>
+  <li>Second</li>
+  <li>Third</li>
 </ul>
 </body>
 </html>
