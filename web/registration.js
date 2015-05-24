@@ -43,12 +43,14 @@ function passwordsMatch() {
     var pwd2 = document.getElementById("passwordRepeat");
     var mtch = document.getElementById("matches");
 
-    if (pwd1.value.length != 0 && pwd2.value.length == 0)
+    if (pwd1.value.length == 0 && pwd1.value.length == 0) {
+        mtch.innerHTML = '';
         return;
+    }
+
     if (pwd1.value == pwd2.value) {
         mtch.innerHTML = '<span style="color:green">matches</span>';
     } else {
         mtch.innerHTML = '<span style="color:red">does not match</span>';
     }
-
 }

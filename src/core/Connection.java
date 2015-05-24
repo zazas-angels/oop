@@ -3,9 +3,6 @@ package core;
 import java.sql.ResultSet;
 
 public interface Connection {
-	/**
-	 * This method returns all results form table
-	 */
 	public ResultSet getUsers();
 	public ResultSet getCategories();
 	public ResultSet getUsersCategories();
@@ -42,4 +39,9 @@ public interface Connection {
 	public ResultSet getAlbomsPictures( int id);
 	public ResultSet getElementsPictures( int id);
 	public ResultSet getAdmins( int id);
+
+
+	public void addUser(UserInterface user);
+
+	public UserInterface getUser(String email, String password);
 }

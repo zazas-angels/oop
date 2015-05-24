@@ -1,11 +1,7 @@
 package core;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /* This class is for data base connection, it connects and can make suitable prepared statement.
  * like (similar code) as in assignment 3.
@@ -286,6 +282,16 @@ public class DBConnection implements core.Connection {
 	public ResultSet getAdmins(int id) {
 		return getResults("admins",id);
 		
+	}
+
+	@Override
+	public void addUser(UserInterface user) {
+
+	}
+
+	@Override
+	public UserInterface getUser(String email, String password) {
+		return null;
 	}
 
 }
