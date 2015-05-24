@@ -8,7 +8,7 @@ import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
 
 public interface CategoryTreeInterface {
 	int add(CategoryInterface newOne, CategoryInterface parent);
-	List<CategoryInterface> getChilds(CategoryInterface cur);
+	List<CategoryInterface> getChilds(int id);
 	List<CategoryInterface> getRoots();
 	CategoryInterface getParent(CategoryInterface cur);
 	int remove(CategoryInterface cur);

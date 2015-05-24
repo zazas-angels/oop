@@ -127,6 +127,7 @@ public class DBConnection implements core.Connection {
 	public static void main(String[] args) {
 		DBConnection db = new DBConnection();
 		ResultSet results = db.getResults("categories");
+		System.out.println("zaza");
 
 	}
 

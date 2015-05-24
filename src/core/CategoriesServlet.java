@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet implementation class Categories
+ * Author: glaba13
  */
 @WebServlet("/CategoriesServlet")
 public class CategoriesServlet extends HttpServlet {
@@ -37,7 +38,16 @@ public class CategoriesServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out =response.getWriter();
-		out.println("Zaza");
+		String idSting = request.getParameter("id");
+		int id;
+		try {
+			id = Integer.parseInt(idSting);
+		} catch (NumberFormatException e) {
+			id = -1;
+		}
+		if(id<0)return;
+		CategoryTree categories = (CategoryTree) getServletContext().getAttribute("tree");
+		categories.getChilds(id);
 		
 	}
 
