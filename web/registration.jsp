@@ -9,13 +9,44 @@
     Registration
 </h1>
 
-<b>
-    Please enter proposed name and password:<br><br>
-    Email: <input type="text" name="username"> <br>
-    <a href="#">confirm</a><br><br>
-    Password: <input type="text" name="password"> <br>
-    Confirm Password: <input type="text" name="confirm password"> <br>
-    Url:<input type="text" name="url"> <br><br>
-    <button name="registration">Sign Up</button>
-    <br><br>
-</b>
+
+<table>
+    <tbody>
+    <tr>
+        <td colspan="3">
+            Please fill text fields:
+        </td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td><input type="text" name="email"></td>
+        <td><a href="#">confirm</a></td>
+    </tr>
+    <tr>
+        <form action="" method="post" id="passwordTest">
+            <td>Password:</td>
+            <td><input type="password" id="password" onkeyup="return passwordChanged()"/></td>
+            <td>
+                <div id="strength"></div>
+            </td>
+        </form>
+    </tr>
+    <tr>
+        <td>Repeat:</td>
+        <td><input type="password" id="passwordRepeat" onkeyup="return passwordsMatch()"/></td>
+        <td>
+            <div id="matches"></div>
+        </td>
+    </tr>
+    <tr>
+        <td> Url:</td>
+        <td><input type="text" name="url"></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan="2">
+            <button name="registration">Sign Up</button>
+        </td>
+    </tr>
+    </tbody>
+</table>

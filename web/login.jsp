@@ -18,9 +18,31 @@ Password: <input type="password" name="password"> <button name="loginButton">Log
 <div id="login">
     Please log in:
     <br><br>
-    Email: <input type="text" name="username"> <br><br>
-    Password: <input type="password" name="password">
-    <button name="loginButton">Login</button>
+    <table>
+        <tbody>
+        <tr id="invalidUserNamePassword">
+            <td colspan="2">
+                Invalid username or password
+            </td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input type="text" name="username"></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type="password" name="password"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <form action="login" method="post">
+                    <button name="loginButton">Login</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
     <br><br>
 
     <p><a href="#" onclick="loadRegistrationHtml()">registration</a></p>
