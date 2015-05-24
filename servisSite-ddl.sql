@@ -52,6 +52,8 @@ CREATE TABLE users (
     url varchar(64),
     mail varchar(64),
     password varchar(64),
+    raiting double,
+    avatarFile CHAR(64),
     ThemeID int default 1,
 	primary key(ID),
     unique(url),
