@@ -2,6 +2,7 @@ package core;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,7 +38,7 @@ public class CategoriesServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		PrintWriter out =response.getWriter();
+		PrintWriter writer =response.getWriter();
 		String idSting = request.getParameter("id");
 		int id;
 		try {
@@ -46,8 +47,14 @@ public class CategoriesServlet extends HttpServlet {
 			id = -1;
 		}
 		if(id<0)return;
-		CategoryTree categories = (CategoryTree) getServletContext().getAttribute("tree");
-		categories.getChilds(id);
+		CategoryTree categories = (CategoryTree) getServletContext().getAttribute("categories");
+		List<CategoryInterface> childCategories = categories.getChilds(id);
+		for (int i = 0; i < childCategories.size(); i++) {
+			writer.print("<li>");
+			
+			writer.print("<a href='#' onclick=\"makeNextCategories("+childCategories.get(i).getId()+");\"> "+ childCategories.get(i).getName()+" </a>");
+			writer.print("</li>");
+		}
 		
 	}
 
