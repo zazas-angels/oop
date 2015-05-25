@@ -62,7 +62,6 @@ public class UsersServlet extends HttpServlet {
 		connectedCategories.addAll(parentsBranch);
 		Connection database = (Connection)request.getServletContext().getAttribute("database");
 		ResultSet results = database.getUsersByCategories(connectedCategories);
-		writer.print("<ul id=\"users\" >");
 		if (results != null) {
 			try {
 				while (results.next()) {
@@ -78,7 +77,6 @@ public class UsersServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		writer.print("</ul>");
 		
 	}
 
