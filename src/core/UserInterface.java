@@ -4,10 +4,11 @@ package core;
  * Created by nika on 5/24/15.
  */
 public interface UserInterface {
-    public void getEmail();
+    public String getEmail();
 
     //we save not passwords, we save hashStrings as password..
-    public void getPassword();
+    public String getPassword();
 
-    public void getID();
+    public int getID();
+    public String getURL();
 }

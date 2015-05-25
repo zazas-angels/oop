@@ -55,11 +55,50 @@ function passwordsMatch() {
     }
 }
 
-function trySignUp() {
+function checkPasswords() {
     var pwd1 = document.getElementById("password");
     var pwd2 = document.getElementById("passwordRepeat");
     var mtch = document.getElementById("matches");
     var strength = document.getElementById('strength');
 
     return pwd1.value == pwd2.value && pwd1.value.length >= 6;
+}
+
+
+// to change as .domain
+var chveniSaiti = ".chveniSaiti.ge";
+function checkURL() {
+    var url = document.getElementById("url");
+    if (url.value.length < chveniSaiti.length) {
+        document.getElementById("urlCheck").innerHTML = "structure: *.chveniSaiti.ge";
+        return false;
+    }
+    var sufix = url.value.substring(url.value.length - chveniSaiti.length, url.value.length);
+    if (sufix == ".chveniSaiti.ge") {
+        document.getElementById("urlCheck").innerHTML = "nice url";
+        return true;
+    } else {
+        document.getElementById("urlCheck").innerHTML = "structure: *.chveniSaiti.ge";
+        return false;
+    }
+}
+
+function validateEmail(email) {
+    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    if (re.test(email)) {
+        document.getElementById("checkEmail").innerHTML = "";
+        return true;
+    } else {
+        document.getElementById("checkEmail").innerHTML = "not valid email";
+        return false;
+    }
+}
+
+function checkMail() {
+    var email = document.getElementById("email").value;
+    return validateEmail(email);
+}
+
+function trySignUp() {
+    return checkPasswords() && checkURL() && checkMail();
 }

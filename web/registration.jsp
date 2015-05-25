@@ -19,7 +19,13 @@
         </tr>
         <tr>
             <td>Email:</td>
-            <td><input type="text" name="email"></td>
+            <td><input type="text" autocomplete="off" id="email" onkeyup="return checkMail()"></td>
+            <td>
+                <div id="checkEmail"></div>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
             <td><a href="#">confirm</a></td>
         </tr>
         <tr>
@@ -40,7 +46,10 @@
         </tr>
         <tr>
             <td> Url:</td>
-            <td><input type="text" name="url"></td>
+            <td><input type="text" autocomplete="off" id="url" onkeyup="return checkURL()"/></td>
+            <td>
+                <div id="urlCheck"></div>
+            </td>
         </tr>
         <tr>
             <td></td>
