@@ -1,10 +1,11 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%
     if (request.getSession().getAttribute("logged in") != null && (Boolean) request.getSession().getAttribute("logged in")) {
         request.getRequestDispatcher("userPage.jsp").forward(request, response);
     }
 %>
 <div id="login" charset="UTF-8">
-    Please login:
+    გაიარეთ ავტორიზაცია:
     <br><br>
 
     <form action="login" method="post">
@@ -16,21 +17,21 @@
             <tr id="invalidUserNamePassword">
                 <%}%>
                 <td colspan="2">
-                    Invalid email or password
+                    არასწორი ელ.ფოსტა ან პაროლი
                 </td>
             </tr>
             <tr>
-                <td>Email:</td>
-                <td><input type="text" name="email"></td>
+                <td>ელ.ფოსტა:</td>
+                <td><input type="text" autocomplete="off" name="email"></td>
             </tr>
             <tr>
-                <td>Password:</td>
+                <td>პაროლი:</td>
                 <td><input type="password" name="password"></td>
             </tr>
             <tr>
                 <td></td>
                 <td>
-                    <button name="loginButton">Login</button>
+                    <button name="loginButton">შესვლა</button>
                 </td>
             </tr>
             </tbody>
@@ -38,5 +39,5 @@
     </form>
     <br><br>
 
-    <p><a href="#" onclick="loadRegistrationHtml()">registration</a></p>
+    <p><a href="#" onclick="loadRegistrationHtml()">რეგისტრაცია</a></p>
 </div>

@@ -44,4 +44,6 @@ public interface Connection {
 	public void addUser(UserInterface user);
 
 	public UserInterface getUser(String email, String password);
+
+	public boolean existsUser(String email);
 }

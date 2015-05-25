@@ -25,15 +25,15 @@ function passwordChanged() {
     var enoughRegex = new RegExp("(?=.{6,}).*", "g");
     var pwd = document.getElementById("password");
     if (pwd.value.length == 0) {
-        strength.innerHTML = 'type password';
+        strength.innerHTML = 'აკრიფეთ პაროლი';
     } else if (false == enoughRegex.test(pwd.value)) {
-        strength.innerHTML = '<span style="color:red">very short</span>';
+        strength.innerHTML = '<span style="color:red">ძალზე მოკლეა</span>';
     } else if (strongRegex.test(pwd.value)) {
-        strength.innerHTML = '<span style="color:green">strong!</span>';
+        strength.innerHTML = '<span style="color:green">ძლიერი!</span>';
     } else if (mediumRegex.test(pwd.value)) {
-        strength.innerHTML = '<span style="color:greenyellow">medium!</span>';
+        strength.innerHTML = '<span style="color:greenyellow">საშუალო!</span>';
     } else {
-        strength.innerHTML = '<span style="color:orange">week!</span>';
+        strength.innerHTML = '<span style="color:orange">სუსტი!</span>';
     }
     passwordsMatch();
 }
@@ -49,9 +49,9 @@ function passwordsMatch() {
     }
 
     if (pwd1.value == pwd2.value) {
-        mtch.innerHTML = '<span style="color:green">matches</span>';
+        mtch.innerHTML = '<span style="color:green">ემთხვევა</span>';
     } else {
-        mtch.innerHTML = '<span style="color:red">does not match</span>';
+        mtch.innerHTML = '<span style="color:red">არ ემთხვევა</span>';
     }
 }
 
@@ -64,7 +64,7 @@ function checkPasswords() {
     return pwd1.value == pwd2.value && pwd1.value.length >= 6;
 }
 
-
+/*
 // to change as .domain
 var chveniSaiti = ".chveniSaiti.ge";
 function checkURL() {
@@ -82,14 +82,14 @@ function checkURL() {
         return false;
     }
 }
-
+ */
 function validateEmail(email) {
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     if (re.test(email)) {
         document.getElementById("checkEmail").innerHTML = "";
         return true;
     } else {
-        document.getElementById("checkEmail").innerHTML = "not valid email";
+        document.getElementById("checkEmail").innerHTML = "არასწორი მეილი";
         return false;
     }
 }
@@ -100,5 +100,5 @@ function checkMail() {
 }
 
 function trySignUp() {
-    return checkPasswords() && checkURL() && checkMail();
+    return checkPasswords() && checkMail();
 }

@@ -294,4 +294,9 @@ public class DBConnection implements core.Connection {
 		return null;
 	}
 
+	@Override
+	public boolean existsUser(String email) {
+		return false;
+	}
+
 }
