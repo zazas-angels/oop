@@ -25,15 +25,15 @@ function passwordChanged() {
     var enoughRegex = new RegExp("(?=.{6,}).*", "g");
     var pwd = document.getElementById("password");
     if (pwd.value.length == 0) {
-        strength.innerHTML = 'Type Password';
+        strength.innerHTML = 'type password';
     } else if (false == enoughRegex.test(pwd.value)) {
         strength.innerHTML = '<span style="color:red">very short</span>';
     } else if (strongRegex.test(pwd.value)) {
-        strength.innerHTML = '<span style="color:green">Strong!</span>';
+        strength.innerHTML = '<span style="color:green">strong!</span>';
     } else if (mediumRegex.test(pwd.value)) {
-        strength.innerHTML = '<span style="color:greenyellow">Medium!</span>';
+        strength.innerHTML = '<span style="color:greenyellow">medium!</span>';
     } else {
-        strength.innerHTML = '<span style="color:orange">Weak!</span>';
+        strength.innerHTML = '<span style="color:orange">week!</span>';
     }
     passwordsMatch();
 }
@@ -53,4 +53,13 @@ function passwordsMatch() {
     } else {
         mtch.innerHTML = '<span style="color:red">does not match</span>';
     }
+}
+
+function trySignUp() {
+    var pwd1 = document.getElementById("password");
+    var pwd2 = document.getElementById("passwordRepeat");
+    var mtch = document.getElementById("matches");
+    var strength = document.getElementById('strength');
+
+    return pwd1.value == pwd2.value && pwd1.value.length >= 6;
 }

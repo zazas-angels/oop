@@ -3,8 +3,8 @@
         request.getRequestDispatcher("userPage.jsp").forward(request, response);
     }
 %>
-<div id="login">
-    Please log in:
+<div id="login" charset="UTF-8">
+    Please login:
     <br><br>
 
     <form action="login" method="post">
