@@ -44,5 +44,18 @@ public class CategoryTree implements CategoryTreeInterface {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	@Override
+	public List<CategoryInterface> getChildBush(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public List<CategoryInterface> getParentBranch(int id) {
+		List<CategoryInterface>  results= new ArrayList<CategoryInterface>();
+		results.add(new Category(4,"Category4"));
+		results.add(new Category(1,"Category1"));
+		results.add(new Category(2,"Category2"));
+		return results;
+	}
 
 }

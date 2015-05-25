@@ -1,6 +1,7 @@
 package core;
 
 import java.sql.ResultSet;
+import java.util.List;
 
 public interface Connection {
 	/**
@@ -22,6 +23,8 @@ public interface Connection {
 	public ResultSet getElementsPictures();
 	public ResultSet getAdmins();
 	
+	//get users by categories list, ordered by rating 
+	public ResultSet getUsersByCategories(List<CategoryInterface>  categories);
 
 	
 	/**

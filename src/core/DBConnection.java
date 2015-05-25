@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 /* This class is for data base connection, it connects and can make suitable prepared statement.
  * like (similar code) as in assignment 3.
@@ -124,16 +125,35 @@ public class DBConnection implements core.Connection {
 		return results;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		DBConnection db = new DBConnection();
-		ResultSet results = db.getResults("categories");
 		System.out.println("zaza");
+		ResultSet users =db.getUsers();
+if(users!=null){
+	System.out.println("zaza");
+	while(users.next()){
+	
+		System.out.println("zaza");
+		System.out.println( users.getString(1));
+	
+	}
+}
 
 	}
 
 	@Override
 	public ResultSet getUsers() {
-		return 	getResults("users");
+		ResultSet results = null;
+		try {
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("select * from users Order by raiting desc;");
+
+			results = statement.executeQuery();
+		} catch (SQLException e) {
+			// ignore
+			e.printStackTrace();
+		}
+		return results;
 	}
 
 	@Override
@@ -212,6 +232,7 @@ public class DBConnection implements core.Connection {
 
 	@Override
 	public ResultSet getUsers(int id) {
+		
 		return 	getResults("users",id);
 	}
 
@@ -287,6 +308,30 @@ public class DBConnection implements core.Connection {
 	public ResultSet getAdmins(int id) {
 		return getResults("admins",id);
 		
+	}
+
+	@Override
+	public ResultSet getUsersByCategories(List<CategoryInterface> categories) {
+		// TODO Auto-generated method stub
+		ResultSet results = null;
+		String categoryIds="";
+		//don't need ? it is int
+		for(int i=0;i<categories.size(); i++){
+			categoryIds+=categories.get(i).getId();
+			if(i==categories.size()-1)continue;
+			categoryIds+=",";
+		}
+		System.out.println(categoryIds);
+		try {
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("select * from users as u join users_categories as uc on u.ID=uc.UserID	where uc.CategoryID in ("+
+			categoryIds+") 	group by u.ID order by raiting desc;");
+			results = statement.executeQuery();
+		} catch (SQLException e) {
+			// ignore
+			e.printStackTrace();
+		}
+		return results;
 	}
 
 }
