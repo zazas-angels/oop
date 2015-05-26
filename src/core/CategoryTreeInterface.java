@@ -13,6 +13,6 @@ public interface CategoryTreeInterface {
 	public int remove(CategoryInterface cur);
 	//returns all children and children's children and so on. (including itself)
 	List<CategoryInterface> getChildBush(int id);
-	//returns all parents list  
+	//returns all parents list 
 	List<CategoryInterface> getParentBranch(int id);
 }

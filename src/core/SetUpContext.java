@@ -33,7 +33,7 @@ public class SetUpContext implements ServletContextListener {
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent event)  { 
-         // TODO Auto-generated method stub  
+         // TODO Auto-generated method stub
     	Connection database = new DBConnection();
     	ServletContext servletCont = event.getServletContext();
     	CategoryTreeInterface categories = new CategoryTree(database.getUsers());
