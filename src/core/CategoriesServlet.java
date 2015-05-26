@@ -67,8 +67,11 @@ public class CategoriesServlet extends HttpServlet {
 		
 		for (int i = 0; i < childCategories.size(); i++) {
 			writer.print("<li>");
-			
-			writer.print("<a href='#' onclick=\"makeNextCategories("+childCategories.get(i).getId()+");\"> "+ childCategories.get(i).getName()+" </a>");
+			String href="";
+			int currId = childCategories.get(i).getId();
+			if(categories.hasChilds(currId))
+			href= " href='#' onclick=\"makeNextCategories("+currId+");\"";
+			writer.print("<a"+href+"> "+ childCategories.get(i).getName()+" </a>");
 			writer.print("</li>");
 		}
 		
