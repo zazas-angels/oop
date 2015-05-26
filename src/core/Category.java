@@ -1,24 +1,35 @@
 package core;
 
-/**
- * Created by nika on 5/24/15.
- */
-public class Category implements CategoryInterface {
-    String name;
-    int id;
+public class Category implements CategoryInterface{
+	private int id;
+	private String name;
+	
+	public Category(int id, String name){
+		this.name = name;
+		this.id = id;
+	}
 
-    public Category(int id, String name) {
-        this.name = name;
-        this.id = id;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return this.id;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return this.id == ((Category)obj).id;
+	}
+	
+	@Override
+	public int hashCode() {
+		return ((Integer)id).hashCode();
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.id + " : " + this.name;
+	}
 }
