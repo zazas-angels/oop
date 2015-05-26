@@ -37,6 +37,7 @@ public class SetUpContext implements ServletContextListener {
     	Connection database = new DBConnection();
     	ServletContext servletCont = event.getServletContext();
     	CategoryTreeInterface categories = new CategoryTree(database.getCategories());
+
     	servletCont.setAttribute("categories", categories);
     	servletCont.setAttribute("database", database);
     }
