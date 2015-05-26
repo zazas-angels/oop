@@ -1,3 +1,6 @@
+/*
+ * Author guri
+ */
 package core.database;
 
 import core.category.CategoryInterface;

@@ -1,5 +1,7 @@
 package core.database;
-
+/*
+ * Author: guri
+ */
 import core.category.CategoryInterface;
 import core.user.UserInterface;
 
