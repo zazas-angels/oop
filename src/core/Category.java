@@ -16,4 +16,20 @@ public class Category implements CategoryInterface{
 	public int getId() {
 		return this.id;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return this.id == ((Category)obj).id;
+	}
+	
+	@Override
+	public int hashCode() {
+		return id;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.id + " : " + this.name;
+	}
 }
