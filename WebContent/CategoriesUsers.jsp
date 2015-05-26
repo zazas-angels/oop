@@ -59,6 +59,18 @@
 	}
 </script>
 <title>Categories</title>
+
+<style type="text/css">
+img {
+   padding:4px;
+   border:4px solid;
+   border-color: red;
+    box-shadow: 10px 10px 5px grey;
+     border-radius: 50%;
+     cursor:pointer;
+}
+
+</style>
 </head>
 <body>
 	<%@ page import="core.CategoryTreeInterface"%>
@@ -68,6 +80,7 @@
 	<%@ page import="java.util.List"%>
 	<%@ page import="java.io.PrintWriter"%>
 	<%@ page import="java.sql.ResultSet"%>
+	<%@ page import="core.SiteConstants"%>
 
 <div id = button></div>
 
@@ -102,7 +115,7 @@
 				writer.print("<li>");
 
 				writer.print("<a href='#' onclick=\"alert('notImlemented yet')\"> "
-						+ users.getString(2) + " </a>");
+						+ "<img src=\""+users.getString("avatarFile")+"\" height=\""+SiteConstants.USER_IMG_HEIGTH+"\" width=\""+SiteConstants.USER_IMG_WIDTH+"\"> "+users.getString("name") + " </a>");
 				writer.print("</li>");
 
 			}

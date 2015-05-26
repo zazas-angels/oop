@@ -79,7 +79,7 @@ public class UsersServlet extends HttpServlet {
 					writer.print("<li>");
 
 					writer.print("<a href='#' onclick=\"alert('notImlemented yet')\"> "
-							+ results.getString(2) + " </a>");
+							+ "<img src=\""+results.getString("avatarFile")+"\" height=\""+SiteConstants.USER_IMG_HEIGTH+"\" width=\""+SiteConstants.USER_IMG_WIDTH+"\"> "+results.getString("name") + " </a>");
 					writer.print("</li>");
 
 				}
