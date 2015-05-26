@@ -2,7 +2,7 @@ package core;
 
 
 public class Category implements CategoryInterface{
-	private int id;
+	private int id; 
 	private String name;
 	
 	public Category(int id, String name){
