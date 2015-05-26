@@ -29,7 +29,8 @@ public class RegistrationServlet extends HttpServlet {
         if (password != null && email != null && url != null && checkMail(email) && checkPassword(password) && url != "") {
             if (dbConnection.existsUser(email)) {
                 request.getSession().setAttribute("busy email", email);
-                request.getRequestDispatcher("registration.jsp").forward(request, response);
+                request.getSession().setAttribute("registration", true);
+                request.getRequestDispatcher("index.jsp").forward(request, response);
             } else {
                 User user = new User(email, password, url);
                 dbConnection.addUser(user);
@@ -39,7 +40,8 @@ public class RegistrationServlet extends HttpServlet {
                 request.getRequestDispatcher("userPage.jsp").forward(request, response);
             }
         } else {
-            request.getRequestDispatcher("registration.jsp").forward(request, response);
+            request.getSession().setAttribute("registration", true);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
     }
 

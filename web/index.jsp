@@ -13,6 +13,8 @@
     <script src="registration.js"></script>
   </head>
   <body>
+  aaaaaaaaaaaaaa
   <%@include file="login.jsp" %>
+  aaaaaaaaaaaaaaa
   </body>
 </html>

@@ -18,10 +18,11 @@
                 შეავსეთ ველები:
             </td>
             <%
-                if (request.getSession().getAttribute("wrong try to log in") != null) {
+                if (request.getSession().getAttribute("busy email") != null) {
                     String prevEmail = (String) request.getSession().getAttribute("busy email");
+                    request.getSession().setAttribute("busy email", null);
             %>
-            <td><%=prevEmail%> დაკავებულია</td>
+            <td colspan="2"><%=prevEmail%> დაკავებულია</td>
             <%}%>
         </tr>
         <tr>

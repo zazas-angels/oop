@@ -308,7 +308,7 @@ public class DBConnection implements core.database.Connection {
 
 	@Override
 	public boolean existsUser(String email) {
-		return false;
+		return true;
 	}
 
 }

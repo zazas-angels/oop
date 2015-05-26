@@ -2,9 +2,13 @@
 <%
     if (request.getSession().getAttribute("logged in") != null && (Boolean) request.getSession().getAttribute("logged in")) {
         request.getRequestDispatcher("userPage.jsp").forward(request, response);
-    }
-%>
+    }%>
 <div id="login" charset="UTF-8">
+    <% if (request.getSession().getAttribute("registration") != null) {
+        request.getSession().setAttribute("registration", null);%>
+</div>
+<script>loadRegistrationHtml();</script>
+<%} else {%>
     გაიარეთ ავტორიზაცია:
     <br><br>
 
@@ -41,3 +45,4 @@
 
     <p><a href="#" onclick="loadRegistrationHtml()">რეგისტრაცია</a></p>
 </div>
+<%}%>
