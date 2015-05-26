@@ -110,9 +110,10 @@ public class DBConnection implements core.Connection {
 	private ResultSet getResults(String tableName, int id) {
 		ResultSet results = null;
 		try {
+			int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
 			PreparedStatement statement = dataBaseConnection
 					.prepareStatement("select * from +tableName"+" Where id=?;");
-			statement.setInt(1, id);
+			statement.setInt(temp, id);
 			results = statement.executeQuery();
 		} catch (SQLException e) {
 			// ignore

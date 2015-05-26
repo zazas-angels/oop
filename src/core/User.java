@@ -3,7 +3,7 @@ package core;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class User implements UserInterface, Constants {
+public class User implements UserInterface {
 
 	private int id;
 	private String mail;
@@ -14,7 +14,7 @@ public class User implements UserInterface, Constants {
 		this.id = id;
 		this.mail = mail;
 		this.password = generatePassword(password);
-		this.url = url + "." + DOMAIN;
+		this.url = url + "." + SiteConstants.DOMAIN;
 	}
 
 	private String generatePassword(String password) {
