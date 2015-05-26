@@ -64,25 +64,15 @@ function checkPasswords() {
     return pwd1.value == pwd2.value && pwd1.value.length >= 6;
 }
 
-/*
+
 // to change as .domain
 var chveniSaiti = ".chveniSaiti.ge";
 function checkURL() {
     var url = document.getElementById("url");
-    if (url.value.length < chveniSaiti.length) {
-        document.getElementById("urlCheck").innerHTML = "structure: *.chveniSaiti.ge";
-        return false;
-    }
-    var sufix = url.value.substring(url.value.length - chveniSaiti.length, url.value.length);
-    if (sufix == ".chveniSaiti.ge") {
-        document.getElementById("urlCheck").innerHTML = "nice url";
-        return true;
-    } else {
-        document.getElementById("urlCheck").innerHTML = "structure: *.chveniSaiti.ge";
-        return false;
-    }
+    var enoughRegex = new RegExp("(?=.{1,}).*", "g");
+    return enoughRegex.test(url.value);
 }
- */
+
 function validateEmail(email) {
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     if (re.test(email)) {
@@ -100,5 +90,5 @@ function checkMail() {
 }
 
 function trySignUp() {
-    return checkPasswords() && checkMail();
+    return checkPasswords() && checkMail() && checkURL();
 }

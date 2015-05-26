@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <td>ელ. ფოსტა:</td>
-            <td><input type="text" autocomplete="off" id="email" onkeyup="return checkMail()"></td>
+            <td><input type="text" autocomplete="off" id="email" name="email" onkeyup="return checkMail()"></td>
             <td>
                 <div id="checkEmail"></div>
             </td>
@@ -28,7 +28,7 @@
         <tr>
             <form action="" method="post" id="passwordTest">
                 <td>პაროლი:</td>
-                <td><input type="password" id="password" onkeyup="return passwordChanged()"/></td>
+                <td><input type="password" id="password" name="password" onkeyup="return passwordChanged()"/></td>
                 <td>
                     <div id="strength"></div>
                 </td>
@@ -43,7 +43,7 @@
         </tr>
         <tr>
             <td> Url:</td>
-            <td><input type="text" autocomplete="off" id="url"/></td>
+            <td><input type="text" placeholder="მინ. 1 სიმბოლო" autocomplete="off" id="url" name="url"/></td>
             <td>
                 <div id="urlCheck">.chveniSaiti.ge</div>
             </td>
