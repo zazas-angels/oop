@@ -24,7 +24,7 @@ public class Category implements CategoryInterface{
 	
 	@Override
 	public int hashCode() {
-		return id;
+		return ((Integer)id).hashCode();
 	}
 	
 	@Override

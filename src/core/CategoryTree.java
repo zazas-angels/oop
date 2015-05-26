@@ -118,4 +118,10 @@ public class CategoryTree implements CategoryTreeInterface {
 		return null;
 	}
 
+	@Override
+	public boolean hasChilds(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

@@ -15,4 +15,6 @@ public interface CategoryTreeInterface {
 	List<CategoryInterface> getChildBush(int id);
 	//returns all parents list 
 	List<CategoryInterface> getParentBranch(int id);
+	//returnes if it has childs
+	boolean hasChilds(int id);
 }
