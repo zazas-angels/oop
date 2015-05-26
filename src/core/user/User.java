@@ -7,13 +7,11 @@ import java.security.NoSuchAlgorithmException;
 
 public class User implements UserInterface {
 
-	private int id;
 	private String mail;
 	private String password;
 	private String url;
 
-	public User(int id, String mail, String password, String url) {
-		this.id = id;
+	public User(String mail, String password, String url) {
 		this.mail = mail;
 		this.password = generatePassword(password);
 		this.url = url + "." + SiteConstants.DOMAIN;
@@ -55,11 +53,6 @@ public class User implements UserInterface {
 	@Override
 	public String getPassword() {
 		return password;
-	}
-
-	@Override
-	public int getId() {
-		return id;
 	}
 
 	@Override

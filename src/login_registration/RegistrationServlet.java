@@ -1,6 +1,7 @@
 package login_registration;
 
 import core.database.DBConnection;
+import core.user.User;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -27,14 +28,12 @@ public class RegistrationServlet extends HttpServlet {
         String url = request.getParameter("url");
         if (password != null && email != null && url != null && checkMail(email) && checkPassword(password) && url != "") {
             if (dbConnection.existsUser(email)) {
-                request.setAttribute("email busy", true);
+                request.getSession().setAttribute("busy email", email);
                 request.getRequestDispatcher("registration.jsp").forward(request, response);
             } else {
-                    /*
-                    password = LoginServlet.generateHash("/"+password);
-                    User user = new User(email, password, url);
-                    dbConnection.addUser(user);
-                    */
+                User user = new User(email, password, url);
+                dbConnection.addUser(user);
+
                 request.getSession().setAttribute("logged in", true);
                 request.getSession().setAttribute("email", email);
                 request.getRequestDispatcher("userPage.jsp").forward(request, response);

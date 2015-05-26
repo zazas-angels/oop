@@ -11,7 +11,7 @@
     <form action="login" method="post">
         <table>
             <tbody>
-            <%if (request.getAttribute("wrong try to log in") == null) { %>
+            <%if (request.getSession().getAttribute("wrong try to log in") == null) { %>
             <tr id="invalidUserNamePassword" style="visibility: hidden">
                     <%} else { %>
             <tr id="invalidUserNamePassword">

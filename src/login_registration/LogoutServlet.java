@@ -14,6 +14,7 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().setAttribute("logged in", false);
+        request.getSession().setAttribute("email", null);
         request.getRequestDispatcher("index.jsp").forward(request, response);
 
     }

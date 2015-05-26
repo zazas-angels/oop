@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
             request.getSession().setAttribute("email", email);
             request.getRequestDispatcher("userPage.jsp").forward(request, response);
         } else {
-            request.setAttribute("wrong try to log in", true);
+            request.getSession().setAttribute("wrong try to log in", true);
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
 

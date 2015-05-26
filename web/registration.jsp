@@ -14,9 +14,15 @@
     <table>
         <tbody>
         <tr>
-            <td colspan="3">
+            <td>
                 შეავსეთ ველები:
             </td>
+            <%
+                if (request.getSession().getAttribute("wrong try to log in") != null) {
+                    String prevEmail = (String) request.getSession().getAttribute("busy email");
+            %>
+            <td><%=prevEmail%> დაკავებულია</td>
+            <%}%>
         </tr>
         <tr>
             <td>ელ. ფოსტა:</td>
