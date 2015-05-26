@@ -12,9 +12,9 @@ public interface CategoryTreeInterface {
 	public CategoryInterface getParent(CategoryInterface cur);
 	public int remove(CategoryInterface cur);
 	//returns all children and children's children and so on. (including itself)
-	List<CategoryInterface> getChildBush(int id);
+	public List<CategoryInterface> getChildBush(int id);
 	//returns all parents list 
-	List<CategoryInterface> getParentBranch(int id);
+	public List<CategoryInterface> getParentBranch(int id);
 	//returnes if it has childs
-	boolean hasChilds(int id);
+	public boolean hasChilds(int id);
 }
