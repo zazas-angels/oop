@@ -53,7 +53,7 @@ public class UsersServlet extends HttpServlet {
 		}
 		if(id<0)return;
 		Connection database = (Connection)request.getServletContext().getAttribute("database");
-		ResultSet results;
+		ResultSet results=null;
 		if(id!=0){
 		CategoryTree categories = (CategoryTree) getServletContext().getAttribute("categories");
 		List<CategoryInterface> connectedCategories = new ArrayList<CategoryInterface>();
@@ -63,6 +63,7 @@ public class UsersServlet extends HttpServlet {
 		List<CategoryInterface> parentsBranch = categories.getParentBranch(id);
 		if(parentsBranch!=null)
 		connectedCategories.addAll(parentsBranch);
+	
 		results = database.getUsersByCategories(connectedCategories);
 		}else{
 			results = database.getUsers();

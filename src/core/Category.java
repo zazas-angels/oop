@@ -19,5 +19,14 @@ public class Category implements CategoryInterface {
 		// TODO Auto-generated method stub
 		return id;
 	}
-
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return ((Category)obj).getId()==id;
+	}
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return ((Integer)(id)).hashCode();
+	}
 }

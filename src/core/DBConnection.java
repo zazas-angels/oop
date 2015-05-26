@@ -314,6 +314,7 @@ if(users!=null){
 	public ResultSet getUsersByCategories(List<CategoryInterface> categories) {
 		// TODO Auto-generated method stub
 		ResultSet results = null;
+		if(categories==null||categories.size()==0)return null;
 		String categoryIds="";
 		//don't need ? it is int
 		for(int i=0;i<categories.size(); i++){
