@@ -16,4 +16,5 @@ public interface CategoryTreeInterface {
 	List<CategoryInterface> getRoots();
 	CategoryInterface getParent(CategoryInterface cur);
 	int remove(CategoryInterface cur);
+	boolean hasChilds(int id);
 }

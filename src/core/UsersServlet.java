@@ -40,6 +40,11 @@ public class UsersServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	/*
+	 * writes all users which is connected which defined categories
+	 * (non-Javadoc)
+	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter writer =response.getWriter();

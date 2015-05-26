@@ -12,29 +12,28 @@ public class CategoryTree implements CategoryTreeInterface {
 	private ArrayList<CategoryInterface> roots;
 	private HashMap<CategoryInterface, CategoryInterface> chParent;
 	private HashMap<CategoryInterface, ArrayList<CategoryInterface>> map;
-
-	public CategoryTree(ResultSet s) {
+	
+	public CategoryTree(ResultSet s){
 		db = new HashMap<Integer, String>();
 		roots = new ArrayList<CategoryInterface>();
 		chParent = new HashMap<CategoryInterface, CategoryInterface>();
 		map = new HashMap<CategoryInterface, ArrayList<CategoryInterface>>();
 		try {
-			while (s.next()) {
+			while(s.next()){
 				int id = Integer.parseInt(s.getString("ID"));
 				String name = s.getString("name");
 				Category cur = new Category(id, name);
 				db.put(id, name);
 				String pId = s.getString("ParentId");
-				if (pId == null) {
+				if(pId == null){
 					roots.add(cur);
-				} else {
-					CategoryInterface par = new Category(Integer.parseInt(pId),
-							db.get(Integer.parseInt(pId)));
+				}else{
+					CategoryInterface par = new Category(Integer.parseInt(pId), db.get(Integer.parseInt(pId)));
 					chParent.put(cur, par);
 					ArrayList<CategoryInterface> temp;
-					if (map.containsKey(par)) {
+					if(map.containsKey(par)){
 						temp = map.get(par);
-					} else {
+					}else{
 						temp = new ArrayList<CategoryInterface>();
 					}
 					temp.add(cur);
@@ -54,17 +53,17 @@ public class CategoryTree implements CategoryTreeInterface {
 
 	@Override
 	public List<CategoryInterface> getRoots() {
-
+		
 		return roots;
 	}
 
 	@Override
 	public int add(CategoryInterface newOne, CategoryInterface parent) {
-		if (parent == null) {
+		if(parent == null){
 			roots.add(newOne);
 			return 0;
-		} else {
-			if (map.containsKey(parent)) {
+		}else{
+			if(map.containsKey(parent)){
 				ArrayList<CategoryInterface> arr = map.get(parent);
 				arr.add(newOne);
 				map.put(parent, arr);
@@ -75,28 +74,29 @@ public class CategoryTree implements CategoryTreeInterface {
 		return 1;
 	}
 
+
 	@Override
-	// this method returns parent of current category, if given one is root it
-	// returns false
+	//this method returns parent of current category, if given one is root it returns false
 	public CategoryInterface getParent(CategoryInterface cur) {
 		return chParent.get(cur);
 	}
 
+
 	@Override
-	// amas gonia racxa akliaa :/
+	//amas gonia racxa akliaa :/
 	public int remove(CategoryInterface cur) {
-		if (roots.contains(cur)) {
+		if(roots.contains(cur)){
 			roots.remove(cur);
 			ArrayList<CategoryInterface> temp = map.remove(cur);
-			for (int i = 0; i < temp.size(); i++) {
+			for(int i = 0; i < temp.size(); i++){
 				chParent.remove(temp.get(i));
 				roots.add(temp.get(i));
 			}
-		} else {
+		}else{
 			CategoryInterface par = chParent.remove(cur);
 			ArrayList<CategoryInterface> temp = map.remove(cur);
 			ArrayList<CategoryInterface> parChilds = map.get(par);
-			for (int i = 0; i < temp.size(); i++) {
+			for(int i = 0; i < temp.size(); i++){
 				parChilds.add(temp.get(i));
 				chParent.put(temp.get(i), par);
 			}
@@ -104,26 +104,41 @@ public class CategoryTree implements CategoryTreeInterface {
 		}
 		return 0;
 	}
+    
 
 	@Override
 	public List<CategoryInterface> getChildBush(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		CategoryInterface obj = new Category(id, db.get(id));
+		List<CategoryInterface> cur = new ArrayList<CategoryInterface>();
+		fillChildBush(cur, obj);
+		return cur;
+	}
+	
+	private void fillChildBush(List<CategoryInterface> list, CategoryInterface cat){
+		List<CategoryInterface> temp = this.getChilds(cat.getId());
+		list.add(cat);
+		if(temp == null) return;
+		for(int i = 0; i < temp.size(); i++){
+			fillChildBush(list, temp.get(i));
+		}
 	}
 
 	@Override
 	public List<CategoryInterface> getParentBranch(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		List<CategoryInterface> cur = new ArrayList<CategoryInterface>();
+		CategoryInterface obj = new Category(id, "");
+		while(chParent.containsKey(obj)){
+			obj = chParent.get(obj);
+			cur.add(obj);
+		}
+		return cur;
 	}
 
-	public static void main(String[] args) {
-		DBConnection db = new DBConnection();
-		CategoryTreeInterface tree = new CategoryTree(db.getCategories());
-		List<CategoryInterface> list = tree.getChilds(36);
-		System.out.println(list.size());
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i).getName());
-		}
+	@Override
+	public boolean hasChilds(int id) {
+		CategoryInterface obj = new Category(id, "");
+		if(map.containsKey(obj)) return true;
+		return false;
 	}
+
 }

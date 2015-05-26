@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<%-- Java scrip fuctions --%>
 <script src="NextCategories.js"></script>
 <script>
 	//sending request is from W3School tutorial
+	//make next categories and make button (set it disabled or not)
 	function makeNextCategories(id) {
 		alert('it works!');
 		var list = document.getElementById("categories");
@@ -33,7 +35,7 @@
 		document.getElementById("upButton").disabled=true;
 		alert(items.length);
 	}
-
+//make users which are connected to these categoreis
 	function makeUsersForCategory(id) {
 		alert('users works!');
 		var list = document.getElementById("users");
@@ -69,7 +71,7 @@
 
 <div id = button></div>
 
-
+<%-- shows all root categories --%>
 	<%
 		CategoryTreeInterface categories = (CategoryTreeInterface) request
 				.getServletContext().getAttribute("categories");
@@ -88,7 +90,7 @@
 		writer.print("</ul>");
 	%>
 
-
+<%-- Shows all users by rating --%>
 	<%
 		Connection database = (Connection) request.getServletContext()
 				.getAttribute("database");
