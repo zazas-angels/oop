@@ -52,6 +52,9 @@ public class UsersServlet extends HttpServlet {
 			id = -1;
 		}
 		if(id<0)return;
+		Connection database = (Connection)request.getServletContext().getAttribute("database");
+		ResultSet results;
+		if(id!=0){
 		CategoryTree categories = (CategoryTree) getServletContext().getAttribute("categories");
 		List<CategoryInterface> connectedCategories = new ArrayList<CategoryInterface>();
 		List<CategoryInterface> childBush= categories.getChildBush(id);
@@ -60,15 +63,17 @@ public class UsersServlet extends HttpServlet {
 		List<CategoryInterface> parentsBranch = categories.getParentBranch(id);
 		if(parentsBranch!=null)
 		connectedCategories.addAll(parentsBranch);
-		Connection database = (Connection)request.getServletContext().getAttribute("database");
-		ResultSet results = database.getUsersByCategories(connectedCategories);
+		results = database.getUsersByCategories(connectedCategories);
+		}else{
+			results = database.getUsers();
+		}
 		if (results != null) {
 			try {
 				while (results.next()) {
 					writer.print("<li>");
 
 					writer.print("<a href='#' onclick=\"alert('notImlemented yet')\"> "
-							+ results.getString(1) + " </a>");
+							+ results.getString(2) + " </a>");
 					writer.print("</li>");
 
 				}

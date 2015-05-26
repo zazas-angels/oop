@@ -29,7 +29,8 @@
 		xmlHttp.open("POST", "CategoriesServlet?id=" + id, true);
 		xmlHttp.send();
 		makeUsersForCategory(id);
-
+		if(id==0)
+		document.getElementById("upButton").disabled=true;
 		alert(items.length);
 	}
 
@@ -66,7 +67,7 @@
 	<%@ page import="java.io.PrintWriter"%>
 	<%@ page import="java.sql.ResultSet"%>
 
-
+<div id = button></div>
 
 
 	<%
@@ -99,13 +100,12 @@
 				writer.print("<li>");
 
 				writer.print("<a href='#' onclick=\"alert('notImlemented yet')\"> "
-						+ users.getString(1) + " </a>");
+						+ users.getString(2) + " </a>");
 				writer.print("</li>");
 
 			}
 		}
 		writer.print("</ul>");
 	%>
-
 </body>
 </html>

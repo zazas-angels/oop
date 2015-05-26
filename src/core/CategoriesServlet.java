@@ -48,7 +48,21 @@ public class CategoriesServlet extends HttpServlet {
 		}
 		if(id<0)return;
 		CategoryTree categories = (CategoryTree) getServletContext().getAttribute("categories");
-		List<CategoryInterface> childCategories = categories.getChilds(id);
+		CategoryInterface parent =categories.getParent(new Category(id, ""));
+		int parentID=0;
+		if(parent!=null)
+			parentID=parent.getId();
+		System.out.println("id = "+id);;
+		writer.print("<button id=\"upButton\" onclick=\"makeNextCategories("+parentID+")\">Up</button>");
+		writer.print("</li>");
+		List<CategoryInterface> childCategories;
+		if(id==0){
+			childCategories=categories.getRoots();
+		}else{
+			//can be converted to 0 if roots but for every case
+			childCategories=categories.getChilds(id);
+		}
+		
 		for (int i = 0; i < childCategories.size(); i++) {
 			writer.print("<li>");
 			

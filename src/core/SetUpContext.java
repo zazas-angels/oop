@@ -36,7 +36,7 @@ public class SetUpContext implements ServletContextListener {
          // TODO Auto-generated method stub
     	Connection database = new DBConnection();
     	ServletContext servletCont = event.getServletContext();
-    	CategoryTreeInterface categories = new CategoryTree();
+    	CategoryTreeInterface categories = new CategoryTree(database.getCategories());
     	servletCont.setAttribute("categories", categories);
     	servletCont.setAttribute("database", database);
     }
