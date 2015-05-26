@@ -107,19 +107,36 @@ public class CategoryTree implements CategoryTreeInterface {
 
 	@Override
 	public List<CategoryInterface> getChildBush(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		CategoryInterface obj = new Category(id, db.get(id));
+		List<CategoryInterface> cur = new ArrayList<CategoryInterface>();
+		fillChildBush(cur, obj);
+		return cur;
+	}
+	
+	private void fillChildBush(List<CategoryInterface> list, CategoryInterface cat){
+		List<CategoryInterface> temp = this.getChilds(cat.getId());
+		list.add(cat);
+		if(temp == null) return;
+		for(int i = 0; i < temp.size(); i++){
+			fillChildBush(list, temp.get(i));
+		}
 	}
 
 	@Override
 	public List<CategoryInterface> getParentBranch(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		List<CategoryInterface> cur = new ArrayList<CategoryInterface>();
+		CategoryInterface obj = new Category(id, "");
+		while(chParent.containsKey(obj)){
+			obj = chParent.get(obj);
+			cur.add(obj);
+		}
+		return cur;
 	}
 
 	@Override
 	public boolean hasChilds(int id) {
-		// TODO Auto-generated method stub
+		CategoryInterface obj = new Category(id, "");
+		if(map.containsKey(obj)) return true;
 		return false;
 	}
 
