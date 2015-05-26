@@ -104,7 +104,7 @@ public class CategoryTree implements CategoryTreeInterface {
 		}
 		return 0;
 	}
-
+  
 
 	@Override
 	public List<CategoryInterface> getChildBush(int id) {
