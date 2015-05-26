@@ -1,14 +1,17 @@
 package core;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
+import core.category.Category;
+import core.category.CategoryInterface;
+import core.category.CategoryTree;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * Servlet implementation class Categories
@@ -17,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/CategoriesServlet")
 public class CategoriesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
+
+	/**
      * @see HttpServlet#HttpServlet()
      */
     public CategoriesServlet() {

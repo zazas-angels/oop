@@ -1,17 +1,21 @@
-package core;
+package core.user;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import core.SiteConstants;
+import core.category.CategoryInterface;
+import core.category.CategoryTree;
+import core.database.Connection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Servlet implementation class UsersServlet
@@ -77,7 +81,7 @@ public class UsersServlet extends HttpServlet {
 					writer.print("<li>");
 
 					writer.print("<a href='#' onclick=\"alert('notImlemented yet')\"> "
-							+ "<img src=\""+results.getString("avatarFile")+"\" height=\""+SiteConstants.USER_IMG_HEIGTH+"\" width=\""+SiteConstants.USER_IMG_WIDTH+"\"> "+results.getString("name") + " </a>");
+							+ "<img src=\"" + results.getString("avatarFile") + "\" height=\"" + SiteConstants.USER_IMG_HEIGTH + "\" width=\"" + SiteConstants.USER_IMG_WIDTH + "\"> " + results.getString("name") + " </a>");
 					writer.print("</li>");
 
 				}

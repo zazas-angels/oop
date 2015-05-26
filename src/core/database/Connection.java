@@ -1,4 +1,7 @@
-package core;
+package core.database;
+
+import core.category.CategoryInterface;
+import core.user.UserInterface;
 
 import java.sql.ResultSet;
 import java.util.List;

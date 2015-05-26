@@ -1,4 +1,7 @@
-package core;
+package core.database;
+
+import core.category.CategoryInterface;
+import core.user.UserInterface;
 
 import java.sql.Connection;
 import java.sql.*;
@@ -7,7 +10,7 @@ import java.util.List;
 /* This class is for data base connection, it connects and can make suitable prepared statement.
  * like (similar code) as in assignment 3.
  */
-public class DBConnection implements core.Connection {
+public class DBConnection implements core.database.Connection {
 	Connection dataBaseConnection;
 
 	/*

@@ -2,10 +2,10 @@ package core.listeners; /**
  * Created by nika on 5/26/15.
  */
 
-import core.CategoryTree;
-import core.CategoryTreeInterface;
-import core.Connection;
-import core.DBConnection;
+import core.category.CategoryTree;
+import core.category.CategoryTreeInterface;
+import core.database.Connection;
+import core.database.DBConnection;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;

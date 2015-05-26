@@ -1,4 +1,6 @@
-package core;
+package core.user;
+
+import core.SiteConstants;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

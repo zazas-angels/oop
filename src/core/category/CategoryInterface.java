@@ -1,4 +1,4 @@
-package core;
+package core.category;
 
 public interface CategoryInterface {
 	

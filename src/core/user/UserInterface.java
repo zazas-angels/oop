@@ -1,4 +1,4 @@
-package core;
+package core.user;
 
 /**
  * Created by nika on 5/24/15.

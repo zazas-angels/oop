@@ -1,6 +1,6 @@
 package login_registration;
 
-import core.DBConnection;
+import core.database.DBConnection;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

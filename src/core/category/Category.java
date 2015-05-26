@@ -1,4 +1,4 @@
-package core;
+package core.category;
 
 public class Category implements CategoryInterface {
 	private int id;
