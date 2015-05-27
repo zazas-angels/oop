@@ -1,8 +1,10 @@
 package core.database;
+
 /*
  * Author: guri
  */
 import core.category.CategoryInterface;
+import core.user.User;
 import core.user.UserInterface;
 
 import java.sql.Connection;
@@ -31,32 +33,6 @@ public class DBConnection implements core.database.Connection {
 			e.printStackTrace();
 		}
 
-	}
-
-	/*
-	 * This method makes prepared statement using it's id value (if it's "" id
-	 * won't be specified) And returns select preperaed statement
-	 */
-	// it is synchronized for after, no need but mainc
-	public synchronized PreparedStatement getStatement(String id) {
-		PreparedStatement statement = null;
-		String condition = "true";
-		if (id.length() != 0) {
-			condition = " productid = \"" + id + "\"";
-		}
-		try {
-			statement = dataBaseConnection
-					.prepareStatement("select * from products" + " Where "
-							+ condition + " ;");
-			/*
-			 * another teqnique for another generation if(id.length()==0){
-			 * statement.setString(1, "true"); }else{ statement.setString(1,
-			 * id); }
-			 */
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return statement;
 	}
 
 	/*
@@ -99,7 +75,7 @@ public class DBConnection implements core.database.Connection {
 		ResultSet results = null;
 		try {
 			PreparedStatement statement = dataBaseConnection
-					.prepareStatement("select * from "+tableName+" ;");
+					.prepareStatement("select * from " + tableName + " ;");
 
 			results = statement.executeQuery();
 		} catch (SQLException e) {
@@ -117,7 +93,8 @@ public class DBConnection implements core.database.Connection {
 		try {
 			int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
 			PreparedStatement statement = dataBaseConnection
-					.prepareStatement("select * from +tableName"+" Where id=?;");
+					.prepareStatement("select * from +tableName"
+							+ " Where id=?;");
 			statement.setInt(temp, id);
 			results = statement.executeQuery();
 		} catch (SQLException e) {
@@ -135,7 +112,7 @@ public class DBConnection implements core.database.Connection {
 
 	@Override
 	public ResultSet getUsers() {
-		return 	getResults("users");
+		return getResults("users");
 	}
 
 	@Override
@@ -145,7 +122,7 @@ public class DBConnection implements core.database.Connection {
 
 	@Override
 	public ResultSet getUsersCategories() {
-		return 	getResults("users_categories");
+		return getResults("users_categories");
 	}
 
 	@Override
@@ -155,17 +132,17 @@ public class DBConnection implements core.database.Connection {
 
 	@Override
 	public ResultSet getColors() {
-		return  getResults("colors");
+		return getResults("colors");
 	}
 
 	@Override
 	public ResultSet getFonts() {
-		return 	getResults("fonts");
+		return getResults("fonts");
 	}
 
 	@Override
 	public ResultSet getThemes() {
-		return 	 getResults("themes");
+		return getResults("themes");
 	}
 
 	@Override
@@ -175,32 +152,29 @@ public class DBConnection implements core.database.Connection {
 
 	@Override
 	public ResultSet getTexts() {
-		return  getResults("texts");
+		return getResults("texts");
 	}
 
 	@Override
 	public ResultSet getElementsInfo() {
-		return 	getResults("elements_info");
+		return getResults("elements_info");
 	}
-	
-	
-	
+
 	@Override
 	public ResultSet getAlboms() {
-		return 	getResults("alboms");
+		return getResults("alboms");
 	}
 
 	@Override
 	public ResultSet getAlbomsElements() {
-		return  getResults("alboms_elements");
+		return getResults("alboms_elements");
 	}
 
 	@Override
 	public ResultSet getAlbomsPictures() {
-		return  getResults("alboms_pictures");
+		return getResults("alboms_pictures");
 	}
-	
-	
+
 	@Override
 	public ResultSet getElementsPictures() {
 		return getResults("elements_pictures");
@@ -209,7 +183,7 @@ public class DBConnection implements core.database.Connection {
 	@Override
 	public ResultSet getAdmins() {
 		return getResults("admins");
-		
+
 	}
 
 	@Override
@@ -219,96 +193,160 @@ public class DBConnection implements core.database.Connection {
 
 	@Override
 	public ResultSet getUsers(int id) {
-		return 	getResults("users",id);
+		return getResults("users", id);
 	}
 
 	@Override
 	public ResultSet getCategories(int id) {
-		return getResults("categories",id);
+		return getResults("categories", id);
 	}
 
 	@Override
 	public ResultSet getUsersCategories(int id) {
-		return 	getResults("users_categories",id);
+		return getResults("users_categories", id);
 	}
 
 	@Override
 	public ResultSet getPictures(int id) {
-		return getResults("pictures",id);
+		return getResults("pictures", id);
 	}
 
 	@Override
 	public ResultSet getColors(int id) {
-		return  getResults("colors",id);
+		return getResults("colors", id);
 	}
 
 	@Override
 	public ResultSet getFonts(int id) {
-		return 	getResults("fonts",id);
+		return getResults("fonts", id);
 	}
 
 	@Override
 	public ResultSet getThemes(int id) {
-		return 	 getResults("themes",id);
+		return getResults("themes", id);
 	}
 
 	@Override
 	public ResultSet getElements(int id) {
-		return getResults("elements",id);
+		return getResults("elements", id);
 	}
 
 	@Override
 	public ResultSet getTexts(int id) {
-		return  getResults("texts",id);
+		return getResults("texts", id);
 	}
 
 	@Override
 	public ResultSet getElementsInfo(int id) {
-		return 	getResults("elements_info",id);
+		return getResults("elements_info", id);
 	}
-	
-	
-	
+
 	@Override
 	public ResultSet getAlboms(int id) {
-		return 	getResults("alboms",id);
+		return getResults("alboms", id);
 	}
 
 	@Override
 	public ResultSet getAlbomsElements(int id) {
-		return  getResults("alboms_elements",id);
+		return getResults("alboms_elements", id);
 	}
 
 	@Override
 	public ResultSet getAlbomsPictures(int id) {
-		return  getResults("alboms_pictures",id);
+		return getResults("alboms_pictures", id);
 	}
-	
-	
+
 	@Override
 	public ResultSet getElementsPictures(int id) {
-		return getResults("elements_pictures",id);
+		return getResults("elements_pictures", id);
 	}
 
 	@Override
 	public ResultSet getAdmins(int id) {
-		return getResults("admins",id);
-		
+		return getResults("admins", id);
+
 	}
 
+	/*
+	 * Add user in database (non-Javadoc)
+	 * 
+	 * @see core.database.Connection#addUser(core.user.UserInterface)
+	 */
 	@Override
 	public void addUser(UserInterface user) {
-
+	
+		try {
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("insert into users (name, url, mail, password) values (?,?,?,?);");
+			statement.setString(1, user.getName());
+			statement.setString(2, user.getURL());
+			statement.setString(2, user.getEmail());
+			statement.setString(2, user.getPassword());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			// ignore
+			e.printStackTrace();
+		}
 	}
 
+	/*
+	 * getUsers if not exist return null (non-Javadoc)
+	 * 
+	 * @see core.database.Connection#getUser(java.lang.String, java.lang.String)
+	 */
 	@Override
-	public UserInterface getUser(String email, String password) {
-		return null;
+	public UserInterface getUser(String mail, String password) {
+		ResultSet results = null;
+		try {
+			int temp = 1;
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("select * from +tableName"
+							+ " Where mail=? and password =?;");
+			statement.setString(1, mail);
+			statement.setString(2, password);
+			results = statement.executeQuery();
+		} catch (SQLException e) {
+			// ignore
+			e.printStackTrace();
+		}
+		if (results == null)
+			return null;
+		UserInterface user = null;
+		try {
+			if (results.next()) {
+				user = new User(results.getString("name"),mail, password,
+						results.getString("url"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
 	}
 
+	/*
+	 * Checks if user exist in database by email (non-Javadoc)
+	 * 
+	 * @see core.database.Connection#existsUser(java.lang.String)
+	 */
 	@Override
 	public boolean existsUser(String email) {
-		return true;
+		ResultSet results = null;
+		boolean existResult = false;
+		try {
+			int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("select * from +tableName"
+							+ " Where mail=?;");
+			statement.setString(temp, email);
+			results = statement.executeQuery();
+			if (results != null)
+				existResult = results.next();
+		} catch (SQLException e) {
+			// ignore
+			e.printStackTrace();
+		}
+		return existResult;
 	}
 
 }

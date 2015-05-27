@@ -9,4 +9,5 @@ public interface UserInterface {
     public String getPassword();
 
     public String getURL();
+    public String getName();
 }

@@ -6,12 +6,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class User implements UserInterface {
-
+	private String name;
 	private String mail;
 	private String password;
 	private String url;
 
-	public User(String mail, String password, String url) {
+	public User(String name,String mail, String password, String url) {
+		this.name=name;
 		this.mail = mail;
 		this.password = generatePassword(password);
 		this.url = url + "." + SiteConstants.DOMAIN;
@@ -58,6 +59,15 @@ public class User implements UserInterface {
 	@Override
 	public String getURL() {
 		return url;
+	}
+	/*
+	 * Returns name of user
+	 * (non-Javadoc)
+	 * @see core.user.UserInterface#getName()
+	 */
+	@Override
+	public String getName() {
+		return name;
 	}
 
 }

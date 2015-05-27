@@ -32,7 +32,7 @@ public class RegistrationServlet extends HttpServlet {
                 request.getSession().setAttribute("registration", true);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             } else {
-                User user = new User(email, password, url);
+                User user = new User("",email, password, url);
                 dbConnection.addUser(user);
 
                 request.getSession().setAttribute("logged in", true);
