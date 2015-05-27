@@ -4,15 +4,31 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<%-- Author guri --%>
 <%-- Java script fuctions --%>
 <%-- dummy --%>
 <script src="NextCategories.js"></script>
 <script>
+/*
+ * From stack overflow
+ http://stackoverflow.com/questions/2015041/two-differents-onclick-on-two-divs-one-over-the-other
+ */
+function amIclicked(e, id)
+{
+    e = e || event;
+    var target = e.target || e.srcElement;
+    if(target.id==id)
+        return true;
+    else
+        return false;
+}
 	//sending request is from W3School tutorial
 	//get expanded categories
-	function expandCategory(id) {
-		alert('it works!');
-		var element = document.getElementById("id");
+	function expandCategory(event,id) {
+		alert(id);
+		if(!amIclicked(event, id))return;
+		
+		var element = document.getElementById(id+"");
 
 		var xmlHttp;
 		if (window.XMLHttpRequest) {
@@ -26,6 +42,7 @@
 		xmlHttp.onreadystatechange = function() {
 			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 				element.innerHTML += xmlHttp.responseText;
+				element.innerHTML += hasChilds;
 			}
 		};
 
@@ -33,7 +50,14 @@
 		xmlHttp.send();
 		alert(items.length);
 	}
+	
 </script>
+<style type="text/css">
+.not-active {
+   pointer-events: none;
+   cursor: default;
+}
+</style>
 <title>Category Chooser</title>
 </head>
 <body>
@@ -53,10 +77,10 @@
 		for (int i = 0; i < roots.size(); i++) {
 			writer.print("<li>");
 			int id = roots.get(i).getId() ;
-
-			writer.print("<a id =\""+id+"\" href='#' onclick=\"expandCategory("
-					+id + ");\"> "
-					+ roots.get(i).getName() + " </a>");
+			//reaaly every root has chils , but work for every case
+			writer.print("<div id =\""+id+"\"  onclick=\"expandCategory(event,"
+					+id + ",true);\"> "
+					+ roots.get(i).getName() + " </div>");
 			writer.print("</li>");
 
 		}

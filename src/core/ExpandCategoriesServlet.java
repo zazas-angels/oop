@@ -60,18 +60,20 @@ public class ExpandCategoriesServlet extends HttpServlet {
 					//can be converted to 0 if roots but for every case
 					
 					childCategories=categories.getChilds(id);
-					System.out.println("childs :"+id+" "+childCategories.size());
 				}
-				
+				if(childCategories==null)return;
+				writer.print("<ul>");
 				for (int i = 0; i < childCategories.size(); i++) {
 					writer.print("<li>");
-					String href="";
+					boolean hasChilds=false;
 					int currId = childCategories.get(i).getId();
 					if(categories.hasChilds(currId))
-					href= " href='#' onclick=\"expandCategory("+currId+");\"";
-					writer.print("<a id=\""+currId+"\" "+href+"> "+ childCategories.get(i).getName()+" </a>");
+						hasChilds=true;
+					
+					writer.print("<div  id=\""+currId+"\" "+ "  onclick=\"expandCategory(event"+","+currId+","+hasChilds+");\""+"> "+ childCategories.get(i).getName()+" </div>");
 					writer.print("</li>");
 				}
+				writer.print("</ul>");
 	}
 
 }
