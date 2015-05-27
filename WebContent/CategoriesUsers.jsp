@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<%-- Java scrip fuctions --%>
+<%-- Java script fuctions --%>
 <script src="NextCategories.js"></script>
 <script>
 	//sending request is from W3School tutorial
