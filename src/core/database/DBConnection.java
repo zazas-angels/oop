@@ -298,7 +298,6 @@ public class DBConnection implements core.database.Connection {
 	public UserInterface getUser(String mail, String password) {
 		ResultSet results = null;
 		try {
-			int temp = 1;
 			PreparedStatement statement = dataBaseConnection
 					.prepareStatement("select * from +tableName"
 							+ " Where mail=? and password =?;");
