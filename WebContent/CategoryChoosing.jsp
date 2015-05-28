@@ -24,7 +24,6 @@
 	//sending request is from W3School tutorial
 	//get expanded categories
 	function expandCategory(event, id, hasChilds) {
-		alert(id);
 		if (hasChilds == false)
 			return;
 		if (!amIclicked(event, id))
@@ -61,12 +60,11 @@
 
 	}
 	function shrinkCategory(event, id, hasChilds) {
-		alert("Axali" + id);
 		if (!amIclicked(event, id))
 			return;
 
 		var element = document.getElementById(id + "");
-		element.innerHTML = element.getAttribute("categoryName");
+		element.innerHTML = element.getAttribute("categoryName")+" <input type=\"checkbox\" id=\"myCheck\">";
 	}
 </script>
 <style type="text/css">
@@ -99,8 +97,9 @@
 					+ id
 					+ "\"  categoryName=\""
 					+ categoryName
-					+ "\"  isExpanded = \"false\" onclick=\"expandCategory(event,"
-					+ id + ",true);\"> " + categoryName + " </div>");
+					+ "\"  isExpanded = \"false\"  onclick=\"expandCategory(event,"
+					+ id + ",true);\"> " + categoryName +" <input type=\"checkbox\" id=\"myCheck\">");
+
 			writer.print("</li>");
 
 		}

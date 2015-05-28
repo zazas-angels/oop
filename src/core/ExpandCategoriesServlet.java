@@ -81,9 +81,9 @@ public class ExpandCategoriesServlet extends HttpServlet {
 				hasChilds = true;
 			String categoryName= childCategories.get(i).getName();
 			writer.print("<div  id=\"" + currId + "\" "+" categoryName=\""+categoryName
-					+ "\"  isExpanded = \"false\"  onclick=\"expandCategory(event" + "," + currId + ","
+					+ "\"  isExpanded = \"false\" onclick=\"expandCategory(event" + "," + currId + ","
 					+ hasChilds + ");\"" + "> "
-					+ categoryName + " </div>");
+					+ categoryName + " <input type=\"checkbox\" id=\"myCheck\">" +" </div>");
 			writer.print("</li>");
 		}
 		writer.print("</ul>");
