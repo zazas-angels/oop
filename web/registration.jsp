@@ -63,4 +63,11 @@
         </tr>
         </tbody>
     </table>
+
+    <div>
+        <button id="signinButton">google +</button>
+    </div>
+    <div>
+        <%@include file="loginWithFacebook.jsp" %>
+    </div>
 </form>

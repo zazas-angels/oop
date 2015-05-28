@@ -18,6 +18,10 @@ import java.util.regex.Pattern;
  */
 @WebServlet(value = "/registration", name = "registrationServlet")
 public class RegistrationServlet extends HttpServlet {
+    /**
+     * tries to registrate user with given parameters, if parameters are right, than registrates and logs in user.
+     * else forwards back
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
@@ -50,24 +54,43 @@ public class RegistrationServlet extends HttpServlet {
         System.out.println("RegistrationServlet.doGet");
     }
 
+    /**
+     * checks if given password has enough length
+     */
     private boolean checkPassword(String password) {
-        return enoughLength(password);
+        return enoughLength(password, 6);
     }
 
+    /**
+     * checks if given email has right structure
+     */
     private boolean checkMail(String email) {
         return rightEmailStructure(email);
     }
 
+    /**
+     * checks if given string has email structure
+     */
     private boolean rightEmailStructure(String email) {
         String patternString = "^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$";
         return checkRegEx(patternString, email);
     }
 
-    private boolean enoughLength(String text) {
-        String patternString = "(?=.{1,}).*";
+    /**
+     * checks if given text has minimum given number length
+     */
+    private boolean enoughLength(String text, int length) {
+        String patternString = "(?=excpression.{" + length + ",}).*";
         return checkRegEx(patternString, text);
     }
 
+    /**
+     * checks if given text matches to given regular expression
+     *
+     * @param patternString regular expression
+     * @param text          to check
+     * @return true if matches, else false
+     */
     private boolean checkRegEx(String patternString, String text) {
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(text);

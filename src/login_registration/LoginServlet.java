@@ -15,6 +15,11 @@ import java.io.IOException;
  */
 @WebServlet(value = "/login", name = "loginServlet")
 public class LoginServlet extends HttpServlet {
+    /**
+     * try to log in with given parameters, wich are stored in request object.
+     * if login is successful, forwards to user page,
+     * else forwards to same page, and sets wrong try login attribute true.
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
