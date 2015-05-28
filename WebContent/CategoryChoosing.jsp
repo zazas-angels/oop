@@ -9,6 +9,8 @@
 <%-- dummy --%>
 <script src="NextCategories.js"></script>
 <script>
+//set for checked id's
+var checkedSet = new Set();
 	/* checking if clicked was reaaly on this div and not on super.
 	 * From stack overflow
 	 http://stackoverflow.com/questions/2015041/two-differents-onclick-on-two-divs-one-over-the-other
@@ -59,12 +61,24 @@
 		//element.onclick=function(){shrinkCategory(event,id,hasChilds); } ;
 
 	}
+	//this function shrinksCategory which it was really clicked
 	function shrinkCategory(event, id, hasChilds) {
 		if (!amIclicked(event, id))
 			return;
 
 		var element = document.getElementById(id + "");
 		element.innerHTML = element.getAttribute("categoryName")+" <input type=\"checkbox\" id=\"myCheck\">";
+	}
+	//This function adds id in checkedList if list is checked or removed it if it's uncheched
+	function changeCheckedSet(event, id) {
+		
+		if (!amIclicked(event, "check"+id))
+			return;
+		var element = document.getElementById("check"+id);
+		alert(element.checked);
+		if(element.checked){
+			
+		}
 	}
 </script>
 <style type="text/css">
@@ -98,7 +112,7 @@
 					+ "\"  categoryName=\""
 					+ categoryName
 					+ "\"  isExpanded = \"false\"  onclick=\"expandCategory(event,"
-					+ id + ",true);\"> " + categoryName +" <input type=\"checkbox\" id=\"myCheck\">");
+					+ id + ",true);\"> " + categoryName +" <input type=\"checkbox\" onclick=\"changeCheckedSet(event,"+ id + ");\"  id=\"check"+id+"\">");
 
 			writer.print("</li>");
 
