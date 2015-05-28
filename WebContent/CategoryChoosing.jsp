@@ -54,10 +54,10 @@
 				element.innerHTML += xmlHttp.responseText;
 				var checkedBoxes = element.getElementsByTagName("input");
 				//adds checked if it was checked
-				for(var i=0; i<checkedBoxes.length;i++){
+				for (var i = 0; i < checkedBoxes.length; i++) {
 					var checkBox = checkedBoxes[i];
 					if (checkBox.getAttribute("id") in checkedSet) {
-						checkBox.checked=true;
+						checkBox.checked = true;
 					}
 				}
 			}
@@ -70,20 +70,21 @@
 
 	}
 	//this function shrinksCategory which it was really clicked
-	
+
 	function shrinkCategory(event, id, hasChilds) {
 		if (!amIclicked(event, id))
 			return;
 
 		var element = document.getElementById(id + "");
 		//set true if it was true
-		var isChecked="";
-		if (("check"+id) in checkedSet) {
-			isChecked="checked";
+		var isChecked = "";
+		if (("check" + id) in checkedSet) {
+			isChecked = "checked";
 		}
 		element.innerHTML = element.getAttribute("categoryName")
-				+ " <input type=\"checkbox\""+isChecked+"  onclick=\"changeCheckedSet(event,"
-					+ id + ");\"  id=\"check" + id + "\">";
+				+ " <input type=\"checkbox\"" + isChecked
+				+ "  onclick=\"changeCheckedSet(event," + id
+				+ ");\"  id=\"check" + id + "\">";
 	}
 	//This function adds id in checkedList if list is checked or removed it if it's uncheched
 	function changeCheckedSet(event, id) {
@@ -96,12 +97,33 @@
 			alert("checkdia");
 			checkedSet["check" + id] = true;
 			addedCategories = document.getElementById("addedCategories");
-			addedCategories.innerHTML+="<li>"+document.getElementById(id).getAttribute("categoryName")+"</li>";
+			addedCategories.innerHTML += "<li id=\"addedCategory"+id+"\"  >"
+					+ document.getElementById(id).getAttribute("categoryName")
+					+"  <a onclick=\"makeRemovedChoosedCategy("+id+")\" >"+" X </a>"
+					
+					
+					"</li>";
 		} else {
 			//it should work
 			delete checkedSet["check" + id];
-
+			removeAddedCategory(id);
 		}
+		
+	}
+	//This functuon removed added category and unchecked suitable checkboxs and make remove from set
+	function makeRemovedChoosedCategy(id){
+		alert("Physics works I'm Alive");
+		var checkBox = document.getElementById("check" + id);
+		if(checkBox!=null)
+		checkBox.checked=false;
+		delete checkedSet["check" + id];
+		removeAddedCategory(id);
+		
+	}
+	//This function just removes category from addedCatgeory view list
+	function removeAddedCategory(id){
+		var choosedCategory = document.getElementById("addedCategory" + id);
+		choosedCategory.parentNode.removeChild(choosedCategory);
 	}
 </script>
 <style type="text/css">
