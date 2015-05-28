@@ -10,11 +10,11 @@
   <head>
     <meta charset="UTF-8">
     <title></title>
+    <!--script src="https://apis.google.com/js/client:platform.js" async defer></script>-->
     <script src="registration.js"></script>
   </head>
   <body>
-  aaaaaaaaaaaaaa
-  <%@include file="login.jsp" %>
-  aaaaaaaaaaaaaaa
+  <%@include file="login_registration.jsp" %>
+  <%@include file="CategoriesUsers.jsp" %>
   </body>
 </html>

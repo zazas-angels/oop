@@ -18,6 +18,23 @@ function loadRegistrationHtml() {
     xmlhttp.send();
 }
 
+function loadLoginHtml() {
+    var xmlhttp;
+    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    }
+    else {// code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            document.getElementById("login").innerHTML = xmlhttp.responseText;
+        }
+    };
+    xmlhttp.open("GET", "login.jsp", true);
+    xmlhttp.send();
+}
+
 function passwordChanged() {
     var strength = document.getElementById('strength');
     var strongRegex = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$", "g");
@@ -91,4 +108,76 @@ function checkMail() {
 
 function trySignUp() {
     return checkPasswords() && checkMail() && checkURL();
+}
+
+
+var signinCallback = function signinCallback(authResult) {
+    if (authResult['status']['signed_in']) {
+        // Update the app to reflect a signed in user
+        // Hide the sign-in button now that the user is authorized, for example:
+        document.getElementById('signinButton').setAttribute('style', 'display: none');
+        console.log('Sign-in state: zaza');
+    } else {
+        // Update the app to reflect a signed out user
+        // Possible error values:
+        //   "user_signed_out" - User is signed-out
+        //   "access_denied" - User denied access to your app
+        //   "immediate_failed" - Could not automatically log in the user
+        console.log('Sign-in state: ' + authResult['error']);
+    }
+}
+
+
+//guris funqciebi
+
+
+//sending request is from W3School tutorial
+//make next categories and make button (set it disabled or not)
+function makeNextCategories(id) {
+    alert('it works!');
+    var list = document.getElementById("categories");
+
+    var xmlHttp;
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlHttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            list.innerHTML = xmlHttp.responseText;
+        }
+    };
+
+    xmlHttp.open("POST", "CategoriesServlet?id=" + id, true);
+    xmlHttp.send();
+    makeUsersForCategory(id);
+    if (id == 0)
+        document.getElementById("upButton").disabled = true;
+    alert(items.length);
+}
+//make users which are connected to these categoreis
+function makeUsersForCategory(id) {
+    alert('users works!');
+    var list = document.getElementById("users");
+    var xmlHttp;
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlHttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            list.innerHTML = xmlHttp.responseText;
+        }
+    };
+
+    xmlHttp.open("POST", "UsersServlet?categoryId=" + id, true);
+    xmlHttp.send();
 }
