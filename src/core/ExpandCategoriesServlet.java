@@ -26,7 +26,7 @@ public class ExpandCategoriesServlet extends HttpServlet {
 	 */
 	public ExpandCategoriesServlet() {
 		super();
-
+		// ignored
 	}
 
 	/**
@@ -43,9 +43,11 @@ public class ExpandCategoriesServlet extends HttpServlet {
 	 *      response)
 	 */
 	/*
-	 * makes inner categories suitable for having children
-	 * (non-Javadoc)
-	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 * makes inner categories suitable for having children (non-Javadoc)
+	 * 
+	 * @see
+	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest
+	 * , javax.servlet.http.HttpServletResponse)
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -59,7 +61,16 @@ public class ExpandCategoriesServlet extends HttpServlet {
 		}
 		if (id < 0)
 			return;
+		printExpandedCategories(writer, id);
 
+	}
+
+	/*
+	 * This method prints all categories with its checkboxes and makes it
+	 * suitable for having children
+	 */
+	private void printExpandedCategories(PrintWriter writer, int id) {
+		// TODO Auto-generated method stub
 		CategoryTree categories = (CategoryTree) getServletContext()
 				.getAttribute("categories");
 		List<CategoryInterface> childCategories;
@@ -76,18 +87,32 @@ public class ExpandCategoriesServlet extends HttpServlet {
 		for (int i = 0; i < childCategories.size(); i++) {
 			writer.print("<li>");
 			boolean hasChilds = false;
-			String style =" style=\"cursor:pointer;\" ";//can be "" beacuse of super has this pointer
+			String style = " style=\"cursor:pointer;\" ";// can be "" beacuse of
+															// super has this
+															// pointer
 			int currId = childCategories.get(i).getId();
 			if (categories.hasChilds(currId))
 				hasChilds = true;
-			else{
-				style =" style=\"cursor:default;\" ";
+			else {
+				style = " style=\"cursor:default;\" ";
 			}
-			String categoryName= childCategories.get(i).getName();
-			writer.print("<div "+style+" id=\"" + currId + "\" "+" categoryName=\""+categoryName
-					+ "\"  isExpanded = \"false\" onclick=\"expandCategory(event" + "," + currId + ","
-					+ hasChilds + ");\"" + "> "
-					+ categoryName + " <input type=\"checkbox\" onclick=\"changeCheckedSet(event,"
+			String categoryName = childCategories.get(i).getName();
+			writer.print("<div "
+					+ style
+					+ " id=\""
+					+ currId
+					+ "\" "
+					+ " categoryName=\""
+					+ categoryName
+					+ "\"  isExpanded = \"false\" onclick=\"expandCategory(event"
+					+ ","
+					+ currId
+					+ ","
+					+ hasChilds
+					+ ");\""
+					+ "> "
+					+ categoryName
+					+ " <input type=\"checkbox\" onclick=\"changeCheckedSet(event,"
 					+ currId + ");\"  id=\"check" + currId + "\">");
 			writer.print("</li>");
 		}
