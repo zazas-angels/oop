@@ -1,9 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="ISO-8859-1"%>
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%-- Author glaba13 --%>
 <%-- Java script fuctions --%>
 <%-- dummy --%>
@@ -149,7 +150,7 @@
 			int id = roots.get(i).getId();
 			String categoryName = roots.get(i).getName();
 			//reaaly every root has chils , but work for every case
-			writer.print("<div id =\""
+			writer.print("<div style=\"cursor:pointer;\" id =\""
 					+ id
 					+ "\"  categoryName=\""
 					+ categoryName
@@ -165,7 +166,7 @@
 		}
 		writer.print("</ul>");
 	%>
-	<h1>Added Categories:</h1>
+	<h1>არჩეული კატეგორიები:</h1>
 	<ul id="addedCategories"></ul>
 </body>
 </html>

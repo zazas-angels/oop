@@ -76,11 +76,15 @@ public class ExpandCategoriesServlet extends HttpServlet {
 		for (int i = 0; i < childCategories.size(); i++) {
 			writer.print("<li>");
 			boolean hasChilds = false;
+			String style =" style=\"cursor:pointer;\" ";//can be "" beacuse of super has this pointer
 			int currId = childCategories.get(i).getId();
 			if (categories.hasChilds(currId))
 				hasChilds = true;
+			else{
+				style =" style=\"cursor:default;\" ";
+			}
 			String categoryName= childCategories.get(i).getName();
-			writer.print("<div  id=\"" + currId + "\" "+" categoryName=\""+categoryName
+			writer.print("<div "+style+" id=\"" + currId + "\" "+" categoryName=\""+categoryName
 					+ "\"  isExpanded = \"false\" onclick=\"expandCategory(event" + "," + currId + ","
 					+ hasChilds + ");\"" + "> "
 					+ categoryName + " <input type=\"checkbox\" onclick=\"changeCheckedSet(event,"
