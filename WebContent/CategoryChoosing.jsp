@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="ISO-8859-1"%>
-	
+	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -98,28 +98,28 @@
 			addedCategories = document.getElementById("addedCategories");
 			addedCategories.innerHTML += "<li id=\"addedCategory"+id+"\"  >"
 					+ document.getElementById(id).getAttribute("categoryName")
-					+"  <a onclick=\"makeRemovedChoosedCategy("+id+")\" >"+" <b style=\"color:red;cursor:pointer;\">X</b></a>"
-					
-					
-					"</li>";
+					+ "  <a onclick=\"makeRemovedChoosedCategy(" + id + ")\" >"
+					+ " <b style=\"color:red;cursor:pointer;\">X</b></a>"
+
+			"</li>";
 		} else {
 			//it should work
 			delete checkedSet["check" + id];
 			removeAddedCategory(id);
 		}
-		
+
 	}
 	//This functuon removed added category and unchecked suitable checkboxs and make remove from set
-	function makeRemovedChoosedCategy(id){
+	function makeRemovedChoosedCategy(id) {
 		var checkBox = document.getElementById("check" + id);
-		if(checkBox!=null)
-		checkBox.checked=false;
+		if (checkBox != null)
+			checkBox.checked = false;
 		delete checkedSet["check" + id];
 		removeAddedCategory(id);
-		
+
 	}
 	//This function just removes category from addedCatgeory view list
-	function removeAddedCategory(id){
+	function removeAddedCategory(id) {
 		var choosedCategory = document.getElementById("addedCategory" + id);
 		choosedCategory.parentNode.removeChild(choosedCategory);
 	}
@@ -133,6 +133,7 @@
 <title>Category Chooser</title>
 </head>
 <body>
+	<h1>აირჩიეთ კატეგორია:</h1>
 	<%-- shows all root categories --%>
 	<%@ page import="core.category.CategoryTreeInterface"%>
 	<%@ page import="core.category.CategoryInterface"%>
@@ -144,28 +145,32 @@
 				.getServletContext().getAttribute("categories");
 		List<CategoryInterface> roots = categories.getRoots();
 		PrintWriter writer = response.getWriter();
-		writer.print("<ul id=\"categories\" >");
+	%>
+	<%="<ul id=\"categories\" >"%>
+	<%
 		for (int i = 0; i < roots.size(); i++) {
-			writer.print("<li>");
-			int id = roots.get(i).getId();
+	%>
+	<%="<li>"%>
+	<%
+		int id = roots.get(i).getId();
 			String categoryName = roots.get(i).getName();
 			//reaaly every root has chils , but work for every case
-			writer.print("<div style=\"cursor:pointer;\" id =\""
-					+ id
-					+ "\"  categoryName=\""
-					+ categoryName
-					+ "\"  isExpanded = \"false\"  onclick=\"expandCategory(event,"
-					+ id
-					+ ",true);\"> "
-					+ categoryName
-					+ " <input type=\"checkbox\" onclick=\"changeCheckedSet(event,"
-					+ id + ");\"  id=\"check" + id + "\">");
-
-			writer.print("</li>");
-
-		}
-		writer.print("</ul>");
 	%>
+	<%="<div style=\"cursor:pointer;\" id =\""
+						+ id
+						+ "\"  categoryName=\""
+						+ categoryName
+						+ "\"  isExpanded = \"false\"  onclick=\"expandCategory(event,"
+						+ id
+						+ ",true);\"> "
+						+ categoryName
+						+ " <input type=\"checkbox\" onclick=\"changeCheckedSet(event,"
+						+ id + ");\"  id=\"check" + id + "\">"%>
+	<%="</li>"%>
+	<%
+		}
+	%>
+	<%="</ul>"%>
 	<h1>არჩეული კატეგორიები:</h1>
 	<ul id="addedCategories"></ul>
 </body>
