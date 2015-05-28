@@ -92,14 +92,12 @@
 		if (!amIclicked(event, "check" + id))
 			return;
 		var element = document.getElementById("check" + id);
-		alert(element.checked);
 		if (element.checked) {
-			alert("checkdia");
 			checkedSet["check" + id] = true;
 			addedCategories = document.getElementById("addedCategories");
 			addedCategories.innerHTML += "<li id=\"addedCategory"+id+"\"  >"
 					+ document.getElementById(id).getAttribute("categoryName")
-					+"  <a onclick=\"makeRemovedChoosedCategy("+id+")\" >"+" X </a>"
+					+"  <a onclick=\"makeRemovedChoosedCategy("+id+")\" >"+" <b style=\"color:red;cursor:pointer;\">X</b></a>"
 					
 					
 					"</li>";
@@ -112,7 +110,6 @@
 	}
 	//This functuon removed added category and unchecked suitable checkboxs and make remove from set
 	function makeRemovedChoosedCategy(id){
-		alert("Physics works I'm Alive");
 		var checkBox = document.getElementById("check" + id);
 		if(checkBox!=null)
 		checkBox.checked=false;
