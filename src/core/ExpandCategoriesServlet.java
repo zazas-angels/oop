@@ -83,7 +83,8 @@ public class ExpandCategoriesServlet extends HttpServlet {
 			writer.print("<div  id=\"" + currId + "\" "+" categoryName=\""+categoryName
 					+ "\"  isExpanded = \"false\" onclick=\"expandCategory(event" + "," + currId + ","
 					+ hasChilds + ");\"" + "> "
-					+ categoryName + " <input type=\"checkbox\" id=\"myCheck\">" +" </div>");
+					+ categoryName + " <input type=\"checkbox\" onclick=\"changeCheckedSet(event,"
+					+ currId + ");\"  id=\"check" + currId + "\">");
 			writer.print("</li>");
 		}
 		writer.print("</ul>");

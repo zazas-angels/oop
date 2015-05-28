@@ -9,8 +9,8 @@
 <%-- dummy --%>
 <script src="NextCategories.js"></script>
 <script>
-//set for checked id's
-var checkedSet = new Set();
+	//set for checked id's: this technique as set is from http://stackoverflow.com/questions/7958292/mimicking-sets-in-javascript
+	var checkedSet = {};
 	/* checking if clicked was reaaly on this div and not on super.
 	 * From stack overflow
 	 http://stackoverflow.com/questions/2015041/two-differents-onclick-on-two-divs-one-over-the-other
@@ -33,12 +33,12 @@ var checkedSet = new Set();
 
 		var element = document.getElementById(id + "");
 		//shrink this way
-		if (element.getAttribute("isExpanded")=="true") {
-			element.setAttribute("isExpanded","false");
+		if (element.getAttribute("isExpanded") == "true") {
+			element.setAttribute("isExpanded", "false");
 			shrinkCategory(event, id, hasChilds);
 			return;
 		}
-		element.setAttribute("isExpanded","true");
+		element.setAttribute("isExpanded", "true");
 		//change on click function
 		var xmlHttp;
 		if (window.XMLHttpRequest) {
@@ -52,6 +52,14 @@ var checkedSet = new Set();
 		xmlHttp.onreadystatechange = function() {
 			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 				element.innerHTML += xmlHttp.responseText;
+				var checkedBoxes = element.getElementsByTagName("input");
+				//adds checked if it was checked
+				for(var i=0; i<checkedBoxes.length;i++){
+					var checkBox = checkedBoxes[i];
+					if (checkBox.getAttribute("id") in checkedSet) {
+						checkBox.checked=true;
+					}
+				}
 			}
 		};
 
@@ -62,22 +70,37 @@ var checkedSet = new Set();
 
 	}
 	//this function shrinksCategory which it was really clicked
+	
 	function shrinkCategory(event, id, hasChilds) {
 		if (!amIclicked(event, id))
 			return;
 
 		var element = document.getElementById(id + "");
-		element.innerHTML = element.getAttribute("categoryName")+" <input type=\"checkbox\" id=\"myCheck\">";
+		//set true if it was true
+		var isChecked="";
+		if (("check"+id) in checkedSet) {
+			isChecked="checked";
+		}
+		element.innerHTML = element.getAttribute("categoryName")
+				+ " <input type=\"checkbox\""+isChecked+"  onclick=\"changeCheckedSet(event,"
+					+ id + ");\"  id=\"check" + id + "\">";
 	}
 	//This function adds id in checkedList if list is checked or removed it if it's uncheched
 	function changeCheckedSet(event, id) {
-		
-		if (!amIclicked(event, "check"+id))
+
+		if (!amIclicked(event, "check" + id))
 			return;
-		var element = document.getElementById("check"+id);
+		var element = document.getElementById("check" + id);
 		alert(element.checked);
-		if(element.checked){
-			
+		if (element.checked) {
+			alert("checkdia");
+			checkedSet["check" + id] = true;
+			addedCategories = document.getElementById("addedCategories");
+			addedCategories.innerHTML+="<li>"+document.getElementById(id).getAttribute("categoryName")+"</li>";
+		} else {
+			//it should work
+			delete checkedSet["check" + id];
+
 		}
 	}
 </script>
@@ -112,13 +135,18 @@ var checkedSet = new Set();
 					+ "\"  categoryName=\""
 					+ categoryName
 					+ "\"  isExpanded = \"false\"  onclick=\"expandCategory(event,"
-					+ id + ",true);\"> " + categoryName +" <input type=\"checkbox\" onclick=\"changeCheckedSet(event,"+ id + ");\"  id=\"check"+id+"\">");
+					+ id
+					+ ",true);\"> "
+					+ categoryName
+					+ " <input type=\"checkbox\" onclick=\"changeCheckedSet(event,"
+					+ id + ");\"  id=\"check" + id + "\">");
 
 			writer.print("</li>");
 
 		}
 		writer.print("</ul>");
 	%>
-
+	<h1>Added Categories:</h1>
+	<ul id="addedCategories"></ul>
 </body>
 </html>
