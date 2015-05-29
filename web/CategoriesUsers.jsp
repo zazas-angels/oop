@@ -1,4 +1,3 @@
-<script src="NextCategories.js"></script>
 <script>
     //sending request is from W3School tutorial
     //make next categories and make button (set it disabled or not)

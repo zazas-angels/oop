@@ -1,0 +1,29 @@
+#authorization-block {
+    background: #ededed;
+    position: absolute;
+    width: 300px;
+    top: 48px;
+    left: 25px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 2px 2px rgba(165, 104, 161, 0.03);
+    -moz-box-shadow: 0 2px 2px rgba(165, 104, 161, 0.64);
+    box-shadow: 0 2px 2px rgba(27, 164, 7, 0.9);
+    z-index: 999999;
+    padding: 20px 0 15px 0;
+    display: none;
+}
+
+#registration-block {
+    background: #ededed;
+    position: absolute;
+    width: 380px;
+    top: 48px;
+    left: 75px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 2px 2px rgba(165, 104, 161, 0.03);
+    -moz-box-shadow: 0 2px 2px rgba(165, 104, 161, 0.64);
+    box-shadow: 0 2px 2px rgba(164, 31, 26, 0.9);
+    z-index: 999999;
+    padding: 20px 0 15px 0;
+    display: none;
+}

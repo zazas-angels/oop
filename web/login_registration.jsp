@@ -6,14 +6,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<table id="login">
+<div id="login">
+    <table>
     <tr>
 
         <td>
-            <button onclick="loadLoginHtml()">შესვლა</button>
+            <button id="login-button">შესვლა</button>
         </td>
         <td>
-            <button onclick="loadRegistrationHtml()">რეგისტრაცია</button>
+            <button id="reg-button">რეგისტრაცია</button>
         </td>
     </tr>
-</table>
+    </table>
+</div>
+
+<%@include file="login.jsp" %>
+<%@include file="registration.jsp" %>

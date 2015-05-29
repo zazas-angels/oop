@@ -8,13 +8,19 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
     <title></title>
     <!--script src="https://apis.google.com/js/client:platform.js" async defer></script>-->
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="registration.js"></script>
+
   </head>
   <body>
+
+  <!--%@include file="facebookButton.html"%>
+  <!--%@include file="test.jsp"%>-->
   <%@include file="login_registration.jsp" %>
-  <%@include file="CategoriesUsers.jsp" %>
+  <!--%@include file="CategoriesUsers.jsp" %>-->
   </body>
 </html>

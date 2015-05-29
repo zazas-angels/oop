@@ -1,6 +1,21 @@
 /**
  * Created by nika on 5/23/15.
  */
+
+$(document).ready(function () {
+    $("#login-button").click(function () {
+        $('#registration-block').hide();
+        $('#authorization-block').toggle();
+    });
+});
+
+$(document).ready(function () {
+    $("#reg-button").click(function () {
+        $('#authorization-block').hide();
+        $('#registration-block').toggle();
+    })
+});
+/*
 function loadRegistrationHtml() {
     var xmlhttp;
     if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -19,7 +34,12 @@ function loadRegistrationHtml() {
 }
 
 function loadLoginHtml() {
-    var xmlhttp;
+ /*$.get("login.jsp").done(function(response){
+ $('#login').html(response);
+ });
+ $.ajax * /
+
+ var xmlhttp;
     if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
         xmlhttp = new XMLHttpRequest();
     }
@@ -34,7 +54,7 @@ function loadLoginHtml() {
     xmlhttp.open("GET", "login.jsp", true);
     xmlhttp.send();
 }
-
+ */
 function passwordChanged() {
     var strength = document.getElementById('strength');
     var strongRegex = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$", "g");
@@ -110,7 +130,7 @@ function trySignUp() {
     return checkPasswords() && checkMail() && checkURL();
 }
 
-
+/**
 var signinCallback = function signinCallback(authResult) {
     if (authResult['status']['signed_in']) {
         // Update the app to reflect a signed in user
@@ -125,59 +145,4 @@ var signinCallback = function signinCallback(authResult) {
         //   "immediate_failed" - Could not automatically log in the user
         console.log('Sign-in state: ' + authResult['error']);
     }
-}
-
-
-//guris funqciebi
-
-
-//sending request is from W3School tutorial
-//make next categories and make button (set it disabled or not)
-function makeNextCategories(id) {
-    alert('it works!');
-    var list = document.getElementById("categories");
-
-    var xmlHttp;
-    if (window.XMLHttpRequest) {
-        // code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlHttp = new XMLHttpRequest();
-    } else {
-        // code for IE6, IE5
-        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            list.innerHTML = xmlHttp.responseText;
-        }
-    };
-
-    xmlHttp.open("POST", "CategoriesServlet?id=" + id, true);
-    xmlHttp.send();
-    makeUsersForCategory(id);
-    if (id == 0)
-        document.getElementById("upButton").disabled = true;
-    alert(items.length);
-}
-//make users which are connected to these categoreis
-function makeUsersForCategory(id) {
-    alert('users works!');
-    var list = document.getElementById("users");
-    var xmlHttp;
-    if (window.XMLHttpRequest) {
-        // code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlHttp = new XMLHttpRequest();
-    } else {
-        // code for IE6, IE5
-        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            list.innerHTML = xmlHttp.responseText;
-        }
-    };
-
-    xmlHttp.open("POST", "UsersServlet?categoryId=" + id, true);
-    xmlHttp.send();
-}
+}**/
