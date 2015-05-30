@@ -58,7 +58,6 @@
 				for (var i = 0; i < checkedBoxes.length; i++) {
 					var checkBox = checkedBoxes[i];
 					if (checkBox.getAttribute("id") in checkedSet) {
-						alert(checkBox.getAttribute("id"));
 						checkBox.checked = true;
 					}
 				}
@@ -81,7 +80,6 @@
 		//set true if it was true
 		var isChecked = false;
 		if (("check" + id) in checkedSet) {
-			alert(id);
 			isChecked = true;
 		}
 		var parentID = document.getElementById("check"+id).getAttribute("parentId");
@@ -105,11 +103,9 @@
 		}
 		var element = document.getElementById("check" + id);
 
-		alert(element.getAttribute("parentId"));
 
 		var wasChecked = element.getAttribute("id") in checkedSet;
 		if (directClick == 1 && !wasChecked) {
-			alert("qnaS");
 			element.checked = true;
 		}else{
 			if(directClick==-1&&wasChecked)
@@ -159,7 +155,6 @@
 		//adds checked if it was checked
 		while(subList.length!=0){
 			var subCategory = subList[0];//beacause it's removing
-			alert(id+" removed "+subCategory.getAttribute("id"));
 			makeRemovedChoosedCategy(subCategory.getAttribute("id").substring(13));
 		}
 		choosedCategory.parentNode.removeChild(choosedCategory);
