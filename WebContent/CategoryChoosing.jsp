@@ -79,16 +79,18 @@
 
 		var element = document.getElementById(id + "");
 		//set true if it was true
-		var isChecked = "";
+		var isChecked = false;
 		if (("check" + id) in checkedSet) {
-			isChecked = "checked";
+			alert(id);
+			isChecked = true;
 		}
-		
 		var parentID = document.getElementById("check"+id).getAttribute("parentId");
 		element.innerHTML = element.getAttribute("categoryName")
-				+ " <input type=\"checkbox\"" + isChecked
+				+ " <input type=\"checkbox\"" 
 				+ "  parentId=\""+parentID+"\" onclick=\"changeCheckedSet(event," + id
 				+ ",0);\"  id=\"check" + id + "\">";
+		document.getElementById("check"+id).checked=isChecked;
+		
 	}
 	//This function adds id in checkedList if list is checked or removed it if it's uncheched
 	// it contains direct cklick which is 0 if it is really direct chlick
