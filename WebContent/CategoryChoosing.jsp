@@ -118,18 +118,21 @@
 		if (isChecked && !wasChecked) {
 			checkedSet["check" + id] = true;
 			var addesSuper;
-			
+			var startUl="";
+			var endUl="";
 			if(parentId==0){
 				addesSuper= document.getElementById("addedCategories");
-				alert("super");
+
 			}else{
 				addesSuper= document.getElementById("addedCategory"+parentId);
-				alert("sub :"+parentId);
+				startUl="<ul>";
+				endUl="</ul>";
 			}
-			addesSuper.innerHTML += "<li id=\"addedCategory"+id+"\"  >"
+			addesSuper.innerHTML += startUl+"<li> <div id=\"addedCategory"+id+"\"  >"
 					+ document.getElementById(id).getAttribute("categoryName")
 					+ "  <a onclick=\"makeRemovedChoosedCategy(" + id + ")\" >"
-					+ " <b style=\"color:red;cursor:pointer;\">X</b></a>"+	"</li>";
+					+ " <b style=\"color:red;cursor:pointer;\">X</b></a>"+	"</div> </li>"+endUl;
+		
 		} else {
 
 			if (!isChecked&&wasChecked) {
