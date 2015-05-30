@@ -58,6 +58,7 @@
 				for (var i = 0; i < checkedBoxes.length; i++) {
 					var checkBox = checkedBoxes[i];
 					if (checkBox.getAttribute("id") in checkedSet) {
+						alert(checkBox.getAttribute("id"));
 						checkBox.checked = true;
 					}
 				}
@@ -82,9 +83,11 @@
 		if (("check" + id) in checkedSet) {
 			isChecked = "checked";
 		}
+		
+		var parentID = document.getElementById("check"+id).getAttribute("parentId");
 		element.innerHTML = element.getAttribute("categoryName")
 				+ " <input type=\"checkbox\"" + isChecked
-				+ "  parentId=\"0\" onclick=\"changeCheckedSet(event," + id
+				+ "  parentId=\""+parentID+"\" onclick=\"changeCheckedSet(event," + id
 				+ ",0);\"  id=\"check" + id + "\">";
 	}
 	//This function adds id in checkedList if list is checked or removed it if it's uncheched
@@ -118,20 +121,17 @@
 		if (isChecked && !wasChecked) {
 			checkedSet["check" + id] = true;
 			var addesSuper;
-			var startUl="";
-			var endUl="";
+
 			if(parentId==0){
 				addesSuper= document.getElementById("addedCategories");
 
 			}else{
-				addesSuper= document.getElementById("addedCategory"+parentId);
-				startUl="<ul>";
-				endUl="</ul>";
+				addesSuper= document.getElementById("addedCategory"+parentId).getElementsByTagName("ul")[0];
 			}
-			addesSuper.innerHTML += startUl+"<div id=\"addedCategory"+id+"\"  >"+"<li>" 
+			addesSuper.innerHTML += "<li id=\"addedCategory"+id+"\"  >"
 					+ document.getElementById(id).getAttribute("categoryName")
 					+ "  <a onclick=\"makeRemovedChoosedCategy(" + id + ")\" >"
-					+ " <b style=\"color:red;cursor:pointer;\">X</b></a>"+"</li>"+" </div> "+endUl;
+					+ " <b style=\"color:red;cursor:pointer;\">X</b></a>"+"<ul></ul></li>";
 		
 		} else {
 
@@ -153,10 +153,11 @@
 	//This function just removes category from addedCatgeory view list
 	function removeAddedCategory(id) {
 		var choosedCategory = document.getElementById("addedCategory" + id);
-		var subList = choosedCategory.getElementsByTagName("div");
+		var subList = choosedCategory.getElementsByTagName("li");
 		//adds checked if it was checked
-		for (var i = 0; i < subList.length; i++) {
-			var subCategory = subList[i];
+		while(subList.length!=0){
+			var subCategory = subList[0];//beacause it's removing
+			alert(id+" removed "+subCategory.getAttribute("id"));
 			makeRemovedChoosedCategy(subCategory.getAttribute("id").substring(13));
 		}
 		choosedCategory.parentNode.removeChild(choosedCategory);
