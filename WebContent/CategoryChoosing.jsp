@@ -128,17 +128,15 @@
 				startUl="<ul>";
 				endUl="</ul>";
 			}
-			addesSuper.innerHTML += startUl+"<li> <div id=\"addedCategory"+id+"\"  >"
+			addesSuper.innerHTML += startUl+"<div id=\"addedCategory"+id+"\"  >"+"<li>" 
 					+ document.getElementById(id).getAttribute("categoryName")
 					+ "  <a onclick=\"makeRemovedChoosedCategy(" + id + ")\" >"
-					+ " <b style=\"color:red;cursor:pointer;\">X</b></a>"+	"</div> </li>"+endUl;
+					+ " <b style=\"color:red;cursor:pointer;\">X</b></a>"+"</li>"+" </div> "+endUl;
 		
 		} else {
 
 			if (!isChecked&&wasChecked) {
-				//it should work
-				delete checkedSet["check" + id];
-				removeAddedCategory(id);
+				makeRemovedChoosedCategy(id);
 			}
 		}
 		
@@ -151,11 +149,16 @@
 			checkBox.checked = false;
 		delete checkedSet["check" + id];
 		removeAddedCategory(id);
-
 	}
 	//This function just removes category from addedCatgeory view list
 	function removeAddedCategory(id) {
 		var choosedCategory = document.getElementById("addedCategory" + id);
+		var subList = choosedCategory.getElementsByTagName("div");
+		//adds checked if it was checked
+		for (var i = 0; i < subList.length; i++) {
+			var subCategory = subList[i];
+			makeRemovedChoosedCategy(subCategory.getAttribute("id").substring(13));
+		}
 		choosedCategory.parentNode.removeChild(choosedCategory);
 	}
 </script>
