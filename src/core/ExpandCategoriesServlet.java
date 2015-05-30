@@ -113,7 +113,7 @@ public class ExpandCategoriesServlet extends HttpServlet {
 					+ "> "
 					+ categoryName
 					+ " <input type=\"checkbox\" onclick=\"changeCheckedSet(event,"
-					+ currId + ");\"  id=\"check" + currId + "\">");
+					+ currId + ",0);\" parentId=\""+id+"\" id=\"check" + currId + "\">");
 			writer.print("</li>");
 		}
 		writer.print("</ul>");

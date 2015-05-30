@@ -84,29 +84,61 @@
 		}
 		element.innerHTML = element.getAttribute("categoryName")
 				+ " <input type=\"checkbox\"" + isChecked
-				+ "  onclick=\"changeCheckedSet(event," + id
-				+ ");\"  id=\"check" + id + "\">";
+				+ "  parentId=\"0\" onclick=\"changeCheckedSet(event," + id
+				+ ",0);\"  id=\"check" + id + "\">";
 	}
 	//This function adds id in checkedList if list is checked or removed it if it's uncheched
-	function changeCheckedSet(event, id) {
+	// it contains direct cklick which is 0 if it is really direct chlick
+	//it is 1 if it isn't and have to be checked ande for -1 opposite
+	function changeCheckedSet(event, id, directClick) {
 
-		if (!amIclicked(event, "check" + id))
+		if (directClick == 0 && !amIclicked(event, "check" + id))
 			return;
+		//if it isn't clicked directli and id is 0 (roots parent,which doesn't exists)
+		if (id == 0) {//no real id (root's parent)
+			return;
+		}
 		var element = document.getElementById("check" + id);
-		if (element.checked) {
+
+		alert(element.getAttribute("parentId"));
+
+		var wasChecked = element.getAttribute("id") in checkedSet;
+		if (directClick == 1 && !wasChecked) {
+			alert("qnaS");
+			element.checked = true;
+		}else{
+			if(directClick==-1&&wasChecked)
+				element.checked = false;
+		}
+		var isChecked = element.checked;
+		var parentId= element.getAttribute("parentId");
+		if (isChecked == true)
+			changeCheckedSet(event, parentId, 1);
+		
+		if (isChecked && !wasChecked) {
 			checkedSet["check" + id] = true;
-			addedCategories = document.getElementById("addedCategories");
-			addedCategories.innerHTML += "<li id=\"addedCategory"+id+"\"  >"
+			var addesSuper;
+			
+			if(parentId==0){
+				addesSuper= document.getElementById("addedCategories");
+				alert("super");
+			}else{
+				addesSuper= document.getElementById("addedCategory"+parentId);
+				alert("sub :"+parentId);
+			}
+			addesSuper.innerHTML += "<li id=\"addedCategory"+id+"\"  >"
 					+ document.getElementById(id).getAttribute("categoryName")
 					+ "  <a onclick=\"makeRemovedChoosedCategy(" + id + ")\" >"
-					+ " <b style=\"color:red;cursor:pointer;\">X</b></a>"
-
-			"</li>";
+					+ " <b style=\"color:red;cursor:pointer;\">X</b></a>"+	"</li>";
 		} else {
-			//it should work
-			delete checkedSet["check" + id];
-			removeAddedCategory(id);
+
+			if (!isChecked&&wasChecked) {
+				//it should work
+				delete checkedSet["check" + id];
+				removeAddedCategory(id);
+			}
 		}
+		
 
 	}
 	//This functuon removed added category and unchecked suitable checkboxs and make remove from set
@@ -164,8 +196,8 @@
 						+ id
 						+ ",true);\"> "
 						+ categoryName
-						+ " <input type=\"checkbox\" onclick=\"changeCheckedSet(event,"
-						+ id + ");\"  id=\"check" + id + "\">"%>
+						+ " <input type=\"checkbox\" parentId=\"0\" onclick=\"changeCheckedSet(event,"
+						+ id + ",0);\"  id=\"check" + id + "\">"%>
 	<%="</li>"%>
 	<%
 		}
