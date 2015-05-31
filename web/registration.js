@@ -7,14 +7,12 @@ $(document).ready(function () {
         $('#registration-block').hide();
         $('#authorization-block').toggle();
     });
-});
-
-$(document).ready(function () {
     $("#reg-button").click(function () {
         $('#authorization-block').hide();
         $('#registration-block').toggle();
-    })
+    });
 });
+
 /*
 function loadRegistrationHtml() {
     var xmlhttp;

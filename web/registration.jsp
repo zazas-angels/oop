@@ -15,9 +15,6 @@
         <table>
             <tbody>
             <tr>
-                <td>
-                    შეავსეთ ველები:
-                </td>
                 <%
                     if (request.getSession().getAttribute("busy email") != null) {
                         String prevEmail = (String) request.getSession().getAttribute("busy email");

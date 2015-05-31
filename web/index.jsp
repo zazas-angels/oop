@@ -17,10 +17,7 @@
 
   </head>
   <body>
-
-  <!--%@include file="facebookButton.html"%>
-  <!--%@include file="test.jsp"%>-->
   <%@include file="login_registration.jsp" %>
-  <!--%@include file="CategoriesUsers.jsp" %>-->
+  <!--%@include file="CategoriesUsers.jsp" %-->
   </body>
 </html>

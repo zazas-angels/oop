@@ -3,7 +3,7 @@
     position: absolute;
     width: 300px;
     top: 48px;
-    left: 25px;
+    right: 75px;
     border-radius: 6px;
     -webkit-box-shadow: 0 2px 2px rgba(165, 104, 161, 0.03);
     -moz-box-shadow: 0 2px 2px rgba(165, 104, 161, 0.64);
@@ -18,7 +18,7 @@
     position: absolute;
     width: 380px;
     top: 48px;
-    left: 75px;
+    right: 25px;
     border-radius: 6px;
     -webkit-box-shadow: 0 2px 2px rgba(165, 104, 161, 0.03);
     -moz-box-shadow: 0 2px 2px rgba(165, 104, 161, 0.64);

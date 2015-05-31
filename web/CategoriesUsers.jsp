@@ -11,7 +11,7 @@
             xmlHttp = new XMLHttpRequest();
         } else {
             // code for IE6, IE5
-            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            //xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
 
         xmlHttp.onreadystatechange = function () {

@@ -30,7 +30,7 @@ public class RegistrationServlet extends HttpServlet {
 
 
         String url = request.getParameter("url");
-        if (password != null && email != null && url != null && checkMail(email) && checkPassword(password) && url != "") {
+        if (password != null && email != null && url != null && checkMail(email) && checkPassword(password) && !url.equals("")) {
             if (dbConnection.existsUser(email)) {
                 request.getSession().setAttribute("busy email", email);
                 request.getSession().setAttribute("registration", true);
@@ -80,7 +80,7 @@ public class RegistrationServlet extends HttpServlet {
      * checks if given text has minimum given number length
      */
     private boolean enoughLength(String text, int length) {
-        String patternString = "(?=excpression.{" + length + ",}).*";
+        String patternString = "(?=.{" + length + ",}).*";
         return checkRegEx(patternString, text);
     }
 

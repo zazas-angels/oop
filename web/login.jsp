@@ -1,15 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <div id="authorization-block" style="display: none">
-<%
-    if (request.getSession().getAttribute("logged in") != null && (Boolean) request.getSession().getAttribute("logged in")) {
-        request.getRequestDispatcher("userPage.jsp").forward(request, response);
-    }%>
-    <% if (request.getSession().getAttribute("registration") != null) {
-        request.getSession().setAttribute("registration", null);%>
 
-<script>loadRegistrationHtml();</script>
-<%} else {%>
     <!--div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div-->
 
     <%@include file="facebookSDK.html" %>
@@ -50,7 +42,7 @@
     <div>
         <button id="signinButton">google +</button>
         <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false"
-             data-auto-logout-link="false"></div>
+             data-auto-logout-link="false" scope="public_profile,email" onlogin="checkLoginState()"></div>
     </div>
-<%}%>
+</div>
 </div>
