@@ -78,34 +78,71 @@
 
 		var element = document.getElementById(id + "");
 		//set true if it was true
-		var isChecked = "";
+		var isChecked = false;
 		if (("check" + id) in checkedSet) {
-			isChecked = "checked";
+			isChecked = true;
 		}
+		var parentID = document.getElementById("check" + id).getAttribute(
+				"parentId");
 		element.innerHTML = element.getAttribute("categoryName")
-				+ " <input type=\"checkbox\"" + isChecked
-				+ "  onclick=\"changeCheckedSet(event," + id
-				+ ");\"  id=\"check" + id + "\">";
+				+ " <input type=\"checkbox\"" + "  parentId=\"" + parentID
+				+ "\" onclick=\"changeCheckedSet(event," + id
+				+ ",0);\"  id=\"check" + id + "\">";
+		document.getElementById("check" + id).checked = isChecked;
+
 	}
 	//This function adds id in checkedList if list is checked or removed it if it's uncheched
-	function changeCheckedSet(event, id) {
+	// it contains direct cklick which is 0 if it is really direct chlick
+	//it is 1 if it isn't and have to be checked ande for -1 opposite
+	function changeCheckedSet(event, id, directClick) {
 
-		if (!amIclicked(event, "check" + id))
+		if (directClick == 0 && !amIclicked(event, "check" + id))
 			return;
+		//if it isn't clicked directli and id is 0 (roots parent,which doesn't exists)
+		if (id == 0) {//no real id (root's parent)
+			return;
+		}
 		var element = document.getElementById("check" + id);
-		if (element.checked) {
+
+		var wasChecked = element.getAttribute("id") in checkedSet;
+		if (directClick == 1 && !wasChecked) {
+			element.checked = true;
+		} else {
+			if (directClick == -1 && wasChecked)
+				element.checked = false;
+		}
+		var isChecked = element.checked;
+		var parentId = element.getAttribute("parentId");
+		if (isChecked == true)
+			changeCheckedSet(event, parentId, 1);
+		makeChangedStructure(id, parentId, isChecked, wasChecked);
+
+	}
+	//This function makes checked change for other structures: for set of choosed id's and for adding in added categories view
+	function makeChangedStructure(id, parentId, isChecked, wasChecked) {
+		if (isChecked && !wasChecked) {
 			checkedSet["check" + id] = true;
-			addedCategories = document.getElementById("addedCategories");
-			addedCategories.innerHTML += "<li id=\"addedCategory"+id+"\"  >"
+			var addesSuper;
+
+			if (parentId == 0) {
+				addesSuper = document.getElementById("addedCategories");
+
+			} else {
+				addesSuper = document
+						.getElementById("addedCategory" + parentId)
+						.getElementsByTagName("ul")[0];
+			}
+			addesSuper.innerHTML += "<li id=\"addedCategory"+id+"\"  >"
 					+ document.getElementById(id).getAttribute("categoryName")
 					+ "  <a onclick=\"makeRemovedChoosedCategy(" + id + ")\" >"
 					+ " <b style=\"color:red;cursor:pointer;\">X</b></a>"
+					+ "<ul></ul></li>";
 
-			"</li>";
 		} else {
-			//it should work
-			delete checkedSet["check" + id];
-			removeAddedCategory(id);
+
+			if (!isChecked && wasChecked) {
+				makeRemovedChoosedCategy(id);
+			}
 		}
 
 	}
@@ -116,11 +153,17 @@
 			checkBox.checked = false;
 		delete checkedSet["check" + id];
 		removeAddedCategory(id);
-
 	}
 	//This function just removes category from addedCatgeory view list
 	function removeAddedCategory(id) {
 		var choosedCategory = document.getElementById("addedCategory" + id);
+		var subList = choosedCategory.getElementsByTagName("li");
+		//adds checked if it was checked
+		while (subList.length != 0) {
+			var subCategory = subList[0];//beacause it's removing
+			makeRemovedChoosedCategy(subCategory.getAttribute("id").substring(
+					13));
+		}
 		choosedCategory.parentNode.removeChild(choosedCategory);
 	}
 </script>
@@ -164,8 +207,8 @@
 						+ id
 						+ ",true);\"> "
 						+ categoryName
-						+ " <input type=\"checkbox\" onclick=\"changeCheckedSet(event,"
-						+ id + ");\"  id=\"check" + id + "\">"%>
+						+ " <input type=\"checkbox\" parentId=\"0\" onclick=\"changeCheckedSet(event,"
+						+ id + ",0);\"  id=\"check" + id + "\">"%>
 	<%="</li>"%>
 	<%
 		}
