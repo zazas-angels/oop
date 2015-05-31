@@ -333,7 +333,6 @@ public class DBConnection implements core.database.Connection {
 	 */
 	@Override
 	public boolean existsUser(String email) {
-		return true;/*
 		ResultSet results = null;
 		boolean existResult = false;
 		try {
@@ -350,7 +349,6 @@ public class DBConnection implements core.database.Connection {
 			e.printStackTrace();
 		}
 		return existResult;
-	*/
 	}
 
 }

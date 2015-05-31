@@ -16,6 +16,7 @@ public class LogoutServlet extends HttpServlet {
      * sets logged in parameter false, email - null and forwards to homepage
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         request.getSession().setAttribute("logged in", false);
         request.getSession().setAttribute("email", null);
         request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -23,5 +24,8 @@ public class LogoutServlet extends HttpServlet {
 
     //ignored
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getSession().setAttribute("logged in", false);
+        request.getSession().setAttribute("email", null);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 }

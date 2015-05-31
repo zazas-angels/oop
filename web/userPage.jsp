@@ -15,8 +15,6 @@
     Wellcome you fucking zaza
 </h1>
 
-<form action="logout" method="post">
-    <button name="logout">Log Out</button>
-</form>
 </body>
+<a href="/logout" onclick="onLogout();">Logout</a>
 </html>

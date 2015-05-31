@@ -34,7 +34,7 @@ To change this template use File | Settings | File Templates.
             statusChangeCallback(response);
         });
     }
-
+    /*
     window.fbAsyncInit = function () {
         /*   FB.init({
          appId      : '935732739811780',
@@ -42,7 +42,7 @@ To change this template use File | Settings | File Templates.
          // the session
          xfbml      : true,  // parse social plugins on this page
          version    : 'v2.2' // use version 2.2
-         });*/
+     });
 
         // Now that we've initialized the JavaScript SDK, we call
         // FB.getLoginStatus().  This function gets the state of the
@@ -61,7 +61,7 @@ To change this template use File | Settings | File Templates.
         });
 
     };
-
+     */
     // Load the SDK asynchronously
     (function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
@@ -80,7 +80,17 @@ To change this template use File | Settings | File Templates.
             var str = JSON.stringify(response);
             var obj = JSON.parse(str);
             window.location = 'FacebookServlet?email=' + obj.email;
-            //document.location.href="FacebookServlet";
+            FB.logout(function (response) {
+                // Person is now logged out
+
+                //document.location.href="FacebookServlet";
+            });
+        });
+    }
+    function onLogout() {
+        FB.logout(function (response) {
+//            FB.Auth.setAuthResponse(null, 'unknown');
+            // Person is now logged out
         });
     }
 </script>
