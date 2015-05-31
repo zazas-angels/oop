@@ -24,6 +24,13 @@
                 <%}%>
             </tr>
             <tr>
+                <td>დასახელება:</td>
+                <td><input type="text" placeholder="მინ. 1 სიმბოლო" autocomplete="off" id="name" name="name"/></td>
+                <td>
+                    <div id="checkName"></div>
+                </td>
+            </tr>
+            <tr>
                 <td>ელ. ფოსტა:</td>
                 <td><input type="text" autocomplete="off" id="email" name="email" onkeyup="return checkMail()"></td>
                 <td>
@@ -61,7 +68,6 @@
             </tr>
             </tbody>
         </table>
-
         <div>
             <button id="signinButton">google +</button>
         </div>

@@ -1,5 +1,7 @@
 package core.user;
 
+import core.SiteConstants;
+
 /**
  * Created by nika on 5/24/15.
  */
@@ -10,4 +12,6 @@ public interface UserInterface {
 
     public String getURL();
     public String getName();
+
+    public SiteConstants.Type getType();
 }

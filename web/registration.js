@@ -108,6 +108,12 @@ function checkURL() {
     return enoughRegex.test(url.value);
 }
 
+function checkName() {
+    var url = document.getElementById("name");
+    var enoughRegex = new RegExp("(?=.{1,}).*", "g");
+    return enoughRegex.test(url.value);
+}
+
 function validateEmail(email) {
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     if (re.test(email)) {
@@ -125,7 +131,7 @@ function checkMail() {
 }
 
 function trySignUp() {
-    return checkPasswords() && checkMail() && checkURL();
+    return checkPasswords() && checkMail() && checkURL() && checkName();
 }
 
 /**

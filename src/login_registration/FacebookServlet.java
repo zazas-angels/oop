@@ -1,5 +1,6 @@
 package login_registration;
 
+import core.SiteConstants;
 import core.database.DBConnection;
 import core.user.User;
 
@@ -33,7 +34,7 @@ public class FacebookServlet extends HttpServlet {
             request.getSession().setAttribute("email", email);
             request.getRequestDispatcher("userPage.jsp").forward(request, response);
         } else {
-            User user = new User("", email, null, null);
+            User user = new User(null, email, null, null, SiteConstants.Type.facebook);
             dbConnection.addUser(user);
 
             request.getSession().setAttribute("logged in", true);

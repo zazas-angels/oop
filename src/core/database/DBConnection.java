@@ -3,6 +3,7 @@ package core.database;
 /*
  * Author: guri
  */
+import core.SiteConstants;
 import core.category.CategoryInterface;
 import core.user.User;
 import core.user.UserInterface;
@@ -103,12 +104,12 @@ public class DBConnection implements core.database.Connection {
 		}
 		return results;
 	}
-
+/*
 	public static void main(String[] args) {
 		DBConnection db = new DBConnection();
-		db.addUser(new User("nika","nika@yahoo.com","monika","ragaca.com"));
+		db.addUser(new User("nika","nika@yahoo.com","monika","ragaca.com", SiteConstants.Type.email));
 
-	}
+	}*/
 
 	@Override
 	public ResultSet getUsers() {
@@ -317,7 +318,7 @@ public class DBConnection implements core.database.Connection {
 		try {
 			if (results.next()) {
 				user = new User(results.getString("name"),mail, password,
-						results.getString("url"));
+						results.getString("url"), SiteConstants.getType(results.getString("type")));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

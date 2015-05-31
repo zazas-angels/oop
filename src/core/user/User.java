@@ -10,16 +10,21 @@ public class User implements UserInterface {
 	private String mail;
 	private String password;
 	private String url;
+	private SiteConstants.Type type;
 
-	public User(String name,String mail, String password, String url) {
+
+	public User(String name, String mail, String password, String url, SiteConstants.Type type) {
 		this.name=name;
 		this.mail = mail;
 		this.password = generatePassword(password);
 		this.url = url + "." + SiteConstants.DOMAIN;
+		this.type = type;
 	}
+
 
 	private String generatePassword(String password) {
 		password = "/" + password;
+
 		try {
             MessageDigest ms = MessageDigest.getInstance("SHA");
             ms.update(password.getBytes());
@@ -68,6 +73,11 @@ public class User implements UserInterface {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+
+	public SiteConstants.Type getType() {
+		return type;
 	}
 
 }

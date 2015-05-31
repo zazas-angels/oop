@@ -1,5 +1,6 @@
 package login_registration;
 
+import core.SiteConstants;
 import core.database.DBConnection;
 import core.user.User;
 
@@ -30,13 +31,14 @@ public class RegistrationServlet extends HttpServlet {
 
 
         String url = request.getParameter("url");
-        if (password != null && email != null && url != null && checkMail(email) && checkPassword(password) && !url.equals("")) {
+        String name = request.getParameter("name");
+        if (name != null && password != null && email != null && url != null && checkName(name) && checkMail(email) && checkPassword(password) && !url.equals("")) {
             if (dbConnection.existsUser(email)) {
                 request.getSession().setAttribute("busy email", email);
                 request.getSession().setAttribute("registration", true);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             } else {
-                User user = new User("",email, password, url);
+                User user = new User(name, email, password, url, SiteConstants.Type.email);
                 dbConnection.addUser(user);
 
                 request.getSession().setAttribute("logged in", true);
@@ -54,6 +56,9 @@ public class RegistrationServlet extends HttpServlet {
         System.out.println("RegistrationServlet.doGet");
     }
 
+    private boolean checkName(String name) {
+        return enoughLength(name, 1);
+    }
     /**
      * checks if given password has enough length
      */
