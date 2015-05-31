@@ -1,6 +1,7 @@
 package login_registration;
 
 import core.database.DBConnection;
+import core.user.User;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -22,13 +23,14 @@ public class LoginServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String password = request.getParameter("password");
+        password = User.generatePassword(password);
         String email = request.getParameter("email");
         ServletContext context = request.getServletContext();
         DBConnection dbConnection = (DBConnection) context.getAttribute("database");
 
         if (password != null && email != null && (email.equals("zaza") && request.getParameter("password").equals("zazuna")) || dbConnection.getUser(email, password) != null) {
             request.getSession().setAttribute("logged in", true);
-            request.getSession().setAttribute("email", email);
+            request.getSession().setAttribute("user", dbConnection.getUser(email, password));
             request.getRequestDispatcher("userPage.jsp").forward(request, response);
         } else {
             request.getSession().setAttribute("wrong try to log in", true);
@@ -41,6 +43,5 @@ public class LoginServlet extends HttpServlet {
     // ignored
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("LoginServlet.doGet");
-        System.out.println("request = [" + request + "], response = [" + response + "]");
     }
 }

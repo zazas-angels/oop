@@ -104,12 +104,12 @@ public class DBConnection implements core.database.Connection {
 		}
 		return results;
 	}
-/*
+
 	public static void main(String[] args) {
 		DBConnection db = new DBConnection();
-		db.addUser(new User("nika","nika@yahoo.com","monika","ragaca.com", SiteConstants.Type.email));
+		db.addUser(new User("nika", "nika@yahoo.com", "paroli", "ragaca.com", SiteConstants.Type.email));
 
-	}*/
+	}
 
 	@Override
 	public ResultSet getUsers() {
@@ -274,20 +274,23 @@ public class DBConnection implements core.database.Connection {
 	 * @see core.database.Connection#addUser(core.user.UserInterface)
 	 */
 	@Override
-	public void addUser(UserInterface user) {
+	public int addUser(UserInterface user) {
 	
 		try {
 			PreparedStatement statement = dataBaseConnection
-					.prepareStatement("insert into users (name, url, mail, password) values (?,?,?,?);");
+					.prepareStatement("insert into users (name, url, mail, password, type) values (?,?,?,?,?);");
 			statement.setString(1, user.getName());
 			statement.setString(2, user.getURL());
 			statement.setString(3, user.getEmail());
 			statement.setString(4, user.getPassword());
+			statement.setString(5, String.valueOf(user.getType()));
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			// ignore
 			e.printStackTrace();
+			return 1;
 		}
+		return 0;
 	}
 
 	/*
@@ -303,7 +306,7 @@ public class DBConnection implements core.database.Connection {
 			int temp1 = 1;
 			int temp2 = 2;
 			PreparedStatement statement = dataBaseConnection
-					.prepareStatement("select * from +tableName"
+					.prepareStatement("select * from users"
 							+ " Where mail=? and password =?;");
 			statement.setString(temp1, mail);
 			statement.setString(temp2, password);
@@ -339,7 +342,7 @@ public class DBConnection implements core.database.Connection {
 		try {
 			int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
 			PreparedStatement statement = dataBaseConnection
-					.prepareStatement("select * from +tableName"
+					.prepareStatement("select * from users"
 							+ " Where mail=?;");
 			statement.setString(temp, email);
 			results = statement.executeQuery();

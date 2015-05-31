@@ -51,6 +51,7 @@ CREATE TABLE users (
 	name varchar(150),
     url varchar(64),
     mail varchar(64),
+    type VARCHAR(64),
     password varchar(64),
     raiting double default 0,
     avatarFile CHAR(64) default "default.png" not null,

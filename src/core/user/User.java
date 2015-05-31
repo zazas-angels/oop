@@ -22,7 +22,7 @@ public class User implements UserInterface {
 	}
 
 
-	private String generatePassword(String password) {
+	public static String generatePassword(String password) {
 		password = "/" + password;
 
 		try {
@@ -40,7 +40,7 @@ public class User implements UserInterface {
 	 Given a byte[] array, produces a hex String,
      such as "234a6f". with 2 chars for each byte in the array.
     */
-	private String hexToString(byte[] bytes) {
+	private static String hexToString(byte[] bytes) {
 		StringBuffer buff = new StringBuffer();
 		for (int i = 0; i < bytes.length; i++) {
 			int val = bytes[i];

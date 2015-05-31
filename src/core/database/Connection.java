@@ -50,7 +50,10 @@ public interface Connection {
 	public ResultSet getAdmins( int id);
 
 
-	public void addUser(UserInterface user);
+	/**
+	 * returns 0 if successfully added else 1
+	 */
+	public int addUser(UserInterface user);
 
 	public UserInterface getUser(String email, String password);
 

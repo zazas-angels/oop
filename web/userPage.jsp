@@ -1,3 +1,4 @@
+<%@ page import="core.user.User" %>
 <%--
   Created by IntelliJ IDEA.
   User: nika
@@ -12,7 +13,7 @@
 </head>
 <body>
 <h1>
-    Wellcome you fucking zaza
+    Wellcome <%=((User) request.getSession().getAttribute("user")).getName()%>
 </h1>
 
 </body>

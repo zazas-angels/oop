@@ -79,7 +79,7 @@ To change this template use File | Settings | File Templates.
         FB.api('/me', function (response) {
             var str = JSON.stringify(response);
             var obj = JSON.parse(str);
-            window.location = 'FacebookServlet?email=' + obj.email;
+            window.location = 'fbServlet?id=' + obj.id;
             FB.logout(function (response) {
                 // Person is now logged out
 

@@ -134,6 +134,10 @@ function trySignUp() {
     return checkPasswords() && checkMail() && checkURL() && checkName();
 }
 
+function trySignUpFb() {
+    return checkURL() && checkName();
+}
+
 /**
 var signinCallback = function signinCallback(authResult) {
     if (authResult['status']['signed_in']) {

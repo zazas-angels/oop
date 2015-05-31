@@ -39,16 +39,15 @@ public class RegistrationServlet extends HttpServlet {
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             } else {
                 User user = new User(name, email, password, url, SiteConstants.Type.email);
-                dbConnection.addUser(user);
-
-                request.getSession().setAttribute("logged in", true);
-                request.getSession().setAttribute("email", email);
-                request.getRequestDispatcher("userPage.jsp").forward(request, response);
+                if (dbConnection.addUser(user) == 0) {
+                    request.getSession().setAttribute("logged in", true);
+                    request.getSession().setAttribute("user", user);
+                    request.getRequestDispatcher("userPage.jsp").forward(request, response);
+                }
             }
-        } else {
-            request.getSession().setAttribute("registration", true);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
+        request.getSession().setAttribute("registration", true);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -56,9 +55,10 @@ public class RegistrationServlet extends HttpServlet {
         System.out.println("RegistrationServlet.doGet");
     }
 
-    private boolean checkName(String name) {
+    protected static boolean checkName(String name) {
         return enoughLength(name, 1);
     }
+
     /**
      * checks if given password has enough length
      */
@@ -84,7 +84,7 @@ public class RegistrationServlet extends HttpServlet {
     /**
      * checks if given text has minimum given number length
      */
-    private boolean enoughLength(String text, int length) {
+    private static boolean enoughLength(String text, int length) {
         String patternString = "(?=.{" + length + ",}).*";
         return checkRegEx(patternString, text);
     }
@@ -96,7 +96,7 @@ public class RegistrationServlet extends HttpServlet {
      * @param text          to check
      * @return true if matches, else false
      */
-    private boolean checkRegEx(String patternString, String text) {
+    private static boolean checkRegEx(String patternString, String text) {
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(text);
         return matcher.matches();
