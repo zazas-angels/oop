@@ -106,7 +106,7 @@ public class DBConnection implements core.database.Connection {
 
 	public static void main(String[] args) {
 		DBConnection db = new DBConnection();
-		ResultSet results = db.getResults("categories");
+		db.addUser(new User("nika","nika@yahoo.com","monika","ragaca.com"));
 
 	}
 
@@ -280,8 +280,8 @@ public class DBConnection implements core.database.Connection {
 					.prepareStatement("insert into users (name, url, mail, password) values (?,?,?,?);");
 			statement.setString(1, user.getName());
 			statement.setString(2, user.getURL());
-			statement.setString(2, user.getEmail());
-			statement.setString(2, user.getPassword());
+			statement.setString(3, user.getEmail());
+			statement.setString(4, user.getPassword());
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			// ignore
