@@ -4,7 +4,6 @@ Create database ServisSite;
 USE ServisSite;
 
 
-
 DROP TABLE IF EXISTS pictures;
 CREATE TABLE pictures (
 	ID int not null auto_increment,
@@ -63,6 +62,15 @@ CREATE TABLE users (
     FOREIGN KEY (ThemeID) REFERENCES themes(ID)
 );
 
+DROP TABLE IF EXISTS users_confcodes;
+CREATE TABLE users_confcodes (
+	ID int not null auto_increment,
+	userId int not null,
+	confirmCode  CHAR(64),
+	  FOREIGN KEY (userId) REFERENCES users(ID), 
+	  Unique(userId),
+	primary key(ID)
+);
 
 DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
