@@ -355,4 +355,28 @@ public class DBConnection implements core.database.Connection {
 		return existResult;
 	}
 
+	@Override
+	public int insertUserConfCode(int UserId, String confCode) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean isActiveUser(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int activateUser(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteUserConfCode(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

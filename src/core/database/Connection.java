@@ -26,6 +26,7 @@ public interface Connection {
 	public ResultSet getElementsPictures();
 	public ResultSet getAdmins();
 	
+	
 	//get users by categories list, ordered by rating 
 	public ResultSet getUsersByCategories(List<CategoryInterface>  categories);
 
@@ -58,4 +59,12 @@ public interface Connection {
 	public UserInterface getUser(String email, String password);
 
 	public boolean existsUser(String email);
+	
+	public int insertUserConfCode(int UserId, String confCode);
+	
+	public boolean isActiveUser(int id);
+	
+	public int activateUser(int id);
+	
+	public int deleteUserConfCode(int id);
 }
