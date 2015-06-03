@@ -283,7 +283,7 @@ public class DBConnection implements core.database.Connection {
 			statement.setString(2, user.getURL());
 			statement.setString(3, user.getEmail());
 			statement.setString(4, user.getPassword());
-			statement.setString(5, String.valueOf(user.getType()));
+			statement.setString(5, SiteConstants.typeToString(user.getType()));
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			// ignore

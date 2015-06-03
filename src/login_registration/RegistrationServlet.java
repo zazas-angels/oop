@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 /**
  * Created by nika on 5/24/15.
  */
-@WebServlet(value = "/registration", name = "registrationServlet")
+@WebServlet(value = "/registration", name = "registration")
 public class RegistrationServlet extends HttpServlet {
     /**
      * tries to registrate user with given parameters, if parameters are right, than registrates and logs in user.
@@ -42,6 +42,7 @@ public class RegistrationServlet extends HttpServlet {
                 if (dbConnection.addUser(user) == 0) {
                     request.getSession().setAttribute("logged in", true);
                     request.getSession().setAttribute("user", user);
+                    request.getSession().setAttribute("registration", false);
                     request.getRequestDispatcher("userPage.jsp").forward(request, response);
                 }
             }

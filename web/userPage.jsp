@@ -17,5 +17,5 @@
 </h1>
 
 </body>
-<a href="/logout" onclick="onLogout();">Logout</a>
+<%@include file="logout.jsp" %>
 </html>

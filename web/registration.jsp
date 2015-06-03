@@ -69,7 +69,7 @@
             </tbody>
         </table>
         <div>
-            <button id="signinButton">google +</button>
+            <%@include file="googlePlusButton.html" %>
         </div>
         <div>
             <%@include file="facebookButton.html" %>

@@ -9,14 +9,14 @@
 <html>
 <head>
     <title>რეგისტრაცია</title>
-    <
 </head>
 <body>
 <h1>
     რეგისტრაცია
 </h1>
 
-<form action="/fbServlet" , method="post">
+
+<form action="fbG+Servlet" , method="post">
     <table>
         <tbody>
         <tr>

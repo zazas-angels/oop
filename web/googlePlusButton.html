@@ -1,0 +1,45 @@
+<script>
+
+    function onLoginGoglePlus() {
+        console.log("shevedit");
+        gapi.client.load('plus', 'v1', function () {
+            var request = gapi.client.plus.people.get({'userId': 'me'});
+            request.execute(function (response) {
+                window.location = 'fbG+Servlet?id=' + response.id + '&type=' + "g+";
+            });
+        });
+    }
+
+    function onLogOutGP() {
+        gapi.auth.signOut();
+        location.reload();
+    }
+    function signinCallbackGooglePlus(authResult) {
+        console.log("signinCallBackGooglePlus");
+        if (authResult['status']['signed_in']) {
+// Update the app to reflect a signed in user
+// Hide the sign-in button now that the user is authorized, for example:
+            onLoginGoglePlus();
+        } else {
+// Update the app to reflect a signed out user
+// Possible error values:
+//   "user_signed_out" - User is signed-out
+//   "access_denied" - User denied access to your app
+//   "immediate_failed" - Could not automatically log in the user
+            console.log('Sign-in state: ' + authResult['error']);
+        }
+    }</script>
+
+
+<!-- Add where you want your sign-in button to render -->
+<!--span id="signinButton">
+  <span
+          class="g-signin"
+          onlogin="signinCallbackGooglePlus"
+          data-clientid="223066845585-k9jd80etd8sfgnia2e2ak4plt3qrk8in.apps.googleusercontent.com"
+          data-cookiepolicy="single_host_origin"
+          data-requestvisibleactions="http://schema.org/AddAction"
+          data-scope="https://www.googleapis.com/auth/plus.login">
+  </span>
+</--span-->
+<div id="result"></div>

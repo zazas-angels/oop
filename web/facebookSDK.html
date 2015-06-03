@@ -16,7 +16,7 @@ To change this template use File | Settings | File Templates.
         // for FB.getLoginStatus().
         if (response.status === 'connected') {
             // Logged into your app and Facebook.
-            onLogin();
+            onLoginFb();
         } else if (response.status === 'not_authorized') {
             // The person is logged into Facebook, but not your app.
             // transfer to facebookServlet
@@ -30,6 +30,7 @@ To change this template use File | Settings | File Templates.
     // Button.  See the onlogin handler attached to it in the sample
     // code below.
     function checkLoginState() {
+        console.log("check login state");
         FB.getLoginStatus(function (response) {
             statusChangeCallback(response);
         });
@@ -72,22 +73,24 @@ To change this template use File | Settings | File Templates.
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-    function onLogin() {
+    function onLoginFb() {
         FB.api('/me', {fields: 'email'}, function (response) {
             console.log(JSON.stringify(response));
         });
         FB.api('/me', function (response) {
             var str = JSON.stringify(response);
             var obj = JSON.parse(str);
-            window.location = 'fbServlet?id=' + obj.id;
+            debugger;
+            window.location = 'fbG+Servlet?id=' + obj.id + "&type=fb";
+            debugger;
             FB.logout(function (response) {
                 // Person is now logged out
 
-                //document.location.href="FacebookServlet";
+                //document.location.href="FbGplusServlet";
             });
         });
     }
-    function onLogout() {
+    function onLogoutFB() {
         FB.logout(function (response) {
 //            FB.Auth.setAuthResponse(null, 'unknown');
             // Person is now logged out

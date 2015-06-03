@@ -4,6 +4,7 @@
 
     <!--div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div-->
 
+    <%@include file="googlePlusButton.html" %>
     <%@include file="facebookSDK.html" %>
     გაიარეთ ავტორიზაცია:
     <br><br>
@@ -13,8 +14,11 @@
             <tbody>
             <%if (request.getSession().getAttribute("wrong try to log in") == null) { %>
             <tr id="invalidUserNamePassword" style="visibility: hidden">
-                    <%} else { %>
+                    <%} else {%>
             <tr id="invalidUserNamePassword">
+                <script>
+                    $("#authorization-block").show();
+                </script>
                 <%}%>
                 <td colspan="2">
                     არასწორი ელ.ფოსტა ან პაროლი
@@ -31,7 +35,7 @@
             <tr>
                 <td></td>
                 <td>
-                    <button name="loginButton" onclick="return loadLoginHtml()">შესვლა</button>
+                    <button name="loginButton">შესვლა</button>
                 </td>
             </tr>
             </tbody>
@@ -40,9 +44,16 @@
     <br><br>
 
     <div>
-        <button id="signinButton">google +</button>
-        <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false"
-             data-auto-logout-link="false" scope="public_profile,email" onlogin="checkLoginState()"></div>
+        <table>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false"
+                         data-auto-logout-link="false" scope="public_profile,email" onlogin="checkLoginState()"></div>
+                </td>
+            </tr>
+        </table>
     </div>
-</div>
 </div>

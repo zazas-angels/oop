@@ -105,3 +105,6 @@ local.properties
 .texlipse
 
 
+
+*.properties
+*.zip
