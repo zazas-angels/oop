@@ -4,7 +4,6 @@
 
     <!--div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div-->
 
-    <%@include file="googlePlusButton.html" %>
     <%@include file="facebookSDK.html" %>
     გაიარეთ ავტორიზაცია:
     <br><br>
@@ -47,7 +46,7 @@
         <table>
             <tr>
                 <td>
-
+                    <%@include file="googlePlusButton.html" %>
                 </td>
                 <td>
                     <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false"

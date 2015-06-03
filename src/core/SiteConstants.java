@@ -12,11 +12,12 @@ public final class SiteConstants {
 	}
 
 	public static Type getType(String type) {
+		if (type == null) return null;
 		if (type.equalsIgnoreCase("email"))
 			return Type.email;
 		if (type.equalsIgnoreCase("fb") || type.equalsIgnoreCase("facebook"))
 			return Type.facebook;
-		if (type.equalsIgnoreCase("googlePlus") || type.equalsIgnoreCase("gp"))
+		if (type.equalsIgnoreCase("googlePlus") || type.equalsIgnoreCase("gp") || type.equalsIgnoreCase("g+"))
 			return Type.googlePlus;
 		return null;
 	}

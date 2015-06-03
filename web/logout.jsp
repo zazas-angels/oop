@@ -1,7 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script>
     function onLogout() {
-
+        console.log("ignore");
+    }
+    function logout() {
+        console.log("ignore");
+        //ignore
     }
 </script>
 <%
