@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
             user = (User) dbConnection.getUser(email, password);
         }
         ;
-        if (password != null && email != null && (email.equals("zaza") && request.getParameter("password").equals("zazuna")) || user != null) {
+        if (password != null && email != null && user != null) {
             loginUser(request, response, user, context);
         } else {
             request.getSession().setAttribute("wrong try to log in", true);

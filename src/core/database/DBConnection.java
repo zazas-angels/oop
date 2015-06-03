@@ -243,17 +243,17 @@ public class DBConnection implements core.database.Connection {
 	}
 
 	@Override
-	public ResultSet getAlboms(int id) {
+	public ResultSet getAlbums(int id) {
 		return getResults("alboms", id);
 	}
 
 	@Override
-	public ResultSet getAlbomsElements(int id) {
+	public ResultSet getAlbumsElements(int id) {
 		return getResults("alboms_elements", id);
 	}
 
 	@Override
-	public ResultSet getAlbomsPictures(int id) {
+	public ResultSet getAlbumsPictures(int id) {
 		return getResults("alboms_pictures", id);
 	}
 
@@ -356,6 +356,17 @@ public class DBConnection implements core.database.Connection {
 	}
 
 	@Override
+	public boolean existsAdministrator(String email) {
+		// TODO
+		return false;
+	}
+
+	@Override
+	public UserInterface getAdmin(String email, String password) {
+		return null;
+	}
+
+	@Override
 	public int insertUserConfCode(int UserId, String confCode) {
 		// TODO Auto-generated method stub
 		return 0;
@@ -379,4 +390,8 @@ public class DBConnection implements core.database.Connection {
 		return 0;
 	}
 
+	@Override
+	public void setBannedStatus(UserInterface user, boolean bannedStatus) {
+		// TODO
+	}
 }

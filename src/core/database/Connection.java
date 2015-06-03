@@ -44,9 +44,12 @@ public interface Connection {
 	public ResultSet getElements( int id);
 	public ResultSet getTexts( int id);
 	public ResultSet getElementsInfo( int id);
-	public ResultSet getAlboms( int id);
-	public ResultSet getAlbomsElements (int id);
-	public ResultSet getAlbomsPictures( int id);
+
+	public ResultSet getAlbums(int id);
+
+	public ResultSet getAlbumsElements(int id);
+
+	public ResultSet getAlbumsPictures(int id);
 	public ResultSet getElementsPictures( int id);
 	public ResultSet getAdmins( int id);
 
@@ -59,7 +62,11 @@ public interface Connection {
 	public UserInterface getUser(String email, String password);
 
 	public boolean existsUser(String email);
-	
+
+	public UserInterface getAdmin(String email, String password);
+
+	public boolean existsAdministrator(String email);
+
 	public int insertUserConfCode(int UserId, String confCode);
 	
 	public boolean isActiveUser(int id);
@@ -67,4 +74,11 @@ public interface Connection {
 	public int activateUser(int id);
 	
 	public int deleteUserConfCode(int id);
+
+	public void setBannedStatus(UserInterface user, boolean bannedStatus);
+
+	/**
+	 * user's name isn't unique, so there may be many users with same name
+	 */
+	public List<UserInterface> getUsersByName(String name);
 }
