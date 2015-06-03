@@ -1,0 +1,2 @@
+Color picker is from : http://jscolor.com/release/jscolor-1.4.4.zip
+DragResize is from: https://www.twinhelix.com/javascript/dragresize/
