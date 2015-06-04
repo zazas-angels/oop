@@ -75,21 +75,21 @@
 #sub #circle {
     width: 50px;
     height: 50px;
-    top: 0;
-    left: 40px;
+    top: 1;
+    left: 115px;
     opacity: 0;
     transition: 0.2s opacity;
 }
 #sub #circle:nth-child(1) {
-    top: 120px;
+    top: 70px;
     background: #95507f;
 }
 #sub #circle:nth-child(2) {
-    top: 180px;
+    top: 120px;
     background: #4e935c;
 }
 #sub #circle:nth-child(3) {
-    top: 240px;
+    top: 170px;
     background: #9f4b49;
 }
 #sub #circle:nth-child(1):after {
@@ -175,4 +175,8 @@ visibility:visible;
 #sub #circle:hover > span {
     opacity: 1;
     padding-left: 75px;
+}
+#circle:hover > span {
+    opacity: 1;
+    padding-left: 95px;
 }

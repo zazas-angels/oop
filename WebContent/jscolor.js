@@ -449,12 +449,14 @@ var jscolor = {
 				if(this.hash) { value = '#'+value; }
 				valueElement.value = value;
 				//alert(valueElement.getAttribute("isa"));
-				var e = document.getElementById(valueElement.getAttribute("isa"));
+				var e = document.getElementById(valueElement.getAttribute("labelId"));
+				//alert(e.getAttribute("zaza"));
+				//alert(value);
 				if(valueElement.getAttribute("colorType")=="font")
-				e.style.color = value;
+				e.style.color = "#"+value;
 				else{
 					if(valueElement.getAttribute("colorType")=="back")
-						e.style.backgroundColor=value;
+						e.style.backgroundColor="#"+value;
 					
 				}
 					
