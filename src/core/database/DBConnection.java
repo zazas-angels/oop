@@ -337,12 +337,19 @@ public class DBConnection implements core.database.Connection {
 	 */
 	@Override
 	public boolean existsUser(String email) {
+		
+		return checkByMail(email,"users");
+	}
+	/*
+	 * Checks if mail exists in table and returns result
+	 */
+	private boolean checkByMail(String email, String table){
 		ResultSet results = null;
 		boolean existResult = false;
 		try {
 			int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
 			PreparedStatement statement = dataBaseConnection
-					.prepareStatement("select * from users"
+					.prepareStatement("select * from "+table
 							+ " Where mail=?;");
 			statement.setString(temp, email);
 			results = statement.executeQuery();
@@ -354,16 +361,39 @@ public class DBConnection implements core.database.Connection {
 		}
 		return existResult;
 	}
-
+	/*
+	 * checks if administrator exists and returnes result
+	 * (non-Javadoc)
+	 * @see core.database.Connection#existsAdministrator(java.lang.String)
+	 */
 	@Override
 	public boolean existsAdministrator(String email) {
 		// TODO
-		return false;
+		return checkByMail(email,"admins");
 	}
 
 	@Override
 	public UserInterface getAdmin(String email, String password) {
-		return null;
+		UserInterface admin=null;
+		ResultSet results = null;
+		try {
+			int one = 1; // 1s ro gadavcem metods mixurebs ratomgac
+			int two=2;
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("select * from admins"
+							+ " Where mail=?&&password=?;");
+			statement.setString(one, email);
+			statement.setString(two, password);
+			results = statement.executeQuery();
+			if (results != null&&results.next()){
+				admin = new User("",results.getString("mail"),results.getString("password"),"",null);;
+			}
+			
+		} catch (SQLException e) {
+			// ignore
+			e.printStackTrace();
+		}
+		return admin;
 	}
 
 	@Override
@@ -374,13 +404,36 @@ public class DBConnection implements core.database.Connection {
 
 	@Override
 	public boolean isActiveUser(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean result = false;
+		ResultSet userRes = getUsers(id);
+		try {
+			if(userRes!=null&&userRes.next()){
+				result=userRes.getString("isActive")=="true";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
 	public int activateUser(int id) {
 		// TODO Auto-generated method stub
+		try {
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("insert into users (name, url, mail, password, type) values (?,?,?,?,?);");
+			statement.setString(1, user.getName());
+			statement.setString(2, user.getURL());
+			statement.setString(3, user.getEmail());
+			statement.setString(4, user.getPassword());
+			statement.setString(5, SiteConstants.typeToString(user.getType()));
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			// ignore
+			e.printStackTrace();
+			return 1;
+		}
 		return 0;
 	}
 
@@ -393,5 +446,11 @@ public class DBConnection implements core.database.Connection {
 	@Override
 	public void setBannedStatus(UserInterface user, boolean bannedStatus) {
 		// TODO
+	}
+
+	@Override
+	public List<UserInterface> getUsersByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

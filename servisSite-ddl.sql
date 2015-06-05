@@ -52,6 +52,7 @@ CREATE TABLE users (
     mail varchar(64),
     type VARCHAR(64),
     isActive bool default false,
+     isBanned bool default false,
     password varchar(64),
     raiting double default 0,
     avatarFile CHAR(64) default "default.png" not null,
