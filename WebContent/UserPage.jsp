@@ -99,14 +99,14 @@ function changeSize(id){
 <body>
 
 	<div class="drsElement"
-		style="left: 50px; top: 150px; width: 250px; height: 120px; background: white; text-align: center">
+		style="left: 50px; top: 150px; width: 350px; height: 90px; background: white; text-align: center">
 		<div class="drsMoveHandle">
-			Color:
+			Text:
 			
 
 
 		</div>
-		<div>
+		<div style="border: 1px solid green; background-color:#A5B7F2;">
 				Font: <input id="zaz" size="5" class="color" colorType="font"
 					labelId="7" value="000000">
 				 Back: <input id="zaz"
@@ -114,7 +114,7 @@ function changeSize(id){
 				Size:<input id="size7"
 					size="1" value="18" onkeydown="changeSize(7);"  onpaste="changeSize(7);"   oninput="changeSize(7);">
 			</div>
-			<div><p contenteditable="true" id="7" >opaa</p></div>
+			<div id="7"><p contenteditable="true"  >opaa</p></div>
 			
 			
 	</div>
