@@ -1,7 +1,11 @@
 package login_registration;
 
+import core.SiteConstants;
+import core.administrator.AdminInterface;
+import core.administrator.Administrator;
 import core.database.DBConnection;
 import core.user.User;
+import core.user.UserInterface;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -31,17 +35,21 @@ public class LoginServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         DBConnection dbConnection = (DBConnection) context.getAttribute("database");
 
-        User user = null;
-        if (dbConnection.getUser(email, password) != null) {
-            user = (User) dbConnection.getUser(email, password);
+        if (password != null && email != null) {
+            User user = null;
+            if (dbConnection.getUser(email, password) != null) {
+                user = (User) dbConnection.getUser(email, password);
+            }
+            if (user != null) {
+                loginUser(request, response, user, context);
+            }
+            Administrator admin = (Administrator) dbConnection.getAdmin(email, password);
+            if (admin != null) {
+                loginAdmin(request, response, admin, context);
+            }
         }
-        ;
-        if (password != null && email != null && user != null) {
-            loginUser(request, response, user, context);
-        } else {
-            request.getSession().setAttribute("wrong try to log in", true);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-        }
+        request.getSession().setAttribute("wrong try to log in", true);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     /**
@@ -51,22 +59,41 @@ public class LoginServlet extends HttpServlet {
 
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
+            ServletContext context = request.getServletContext();
             for (Cookie cookie : cookies) {
-                ServletContext context = request.getServletContext();
-                HashMap<String, User> mapSession = (HashMap<String, User>) context.getAttribute("sessions_map");
-
-
-                if (cookie.getName().equals("login_session_id") && cookie.getValue() != null) {
-                    User user = mapSession.get(cookie.getValue());
+                if (cookie.getName().equals(SiteConstants.LOGIN_COOKIE_NAME) && cookie.getValue() != null) {
+                    HashMap<String, UserInterface> mapSession = (HashMap<String, UserInterface>) context.getAttribute(SiteConstants.SESSIONS_MAP_USERS);
+                    UserInterface user = mapSession.get(cookie.getValue());
                     if (user != null) {
                         loginUser(request, response, user, context);
+                    } else {
+                        HashMap<String, AdminInterface> mapSessionAd = (HashMap<String, AdminInterface>) context.getAttribute(SiteConstants.SESSIONS_MAP_ADMINS);
+                        AdminInterface admin = mapSessionAd.get(cookie.getValue());
+                        if (admin != null) {
+                            loginAdmin(request, response, admin, context);
+                        }
                     }
                 }
             }
         }
     }
 
-    private void loginUser(HttpServletRequest request, HttpServletResponse response, User user, ServletContext context) throws ServletException, IOException {
+
+    /**
+     * logs in user, saves information in session and saves session id in cookie
+     */
+    private void loginAdmin(HttpServletRequest request, HttpServletResponse response, AdminInterface admin, ServletContext context) throws ServletException, IOException {
+        request.getSession().setAttribute("logged in", true);
+        request.getSession().setAttribute("type", "admin");
+        request.getSession().setAttribute("admin", admin);
+
+        request.getRequestDispatcher("adminPage.jsp").forward(request, response);
+    }
+
+    /**
+     * logs in user, saves information in session and saves session id in cookie
+     */
+    private void loginUser(HttpServletRequest request, HttpServletResponse response, UserInterface user, ServletContext context) throws ServletException, IOException {
         request.getSession().setAttribute("logged in", true);
         request.getSession().setAttribute("type", "email");
         request.getSession().setAttribute("user", user);
@@ -75,16 +102,35 @@ public class LoginServlet extends HttpServlet {
         request.getRequestDispatcher("userPage.jsp").forward(request, response);
     }
 
-    public static void addCookie(HttpServletRequest request, HttpServletResponse response, ServletContext context, User user) {
 
+    /**
+     * saves cookie and adds in maps sessions and which user was logged in on that session
+     */
+    public static void addCookie(HttpServletRequest request, HttpServletResponse response, ServletContext context, UserInterface user) {
         String sessionId = request.getSession().getId();
         addIntoMaps(sessionId, user, context);
         // save login state in cookies..
-        Cookie newCookie = new Cookie("login_session_id", sessionId);
+        saveCookie(sessionId, response);
+    }
+
+    /**
+     * saves cookie and adds in maps sessions and which admin was logged in on that session
+     */
+    public static void addCookie(HttpServletRequest request, HttpServletResponse response, ServletContext context, AdminInterface admin) {
+        String sessionId = request.getSession().getId();
+        // save login state in cookies..
+        addIntoMaps(sessionId, admin, context);
+        saveCookie(sessionId, response);
+    }
+
+    /**
+     * saves cookie for login, cookie is valid during one hour
+     */
+    private static void saveCookie(String sessionId, HttpServletResponse response) {
+        Cookie newCookie = new Cookie(SiteConstants.LOGIN_COOKIE_NAME, sessionId);
         newCookie.setMaxAge(60 * 60); // one hour
         response.addCookie(newCookie);
     }
-
 
     /**
      * saves in maps id of session and user
@@ -92,14 +138,31 @@ public class LoginServlet extends HttpServlet {
      * @param sessionId id of session which we want to associate to user
      * @param user      user, which was logged in on that session
      */
-    public static void addIntoMaps(String sessionId, User user, ServletContext context) {
-        HashMap<User, String> mapUser = (HashMap<User, String>) context.getAttribute("users_map");
-        HashMap<String, User> mapSession = (HashMap<String, User>) context.getAttribute("sessions_map");
+    public static void addIntoMaps(String sessionId, UserInterface user, ServletContext context) {
+        HashMap<UserInterface, String> mapUser = (HashMap<UserInterface, String>) context.getAttribute(SiteConstants.USERS_MAP_NAME);
+        HashMap<String, UserInterface> mapSession = (HashMap<String, UserInterface>) context.getAttribute(SiteConstants.SESSIONS_MAP_USERS);
         if (mapUser.get(user) != null) {
             String oldSession = mapUser.get(user);
             mapSession.remove(oldSession);
         }
         mapSession.put(sessionId, user);
         mapUser.put(user, sessionId);
+    }
+
+    /**
+     * saves in maps id of session and admin
+     *
+     * @param sessionId id of session which we want to associate to admin
+     * @param admin     admin, which was logged in on that session
+     */
+    public static void addIntoMaps(String sessionId, AdminInterface admin, ServletContext context) {
+        HashMap<AdminInterface, String> mapAdmins = (HashMap<AdminInterface, String>) context.getAttribute(SiteConstants.ADMINS_MAP_NAME);
+        HashMap<String, AdminInterface> mapSession = (HashMap<String, AdminInterface>) context.getAttribute(SiteConstants.SESSIONS_MAP_ADMINS);
+        if (mapAdmins.get(admin) != null) {
+            String oldSession = mapAdmins.get(admin);
+            mapSession.remove(oldSession);
+        }
+        mapSession.put(sessionId, admin);
+        mapAdmins.put(admin, sessionId);
     }
 }

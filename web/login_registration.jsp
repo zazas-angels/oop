@@ -1,3 +1,4 @@
+<%@ page import="core.SiteConstants" %>
 <%--
   Created by IntelliJ IDEA.
   User: nika
@@ -9,12 +10,16 @@
 <%
     boolean b = true;
     if (request.getSession().getAttribute("logged in") != null && (Boolean) request.getSession().getAttribute("logged in")) {
-        request.getRequestDispatcher("userPage.jsp").forward(request, response);
+        String nextPage = "userPage.jsp";
+        if (request.getSession().getAttribute("type").equals("admin")) {
+            nextPage = "adminPage.jsp";
+        }
+        request.getRequestDispatcher(nextPage).forward(request, response);
     } else {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("login_session_id") && !cookie.getValue().equals("")) {
+                if (cookie.getName().equals(SiteConstants.LOGIN_COOKIE_NAME) && !cookie.getValue().equals("")) {
 %>
 <script>window.location = 'login';</script>
 <%

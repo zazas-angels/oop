@@ -5,7 +5,6 @@
     }
     function logout() {
         console.log("ignore");
-        //ignore
     }
 </script>
 <%

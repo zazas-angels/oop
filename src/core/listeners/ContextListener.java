@@ -2,11 +2,13 @@ package core.listeners; /**
  * Created by nika on 5/26/15.
  */
 
+import core.SiteConstants;
+import core.administrator.AdminInterface;
 import core.category.CategoryTree;
 import core.category.CategoryTreeInterface;
 import core.database.Connection;
 import core.database.DBConnection;
-import core.user.User;
+import core.user.UserInterface;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -26,19 +28,32 @@ public class ContextListener implements ServletContextListener {
         ResultSet set = database.getCategories();
         CategoryTreeInterface categories = new CategoryTree(set);
 
-
-        // need for cookies
-        HashMap<String, User> mapSession = new HashMap<>();
-        HashMap<User, String> mapUser = new HashMap();
-
         servletCont.setAttribute("categories", categories);
         servletCont.setAttribute("database", database);
-        servletCont.setAttribute("sessions_map", mapSession);
-        servletCont.setAttribute("users_map", mapUser);
+
+
+        addMaps(servletCont);
+    }
+
+    /**
+     * saves in servlet context hashmaps
+     * this hashmaps are used, to find connections between sessions and who was logged in on that session(user or admin)
+     */
+    private void addMaps(ServletContext servletCont) {
+        // need for cookies
+        HashMap<String, UserInterface> mapSession = new HashMap<>();
+        HashMap<UserInterface, String> mapUser = new HashMap<>();
+
+        HashMap<String, AdminInterface> mapSessionAdmins = new HashMap<>();
+        HashMap<AdminInterface, String> mapAdmins = new HashMap<>();
+
+        servletCont.setAttribute(SiteConstants.SESSIONS_MAP_USERS, mapSession);
+        servletCont.setAttribute(SiteConstants.SESSIONS_MAP_ADMINS, mapSessionAdmins);
+        servletCont.setAttribute(SiteConstants.USERS_MAP_NAME, mapUser);
+        servletCont.setAttribute(SiteConstants.ADMINS_MAP_NAME, mapAdmins);
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-
     }
 }

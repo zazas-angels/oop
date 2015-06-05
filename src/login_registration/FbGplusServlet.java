@@ -1,8 +1,10 @@
 package login_registration;
 
 import core.SiteConstants;
+import core.administrator.Administrator;
 import core.database.DBConnection;
 import core.user.User;
+import core.user.UserInterface;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -34,10 +36,7 @@ public class FbGplusServlet extends HttpServlet {
             SiteConstants.Type tp = SiteConstants.getType(type);
             User user = new User(name, id, "", url, tp);
             dbConnection.addUser(user);
-            request.getSession().setAttribute("logged in", true);
-            request.getSession().setAttribute("user", user);
-            LoginServlet.addCookie(request, response, context, user);
-            request.getRequestDispatcher("userPage.jsp").forward(request, response);
+            loginUser(user, request, response, context);
         } else {
             request.getRequestDispatcher("fbG+Registration.jsp").forward(request, response);
         }
@@ -61,19 +60,39 @@ public class FbGplusServlet extends HttpServlet {
         }
 
         if (dbConnection.existsUser(id)) {
-            request.getSession().setAttribute("logged in", true);
             User user = (User) dbConnection.getUser(id, User.generatePassword(""));
-            request.getSession().setAttribute("user", user);
-            LoginServlet.addCookie(request, response, context, user);
-            request.getRequestDispatcher("userPage.jsp").forward(request, response);
+            loginUser(user, request, response, context);
         } else {
-            request.getSession().setAttribute("id", id);
-            if (type.equals("fb")) {
-                request.getSession().setAttribute("type", type);
+            if (dbConnection.existsAdministrator(id)) {
+                Administrator admin = (Administrator) dbConnection.getAdmin(id, User.generatePassword(""));
+                loginAdmin(admin, request, response, context);
+
             } else {
+                request.getSession().setAttribute("id", id);
                 request.getSession().setAttribute("type", type);
+                request.getRequestDispatcher("fbG+Registration.jsp").forward(request, response);
             }
-            request.getRequestDispatcher("fbG+Registration.jsp").forward(request, response);
         }
+    }
+
+    /**
+     * logs admin in..
+     */
+    private void loginAdmin(Administrator admin, HttpServletRequest request, HttpServletResponse response, ServletContext context) throws ServletException, IOException {
+        request.getSession().setAttribute("logged in", true);
+        request.getSession().setAttribute("admin", admin);
+        LoginServlet.addCookie(request, response, context, admin);
+        //LoginServlet.addCookie(request, response, context, admin);
+        request.getRequestDispatcher("adminPage.jsp").forward(request, response);
+    }
+
+    /**
+     * logs user in, saves in cookies.
+     */
+    private void loginUser(UserInterface user, HttpServletRequest request, HttpServletResponse response, ServletContext context) throws ServletException, IOException {
+        request.getSession().setAttribute("logged in", true);
+        request.getSession().setAttribute("user", user);
+        LoginServlet.addCookie(request, response, context, user);
+        request.getRequestDispatcher("userPage.jsp").forward(request, response);
     }
 }

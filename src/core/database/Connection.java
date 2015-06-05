@@ -3,6 +3,8 @@
  */
 package core.database;
 
+import core.administrator.AdminInterface;
+import core.administrator.Administrator;
 import core.category.CategoryInterface;
 import core.user.UserInterface;
 
@@ -63,7 +65,7 @@ public interface Connection {
 
 	public boolean existsUser(String email);
 
-	public UserInterface getAdmin(String email, String password);
+	public AdminInterface getAdmin(String email, String password);
 
 	public boolean existsAdministrator(String email);
 
@@ -81,4 +83,6 @@ public interface Connection {
 	 * user's name isn't unique, so there may be many users with same name
 	 */
 	public List<UserInterface> getUsersByName(String name);
+
+	int addAdmin(Administrator administrator);
 }

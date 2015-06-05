@@ -1,5 +1,7 @@
 package login_registration;
 
+import core.SiteConstants;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -26,7 +28,7 @@ public class LogoutServlet extends HttpServlet {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("login_session_id")) {
+                if (cookie.getName().equals(SiteConstants.LOGIN_COOKIE_NAME)) {
                     cookie.setValue("");
                     response.addCookie(cookie);
                 }

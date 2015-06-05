@@ -1,6 +1,7 @@
 package core.administrator;
 
 import core.category.CategoryInterface;
+import core.category.CategoryTree;
 import core.user.UserInterface;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface AdminInterface {
     public List<UserInterface> findUsersExtended(String name, boolean banned, CategoryInterface category);
 
     public void addCategory(CategoryInterface parentCategory, CategoryInterface category);
+
+    public void setCategoryTree(CategoryTree categoryTree);
 }
