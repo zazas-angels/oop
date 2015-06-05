@@ -77,7 +77,7 @@ public interface Connection {
 	
 	public int deleteUserConfCode(int id);
 
-	public void setBannedStatus(UserInterface user, boolean bannedStatus);
+	public int setBannedStatus(int id, boolean bannedStatus);
 
 	/**
 	 * user's name isn't unique, so there may be many users with same name
