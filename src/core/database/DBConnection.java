@@ -4,12 +4,14 @@ package core.database;
  * Author: guri
  */
 import core.SiteConstants;
+import core.SiteConstants.Type;
 import core.category.CategoryInterface;
 import core.user.User;
 import core.user.UserInterface;
 
 import java.sql.Connection;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /* This class is for data base connection, it connects and can make suitable prepared statement.
@@ -324,7 +326,6 @@ public class DBConnection implements core.database.Connection {
 						results.getString("url"), SiteConstants.getType(results.getString("type")));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return user;
@@ -368,7 +369,6 @@ public class DBConnection implements core.database.Connection {
 	 */
 	@Override
 	public boolean existsAdministrator(String email) {
-		// TODO
 		return checkByMail(email,"admins");
 	}
 
@@ -396,11 +396,7 @@ public class DBConnection implements core.database.Connection {
 		return admin;
 	}
 
-	@Override
-	public int insertUserConfCode(int UserId, String confCode) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+
 
 	@Override
 	public boolean isActiveUser(int id) {
@@ -416,18 +412,20 @@ public class DBConnection implements core.database.Connection {
 		}
 		return result;
 	}
-
+	/*
+	 * Activates user. returns 0 if everything is allright, 1 otherwise
+	 * (non-Javadoc)
+	 * @see core.database.Connection#activateUser(int)
+	 */
 	@Override
 	public int activateUser(int id) {
 		// TODO Auto-generated method stub
 		try {
 			PreparedStatement statement = dataBaseConnection
-					.prepareStatement("insert into users (name, url, mail, password, type) values (?,?,?,?,?);");
-			statement.setString(1, user.getName());
-			statement.setString(2, user.getURL());
-			statement.setString(3, user.getEmail());
-			statement.setString(4, user.getPassword());
-			statement.setString(5, SiteConstants.typeToString(user.getType()));
+					.prepareStatement("Update users	set isActive = true    where id=?;");
+			int one=1;
+			
+					statement.setInt(one, id);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			// ignore
@@ -436,7 +434,11 @@ public class DBConnection implements core.database.Connection {
 		}
 		return 0;
 	}
-
+	@Override
+	public int insertUserConfCode(int UserId, String confCode) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	@Override
 	public int deleteUserConfCode(int id) {
 		// TODO Auto-generated method stub
@@ -444,13 +446,69 @@ public class DBConnection implements core.database.Connection {
 	}
 
 	@Override
-	public void setBannedStatus(UserInterface user, boolean bannedStatus) {
-		// TODO
+	/*
+	 * set Banned of user, returns 0 if everythin is allright else 1
+	 * (non-Javadoc)
+	 * @see core.database.Connection#setBannedStatus(core.user.UserInterface, boolean)
+	 */
+	public int setBannedStatus(int id, boolean bannedStatus) {
+		try {
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("Update users	set isBanned =?   where id=?;");
+			int one=1;
+			int two=2;
+					statement.setBoolean(one, bannedStatus);
+					statement.setInt(two, id);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			// ignore
+			e.printStackTrace();
+			return 1;
+		}
+		return 0;
 	}
-
+	/*
+	 * Returnes users by name
+	 * (non-Javadoc)
+	 * @see core.database.Connection#getUsersByName(java.lang.String)
+	 */
 	@Override
 	public List<UserInterface> getUsersByName(String name) {
 		// TODO Auto-generated method stub
-		return null;
+		List<UserInterface>  usersList = null;
+		try {
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("select * from users where name=?;");
+			int one=1;
+			statement.setString(one, name);
+			ResultSet results = statement.executeQuery();
+			usersList=new ArrayList<UserInterface>();
+			fillUsers(results,usersList);
+		} catch (SQLException e) {
+			// ignore
+			e.printStackTrace();
+		}
+		
+		return usersList;
+	}
+	//Fills user with result set and returns result
+	private void fillUsers(ResultSet results, List<UserInterface> usersList) throws SQLException {
+		while(results.next()){
+			Type type=null;
+			String stringType =results.getString("type");
+			if(stringType=="email"){
+				type=Type.email;
+			}else
+			if(stringType=="facebook"){
+				type=Type.facebook;
+			}else
+			if(stringType=="googlePlus"){
+				type=Type.googlePlus;
+			}
+			UserInterface user = new User(results.getString("name"),results.getString("mail"),results.getString("password"),
+					results.getString("password"),type);
+			usersList.add(user);
+		}
+		
 	}
 }
