@@ -18,20 +18,53 @@
 	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link href='http://fonts.googleapis.com/css?family=Comfortaa'
 	rel='stylesheet' type='text/css'>
-<script type="text/javascript">
-function changeSize(id){
-	var element = document.getElementById(id);
-	//alert(document.getElementById("size"+id).value);
-	//alert("Zaza");
-	var size =document.getElementById("size"+id).value;
-	if(!isNaN(size)&&size>0)
-	element.style.fontSize=size+"px";
-	
-}
 
+<script>
+	function upload() {
+	alert("ha");
+		var xmlHttp;
+		if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xmlHttp = new XMLHttpRequest();
+		} else {
+			// code for IE6, IE5
+			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
 
+		xmlHttp.onreadystatechange = function() {
+			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+				alert("dastuldai");
+			}
+		};
+	var file = document.getElementById("uploadfile");
+
+		/* Create a FormData instance */
+		var formData = new FormData();
+		/* Add the file */
+		formData.append("file", file.files[0]);
+
+		xmlHttp.open("post", "FileUploadHandler", true);
+		xmlHttp.setRequestHeader("Content-Type", "multipart/form-data");
+		xmlHttp.send(formData); /* Send to server */ 
+/* 		xmlHttp.open("POST", "FileUploadHandler", true);
+		xmlHttp.send(); */
+		alert("zaza");
+
+	}
 </script>
+<script type="text/javascript">
+	function changeSize(id) {
+		var element = document.getElementById(id);
+		//alert(document.getElementById("size"+id).value);
+		//alert("Zaza");
+		var size = document.getElementById("size" + id).value;
+		if (!isNaN(size) && size > 0)
+			element.style.fontSize = size + "px";
 
+	}
+</script>
+<%--uploader style --%>
+<link rel="stylesheet" type="text/css" href="Uploader.css">
 <script type="text/javascript">
 	//<![CDATA[
 
@@ -97,28 +130,24 @@ function changeSize(id){
 </head>
 
 <body>
-
+	<%--text --%>
 	<div class="drsElement"
 		style="left: 50px; top: 150px; width: 350px; height: 90px; background: white; text-align: center">
-		<div class="drsMoveHandle">
-			Text:
-			
-
-
+		<div class="drsMoveHandle">Text:</div>
+		<div style="border: 1px solid green; background-color: #A5B7F2;">
+			Font: <input id="zaz" size="5" class="color" colorType="font"
+				labelId="7" value="000000"> Back: <input id="zaz" size="5"
+				class="color" colorType="back" labelId="7" value="FFFFFF">
+			Size:<input id="size7" size="1" value="18" onkeydown="changeSize(7);"
+				onpaste="changeSize(7);" oninput="changeSize(7);">
 		</div>
-		<div style="border: 1px solid green; background-color:#A5B7F2;">
-				Font: <input id="zaz" size="5" class="color" colorType="font"
-					labelId="7" value="000000">
-				 Back: <input id="zaz"
-					size="5" class="color" colorType="back" labelId="7" value="FFFFFF">
-				Size:<input id="size7"
-					size="1" value="18" onkeydown="changeSize(7);"  onpaste="changeSize(7);"   oninput="changeSize(7);">
-			</div>
-			<div id="7"><p contenteditable="true"  >opaa</p></div>
-			
-			
-	</div>
+		<div id="7">
+			<p contenteditable="true">opaa</p>
+		</div>
 
+
+	</div>
+	<%--control panel --%>
 	<div class="controlPanel">
 
 		<div id="circle">
@@ -143,8 +172,73 @@ function changeSize(id){
 
 
 	</div>
+	<%--image --%>
+
+	<div class="drsElement "
+		style="left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center">
+		
+
+			
+	<form id="form1">    
+
+    <label for="sampleFile">Please select a file </label>
+
+    <input id="sampleFile" name="sampleFile" type="file" /> <br/>
+
+    <input id="uploadBtn" type="button" value="Ajax Submit" onClick="performAjaxSubmit();"></input>
+
+</form>
+
+            
 
 
 
+		<div class="drsMoveHandle " style="background: #DFC;">
+			<img alt="" src="noImage.png " style="width: 250px; height: 230px;">
+		</div>
+
+	</div>
+
+
+	<input type="file" id="uploadfile" name="uploadfile" />
+	<input type="button" value="upload" onclick="upload()" />
+
+	
+	
+	
+	
+<script type="text/javascript">
+
+    function performAjaxSubmit() {
+
+      
+        var sampleFile = document.getElementById("sampleFile").files[0];
+
+        var formdata = new FormData();
+
+
+        formdata.append("sampleFile", sampleFile);
+
+        var xhr = new XMLHttpRequest();       
+
+        xhr.open("POST","FileUploader", true);
+
+        xhr.send(formdata);
+
+        xhr.onload = function(e) {
+
+            if (this.status == 200) {
+
+               alert(this.responseText);
+
+            }
+
+        };                    
+
+    }   
+
+</script>
+	
+	
 </body>
 </html>
