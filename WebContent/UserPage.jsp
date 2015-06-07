@@ -142,16 +142,16 @@
 
 
 	</div> --%>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
 	<%--control panel --%>
 	<div class="controlPanel">
 
@@ -160,13 +160,13 @@
 				class="icon2 fa fa-star fa-lg"></i> <span> ADD</span>
 		</div>
 		<div id="sub">
-			<div  onclick="createText();" id="circle">
+			<div onclick="createText();" id="circle">
 				<i class="icon1 fa fa-star fa-lg"></i> <i
 					class="icon2 fa fa-plus fa-lg"></i><span>Text</span>
 			</div>
 			<div onclick="createImage();" id="circle">
 				<i class="icon1 fa fa-star fa-lg"></i> <i
-					class="icon2 fa fa-plus fa-lg"></i> <span >Image</span>
+					class="icon2 fa fa-plus fa-lg"></i> <span>Image</span>
 			</div>
 			<div id="circle">
 				<i class="icon1 fa fa-star fa-lg"></i> <i
@@ -178,7 +178,7 @@
 
 	</div>
 	<%--image --%>
-<%--
+	<%--
 	<div class="drsElement "
 		style="left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center">
 
@@ -240,12 +240,21 @@
 
 		}
 	</script>
-	<p onclick="createImage()">sheqmen surat</p>
-	<p onclick="createText()">iqmen teqsti</p>
-	
-	
-	
-	
+
+	<%--comment box --%>
+	<div>
+		<form action="demo_form.asp" id="usrform">
+			Name: <input type="text" name="usrname"> <input type="submit">
+		</form>
+		<br>
+		<textarea rows="4" cols="50" name="comment" form="usrform">
+Enter text here...</textarea>
+		<p>name :comment 1</p>
+		<p>name : comment 1</p>
+		<p>name : comment 1</p>
+
+	</div>
+
 
 </body>
 </html>
