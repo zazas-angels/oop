@@ -10,7 +10,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
  
  
-public class sendMail {
+public class SendMail {
 	static final String SRC_MAIL_ADDRESS = "akasr13@freeuni.edu.ge"; //sends from
 	static final String SRC_MAIL_PASSWORD = "12200139";	//user password
 	
