@@ -18,41 +18,36 @@
 	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link href='http://fonts.googleapis.com/css?family=Comfortaa'
 	rel='stylesheet' type='text/css'>
-
-<script>
-	function upload() {
-	alert("ha");
-		var xmlHttp;
-		if (window.XMLHttpRequest) {
-			// code for IE7+, Firefox, Chrome, Opera, Safari
-			xmlHttp = new XMLHttpRequest();
-		} else {
-			// code for IE6, IE5
-			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-
-		xmlHttp.onreadystatechange = function() {
-			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-				alert("dastuldai");
-			}
-		};
-	var file = document.getElementById("uploadfile");
-
-		/* Create a FormData instance */
-		var formData = new FormData();
-		/* Add the file */
-		formData.append("file", file.files[0]);
-
-		xmlHttp.open("post", "FileUploadHandler", true);
-		xmlHttp.setRequestHeader("Content-Type", "multipart/form-data");
-		xmlHttp.send(formData); /* Send to server */ 
-/* 		xmlHttp.open("POST", "FileUploadHandler", true);
-		xmlHttp.send(); */
-		alert("zaza");
-
-	}
-</script>
 <script type="text/javascript">
+	var numElements = 5;//need threading?
+	function createImage() {
+
+		numElements += 1;
+		alert(1);
+		document.body.innerHTML += "<div class=\"drsElement\" style=\"left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center\"><form id="+numElements+"><input id=\"sampleFile1\" name=\"sampleFile\" type=\"file\" accept=\"image\" /> <br /> <input class=\"gobutton\" id=\"uploadBtn\" type=\"button\"	value=\"Upload\" onClick=\"performAjaxSubmit("
+				+ numElements
+				+ ");\"></input></form> <div class=\"drsMoveHandle\" style=\"background: #DFC;\" id=\"image1\"><img alt=\"\" src=\"noImage.png \" style=\"width: 250px; height: 230px;\"></div></div>";
+		alert(2);
+	}
+
+	function createText() {
+		numElements += 1;
+		alert(1);
+		document.body.innerHTML += "<div class=\"drsElement\""
+			+"	style=\"left: 50px; top: 150px; width: 350px; height: 90px; background: white; text-align: center\">"
+					+ "	<div class=\"drsMoveHandle\">Text:</div>"
+					+ "	<div style=\"border: 1px solid green; background-color: #A5B7F2;\">"
+					+ "		Font: <input id=\"Font"+numElements+"\" size=\"5\" class=\"color\" colorType=\"font\""
+	+	"	labelId=\""+numElements+"\" value=\"000000\"  autocomplete=\"off\" style=\"color: rgb(255, 255, 255); background-image: none; background-color: rgb(0, 0, 0);\"> Back: <input id=\"Back"+numElements+"\" size=\"5\""
+	+		"	class=\"color\" colorType=\"back\" labelId=\""+numElements+"\" value=\"FFFFFF\"  autocomplete=\"off\" style=\"color: rgb(255, 255, 255); background-image: none; background-color: rgb(0, 0, 0);\">"
+					+ "		Size:<input id=\"size"+numElements+"\" size=\"1\" value=\"18\" onkeydown=\"changeSize("+numElements+");\""
+					+ "			onpaste=\"changeSize("+numElements+");\" oninput=\"changeSize("+numElements+");\">"
+					+ "	</div>"
+					+ "	<div id=\""+numElements+"\">"
+					+ "		<p contenteditable=\"true\">Your Text</p>" + "</div>	</div>";
+	
+		alert(2);
+	}
 	function changeSize(id) {
 		var element = document.getElementById(id);
 		//alert(document.getElementById("size"+id).value);
@@ -131,7 +126,7 @@
 
 <body>
 	<%--text --%>
-	<div class="drsElement"
+	<%--<div class="drsElement"
 		style="left: 50px; top: 150px; width: 350px; height: 90px; background: white; text-align: center">
 		<div class="drsMoveHandle">Text:</div>
 		<div style="border: 1px solid green; background-color: #A5B7F2;">
@@ -146,7 +141,17 @@
 		</div>
 
 
-	</div>
+	</div> --%>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<%--control panel --%>
 	<div class="controlPanel">
 
@@ -155,13 +160,13 @@
 				class="icon2 fa fa-star fa-lg"></i> <span> ADD</span>
 		</div>
 		<div id="sub">
-			<div id="circle">
+			<div  onclick="createText();" id="circle">
 				<i class="icon1 fa fa-star fa-lg"></i> <i
-					class="icon2 fa fa-plus fa-lg"></i> <span>Text</span>
+					class="icon2 fa fa-plus fa-lg"></i><span>Text</span>
 			</div>
-			<div id="circle">
+			<div onclick="createImage();" id="circle">
 				<i class="icon1 fa fa-star fa-lg"></i> <i
-					class="icon2 fa fa-plus fa-lg"></i> <span>Two</span>
+					class="icon2 fa fa-plus fa-lg"></i> <span >Image</span>
 			</div>
 			<div id="circle">
 				<i class="icon1 fa fa-star fa-lg"></i> <i
@@ -173,72 +178,74 @@
 
 	</div>
 	<%--image --%>
-
+<%--
 	<div class="drsElement "
 		style="left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center">
-		
-
-			
-	<form id="form1">    
-
-    <label for="sampleFile">Please select a file </label>
-
-    <input id="sampleFile" name="sampleFile" type="file" /> <br/>
-
-    <input id="uploadBtn" type="button" value="Ajax Submit" onClick="performAjaxSubmit();"></input>
-
-</form>
-
-            
 
 
 
-		<div class="drsMoveHandle " style="background: #DFC;">
+		<form id="1">
+
+			<input id="sampleFile1" name="sampleFile" type="file" accept="image" />
+			<br /> <input class="gobutton" id="uploadBtn" type="button"
+				value="Upload" onClick="performAjaxSubmit(1);"></input>
+
+		</form>
+
+
+
+
+
+		<div class="drsMoveHandle " style="background: #DFC;" id="image1">
 			<img alt="" src="noImage.png " style="width: 250px; height: 230px;">
 		</div>
 
 	</div>
+ --%>
 
 
-	<input type="file" id="uploadfile" name="uploadfile" />
-	<input type="button" value="upload" onclick="upload()" />
 
+
+	<script type="text/javascript">
+		function performAjaxSubmit(id) {
+
+			var sampleFile = document.getElementById("sampleFile" + id).files[0];
+
+			var formdata = new FormData();
+			var image = document.getElementById("image" + id)
+
+			formdata.append("sampleFile", sampleFile);
+
+			if (window.XMLHttpRequest) {
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xhr = new XMLHttpRequest();
+			} else {
+				// code for IE6, IE5
+				xhr = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			xhr.open("POST", "FileUploader", true);
+
+			xhr.send(formdata);
+
+			xhr.onload = function(e) {
+
+				if (this.status == 200) {
+					image.innerHTML = this.responseText;
+					alert(this.responseText);
+
+				}
+
+			};
+
+		}
+	</script>
+	<p onclick="createImage()">sheqmen surat</p>
+	<p onclick="createText()">iqmen teqsti</p>
 	
 	
 	
 	
-<script type="text/javascript">
 
-    function performAjaxSubmit() {
-
-      
-        var sampleFile = document.getElementById("sampleFile").files[0];
-
-        var formdata = new FormData();
-
-
-        formdata.append("sampleFile", sampleFile);
-
-        var xhr = new XMLHttpRequest();       
-
-        xhr.open("POST","FileUploader", true);
-
-        xhr.send(formdata);
-
-        xhr.onload = function(e) {
-
-            if (this.status == 200) {
-
-               alert(this.responseText);
-
-            }
-
-        };                    
-
-    }   
-
-</script>
-	
-	
 </body>
 </html>
