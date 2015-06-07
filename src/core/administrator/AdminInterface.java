@@ -4,7 +4,7 @@ import core.category.CategoryInterface;
 import core.category.CategoryTree;
 import core.user.UserInterface;
 
-import java.util.List;
+import java.sql.ResultSet;
 
 
 public interface AdminInterface {
@@ -15,9 +15,7 @@ public interface AdminInterface {
 
     public void releaseBann(UserInterface user);
 
-    public List<UserInterface> findUser(String name);
-
-    public List<UserInterface> findUsersExtended(String name, boolean banned, CategoryInterface category);
+    public ResultSet findUser(String name, String bann, String active, String categoryName);
 
     public void addCategory(CategoryInterface parentCategory, CategoryInterface category);
 

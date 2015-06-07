@@ -13,6 +13,7 @@ import core.user.UserInterface;
 
 import java.sql.Connection;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static core.user.User.generatePassword;
@@ -22,6 +23,7 @@ import static core.user.User.generatePassword;
  */
 public class DBConnection implements core.database.Connection {
     Connection dataBaseConnection;
+    private ArrayList<String> allCategoriesNames;
 
     /*
      * Constructor: it connects (tries) database using MyDBINfo informations.
@@ -112,8 +114,7 @@ public class DBConnection implements core.database.Connection {
 
     public static void main(String[] args) {
         DBConnection db = new DBConnection();
-        db.addAdmin(new Administrator("nika", generatePassword("paroli"), null, null));
-
+        db.addAdmin(new Administrator("nika", "paroli", new DBConnection(), null));
     }
 
     @Override
@@ -305,21 +306,7 @@ public class DBConnection implements core.database.Connection {
      */
     @Override
     public UserInterface getUser(String mail, String password) {
-        ResultSet results = null;
-        try {
-            // ricxvebze mixurebs setString-s rom gadavcem da nu cvlit ra..
-            int temp1 = 1;
-            int temp2 = 2;
-            PreparedStatement statement = dataBaseConnection
-                    .prepareStatement("select * from users"
-                            + " Where mail=? and password =?;");
-            statement.setString(temp1, mail);
-            statement.setString(temp2, password);
-            results = statement.executeQuery();
-        } catch (SQLException e) {
-            // ignore
-            e.printStackTrace();
-        }
+        ResultSet results = getFromTable("users", mail, password);
         if (results == null)
             return null;
         UserInterface user = null;
@@ -345,12 +332,7 @@ public class DBConnection implements core.database.Connection {
         ResultSet results = null;
         boolean existResult = false;
         try {
-            int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
-            PreparedStatement statement = dataBaseConnection
-                    .prepareStatement("select * from users"
-                            + " Where mail=?;");
-            statement.setString(temp, email);
-            results = statement.executeQuery();
+            results = getUsersBy("mail", email);
             if (results != null)
                 existResult = results.next();
         } catch (SQLException e) {
@@ -361,14 +343,40 @@ public class DBConnection implements core.database.Connection {
     }
 
     @Override
-    public boolean existsAdministrator(String email) {
-        // TODO
-        return false;
+    public AdminInterface getAdmin(String email, String password) {
+        ResultSet results = getFromTable("admins", email, password);
+        if (results == null)
+            return null;
+        AdminInterface admin = null;
+        try {
+            if (results.next()) {
+                admin = new Administrator(email, password, this, null);
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return admin;
     }
 
-    @Override
-    public AdminInterface getAdmin(String email, String password) {
-        return new Administrator("nika", "a0ff66d275d50b7bc63b034fce96d2011f2ac91f", null, null);
+    private ResultSet getFromTable(String table, String email, String password) {
+        password = generatePassword(password);
+        ResultSet results = null;
+        try {
+            // ricxvebze mixurebs setString-s rom gadavcem da nu cvlit ra..
+            int temp1 = 1;
+            int temp2 = 2;
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("select * from " + table
+                            + " Where mail=? and password =?;");
+            statement.setString(temp1, email);
+            statement.setString(temp2, password);
+            results = statement.executeQuery();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+        return results;
     }
 
     @Override
@@ -396,17 +404,53 @@ public class DBConnection implements core.database.Connection {
     }
 
     @Override
+    public void setBannedStatus(int id, boolean bannedStatus) {
+
+    }
+
+    @Override
     public void setBannedStatus(UserInterface user, boolean bannedStatus) {
         // TODO
     }
 
-    @Override
-    public List<UserInterface> getUsersByName(String name) {
-        return null;
+    /**
+     * @param column column if users table in database
+     * @param value  wanted value
+     * @return
+     */
+    private ResultSet getUsersBy(String column, String value) {
+        ResultSet results = null;
+        try {
+            int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("select * from users"
+                            + " Where " + column + "=?;");
+            statement.setString(temp, value);
+            results = statement.executeQuery();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+        return results;
     }
 
+    /**
+     * returns all users with given name
+     * @param name user's wanted name
+     * @return ResultSet of rows from users table
+     */
+    public ResultSet getUsersByName(String name) {
+        return getUsersBy("name", name);
+    }
+
+
+    /**
+     * adds administrator in database
+     *
+     * @return true, if operation was successful else false
+     */
     @Override
-    public int addAdmin(Administrator administrator) {
+    public boolean addAdmin(Administrator administrator) {
 
         try {
             PreparedStatement statement = dataBaseConnection
@@ -417,8 +461,162 @@ public class DBConnection implements core.database.Connection {
         } catch (SQLException e) {
             // ignore
             e.printStackTrace();
-            return 1;
+            return false;
         }
-        return 0;
+        return true;
+    }
+
+    /**
+     * checks if administrator is already regisrired with given mail
+     *
+     * @return true if is already registrired, otherwise false;
+     */
+    @Override
+    public boolean existsAdministrator(String mail) {
+        ResultSet results = null;
+        boolean existResult = false;
+        try {
+            int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("select * from admins"
+                            + " Where mail=?;");
+            statement.setString(temp, mail);
+            results = statement.executeQuery();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+        try {
+            if (results != null)
+                existResult = results.next();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+        return existResult;
+    }
+
+    /**
+     * @param on if(on) we search banned users, else "bannless" users
+     * @return all banned or "bannless" users
+     */
+    public ResultSet getUsersByBann(boolean on) {
+        String bann = "off";
+        if (on) bann = "on";
+        return getUsersBy("", bann, "all");
+
+    }
+
+    /**
+     * searchs in database users by given criterias
+     *
+     * @param name   name of user, if name.equals(''), we assume that we don't need to specify search by name.
+     * @param bann   if bann.equals("on"), we assume that user's isActived field is true, if bann.equals("off") - false, otherwise we search trues and falses too
+     * @param active if active.equals("on") we assume that user's isActived field is true, if active.equals("off") - false, otherwise we search trues and falses too
+     * @return ResultSet of apropriate users
+     */
+    private ResultSet getUsersBy(String name, String bann, String active) {
+        ResultSet results = null;
+        if (name != null && bann != null && active != null) {
+            try {
+                PreparedStatement statement = dataBaseConnection
+                        .prepareStatement("select * from users"
+                                + " Where name like ? and isBanned like ? and isActive like ?;");
+
+                statement.setString(1, name + "%");
+
+                if (bann.equals("on")) {
+                    statement.setBoolean(2, true);
+                } else {
+                    if (bann.equals("off"))
+                        statement.setBoolean(2, false);
+                    else statement.setString(2, "%");
+                }
+                if (active.equals("on")) {
+                    statement.setBoolean(3, true);
+                } else {
+                    if (active.equals("off"))
+                        statement.setBoolean(3, false);
+                    else statement.setString(3, "%");
+                }
+                results = statement.executeQuery();
+                System.out.println(results);
+            } catch (SQLException e) {
+                // ignore
+                e.printStackTrace();
+            }
+        }
+        return results;
+    }
+
+
+    /**
+     * searchs in database users by given criterias
+     *
+     * @param name       name of user, if name.equals(''), we assume that we don't need to specify search by name.
+     * @param bann       if bann.equals("on"), we assume that user's isActived field is true, if bann.equals("off") - false, otherwise we search trues and falses too
+     * @param active     if active.equals("on") we assume that user's isActived field is true, if active.equals("off") - false, otherwise we search trues and falses too
+     * @param categoryID category
+     * @return ResultSet of apropriate users
+     */
+    public ResultSet getUsersByCriterias(String name, String bann, String active, String categoryID) {
+        ResultSet set = null;
+        if (name != null && bann != null && categoryID != null && active != null) {
+            if (categoryID.equals("default") || categoryID.equals("")) {
+                set = getUsersBy(name, bann, active);
+            } else {
+                set = getUsersByCategoryAndCriterias(categoryID, name, bann, active);
+                //need to join
+            }
+
+        }
+        return set;
+    }
+
+    /**
+     * searchs in database users by given criterias
+     *
+     * @param name       name of user, if name.equals(''), we assume that we don't need to specify search by name.
+     * @param bann       if bann.equals("on"), we assume that user's isActived field is true, if bann.equals("off") - false, otherwise we search trues and falses too
+     * @param active     if active.equals("on") we assume that user's isActived field is true, if active.equals("off") - false, otherwise we search trues and falses too
+     * @param categoryID category
+     * @return ResultSet of apropriate users
+     */
+    private ResultSet getUsersByCategoryAndCriterias(String categoryID, String name, String bann, String active) {
+        ResultSet results = null;
+        if (categoryID != null && name != null && bann != null && active != null) {
+            try {
+                PreparedStatement statement = dataBaseConnection
+                        .prepareStatement("select * from users u, users_categories, categories c " +
+                                "where u.ID = UserID and CategoryID = c.ID and c.ID = ? and u.name like ? " +
+                                "and u.isBanned like ? and u.isActive like ? " +
+                                "group by u.ID");
+
+
+                statement.setString(1, categoryID);
+                statement.setString(2, name + "%");
+
+                if (bann.equals("on")) {
+                    statement.setBoolean(3, true);
+                } else {
+                    if (bann.equals("off"))
+                        statement.setBoolean(3, false);
+                    else statement.setString(3, "%");
+                }
+                if (active.equals("on")) {
+                    statement.setBoolean(4, true);
+                } else {
+                    if (active.equals("off"))
+                        statement.setBoolean(4, false);
+                    else statement.setString(4, "%");
+                }
+                results = statement.executeQuery();
+                System.out.println(results);
+            } catch (SQLException e) {
+                // ignore
+                e.printStackTrace();
+            }
+        }
+        return results;
     }
 }

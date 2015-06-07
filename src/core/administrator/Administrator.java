@@ -5,7 +5,7 @@ import core.category.CategoryTree;
 import core.database.DBConnection;
 import core.user.UserInterface;
 
-import java.util.List;
+import java.sql.ResultSet;
 
 import static core.user.User.generatePassword;
 
@@ -42,13 +42,14 @@ public class Administrator implements AdminInterface {
     }
 
     @Override
-    public List<UserInterface> findUser(String name) {
-        return dbConnection.getUsersByName(name);
-    }
-
-    @Override
-    public List<UserInterface> findUsersExtended(String name, boolean banned, CategoryInterface category) {
-        return null;
+    public ResultSet findUser(String name, String bann, String active, String categoryName) {
+        ResultSet set = null;
+        if (name != null && bann != null && categoryName != null && active != null) {
+            if (dbConnection != null) {
+                set = dbConnection.getUsersByCriterias(name, bann, active, categoryName);
+            }
+        }
+        return set;
     }
 
     @Override

@@ -28,8 +28,8 @@ public class ContextListener implements ServletContextListener {
         ResultSet set = database.getCategories();
         CategoryTreeInterface categories = new CategoryTree(set);
 
-        servletCont.setAttribute("categories", categories);
-        servletCont.setAttribute("database", database);
+        servletCont.setAttribute(SiteConstants.CATEGORY_TREE, categories);
+        servletCont.setAttribute(SiteConstants.DATABASE, database);
 
 
         addMaps(servletCont);

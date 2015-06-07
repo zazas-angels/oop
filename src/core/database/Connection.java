@@ -67,8 +67,6 @@ public interface Connection {
 
 	public AdminInterface getAdmin(String email, String password);
 
-	public boolean existsAdministrator(String email);
-
 	public int insertUserConfCode(int UserId, String confCode);
 	
 	public boolean isActiveUser(int id);
@@ -77,12 +75,11 @@ public interface Connection {
 	
 	public int deleteUserConfCode(int id);
 
-	public int setBannedStatus(int id, boolean bannedStatus);
+	public void setBannedStatus(int id, boolean bannedStatus);
 
-	/**
-	 * user's name isn't unique, so there may be many users with same name
-	 */
-	public List<UserInterface> getUsersByName(String name);
+	void setBannedStatus(UserInterface user, boolean bannedStatus);
 
-	int addAdmin(Administrator administrator);
+	public boolean addAdmin(Administrator administrator);
+
+	public boolean existsAdministrator(String mail);
 }

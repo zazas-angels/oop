@@ -1,14 +1,13 @@
 package login_registration;
 
-import core.SiteConstants;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static login_registration.LoginServlet.deleteLoginCookie;
 
 /**
  * Created by nika on 5/25/15.
@@ -24,16 +23,9 @@ public class LogoutServlet extends HttpServlet {
         request.getSession().setAttribute("email", null);
         request.getSession().setAttribute("type", null);
 
-        // amis nacvlad rom response.addCookie(new Cookie("login_session_id", ""))-s vwerdi ar mushaobda ratomgac
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals(SiteConstants.LOGIN_COOKIE_NAME)) {
-                    cookie.setValue("");
-                    response.addCookie(cookie);
-                }
-            }
-        }
+
+        deleteLoginCookie(request, response);
+        request.getSession().invalidate();
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 

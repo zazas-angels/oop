@@ -2,6 +2,7 @@ package login_registration;
 
 import core.SiteConstants;
 import core.administrator.Administrator;
+import core.category.CategoryTree;
 import core.database.DBConnection;
 import core.user.User;
 import core.user.UserInterface;
@@ -60,11 +61,12 @@ public class FbGplusServlet extends HttpServlet {
         }
 
         if (dbConnection.existsUser(id)) {
-            User user = (User) dbConnection.getUser(id, User.generatePassword(""));
+            User user = (User) dbConnection.getUser(id, "");
             loginUser(user, request, response, context);
         } else {
             if (dbConnection.existsAdministrator(id)) {
-                Administrator admin = (Administrator) dbConnection.getAdmin(id, User.generatePassword(""));
+                Administrator admin = (Administrator) dbConnection.getAdmin(id, "");
+                admin.setCategoryTree((CategoryTree) context.getAttribute(SiteConstants.CATEGORY_TREE));
                 loginAdmin(admin, request, response, context);
 
             } else {

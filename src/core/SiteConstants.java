@@ -12,6 +12,8 @@ public final class SiteConstants {
 	public static final String SESSIONS_MAP_ADMINS = "sessions_map_admins";
 	public static final String SESSIONS_MAP_USERS = "sessions_map_users";
 	public static final String LOGIN_COOKIE_NAME = "login_session_id";
+	public static final String DATABASE = "database";
+	public static final String CATEGORY_TREE = "categoriess";
 
 
 

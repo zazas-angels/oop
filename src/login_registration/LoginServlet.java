@@ -29,8 +29,8 @@ public class LoginServlet extends HttpServlet {
      * else forwards to same page, and sets wrong try login attribute true.
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("LoginServlet.doPost");
         String password = request.getParameter("password");
-        password = User.generatePassword(password);
         String email = request.getParameter("email");
         ServletContext context = request.getServletContext();
         DBConnection dbConnection = (DBConnection) context.getAttribute("database");
@@ -54,8 +54,17 @@ public class LoginServlet extends HttpServlet {
 
     /**
      * is called while login with cookies
+     * or refresh logged in state
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getSession().getAttribute("logged in") != null && (boolean) (request.getSession().getAttribute("logged in")) && request.getSession().getAttribute("type") != null) {
+            if (request.getSession().getAttribute("type").equals("admin") && request.getSession().getAttribute("admin") != null) {
+                request.getRequestDispatcher("adminPage.jsp").forward(request, response);
+            }
+            if (request.getSession().getAttribute("user") != null) {
+                request.getRequestDispatcher("userPage.jsp").forward(request, response);
+            }
+        }
 
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
@@ -76,6 +85,23 @@ public class LoginServlet extends HttpServlet {
                 }
             }
         }
+        //log out
+        request.getSession().invalidate();
+        deleteLoginCookie(request, response);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
+
+    public static void deleteLoginCookie(HttpServletRequest request, HttpServletResponse response) {
+        // amis nacvlad rom response.addCookie(new Cookie("login_session_id", ""))-s vwerdi ar mushaobda ratomgac
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(SiteConstants.LOGIN_COOKIE_NAME)) {
+                    cookie.setValue("");
+                    response.addCookie(cookie);
+                }
+            }
+        }
     }
 
 
@@ -87,6 +113,7 @@ public class LoginServlet extends HttpServlet {
         request.getSession().setAttribute("type", "admin");
         request.getSession().setAttribute("admin", admin);
 
+        addCookie(request, response, context, admin);
         request.getRequestDispatcher("adminPage.jsp").forward(request, response);
     }
 

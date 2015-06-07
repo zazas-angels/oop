@@ -1,33 +1,69 @@
 /**
  * Created by nika on 6/4/15.
  */
+$(document).ready(function () {
+    $("#enableExtended").click(function () {
+        $('#searchByName').hide();
+        $('#extendedSearch').toggle();
+    });
+    $("#disableExtended").click(function () {
+        $('#extendedSearch').hide();
+        $('#searchByName').toggle();
+    });
+});
 
+/*
+ $(document).ready(function () {
+ $.get("http://localhost:8080/AjaxTest/Hello").done(function (response) {
+ //var message = JSON.parse(response);
+ $('#content').html(response.author + ": " + response.message);
 
-//sending request is from W3School tutorial
-//make next categories and make button (set it disabled or not)
-function findUsers() {
-    alert('it works!');
-    var list = document.getElementById("categories");
+ }).fail(function () {
+ alert("fail");
+ });
 
-    var xmlHttp;
-    if (window.XMLHttpRequest) {
-        // code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlHttp = new XMLHttpRequest();
-    } else {
-        // code for IE6, IE5
-        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+ });
+ */
+
+function searchByName() {
+    debugger;
+    var link = "http://localhost:8080/admin?name=" + $("#name").val() + "&category=default&bann=all&active=all";
+    $.get(link)
+        .done(function (response) {
+            update(response);
+        })
+        .fail(function () {
+            alert("fail");
+        });
+}
+
+function extendedSearch() {
+    var link = "http://localhost:8080/admin?name=" + $("#nameExtendedSearch").val() + "&category=" + $("#categoryCombo").val() + "&bann=" + $("#bannCombo").val() + "&active=" + $("#activeCombo").val();
+    console.log(link);
+    $.get(link)
+        .done(function (response) {
+            update(response);
+        })
+        .fail(function () {
+            alert("fail");
+        });
+}
+
+function update(response) {
+    debugger;
+    var data = "";
+    var arr = response;
+    console.log(response);
+    if (arr.length === 0) {
+        data = "ასეთი მომხმარებელი არ არსებობს"
     }
-
-    xmlHttp.onreadystatechange = function () {
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            list.innerHTML = xmlHttp.responseText;
-        }
-    };
-
-    xmlHttp.open("POST", "CategoriesServlet?id=" + id, true);
-    xmlHttp.send();
-    makeUsersForCategory(id);
-    if (id == 0)
-        document.getElementById("upButton").disabled = true;
-    alert(items.length);
+    for (var i = 0; i < arr.length; i++) {
+        var user = arr[i];
+        var url = user.url;
+        var tmp = "<div class= \"col span_1_of_4\">" + user.name + "<br>";
+        tmp += "<a href=\"" + user.url + "\">"
+        tmp += "<img src=\"" + user.avatarFile + "\" alt=\"" + user.name + "\" style=\"width:150px;height:150px;\"></a></div>";
+        data += tmp;
+    }
+    $('#main-section').html(data);
 }
