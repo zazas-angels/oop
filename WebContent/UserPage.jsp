@@ -24,7 +24,7 @@
 
 		numElements += 1;
 		alert(1);
-		document.body.innerHTML += "<div class=\"drsElement\" style=\"left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center\"><form id="+numElements+"><input id=\"sampleFile1\" name=\"sampleFile\" type=\"file\" accept=\"image\" /> <br /> <input class=\"gobutton\" id=\"uploadBtn\" type=\"button\"	value=\"Upload\" onClick=\"performAjaxSubmit("
+		document.body.innerHTML += "<div class=\"drsElement\" style=\"left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center\"><form id="+numElements+"><input id=\"sampleFile1\" name=\"sampleFile\" type=\"file\" accept=\"image\" /> <br /> <input class=\"gobutton\" id=\"uploadBtn\" type=\"button\"	value=\"Upload\" onClick=\"performAjaxSubmit(0,"
 				+ numElements
 				+ ");\"></input></form> <div class=\"drsMoveHandle\" style=\"background: #DFC;\" id=\"image1\"><img alt=\"\" src=\"noImage.png \" style=\"width: 250px; height: 230px;\"></div></div>";
 		alert(2);
@@ -35,17 +35,34 @@
 		alert(1);
 		document.body.innerHTML += "<div class=\"drsElement\""
 			+"	style=\"left: 50px; top: 150px; width: 350px; height: 90px; background: white; text-align: center\">"
-					+ "	<div class=\"drsMoveHandle\">Text:</div>"
-					+ "	<div style=\"border: 1px solid green; background-color: #A5B7F2;\">"
-					+ "		Font: <input id=\"Font"+numElements+"\" size=\"5\" class=\"color\" colorType=\"font\""
-	+	"	labelId=\""+numElements+"\" value=\"000000\"  autocomplete=\"off\" style=\"color: rgb(255, 255, 255); background-image: none; background-color: rgb(0, 0, 0);\"> Back: <input id=\"Back"+numElements+"\" size=\"5\""
-	+		"	class=\"color\" colorType=\"back\" labelId=\""+numElements+"\" value=\"FFFFFF\"  autocomplete=\"off\" style=\"color: rgb(255, 255, 255); background-image: none; background-color: rgb(0, 0, 0);\">"
-					+ "		Size:<input id=\"size"+numElements+"\" size=\"1\" value=\"18\" onkeydown=\"changeSize("+numElements+");\""
-					+ "			onpaste=\"changeSize("+numElements+");\" oninput=\"changeSize("+numElements+");\">"
-					+ "	</div>"
-					+ "	<div id=\""+numElements+"\">"
-					+ "		<p contenteditable=\"true\">Your Text</p>" + "</div>	</div>";
-	
+				+ "	<div class=\"drsMoveHandle\">Text:</div>"
+				+ "	<div style=\"border: 1px solid green; background-color: #A5B7F2;\">"
+				+ "		Font: <input id=\"Font"
+				+ numElements
+				+ "\" size=\"5\" class=\"color\" colorType=\"font\""
+				+ "	labelId=\""
+				+ numElements
+				+ "\" value=\"000000\"  autocomplete=\"off\" style=\"color: rgb(255, 255, 255); background-image: none; background-color: rgb(0, 0, 0);\"> Back: <input id=\"Back"
+				+ numElements
+				+ "\" size=\"5\""
+				+ "	class=\"color\" colorType=\"back\" labelId=\""
+				+ numElements
+				+ "\" value=\"FFFFFF\"  autocomplete=\"off\" style=\"color: rgb(255, 255, 255); background-image: none; background-color: rgb(0, 0, 0);\">"
+				+ "		Size:<input id=\"size"
+				+ numElements
+				+ "\" size=\"1\" value=\"18\" onkeydown=\"changeSize("
+				+ numElements
+				+ ");\""
+				+ "			onpaste=\"changeSize("
+				+ numElements
+				+ ");\" oninput=\"changeSize("
+				+ numElements
+				+ ");\">"
+				+ "	</div>"
+				+ "	<div id=\""+numElements+"\">"
+				+ "		<p contenteditable=\"true\">Your Text</p>"
+				+ "</div>	</div>";
+
 		alert(2);
 	}
 	function changeSize(id) {
@@ -57,7 +74,100 @@
 			element.style.fontSize = size + "px";
 
 	}
+	function createGallery(){
+		numElements += 1;
+		alert(1);
+		document.body.innerHTML += 
+		'<div class="drsElement"'
+		+'	style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">'
+		+'		<div class="drsMoveHandle" style="background: #DFC">Slider</div>'
+
+		+'		<form id="'+numElements+'">	'
+		+'					<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image" />'
+		+'			<br /> Image descr: <input id="imageText'+numElements+'" type="text" /> <input'
+		+'				class="gobutton" id="uploadBtn" type="button" value="Upload"'
+		+'				onClick="performAjaxSubmit(1,'+numElements+');"></input>'
+		+'		</form>'
+		+'		<div style="width: 550px; heigth: 300px;">'
+		+'			<div id="slider'+numElements+'" class="slider">'
+					
+		+'				<img src="images/image-slider-3.jpg" />'
+		+'				<img src="images/image-slider-1.jpg" />'
+					
+		+'			</div>'
+		+'		</div>'
+		+'	</div>';
+	}
+	function createCommentBox() {
+
+		numElements += 1;
+		alert(1);
+		document.body.innerHTML += '<div class="drsElement"'
+				+'style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">'
+
+				+ 'zaza'
+				+ '	<div class="drsMoveHandle" style="background: #DFC">'
+				+ '		<form action="#" id="usrform">'
+				+ '			Name: <input type="text" name="usrname"> <input disabled'
+						+'			class="gobutton" type="submit" style="background: blue">'
+				+ '	</form>'
+				+ '	<br>'
+				+ '		<textarea rows="4" cols="50" name="comment" form="usrform">'
+				+ '		Enter text here...</textarea>'
+				+ '		<br> <br>'
+				+ '		<div class=rounded>'
+				+ '	<p>'
+				+ '			<a class="name 1"> name </a> comment 1'
+				+ '		</p>'
+				+ '	</div>'
+				+ '	<br>'
+				+ '	<div class=rounded>'
+				+ '		<p>'
+				+ '		<a class="name 2"> name </a> comment 2'
+				+ '	</p>'
+				+ '</div>' + '	</div>' + '	</div>';
+
+		alert(2);
+	}
 </script>
+<%--comment style --%>
+<style type="text/css">
+div.rounded {
+	width: 255px;
+	margin: 0;
+	background: #3498db;
+	background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+	background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+	background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+	background-image: -o-linear-gradient(top, #3498db, #2980b9);
+	background-image: linear-gradient(to bottom, #3498db, #2980b9);
+	-webkit-border-radius: 17;
+	-moz-border-radius: 17;
+	border-radius: 17px;
+	font-family: Arial;
+	color: #ffffff;
+	font-size: 20px;
+	padding: 5px 10px 5px 10px;
+	text-decoration: none;
+}
+
+a.name {
+	-webkit-border-radius: 30;
+	-moz-border-radius: 30;
+	border-radius: 30px;
+	font-family: Arial;
+	color: #1100ff;
+	font-size: 25px;
+	background: #ffffff;
+	padding: 15px 15px 15px 15px;
+	text-decoration: none;
+}
+
+a.name:hover {
+	background: #edf1f5;
+	text-decoration: none;
+}
+</style>
 <%--uploader style --%>
 <link rel="stylesheet" type="text/css" href="Uploader.css">
 <script type="text/javascript">
@@ -122,6 +232,19 @@
 </script>
 <%--color picker --%>
 <script type="text/javascript" src="jscolor.js"></script>
+<%--gallery --%>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="sss.min.js"></script>
+<link rel="stylesheet" href="sss.css" type="text/css" media="all">
+
+
+<script>
+	jQuery(function($) {
+		$('.slider').sss();
+	});
+</script>
 </head>
 
 <body>
@@ -168,10 +291,21 @@
 				<i class="icon1 fa fa-star fa-lg"></i> <i
 					class="icon2 fa fa-plus fa-lg"></i> <span>Image</span>
 			</div>
-			<div id="circle">
+			<div onclick="createCommentBox();" id="circle">
 				<i class="icon1 fa fa-star fa-lg"></i> <i
-					class="icon2 fa fa-plus fa-lg"></i> <span>Three</span>
+					class="icon2 fa fa-plus fa-lg"></i> <span>Comments Box</span>
 			</div>
+			
+				<div onclick="createGallery();" id="circle">
+				<i class="icon1 fa fa-star fa-lg"></i> <i
+					class="icon2 fa fa-plus fa-lg"></i> <span>Slider Gallery</span>
+			</div>
+			<div onclick="createGallery();" id="circle">
+				<i class="icon1 fa fa-star fa-lg"></i> <i
+					class="icon2 fa fa-plus fa-lg"></i> <span>Youtube Video</span>
+			</div>
+			
+			
 		</div>
 
 
@@ -188,7 +322,7 @@
 
 			<input id="sampleFile1" name="sampleFile" type="file" accept="image" />
 			<br /> <input class="gobutton" id="uploadBtn" type="button"
-				value="Upload" onClick="performAjaxSubmit(1);"></input>
+				value="Upload" onClick="performAjaxSubmit(0,1);"></input>
 
 		</form>
 
@@ -207,12 +341,19 @@
 
 
 	<script type="text/javascript">
-		function performAjaxSubmit(id) {
+		function performAjaxSubmit(multi, id) {
 
 			var sampleFile = document.getElementById("sampleFile" + id).files[0];
 
 			var formdata = new FormData();
-			var image = document.getElementById("image" + id)
+
+			var image;
+			var slider;
+			if (multi == 0) {
+				image = document.getElementById("image" + id);
+			} else {
+				slider = document.getElementById("slider" + id);
+			}
 
 			formdata.append("sampleFile", sampleFile);
 
@@ -231,7 +372,20 @@
 			xhr.onload = function(e) {
 
 				if (this.status == 200) {
-					image.innerHTML = this.responseText;
+					if (multi == 0) {
+						image.innerHTML = this.responseText;
+					} else {
+						var text = document.getElementById("imageText"+id);
+						alert(text.value);
+						alert("qeia+");
+						var additionalText = "";
+						if(text.value!=""){
+							alert("no");
+							additionalText='<span class="caption">'+text.value+'</span>';
+						}
+						slider.innerHTML +='<div>'+ this.responseText+ additionalText+'</div>';
+						
+					}
 					alert(this.responseText);
 
 				}
@@ -242,18 +396,61 @@
 	</script>
 
 	<%--comment box --%>
-	<div>
-		<form action="demo_form.asp" id="usrform">
-			Name: <input type="text" name="usrname"> <input type="submit">
-		</form>
-		<br>
-		<textarea rows="4" cols="50" name="comment" form="usrform">
-Enter text here...</textarea>
-		<p>name :comment 1</p>
-		<p>name : comment 1</p>
-		<p>name : comment 1</p>
+	<%-- 
 
+	<div class="drsElement"
+		style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">
+
+		zaza
+		<div class="drsMoveHandle" style="background: #DFC">
+			<form action="#" id="usrform">
+				Name: <input type="text" name="usrname"> <input disabled
+					class="gobutton" type="submit" style="background: blue">
+			</form>
+			<br>
+			<textarea rows="4" cols="50" name="comment" form="usrform">
+Enter text here...</textarea>
+			<br> <br>
+			<div class=rounded>
+				<p>
+					<a class="name"> name </a> comment 1
+				</p>
+			</div>
+			<br>
+			<div class=rounded>
+				<p>
+					<a class="name"> name </a> comment 1
+				</p>
+			</div>
+
+		</div>
 	</div>
+--%>
+
+	<%-- gallery --%>
+
+	<div class="drsElement"
+		style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">
+		<div class="drsMoveHandle" style="background: #DFC">Slider</div>
+
+		<form id="1">
+
+			<input id="sampleFile1" name="sampleFile" type="file" accept="image" />
+			<br /> Image descr: <input id="imageText1" type="text" /> <input
+				class="gobutton" id="uploadBtn" type="button" value="Upload"
+				onClick="performAjaxSubmit(1,1);"></input>
+		</form>
+		<div style="width: 550px; heigth: 300px;">
+			<div id="slider1" class="slider">
+				
+				<img src="images/image-slider-3.jpg" />
+				
+			</div>
+		</div>
+	</div>
+
+
+
 
 
 </body>
