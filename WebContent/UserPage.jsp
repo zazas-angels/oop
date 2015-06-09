@@ -24,9 +24,11 @@
 
 		numElements += 1;
 		alert(1);
-		document.body.innerHTML += "<div class=\"drsElement\" style=\"left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center\"><form id="+numElements+"><input id=\"sampleFile1\" name=\"sampleFile\" type=\"file\" accept=\"image\" /> <br /> <input class=\"gobutton\" id=\"uploadBtn\" type=\"button\"	value=\"Upload\" onClick=\"performAjaxSubmit(0,"
+		var div = document.createElement('div');
+		div.innerHTML += "<div class=\"drsElement\" style=\"left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center\"><form id="+numElements+"><input id=\"sampleFile1\" name=\"sampleFile\" type=\"file\" accept=\"image\" /> <br /> <input class=\"gobutton\" id=\"uploadBtn\" type=\"button\"	value=\"Upload\" onClick=\"performAjaxSubmit(0,"
 				+ numElements
 				+ ");\"></input></form> <div class=\"drsMoveHandle\" style=\"background: #DFC;\" id=\"image1\"><img alt=\"\" src=\"noImage.png \" style=\"width: 250px; height: 230px;\"></div></div>";
+		document.body.appendChild(div);
 		alert(2);
 	}
 
@@ -34,7 +36,7 @@
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
-		  div.innerHTML = "<div class=\"drsElement\""
+		div.innerHTML = "<div class=\"drsElement\""
 			+"	style=\"left: 50px; top: 150px; width: 350px; height: 90px; background: white; text-align: center\">"
 				+ "	<div class=\"drsMoveHandle\">Text:</div>"
 				+ "	<div style=\"border: 1px solid green; background-color: #A5B7F2;\">"
@@ -59,13 +61,17 @@
 				+ ");\" oninput=\"changeSize("
 				+ numElements
 				+ ");\">"
-				+'Bold: <input type="checkbox" id="bold'+numElements+'" onclick="changeBold('+numElements+');">'
+				+ 'Bold: <input type="checkbox" id="bold'
+				+ numElements
+				+ '" onclick="changeBold('
+				+ numElements
+				+ ');">'
 				+ "	</div>"
 				+ "	<div id=\""+numElements+"\">"
 				+ "		<p contenteditable=\"true\">Your Text</p>"
 				+ "</div>	</div>";
-				'<input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>';
-				  document.body.appendChild(div);
+		'<input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>';
+		document.body.appendChild(div);
 		alert(2);
 	}
 	function changeSize(id) {
@@ -77,35 +83,37 @@
 			element.style.fontSize = size + "px";
 
 	}
-	function createGallery(){
+	function createGallery() {
 		numElements += 1;
 		alert(1);
-		document.body.innerHTML += 
-		'<div class="drsElement"'
+		var div = document.createElement('div');
+		div.innerHTML += '<div class="drsElement"'
 		+'	style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">'
-		+'		<div class="drsMoveHandle" style="background: #DFC">Slider</div>'
+				+ '		<div class="drsMoveHandle" style="background: #DFC">Slider</div>'
 
-		+'		<form id="'+numElements+'">	'
-		+'					<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image" />'
-		+'			<br /> Image descr: <input id="imageText'+numElements+'" type="text" /> <input'
-		+'				class="gobutton" type="button" value="Upload"'
-		+'				onClick="performAjaxSubmit(1,'+numElements+');"></input>'
-		+'		</form>'
-		+'		<div style="width: 550px; heigth: 300px;">'
-		+'			<div id="slider'+numElements+'" class="slider">'
-					
-		+'				<img src="images/image-slider-3.jpg" />'
-		+'				<img src="images/image-slider-1.jpg" />'
-					
-		+'			</div>'
-		+'		</div>'
-		+'	</div>';
+				+ '		<form id="'+numElements+'">	'
+				+ '					<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image" />'
+				+ '			<br /> Image descr: <input id="imageText'+numElements+'" type="text" /> <input'
+				+ '				class="gobutton" type="button" value="Upload"'
+				+ '				onClick="performAjaxSubmit(1,'
+				+ numElements
+				+ ');"></input>'
+				+ '		</form>'
+				+ '		<div style="width: 550px; height: 300px;">'
+				+ '			<div id="slider'+numElements+'" class="slider">'
+
+				+ '				<img src="images/image-slider-3.jpg" />'
+				+ '				<img src="images/image-slider-1.jpg" />'
+
+				+ '			</div>' + '		</div>' + '	</div>';
+		document.body.appendChild(div);
 	}
 	function createCommentBox() {
 
 		numElements += 1;
 		alert(1);
-		document.body.innerHTML += '<div class="drsElement"'
+		var div = document.createElement('div');
+		div.innerHTML += '<div class="drsElement"'
 				+'style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">'
 
 				+ 'Comment Box'
@@ -129,51 +137,49 @@
 				+ '		<a class="name 2"> name </a> comment 2'
 				+ '	</p>'
 				+ '</div>' + '	</div>' + '	</div>';
-
+		document.body.appendChild(div);
 		alert(2);
 	}
-	
-	function uploadVideo(id){
-		var link=document.getElementById("videoLink"+id).value;
-		if(link.substring(0, 32)=="https://www.youtube.com/watch?v="){
-			alert('<iframe width="560" height="315" src="https://www.youtube.com/embed/'+link.substring(32)
-					+'" frameborder="0" allowfullscreen></iframe>');
-			document.getElementById("video"+id).innerHTML=
-				'<iframe width="560" height="315" src="https://www.youtube.com/embed/'+link.substring(32)
-				+'" frameborder="0" allowfullscreen></iframe>';
-		}else{
-			document.getElementById("video"+id).innerHTML="error loading";
-		
+
+	function uploadVideo(id) {
+		var link = document.getElementById("videoLink" + id).value;
+		if (link.substring(0, 32) == "https://www.youtube.com/watch?v=") {
+			alert('<iframe width="560" height="315" src="https://www.youtube.com/embed/'
+					+ link.substring(32)
+					+ '" frameborder="0" allowfullscreen></iframe>');
+			document.getElementById("video" + id).innerHTML = '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/'
+					+ link.substring(32)
+					+ '" frameborder="0" allowfullscreen></iframe>';
+		} else {
+			document.getElementById("video" + id).innerHTML = "error loading";
+
 		}
-			
-		
-		
-		
-	}
-	
-	function createVideo(){
 
-		numElements+= 1;
+	}
+
+	function createVideo() {
+
+		numElements += 1;
 		alert(1);
-		document.body.innerHTML +=
-		'<div class="drsElement"'
+		var div = document.createElement('div');
+		div.innerHTML += '<div class="drsElement"'
 		+'	style="left: 150px; top: 280px; width: 560px; height: 350px; background: #DFC; text-align: center">'
-		+'	<div class="drsMoveHandle" style="background: #DFC">Youtube Video</div>'
-		+'	Youtube link: <input id="videoLink'+numElements+'" type="text" /> <input'
-		+'			class="gobutton"  type="button" value="Upload Video"'
-		+'			onClick="uploadVideo('+numElements+');"></input>'
+				+ '	<div class="drsMoveHandle" style="background: #DFC">Youtube Video</div>'
+				+ '	Youtube link: <input id="videoLink'+numElements+'" type="text" /> <br><input'
+				+ '			class="gobutton"  type="button" value="Upload Video"'
+				+ '			onClick="uploadVideo(' + numElements + ');"></input>'
 
-		+'	<div id="video'+numElements+'"></div>'
-		+'	</div>';
+				+ '	<div id="video'+numElements+'" style="width:100%;height:calc(100% - 75px);"></div>' + '	</div>';
+		document.body.appendChild(div);
 
 	}
-	
-	function changeBold(id){
-		var isChecked = document.getElementById("bold"+id).checked;
-		if(isChecked){
-			document.getElementById(id).style.fontWeight="Bold";
-		}else{
-			document.getElementById(id).style.fontWeight="normal";
+
+	function changeBold(id) {
+		var isChecked = document.getElementById("bold" + id).checked;
+		if (isChecked) {
+			document.getElementById(id).style.fontWeight = "Bold";
+		} else {
+			document.getElementById(id).style.fontWeight = "normal";
 		}
 	}
 </script>
@@ -346,8 +352,8 @@ a.name:hover {
 				<i class="icon1 fa fa-star fa-lg"></i> <i
 					class="icon2 fa fa-plus fa-lg"></i> <span>Comments Box</span>
 			</div>
-			
-				<div onclick="createGallery();" id="circle">
+
+			<div onclick="createGallery();" id="circle">
 				<i class="icon1 fa fa-star fa-lg"></i> <i
 					class="icon2 fa fa-plus fa-lg"></i> <span>Slider Gallery</span>
 			</div>
@@ -355,8 +361,8 @@ a.name:hover {
 				<i class="icon1 fa fa-star fa-lg"></i> <i
 					class="icon2 fa fa-plus fa-lg"></i> <span>Youtube Video</span>
 			</div>
-			
-			
+
+
 		</div>
 
 
@@ -426,16 +432,18 @@ a.name:hover {
 					if (multi == 0) {
 						image.innerHTML = this.responseText;
 					} else {
-						var text = document.getElementById("imageText"+id);
+						var text = document.getElementById("imageText" + id);
 						alert(text.value);
 						alert("qeia+");
 						var additionalText = "";
-						if(text.value!=""){
+						if (text.value != "") {
 							alert("no");
-							additionalText='<span class="caption">'+text.value+'</span>';
+							additionalText = '<span class="caption">'
+									+ text.value + '</span>';
 						}
-						slider.innerHTML +='<div>'+ this.responseText+ additionalText+'</div>';
-						
+						slider.innerHTML += '<div>' + this.responseText
+								+ additionalText + '</div>';
+
 					}
 					alert(this.responseText);
 
@@ -479,7 +487,7 @@ Enter text here...</textarea>
 --%>
 
 	<%-- gallery --%>
-<%--
+	<%--
 	<div class="drsElement"
 		style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">
 		<div class="drsMoveHandle" style="background: #DFC">Slider</div>
@@ -491,7 +499,7 @@ Enter text here...</textarea>
 				class="gobutton" id="uploadBtn" type="button" value="Upload"
 				onClick="performAjaxSubmit(1,1);"></input>
 		</form>
-		<div style="width: 550px; heigth: 300px;">
+		<div style="width: 550px; height: 300px;">
 			<div id="slider1" class="slider">
 				
 				<img src="images/image-slider-3.jpg" />
@@ -500,19 +508,17 @@ Enter text here...</textarea>
 		</div>
 	</div>
  --%>
-<%--video --%>
-<%-- 
-	<div class="drsElement"
+	<%--video --%> 
+<%-- 	<div class="drsElement"
 		style="left: 150px; top: 280px; width: 560px; height: 350px; background: #DFC; text-align: center">
 		<div class="drsMoveHandle" style="background: #DFC">Youtube Video</div>
-Youtube link: <input id="videoLink1" type="text" /> <input
+Youtube link: <input id="videoLink1" type="text" /> <br><input
 				class="gobutton"  type="button" value="Upload Video"
 				onClick="uploadVideo(1);"></input>
 
-		<div id="video1"></div>
+		<div id="video1" style="width:100%;height:calc(100% - 75px);"></div>
 </div>
 --%>
-
 
 
 </body>
