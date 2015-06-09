@@ -129,6 +129,41 @@
 
 		alert(2);
 	}
+	
+	function uploadVideo(id){
+		var link=document.getElementById("videoLink"+id).value;
+		if(link.substring(0, 32)=="https://www.youtube.com/watch?v="){
+			alert('<iframe width="560" height="315" src="https://www.youtube.com/embed/'+link.substring(32)
+					+'" frameborder="0" allowfullscreen></iframe>');
+			document.getElementById("video"+id).innerHTML=
+				'<iframe width="560" height="315" src="https://www.youtube.com/embed/'+link.substring(32)
+				+'" frameborder="0" allowfullscreen></iframe>';
+		}else{
+			document.getElementById("video"+id).innerHTML="error loading";
+		
+		}
+			
+		
+		
+		
+	}
+	
+	function createVideo(){
+
+		numElements+= 1;
+		alert(1);
+		document.body.innerHTML +=
+		'<div class="drsElement"'
+		+'	style="left: 150px; top: 280px; width: 560px; height: 350px; background: #DFC; text-align: center">'
+		+'	<div class="drsMoveHandle" style="background: #DFC">Youtube Video</div>'
+		+'	Youtube link: <input id="videoLink'+numElements+'" type="text" /> <input'
+		+'			class="gobutton"  type="button" value="Upload Video"'
+		+'			onClick="uploadVideo('+numElements+');"></input>'
+
+		+'	<div id="video'+numElements+'"></div>'
+		+'	</div>';
+
+	}
 </script>
 <%--comment style --%>
 <style type="text/css">
@@ -300,7 +335,7 @@ a.name:hover {
 				<i class="icon1 fa fa-star fa-lg"></i> <i
 					class="icon2 fa fa-plus fa-lg"></i> <span>Slider Gallery</span>
 			</div>
-			<div onclick="createGallery();" id="circle">
+			<div onclick="createVideo();" id="circle">
 				<i class="icon1 fa fa-star fa-lg"></i> <i
 					class="icon2 fa fa-plus fa-lg"></i> <span>Youtube Video</span>
 			</div>
@@ -449,7 +484,18 @@ Enter text here...</textarea>
 		</div>
 	</div>
 
+<%--video --%>
+<%-- 
+	<div class="drsElement"
+		style="left: 150px; top: 280px; width: 560px; height: 350px; background: #DFC; text-align: center">
+		<div class="drsMoveHandle" style="background: #DFC">Youtube Video</div>
+Youtube link: <input id="videoLink1" type="text" /> <input
+				class="gobutton"  type="button" value="Upload Video"
+				onClick="uploadVideo(1);"></input>
 
+		<div id="video1"></div>
+</div>
+--%>
 
 
 
