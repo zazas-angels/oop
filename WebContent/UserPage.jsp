@@ -33,7 +33,8 @@
 	function createText() {
 		numElements += 1;
 		alert(1);
-		document.body.innerHTML += "<div class=\"drsElement\""
+		var div = document.createElement('div');
+		  div.innerHTML = "<div class=\"drsElement\""
 			+"	style=\"left: 50px; top: 150px; width: 350px; height: 90px; background: white; text-align: center\">"
 				+ "	<div class=\"drsMoveHandle\">Text:</div>"
 				+ "	<div style=\"border: 1px solid green; background-color: #A5B7F2;\">"
@@ -63,7 +64,8 @@
 				+ "	<div id=\""+numElements+"\">"
 				+ "		<p contenteditable=\"true\">Your Text</p>"
 				+ "</div>	</div>";
-
+				'<input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>';
+				  document.body.appendChild(div);
 		alert(2);
 	}
 	function changeSize(id) {
