@@ -58,6 +58,7 @@
 				+ ");\" oninput=\"changeSize("
 				+ numElements
 				+ ");\">"
+				+'Bold: <input type="checkbox" id="bold'+numElements+'" onclick="changeBold('+numElements+');">'
 				+ "	</div>"
 				+ "	<div id=\""+numElements+"\">"
 				+ "		<p contenteditable=\"true\">Your Text</p>"
@@ -85,7 +86,7 @@
 		+'		<form id="'+numElements+'">	'
 		+'					<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image" />'
 		+'			<br /> Image descr: <input id="imageText'+numElements+'" type="text" /> <input'
-		+'				class="gobutton" id="uploadBtn" type="button" value="Upload"'
+		+'				class="gobutton" type="button" value="Upload"'
 		+'				onClick="performAjaxSubmit(1,'+numElements+');"></input>'
 		+'		</form>'
 		+'		<div style="width: 550px; heigth: 300px;">'
@@ -105,9 +106,9 @@
 		document.body.innerHTML += '<div class="drsElement"'
 				+'style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">'
 
-				+ 'zaza'
+				+ 'Comment Box'
 				+ '	<div class="drsMoveHandle" style="background: #DFC">'
-				+ '		<form action="#" id="usrform">'
+				+ '		<form action="#" >'
 				+ '			Name: <input type="text" name="usrname"> <input disabled'
 						+'			class="gobutton" type="submit" style="background: blue">'
 				+ '	</form>'
@@ -163,6 +164,15 @@
 		+'	<div id="video'+numElements+'"></div>'
 		+'	</div>';
 
+	}
+	
+	function changeBold(id){
+		var isChecked = document.getElementById("bold"+id).checked;
+		if(isChecked){
+			document.getElementById(id).style.fontWeight="Bold";
+		}else{
+			document.getElementById(id).style.fontWeight="normal";
+		}
 	}
 </script>
 <%--comment style --%>
@@ -284,7 +294,7 @@ a.name:hover {
 
 <body>
 	<%--text --%>
-	<%--<div class="drsElement"
+	<%-- <div class="drsElement"
 		style="left: 50px; top: 150px; width: 350px; height: 90px; background: white; text-align: center">
 		<div class="drsMoveHandle">Text:</div>
 		<div style="border: 1px solid green; background-color: #A5B7F2;">
@@ -293,13 +303,17 @@ a.name:hover {
 				class="color" colorType="back" labelId="7" value="FFFFFF">
 			Size:<input id="size7" size="1" value="18" onkeydown="changeSize(7);"
 				onpaste="changeSize(7);" oninput="changeSize(7);">
-		</div>
+				
+			Bold: <input type="checkbox" id="bold7" onclick="changeBold(7);">
+				</div>
 		<div id="7">
 			<p contenteditable="true">opaa</p>
 		</div>
 
 
-	</div> --%>
+	</div> 
+	
+	--%>
 
 
 
@@ -463,7 +477,7 @@ Enter text here...</textarea>
 --%>
 
 	<%-- gallery --%>
-
+<%--
 	<div class="drsElement"
 		style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">
 		<div class="drsMoveHandle" style="background: #DFC">Slider</div>
@@ -483,7 +497,7 @@ Enter text here...</textarea>
 			</div>
 		</div>
 	</div>
-
+ --%>
 <%--video --%>
 <%-- 
 	<div class="drsElement"
