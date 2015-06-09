@@ -47,7 +47,7 @@ public class FileUploader extends HttpServlet {
 							item.write(new File(pathImage));
 							imageHTML = "<img src=\""
 									+ pathImage
-									+ "\" style=\"width: 250px; height: 230px;\">";
+									+ "\" style=\"width: 100%; height: 100%;\">";
 
 						} else {
 							System.out.println("notImage");

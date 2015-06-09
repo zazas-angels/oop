@@ -25,9 +25,21 @@
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
-		div.innerHTML += "<div class=\"drsElement\" style=\"left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center\"><form id="+numElements+"><input id=\"sampleFile1\" name=\"sampleFile\" type=\"file\" accept=\"image\" /> <br /> <input class=\"gobutton\" id=\"uploadBtn\" type=\"button\"	value=\"Upload\" onClick=\"performAjaxSubmit(0,"
-				+ numElements
-				+ ");\"></input></form> <div class=\"drsMoveHandle\" style=\"background: #DFC;\" id=\"image1\"><img alt=\"\" src=\"noImage.png \" style=\"width: 250px; height: 230px;\"></div></div>";
+		div.innerHTML += 
+		'<div class="drsElement "'
+		+'		style="left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center">'
+		+'		<form id="'+numElements+'">'
+		+'					<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image" />'
+		+'			<br /> <input class="gobutton" id="uploadBtn" type="button"'
+		+'			value="Upload" onClick="performAjaxSubmit(0,'+numElements+');"></input>'
+		+'				</form>'
+		+'	<div class="drsMoveHandle " style="background: #DFC;width:100%; height:calc(100% - 50px);" id="image'+numElements+'"  >'
+		+'		<img alt="noImage" src="noImage.png " style="width: 100%;height:100%;">'
+		+'	</div>'
+		+'		</div>';
+			
+			
+			
 		document.body.appendChild(div);
 		alert(2);
 	}
@@ -369,7 +381,7 @@ a.name:hover {
 
 	</div>
 	<%--image --%>
-	<%--
+	<%-- 
 	<div class="drsElement "
 		style="left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center">
 
@@ -382,24 +394,19 @@ a.name:hover {
 				value="Upload" onClick="performAjaxSubmit(0,1);"></input>
 
 		</form>
-
-
-
-
-
-		<div class="drsMoveHandle " style="background: #DFC;" id="image1">
-			<img alt="" src="noImage.png " style="width: 250px; height: 230px;">
+		<div class="drsMoveHandle " style="background: #DFC;width:100%; height:calc(100% - 50px);" id="image1"  >
+			<img alt="noImage" src="noImage.png " style="width: 100%;height:100%;">
 		</div>
 
 	</div>
- --%>
+ 
 
-
+--%>
 
 
 	<script type="text/javascript">
 		function performAjaxSubmit(multi, id) {
-
+alert("movida");
 			var sampleFile = document.getElementById("sampleFile" + id).files[0];
 
 			var formdata = new FormData();
