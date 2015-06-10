@@ -38,19 +38,23 @@ public class FileUploader extends HttpServlet {
 
 				for (FileItem item : multiparts) {
 					if (!item.isFormField()) {
+						System.out.println(item.getName());
 						File file = new File(item.getName());
 						String name = file.getName();
+						System.out.println("name : "+name);
 						String pathImage = UPLOAD_DIRECTORY + File.separator
 								+ name;
-						if (isImage(file)) {
+						System.out.println(pathImage);
+						if (isImage(name)) {
 							System.out.println("image");
 							item.write(new File(pathImage));
 							imageHTML = "<img src=\""
-									+ pathImage
+									+ name
 									+ "\" style=\"width: 100%; height: 100%;\">";
 
 						} else {
 							System.out.println("notImage");
+							item.write(new File(pathImage));
 						}
 
 						// File uploaded successfully
@@ -74,18 +78,22 @@ public class FileUploader extends HttpServlet {
 	// checks if file is image : Server Side
 	// This code is from:
 	// http://stackoverflow.com/questions/18208359/how-to-check-if-the-file-is-an-image
-	private boolean isImage(File file) {
-		boolean result = true;
-		try {
-			Image image = ImageIO.read(file);
-			if (image == null) {
-				result = false;
+	private boolean isImage(String name) {
+		int index = name.length()-2;//last index can't be .
+		System.out.println("name"+name+"index "+index);
+		
+		while(index>0){
+			System.out.println(index);
+			if(name.charAt(index)=='.'){
+				break;
 			}
-		} catch (IOException ex) {
-			result = false;
+			index--;
 		}
-
-		return result;
+		if(index<=0)return false;
+		
+		String extension= name.substring(index+1).toLowerCase();
+		System.out.println(extension);
+		return extension.equals("png")||extension.equals("jpg")||extension.equals("jpeg")||extension.equals("gif");
 
 	}
 

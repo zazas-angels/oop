@@ -19,7 +19,7 @@
 <link href='http://fonts.googleapis.com/css?family=Comfortaa'
 	rel='stylesheet' type='text/css'>
 <script type="text/javascript">
-	var numElements = 5;//need threading?
+	var numElements = 23;//need threading?
 	function createImage() {
 
 		numElements += 1;
@@ -29,7 +29,7 @@
 		'<div class="drsElement "'
 		+'		style="left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center">'
 		+'		<form id="'+numElements+'">'
-		+'					<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image" />'
+		+'					<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image/gif,image/jpeg,image/jpg,,image/png" />'
 		+'			<br /> <input class="gobutton" id="uploadBtn" type="button"'
 		+'			value="Upload" onClick="performAjaxSubmit(0,'+numElements+');"></input>'
 		+'				</form>'
@@ -314,7 +314,7 @@ a.name:hover {
 
 <body>
 	<%--text --%>
-	<%-- <div class="drsElement"
+	<div class="drsElement"
 		style="left: 50px; top: 150px; width: 350px; height: 90px; background: white; text-align: center">
 		<div class="drsMoveHandle">Text:</div>
 		<div style="border: 1px solid green; background-color: #A5B7F2;">
@@ -322,18 +322,16 @@ a.name:hover {
 				labelId="7" value="000000"> Back: <input id="zaz" size="5"
 				class="color" colorType="back" labelId="7" value="FFFFFF">
 			Size:<input id="size7" size="1" value="18" onkeydown="changeSize(7);"
-				onpaste="changeSize(7);" oninput="changeSize(7);">
-				
-			Bold: <input type="checkbox" id="bold7" onclick="changeBold(7);">
-				</div>
-		<div id="7">
-			<p contenteditable="true">opaa</p>
+				onpaste="changeSize(7);" oninput="changeSize(7);"> Bold: <input
+				type="checkbox" id="bold7" onclick="changeBold(7);">
 		</div>
+		<p contenteditable="true" style="width: 100%; height: calc(100% - 60px);" id="7">
+	</p>
+		
 
 
-	</div> 
-	
-	--%>
+	</div>
+
 
 
 
@@ -381,7 +379,7 @@ a.name:hover {
 
 	</div>
 	<%--image --%>
-	<%-- 
+<%-- 
 	<div class="drsElement "
 		style="left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center">
 
@@ -399,9 +397,10 @@ a.name:hover {
 		</div>
 
 	</div>
+	--%>
  
 
---%>
+
 
 
 	<script type="text/javascript">
@@ -413,6 +412,7 @@ alert("movida");
 
 			var image;
 			var slider;
+			
 			if (multi == 0) {
 				image = document.getElementById("image" + id);
 			} else {
@@ -430,7 +430,6 @@ alert("movida");
 			}
 
 			xhr.open("POST", "FileUploader", true);
-
 			xhr.send(formdata);
 
 			xhr.onload = function(e) {
@@ -515,8 +514,8 @@ Enter text here...</textarea>
 		</div>
 	</div>
  --%>
-	<%--video --%> 
-<%-- 	<div class="drsElement"
+	<%--video --%>
+	<%-- 	<div class="drsElement"
 		style="left: 150px; top: 280px; width: 560px; height: 350px; background: #DFC; text-align: center">
 		<div class="drsMoveHandle" style="background: #DFC">Youtube Video</div>
 Youtube link: <input id="videoLink1" type="text" /> <br><input
@@ -526,7 +525,7 @@ Youtube link: <input id="videoLink1" type="text" /> <br><input
 		<div id="video1" style="width:100%;height:calc(100% - 75px);"></div>
 </div>
 --%>
-
+<img alt="" src="images\default.png">
 
 </body>
 </html>
