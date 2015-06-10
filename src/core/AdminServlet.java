@@ -1,7 +1,7 @@
 package core;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+//import com.google.gson.JsonArray;
+//import com.google.gson.JsonObject;
 import core.administrator.Administrator;
 
 import javax.servlet.ServletException;
@@ -31,7 +31,7 @@ public class AdminServlet extends HttpServlet {
         Administrator admin = (Administrator) request.getSession().getAttribute("admin");
         if (admin != null && name != null && bann != null && category != null && active != null) {
 
-            ResultSet set = admin.findUser(name, bann, active, category);
+           /* ResultSet set = admin.findUser(name, bann, active, category);
             if (set != null) {
                 try {
                     JsonArray list = new JsonArray();
@@ -50,7 +50,7 @@ public class AdminServlet extends HttpServlet {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            }
+            }*/
         }
     }
 }
