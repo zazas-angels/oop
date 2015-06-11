@@ -26,7 +26,6 @@ $(document).ready(function () {
  */
 
 function searchByName() {
-    debugger;
     var link = "http://localhost:8080/admin?name=" + $("#name").val() + "&category=default&bann=all&active=all";
     $.get(link)
         .done(function (response) {
@@ -50,20 +49,29 @@ function extendedSearch() {
 }
 
 function update(response) {
-    debugger;
     var data = "";
     var arr = response;
     console.log(response);
     if (arr.length === 0) {
         data = "ასეთი მომხმარებელი არ არსებობს"
-    }
-    for (var i = 0; i < arr.length; i++) {
-        var user = arr[i];
-        var url = user.url;
-        var tmp = "<div class= \"col span_1_of_4\">" + user.name + "<br>";
-        tmp += "<a href=\"" + user.url + "\">"
-        tmp += "<img src=\"" + user.avatarFile + "\" alt=\"" + user.name + "\" style=\"width:150px;height:150px;\"></a></div>";
-        data += tmp;
+    } else {
+        data = "<ul>";
+        for (var i = 0; i < arr.length; i++) {
+            var user = arr[i];
+            console.log(user);
+            var url = user.url;
+            var tmp = "<li><a class='normal' href='" + url + "'><img src=\"" + user.avatarFile + "\" alt=\"" + user.name + " \"style=\"width:180px;height:180px\" x='0px' y='0px'></a>";
+            tmp += "<div class='info'><h3>" + user.name + "</h3><p>"
+                + url + "<br>"
+                + user.isBanned + "<br>"
+                + user.isActive + "<br>"
+                + "type: " + user.type + "<br>"
+                + "rating " + user.rating + "<br>"
+                + "</p></div></li>";
+            data += tmp;
+        }
+        data += "</ul>" +
+            "<script src=\"searchResults.js\"></script><link rel=\"stylesheet\" href=\"searchResults.css\">";
     }
     $('#main-section').html(data);
 }

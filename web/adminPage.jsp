@@ -93,7 +93,19 @@
         </table>
     </div>
 </div>
+
+
+<div id="left-panel">
+    <div id="reports">
+        <h2>reports</h2></div>
+    <div id="wantedCategories">
+        <h2>wanted categories</h2>
+    </div>
+</div>
+<div id="notifications">
+    <h2>notifications</h2></div>
 <div id=main-section>
+    <h2> main section </h2>
     aasdasdas
     adasdasd
     asdasdasdas

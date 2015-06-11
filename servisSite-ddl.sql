@@ -192,12 +192,6 @@ CREATE TABLE elements_pictures (
 );
 
 
-
-
-
-
-
-
 ##admins
 DROP TABLE IF EXISTS admins;
 CREATE TABLE admins (
@@ -206,3 +200,14 @@ CREATE TABLE admins (
     password varchar(64),
 	primary key(ID)
 );
+
+/*
+##reports
+DROP TABLE IF EXISTS reports;
+CREATE TABLE reports (
+    ID int not null auto_increment,
+    mail varchar(64),
+    password varchar(64),
+    primary key(ID)
+);
+*/

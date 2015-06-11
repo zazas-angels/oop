@@ -1,7 +1,7 @@
 package core;
 
-//import com.google.gson.JsonArray;
-//import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import core.administrator.Administrator;
 
 import javax.servlet.ServletException;
@@ -31,7 +31,7 @@ public class AdminServlet extends HttpServlet {
         Administrator admin = (Administrator) request.getSession().getAttribute("admin");
         if (admin != null && name != null && bann != null && category != null && active != null) {
 
-           /* ResultSet set = admin.findUser(name, bann, active, category);
+            ResultSet set = admin.findUser(name, bann, active, category);
             if (set != null) {
                 try {
                     JsonArray list = new JsonArray();
@@ -42,6 +42,19 @@ public class AdminServlet extends HttpServlet {
                         userObj.addProperty("url", set.getString("url"));
                         userObj.addProperty("type", set.getString("type"));
                         userObj.addProperty("avatarFile", set.getString("avatarFile"));
+                        if (set.getBoolean("isActive")) {
+                            userObj.addProperty("isActive", "active");
+                        } else {
+                            userObj.addProperty("isActive", "not actived");
+                        }
+                        if (set.getBoolean("isBanned")) {
+                            userObj.addProperty("isBanned", "banned");
+                        } else {
+                            userObj.addProperty("isBanned", "not banned");
+                        }
+
+                        // bazashi rating-is nacvlad raiting weria..!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        userObj.addProperty("rating", set.getDouble("raiting"));
                         list.add(userObj);
                     }
                     PrintWriter out = response.getWriter();
@@ -50,7 +63,7 @@ public class AdminServlet extends HttpServlet {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-            }*/
+            }
         }
     }
 }
