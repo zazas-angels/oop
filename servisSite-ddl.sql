@@ -201,13 +201,14 @@ CREATE TABLE admins (
 	primary key(ID)
 );
 
-/*
+
 ##reports
 DROP TABLE IF EXISTS reports;
 CREATE TABLE reports (
     ID int not null auto_increment,
-    mail varchar(64),
-    password varchar(64),
+    authorName VARCHAR(64),
+    authorUrl  VARCHAR(64) DEFAULT "#",
+    text       VARCHAR(2000),
+    postDate   DATETIME,
     primary key(ID)
 );
-*/

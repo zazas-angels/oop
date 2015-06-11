@@ -436,6 +436,7 @@ public class DBConnection implements core.database.Connection {
 
     /**
      * returns all users with given name
+     *
      * @param name user's wanted name
      * @return ResultSet of rows from users table
      */
@@ -616,6 +617,35 @@ public class DBConnection implements core.database.Connection {
                 // ignore
                 e.printStackTrace();
             }
+        }
+        return results;
+    }
+
+    @Override
+    public ResultSet getReports() {
+        ResultSet results = null;
+        try {
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("select * from reports order by postDate desc");
+            results = statement.executeQuery();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+    @Override
+    public ResultSet getReports(int days) {
+        ResultSet results = null;
+        try {
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("select * from reports  where datediff(now(), postDate) < ? order by postDate desc");
+            statement.setInt(1, days);
+            results = statement.executeQuery();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
         }
         return results;
     }

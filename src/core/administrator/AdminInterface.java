@@ -20,4 +20,8 @@ public interface AdminInterface {
     public void addCategory(CategoryInterface parentCategory, CategoryInterface category);
 
     public void setCategoryTree(CategoryTree categoryTree);
+
+    public ResultSet getReports();
+
+    public ResultSet getReports(int days);
 }

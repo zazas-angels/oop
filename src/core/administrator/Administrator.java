@@ -75,4 +75,22 @@ public class Administrator implements AdminInterface {
     public String getPassword() {
         return password;
     }
+
+    @Override
+    public ResultSet getReports() {
+        ResultSet set = null;
+        if (dbConnection != null) {
+            set = dbConnection.getReports();
+        }
+        return set;
+    }
+
+    @Override
+    public ResultSet getReports(int days) {
+        ResultSet set = null;
+        if (dbConnection != null) {
+            set = dbConnection.getReports(days);
+        }
+        return set;
+    }
 }

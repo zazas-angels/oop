@@ -82,4 +82,8 @@ public interface Connection {
 	public boolean addAdmin(Administrator administrator);
 
 	public boolean existsAdministrator(String mail);
+
+	ResultSet getReports();
+
+	ResultSet getReports(int days);
 }
