@@ -212,3 +212,16 @@ CREATE TABLE reports (
     postDate   DATETIME,
     primary key(ID)
 );
+
+##wantedCategories
+DROP TABLE IF EXISTS wantedCategories;
+CREATE TABLE wantedCategories (
+    ID               INT NOT NULL AUTO_INCREMENT,
+    authorName       VARCHAR(64),
+    authorUrl        VARCHAR(64)  DEFAULT "#",
+    cateogotyName    VARCHAR(64),
+    parentCategoryID INT          DEFAULT NULL,
+    postDate         DATE,
+    PRIMARY KEY (ID),
+    FOREIGN KEY (parentCategoryID) REFERENCES categories (ID)
+);

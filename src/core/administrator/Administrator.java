@@ -93,4 +93,22 @@ public class Administrator implements AdminInterface {
         }
         return set;
     }
+
+    @Override
+    public ResultSet getWantedCategories() {
+        ResultSet set = null;
+        if (dbConnection != null) {
+            set = dbConnection.getWantedCategories();
+        }
+        return set;
+    }
+
+    @Override
+    public ResultSet getWantedCategories(int days) {
+        ResultSet set = null;
+        if (dbConnection != null) {
+            set = dbConnection.getWantedCategories(days);
+        }
+        return set;
+    }
 }

@@ -623,10 +623,39 @@ public class DBConnection implements core.database.Connection {
 
     @Override
     public ResultSet getReports() {
+        return reports(-1);
+    }
+
+    @Override
+    public ResultSet getReports(int days) {
+        return reports(days);
+    }
+
+    @Override
+    public ResultSet getWantedCategories(int days) {
+        return wantedCategories(days);
+    }
+
+    @Override
+    public ResultSet getWantedCategories() {
+        return wantedCategories(-1);//-1 means, that date isn't limit
+    }
+
+    /**
+     * if days == -1 it means that we need all data, date isn't limit
+     */
+    private ResultSet wantedCategories(int days) {
         ResultSet results = null;
         try {
+            String dateLimit = "";
+            if (days >= 0) {
+                dateLimit = "where datediff(now(), postDate) < " + days;
+            }
             PreparedStatement statement = dataBaseConnection
-                    .prepareStatement("select * from reports order by postDate desc");
+                    .prepareStatement("select * from wantedCategories left join categories" +
+                            " on wantedCategories.parentCategoryID = categories.ID " + dateLimit + " order by postDate desc;");
+
+
             results = statement.executeQuery();
         } catch (SQLException e) {
             // ignore
@@ -635,13 +664,15 @@ public class DBConnection implements core.database.Connection {
         return results;
     }
 
-    @Override
-    public ResultSet getReports(int days) {
+    private ResultSet reports(int days) {
         ResultSet results = null;
         try {
+            String dateLimit = "";
+            if (days >= 0) {
+                dateLimit = " where datediff(now(), postDate) < " + days;
+            }
             PreparedStatement statement = dataBaseConnection
-                    .prepareStatement("select * from reports  where datediff(now(), postDate) < ? order by postDate desc");
-            statement.setInt(1, days);
+                    .prepareStatement("select * from reports" + dateLimit + " order by postDate desc;");
             results = statement.executeQuery();
         } catch (SQLException e) {
             // ignore

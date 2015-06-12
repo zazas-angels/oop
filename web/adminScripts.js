@@ -11,13 +11,50 @@ $(document).ready(function () {
         $('#searchByName').toggle();
     });
     updateReports();
+    updateWantedCategories();
     setInterval(function () {
-        updateReports()
+        updateReports();
+        updateWantedCategories();
     }, 10000);
 });
 
+function updateWantedCategories() {
+    debugger;
+    var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=wc";
+    $.get(link)
+        .done(function (response) {
+            var data = "";
+            var arr = response;
+            if (arr.length === 0) {
+                data = "no wanted categories"
+            } else {
+                data = "";
+                for (var i = 0; i < arr.length; i++) {
+                    var wantedCategory = arr[i];
+                    var url = wantedCategory.url;
+                    var tmp = "author: ";
+                    if (url === "#") {
+                        tmp += wantedCategory.author;
+                    } else {
+                        tmp += "<a href='" + url + "'> " + wantedCategory.author + "</a>";
+                    }
+                    tmp += "<br>wanted categoty:   " + wantedCategory.categoryName + "" +
+                        "<br>";
+                    if (wantedCategory.parentCategory === null) {
+                        tmp += "parent category: none";
+                    } else {
+                        tmp += "parent categoty: " + wantedCategory.parentCategory + " (ID = " + wantedCategory.parentCategoryID + ")";
+                    }
+                    data += tmp;
+                    data += "<br><br>"
+                }
+            }
+            $('#wantedCategories').html(data);
+        });
+}
+
 function updateReports() {
-    var link = "http://localhost:8080/reports.jsp";
+    var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=rep";
     $.get(link)
         .done(function (response) {
             var data = "";
@@ -37,8 +74,8 @@ function updateReports() {
                     }
                     tmp += "<p>" + report.text + "<br>" + report.date + "</p>";
                     data += tmp;
+                    data += "<br>";
                 }
-                data += "<br><br><br>";
             }
             $('#reports').html(data);
         });

@@ -83,7 +83,11 @@ public interface Connection {
 
 	public boolean existsAdministrator(String mail);
 
-	ResultSet getReports();
+	public ResultSet getReports();
 
-	ResultSet getReports(int days);
+	public ResultSet getReports(int days);
+
+	public ResultSet getWantedCategories(int days);
+
+	public ResultSet getWantedCategories();
 }

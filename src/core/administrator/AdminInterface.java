@@ -24,4 +24,8 @@ public interface AdminInterface {
     public ResultSet getReports();
 
     public ResultSet getReports(int days);
+
+    public ResultSet getWantedCategories();
+
+    public ResultSet getWantedCategories(int days);
 }
