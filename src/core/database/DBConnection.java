@@ -114,7 +114,11 @@ public class DBConnection implements core.database.Connection {
 
     public static void main(String[] args) {
         DBConnection db = new DBConnection();
-        db.addAdmin(new Administrator("nika", "paroli", new DBConnection(), null));
+        try {
+            db.addNotification("nika", "#", SiteConstants.Notification.createdUser);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -642,6 +646,82 @@ public class DBConnection implements core.database.Connection {
     }
 
     /**
+     * adds in categories table new category
+     *
+     * @param name             name of new category
+     * @param parentCategoryId parent category's id, if(parentCategoryId is negative) it means that this category doesn't have parent
+     * @return id in base, of added category
+     * @throws SQLException if something went wrong we throw exception
+     */
+    @Override
+    public int addCategory(String name, int parentCategoryId) throws SQLException {
+        PreparedStatement statement = dataBaseConnection
+                .prepareStatement("insert into categories (name, ParentId) values (?,?);");
+        statement.setString(1, name);
+        if (parentCategoryId < 0) {
+            statement.setObject(2, null);
+        } else {
+            statement.setInt(2, parentCategoryId);
+        }
+        statement.executeUpdate();
+
+
+        PreparedStatement stmt = dataBaseConnection
+                .prepareStatement("select ID from categories where name = ? and ParentId = ?;");
+        stmt.setString(1, name);
+        if (parentCategoryId < 0) {
+            stmt.setObject(2, null);
+        } else {
+            stmt.setInt(2, parentCategoryId);
+        }
+
+        ResultSet set = stmt.executeQuery();
+        set.next();
+        return set.getInt("ID");
+    }
+
+    @Override
+    public void addReport(String authorName, String authorUrl, String text) throws SQLException {
+        PreparedStatement statement = dataBaseConnection
+                .prepareStatement("insert into reports (authorName, text, postDate, authorUrl) values (?, ?, now(), ?);");
+        statement.setString(1, authorName);
+        statement.setString(2, text);
+        statement.setString(3, authorUrl);
+        statement.executeUpdate();
+    }
+
+    /**
+     * adds new wanted category in wantedCategory table
+     *
+     * @param authorName
+     * @param authorUrl
+     * @param categoryName
+     * @param parentCategoryID
+     * @throws SQLException
+     */
+    @Override
+    public void addWantedCategory(String authorName, String authorUrl, String categoryName, String parentCategoryID) throws SQLException {
+        PreparedStatement statement = dataBaseConnection
+                .prepareStatement("insert into wantedCategories (authorName, authorUrl, categoryName, postDate, parentCategoryID) values (?, ?, ?, now(), ?);");
+        statement.setString(1, authorName);
+        statement.setString(2, authorUrl);
+        statement.setString(3, categoryName);
+        statement.setString(4, parentCategoryID);
+        statement.executeUpdate();
+    }
+
+    @Override
+    public void addNotification(String userName, String userUrl, SiteConstants.Notification notification) throws SQLException {
+        PreparedStatement statement = dataBaseConnection
+                .prepareStatement("insert into notifications (notification, userName, userUrl, postDate) values " +
+                        "(?, ?, ?, now());");
+        statement.setString(1, String.valueOf(notification));
+        statement.setString(2, userName);
+        statement.setString(3, userUrl);
+        statement.executeUpdate();
+    }
+
+    /**
      * if days == -1 it means that we need all data, date isn't limit
      */
     private ResultSet wantedCategories(int days) {
@@ -664,6 +744,12 @@ public class DBConnection implements core.database.Connection {
         return results;
     }
 
+    /**
+     * searches reports in database
+     *
+     * @param days the most old report age(in days) to select
+     * @return ResultSet from reports table
+     */
     private ResultSet reports(int days) {
         ResultSet results = null;
         try {
@@ -680,4 +766,6 @@ public class DBConnection implements core.database.Connection {
         }
         return results;
     }
+
+
 }

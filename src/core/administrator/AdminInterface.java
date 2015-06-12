@@ -5,6 +5,7 @@ import core.category.CategoryTree;
 import core.user.UserInterface;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public interface AdminInterface {
@@ -17,7 +18,7 @@ public interface AdminInterface {
 
     public ResultSet findUser(String name, String bann, String active, String categoryName);
 
-    public void addCategory(CategoryInterface parentCategory, CategoryInterface category);
+    public void addCategory(String name, CategoryInterface parentCategory) throws SQLException;
 
     public void setCategoryTree(CategoryTree categoryTree);
 
