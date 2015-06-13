@@ -115,4 +115,13 @@ public class Administrator implements AdminInterface {
         }
         return set;
     }
+
+    @Override
+    public ResultSet getNotifications() {
+        ResultSet set = null;
+        if (dbConnection != null) {
+            set = dbConnection.getNotifications();
+        }
+        return set;
+    }
 }

@@ -12,23 +12,50 @@ $(document).ready(function () {
     });
     updateReports();
     updateWantedCategories();
+    updateNotifications();
     setInterval(function () {
         updateReports();
         updateWantedCategories();
+        //updateNotifications();
     }, 10000);
 });
 
+function updateNotifications() {
+    var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=not";
+    $.get(link)
+        .done(function (response) {
+            var data = "<h2>Notifications</h2>";
+            var arr = response;
+            if (arr.length === 0) {
+                data = "no notification categories"
+            } else {
+                for (var i = 0; i < arr.length; i++) {
+                    var notification = arr[i];
+                    var url = notification.url;
+                    var tmp = notification.notification + " ";
+                    tmp += "author: ";
+                    if (url === "#") {
+                        tmp += notification.author;
+                    } else {
+                        tmp += "<a href='" + url + "'> " + notification.author + "</a>";
+                    }
+                    data += tmp;
+                    data += "<br><br>"
+                }
+            }
+            $('#notifications').html(data);
+        });
+}
+
 function updateWantedCategories() {
-    debugger;
     var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=wc";
     $.get(link)
         .done(function (response) {
-            var data = "";
+            var data = "<h2>Wanted Categories</h2>";
             var arr = response;
             if (arr.length === 0) {
                 data = "no wanted categories"
             } else {
-                data = "";
                 for (var i = 0; i < arr.length; i++) {
                     var wantedCategory = arr[i];
                     var url = wantedCategory.url;
@@ -57,12 +84,11 @@ function updateReports() {
     var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=rep";
     $.get(link)
         .done(function (response) {
-            var data = "";
+            var data = "<h2>Reports</h2>";
             var arr = response;
             if (arr.length === 0) {
                 data = "no reports"
             } else {
-                data = "";
                 for (var i = 0; i < arr.length; i++) {
                     var report = arr[i];
                     var url = report.url;

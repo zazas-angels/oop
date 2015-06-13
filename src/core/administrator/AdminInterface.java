@@ -29,4 +29,6 @@ public interface AdminInterface {
     public ResultSet getWantedCategories();
 
     public ResultSet getWantedCategories(int days);
+
+    public ResultSet getNotifications();
 }

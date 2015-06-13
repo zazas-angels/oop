@@ -15,43 +15,52 @@
     Administrator admin = (Administrator) request.getSession().getAttribute("admin");
     ResultSet set = null;
     String toUpdate = request.getParameter("toUpdate");
-    if (toUpdate.equals("rep")) {
-        set = admin.getReports(31);
-    } else {
-        if (toUpdate.equals("wc")) {
-            set = admin.getWantedCategories();
+    if (toUpdate.equals("rep") || toUpdate.equals("wc") || toUpdate.equals("not")) {
+        if (toUpdate.equals("rep")) {
+            set = admin.getReports(31);
+        } else {
+            if (toUpdate.equals("wc")) {
+                set = admin.getWantedCategories();
+            } else {
+                set = admin.getNotifications();
+            }
         }
-    }
 
-    if (set != null) {
-        try {
-            JsonArray list = new JsonArray();
-            JsonObject userObj;
-            while (set.next()) {
-                userObj = new JsonObject();
-                if (toUpdate.equals("rep")) {
-                    userObj.addProperty("author", set.getString("authorName"));
-                    userObj.addProperty("url", set.getString("authorUrl"));
-                    userObj.addProperty("text", set.getString("text"));
-                    userObj.addProperty("date", set.getString("postDate"));
-                } else {
-                    //wanted categories
-                    if (toUpdate.equals("wc")) {
+        if (set != null) {
+            try {
+                JsonArray list = new JsonArray();
+                JsonObject userObj;
+                while (set.next()) {
+                    userObj = new JsonObject();
+                    if (toUpdate.equals("rep")) {
                         userObj.addProperty("author", set.getString("authorName"));
                         userObj.addProperty("url", set.getString("authorUrl"));
-                        userObj.addProperty("categoryName", set.getString("categoryName"));
+                        userObj.addProperty("text", set.getString("text"));
                         userObj.addProperty("date", set.getString("postDate"));
-                        userObj.addProperty("parentCategory", set.getString("name"));
-                        userObj.addProperty("parentCategoryID", set.getString("parentCategoryID"));
+                    } else {
+                        //wanted categories
+                        if (toUpdate.equals("wc")) {
+                            userObj.addProperty("author", set.getString("authorName"));
+                            userObj.addProperty("url", set.getString("authorUrl"));
+                            userObj.addProperty("categoryName", set.getString("categoryName"));
+                            userObj.addProperty("date", set.getString("postDate"));
+                            userObj.addProperty("parentCategory", set.getString("name"));
+                            userObj.addProperty("parentCategoryID", set.getString("parentCategoryID"));
+                        } else {
+                            userObj.addProperty("author", set.getString("userName"));
+                            userObj.addProperty("url", set.getString("userUrl"));
+                            userObj.addProperty("notification", set.getString("notification"));
+                            userObj.addProperty("date", set.getString("postDate"));
+                        }
                     }
+                    list.add(userObj);
                 }
-                list.add(userObj);
+                PrintWriter out1 = response.getWriter();
+                response.setContentType("application/json");
+                out.println(list);
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            PrintWriter out1 = response.getWriter();
-            response.setContentType("application/json");
-            out.println(list);
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 %>

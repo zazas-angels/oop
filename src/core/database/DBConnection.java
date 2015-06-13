@@ -680,6 +680,14 @@ public class DBConnection implements core.database.Connection {
         return set.getInt("ID");
     }
 
+    /**
+     * adds new report in database
+     *
+     * @param authorName author of report
+     * @param authorUrl  it will be null or "#", when report's author is visitor
+     * @param text       report's text
+     * @throws SQLException
+     */
     @Override
     public void addReport(String authorName, String authorUrl, String text) throws SQLException {
         PreparedStatement statement = dataBaseConnection
@@ -710,6 +718,14 @@ public class DBConnection implements core.database.Connection {
         statement.executeUpdate();
     }
 
+    /**
+     * adds in database new notification
+     *
+     * @param userName
+     * @param userUrl
+     * @param notification it must be from enum of notifications
+     * @throws SQLException
+     */
     @Override
     public void addNotification(String userName, String userUrl, SiteConstants.Notification notification) throws SQLException {
         PreparedStatement statement = dataBaseConnection
@@ -719,6 +735,57 @@ public class DBConnection implements core.database.Connection {
         statement.setString(2, userName);
         statement.setString(3, userUrl);
         statement.executeUpdate();
+    }
+
+    /**
+     * searchs all notifications
+     *
+     * @return ResultSet of all notifications
+     */
+    @Override
+    public ResultSet getNotifications() {
+        return notifications(-1);
+    }
+
+    /**
+     * searchs all notifications in last (days) days..
+     *
+     * @return ResultSet of all notifications
+     */
+    @Override
+    public ResultSet getNotifications(int days) {
+        return notifications(days);
+    }
+
+    /**
+     * if days == -1 it means that we need all data, date isn't limit
+     */
+    private ResultSet notifications(int days) {
+        return getByTable("notifications", days);
+    }
+
+    /**
+     * searches information in given table
+     *
+     * @param days the most old information age(in days) to select
+     * @return ResultSet from information from table
+     */
+    private ResultSet getByTable(String table, int days) {
+        ResultSet results = null;
+        try {
+            String dateLimit = "";
+            if (days >= 0) {
+                dateLimit = "where datediff(now(), postDate) < " + days;
+            }
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("select * from " + table + " " + dateLimit + " order by postDate desc;");
+
+            results = statement.executeQuery();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+        return results;
     }
 
     /**
@@ -751,20 +818,7 @@ public class DBConnection implements core.database.Connection {
      * @return ResultSet from reports table
      */
     private ResultSet reports(int days) {
-        ResultSet results = null;
-        try {
-            String dateLimit = "";
-            if (days >= 0) {
-                dateLimit = " where datediff(now(), postDate) < " + days;
-            }
-            PreparedStatement statement = dataBaseConnection
-                    .prepareStatement("select * from reports" + dateLimit + " order by postDate desc;");
-            results = statement.executeQuery();
-        } catch (SQLException e) {
-            // ignore
-            e.printStackTrace();
-        }
-        return results;
+        return getByTable("reports", days);
     }
 
 

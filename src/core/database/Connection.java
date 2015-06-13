@@ -99,5 +99,9 @@ public interface Connection {
 
 	public void addWantedCategory(String authorName, String authorUrl, String categoryName, String parentCategoryID) throws SQLException;
 
-	void addNotification(String userName, String userUrl, SiteConstants.Notification notification) throws SQLException;
+	public void addNotification(String userName, String userUrl, SiteConstants.Notification notification) throws SQLException;
+
+	public ResultSet getNotifications();
+
+	public ResultSet getNotifications(int days);
 }
