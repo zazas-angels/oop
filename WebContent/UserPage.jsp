@@ -10,10 +10,15 @@
 <script type="text/javascript" src="dragresize.js"></script>
 <link rel="stylesheet" type="text/css" href="DragResizeStyle.css">
 
+<link rel="stylesheet" type="text/css" href="gallery.css">
+<link rel="stylesheet" type="text/css" href="AlbomImage.css">
+<link rel="stylesheet"
+	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="UserControlButton.css">
 <style type="text/css">
 </style>
-
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <link rel="stylesheet"
 	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link href='http://fonts.googleapis.com/css?family=Comfortaa'
@@ -25,21 +30,21 @@
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
-		div.innerHTML += 
-		'<div class="drsElement "'
+		div.innerHTML += '<div class="drsElement "'
 		+'		style="left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center">'
-		+'		<form id="'+numElements+'">'
-		+'					<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image/gif,image/jpeg,image/jpg,,image/png" />'
-		+'			<br /> <input class="gobutton" id="uploadBtn" type="button"'
-		+'			value="Upload" onClick="performAjaxSubmit(0,'+numElements+');"></input>'
-		+'				</form>'
-		+'	<div class="drsMoveHandle " style="background: #DFC;width:100%; height:calc(100% - 50px);" id="image'+numElements+'"  >'
-		+'		<img alt="noImage" src="noImage.png " style="width: 100%;height:100%;">'
-		+'	</div>'
-		+'		</div>';
-			
-			
-			
+				+ '		<form id="'+numElements+'">'
+				+ '					<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image/gif,image/jpeg,image/jpg,,image/png" />'
+				+ '			<br /> <input class="gobutton" id="uploadBtn" type="button"'
+				+ '			value="Upload" onClick="performAjaxSubmit(0,'
+				+ numElements
+				+ ');"></input>'
+				+ '				</form>'
+				+ '	<div class="drsMoveHandle " style="background: #DFC;width:100%; height:calc(100% - 50px);" id="image'
+				+ numElements
+				+ '"  >'
+				+ '		<img alt="noImage" src="noImage.png " style="width: 100%;height:100%;">'
+				+ '	</div>' + '		</div>';
+
 		document.body.appendChild(div);
 		alert(2);
 	}
@@ -79,11 +84,13 @@
 				+ numElements
 				+ ');">'
 				+ "	</div>"
-				+ "	<div id=\""+numElements+"\">"
-				+ "		<p contenteditable=\"true\">Your Text</p>"
-				+ "</div>	</div>";
+				+ '<textarea id="'
+				+ numElements
+				+ '"style=" text-align: center; width: calc(100% - 6px); height: calc(100% - 53px); resize:none;">'
+				+ 'Your Text' + '</textarea>' + '</div>";';
 		'<input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>';
 		document.body.appendChild(div);
+		jscolor.init();
 		alert(2);
 	}
 	function changeSize(id) {
@@ -100,24 +107,28 @@
 		alert(1);
 		var div = document.createElement('div');
 		div.innerHTML += '<div class="drsElement"'
-		+'	style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">'
-				+ '		<div class="drsMoveHandle" style="background: #DFC">Slider</div>'
+	+'	style="left: 150px; top: 280px; width: 500px; height: 300px; background: #DFC; text-align: center">'
+				+ '	<div class="drsMoveHandle" style="background: #DFC">Slider</div>'
 
-				+ '		<form id="'+numElements+'">	'
-				+ '					<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image" />'
-				+ '			<br /> Image descr: <input id="imageText'+numElements+'" type="text" /> <input'
-				+ '				class="gobutton" type="button" value="Upload"'
-				+ '				onClick="performAjaxSubmit(1,'
+				+ '		<form id="'+numElements+'">'
+
+				+ '	<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image/gif,image/jpeg,image/jpg,,image/png" /><input'
+				+ '		class="gobutton" id="uploadBtn" type="button" value="Upload"'
+				+ '		onClick="performAjaxSubmit(1,'
+				+ numElements
+				+ ');"></input> <br /> <select'
+	+'		id="select'+numElements+'">'
+				+ '	</select> <input class="gobutton" type="button" value="Delete"'
+				+ '		onClick="deleteSelected('
 				+ numElements
 				+ ');"></input>'
-				+ '		</form>'
-				+ '		<div style="width: 550px; height: 300px;">'
-				+ '			<div id="slider'+numElements+'" class="slider">'
+				+ '</form>'
+				+ '<div class="slideshow"'
+				+ '	style="width: calc(100% - 5px); height: calc(100% - 110px);">'
+				+ '	<ul id="slider'+numElements+'">'
 
-				+ '				<img src="images/image-slider-3.jpg" />'
-				+ '				<img src="images/image-slider-1.jpg" />'
+				+ '			</ul>' + '</div>' + '</div>';
 
-				+ '			</div>' + '		</div>' + '	</div>';
 		document.body.appendChild(div);
 	}
 	function createCommentBox() {
@@ -179,9 +190,14 @@
 				+ '	<div class="drsMoveHandle" style="background: #DFC">Youtube Video</div>'
 				+ '	Youtube link: <input id="videoLink'+numElements+'" type="text" /> <br><input'
 				+ '			class="gobutton"  type="button" value="Upload Video"'
-				+ '			onClick="uploadVideo(' + numElements + ');"></input>'
+				+ '			onClick="uploadVideo('
+				+ numElements
+				+ ');"></input>'
 
-				+ '	<div id="video'+numElements+'" style="width:100%;height:calc(100% - 75px);"></div>' + '	</div>';
+				+ '	<div id="video'
+				+ numElements
+				+ '" style="width:100%;height:calc(100% - 75px);"></div>'
+				+ '	</div>';
 		document.body.appendChild(div);
 
 	}
@@ -301,7 +317,7 @@ a.name:hover {
 
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-<script src="sss.min.js"></script>
+<script src="sss.js"></script>
 <link rel="stylesheet" href="sss.css" type="text/css" media="all">
 
 
@@ -314,6 +330,7 @@ a.name:hover {
 
 <body>
 	<%--text --%>
+	<%-- 
 	<div class="drsElement"
 		style="left: 50px; top: 150px; width: 350px; height: 90px; background: white; text-align: center">
 		<div class="drsMoveHandle">Text:</div>
@@ -321,17 +338,17 @@ a.name:hover {
 			Font: <input id="zaz" size="5" class="color" colorType="font"
 				labelId="7" value="000000"> Back: <input id="zaz" size="5"
 				class="color" colorType="back" labelId="7" value="FFFFFF">
+				
 			Size:<input id="size7" size="1" value="18" onkeydown="changeSize(7);"
 				onpaste="changeSize(7);" oninput="changeSize(7);"> Bold: <input
 				type="checkbox" id="bold7" onclick="changeBold(7);">
 		</div>
-		<p contenteditable="true" style="width: 100%; height: calc(100% - 60px);" id="7">
-	</p>
+		<textarea id="7"style="  text-align: center; width: calc(100% - 6px); height: calc(100% - 53px); resize:none;">
+Your Text
+</textarea>
 		
-
-
 	</div>
-
+--%>
 
 
 
@@ -379,7 +396,7 @@ a.name:hover {
 
 	</div>
 	<%--image --%>
-<%-- 
+	<%-- 
 	<div class="drsElement "
 		style="left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center">
 
@@ -392,35 +409,38 @@ a.name:hover {
 				value="Upload" onClick="performAjaxSubmit(0,1);"></input>
 
 		</form>
+		
 		<div class="drsMoveHandle " style="background: #DFC;width:100%; height:calc(100% - 50px);" id="image1"  >
 			<img alt="noImage" src="noImage.png " style="width: 100%;height:100%;">
 		</div>
 
 	</div>
 	--%>
- 
+
 
 
 
 
 	<script type="text/javascript">
 		function performAjaxSubmit(multi, id) {
-alert("movida");
+			alert("movida");
 			var sampleFile = document.getElementById("sampleFile" + id).files[0];
 
 			var formdata = new FormData();
 
 			var image;
 			var slider;
-			
+			alert("Dam");
 			if (multi == 0) {
 				image = document.getElementById("image" + id);
 			} else {
+				alert("Das");
 				slider = document.getElementById("slider" + id);
+				alert("bol");
 			}
 
 			formdata.append("sampleFile", sampleFile);
-
+			alert(1);
 			if (window.XMLHttpRequest) {
 				// code for IE7+, Firefox, Chrome, Opera, Safari
 				xhr = new XMLHttpRequest();
@@ -431,24 +451,28 @@ alert("movida");
 
 			xhr.open("POST", "FileUploader", true);
 			xhr.send(formdata);
-
+			alert(2);
 			xhr.onload = function(e) {
 
 				if (this.status == 200) {
 					if (multi == 0) {
 						image.innerHTML = this.responseText;
 					} else {
-						var text = document.getElementById("imageText" + id);
-						alert(text.value);
-						alert("qeia+");
+						//var text = document.getElementById("imageText" + id);
+						//alert(text.value);
+						/* alert("qeia+");
 						var additionalText = "";
 						if (text.value != "") {
 							alert("no");
 							additionalText = '<span class="caption">'
 									+ text.value + '</span>';
-						}
-						slider.innerHTML += '<div>' + this.responseText
-								+ additionalText + '</div>';
+						} */
+						alert(3);
+						numElements += 1;
+						slider.innerHTML += '<li id='+numElements+'>'
+								+ this.responseText + '</li>';
+						document.getElementById('select' + id).innerHTML += '<option value='+numElements+'>'
+								+ sampleFile.name + '</option>';
 
 					}
 					alert(this.responseText);
@@ -493,7 +517,7 @@ Enter text here...</textarea>
 --%>
 
 	<%-- gallery --%>
-	<%--
+	<%-- 
 	<div class="drsElement"
 		style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">
 		<div class="drsMoveHandle" style="background: #DFC">Slider</div>
@@ -506,14 +530,38 @@ Enter text here...</textarea>
 				onClick="performAjaxSubmit(1,1);"></input>
 		</form>
 		<div style="width: 550px; height: 300px;">
-			<div id="slider1" class="slider">
+			<div  class="slider">
 				
 				<img src="images/image-slider-3.jpg" />
-				
+				<img src="images/image-slider-1.jpg" />
 			</div>
 		</div>
+	</div>--%>
+	<%-- 	<div id="oo" class="drsElement"
+		style="left: 150px; top: 280px; width: 500px; height: 300px; background: #DFC; text-align: center">
+		<div class="drsMoveHandle" style="background: #DFC">Slider</div>
+
+		<form id="99">
+
+			<input id="sampleFile99" name="sampleFile" type="file" accept="image" /><input
+				class="gobutton" id="uploadBtn" type="button" value="Upload"
+				onClick="performAjaxSubmit(1,99);"></input> <br /> <select
+				id="select99">
+			</select> <input class="gobutton" type="button" value="Delete"
+				onClick="deleteSelected(99);"></input>
+		</form>
+		<div class="slideshow"
+			style="width: calc(100% - 5px); height: calc(100% - 110px);">
+			<ul id="slider99">
+
+			</ul>
+		</div>
 	</div>
- --%>
+--%>
+
+
+
+
 	<%--video --%>
 	<%-- 	<div class="drsElement"
 		style="left: 150px; top: 280px; width: 560px; height: 350px; background: #DFC; text-align: center">
@@ -525,7 +573,37 @@ Youtube link: <input id="videoLink1" type="text" /> <br><input
 		<div id="video1" style="width:100%;height:calc(100% - 75px);"></div>
 </div>
 --%>
-<img alt="" src="images\default.png">
+
+
+	<script type="text/javascript">
+		/*The code is pretty simple, we animate the ul with a -500px margin left. Then we find the first li and put it last to get the infinite animation.*/
+		$(function() {
+			//alert(document.getElementById("oo").style.width);
+			setInterval(function() {
+
+				$(".slideshow ul").animate({
+				//marginLeft : -document.getElementById("oo").style.width
+				}, 1000, function() {
+					$(this).css({
+						marginLeft : 0
+					}).find("li:last").after($(this).find("li:first"));
+				})
+			}, 1500);
+		});
+
+		function deleteSelected(id) {
+			var selection = document.getElementById("select" + id);
+			
+		
+			if (selection.selectedIndex >=0) {
+				var ImageId = selection.options[selection.selectedIndex].value;
+				selection.remove(selection.selectedIndex);
+				$("#" + ImageId).remove();
+			}
+
+		}
+	</script>
+
 
 </body>
 </html>
