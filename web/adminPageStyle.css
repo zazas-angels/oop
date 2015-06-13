@@ -18,10 +18,12 @@
     -moz-box-shadow: 0 2px 2px rgba(165, 104, 161, 0.64);
     box-shadow: 0 2px 2px rgba(164, 31, 26, 0.9);
     z-index: 0;
-    padding: 20px 0 15px 2%;
+    padding: 20px 0 15px 0;
 }
 
 #reports {
+    overflow-y: scroll;
+    max-height: 300px;
     width: 100%;
     left: 2px;
     float: left;
@@ -34,7 +36,7 @@
 }
 
 #notifications {
-    width: 20%;
+    width: 22%;
     height: 100% !important;
     right: 2px;
     float: right;
@@ -58,8 +60,8 @@
 }
 
 #left-panel {
-    width: 20%;
+    width: 23%;
     float: left;
     z-index: 0;
-    padding: 20px 0 15px 2%;
+    padding: 20px 1% 15px 0;
 }

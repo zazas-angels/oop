@@ -1,7 +1,7 @@
 package core;
 
 /*
- * Author guri
+ * Author guri, celqi pranwia..
  */
 public final class SiteConstants {
 	public static final double USER_IMG_HEIGTH=80;
@@ -16,7 +16,9 @@ public final class SiteConstants {
 	public static final String CATEGORY_TREE = "categoriess";
 
 
-
+	public enum Notification {
+		createdUser
+	}
 
 
 	public enum Type {

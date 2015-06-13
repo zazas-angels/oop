@@ -201,13 +201,27 @@ CREATE TABLE admins (
 	primary key(ID)
 );
 
-/*
+
 ##reports
 DROP TABLE IF EXISTS reports;
 CREATE TABLE reports (
     ID int not null auto_increment,
-    mail varchar(64),
-    password varchar(64),
+    authorName VARCHAR(64),
+    authorUrl  VARCHAR(64) DEFAULT "#",
+    text       VARCHAR(2000),
+    postDate   DATETIME,
     primary key(ID)
 );
-*/
+
+##wantedCategories
+DROP TABLE IF EXISTS wantedCategories;
+CREATE TABLE wantedCategories (
+    ID               INT NOT NULL AUTO_INCREMENT,
+    authorName       VARCHAR(64),
+    authorUrl        VARCHAR(64)  DEFAULT "#",
+    cateogotyName    VARCHAR(64),
+    parentCategoryID INT          DEFAULT NULL,
+    postDate         DATE,
+    PRIMARY KEY (ID),
+    FOREIGN KEY (parentCategoryID) REFERENCES categories (ID)
+);

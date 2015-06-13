@@ -98,7 +98,7 @@
 <div id="left-panel">
     <div id="reports">
         <h2>reports</h2></div>
-    <div id="wantedCategories">
+    <div id="wantedCategories" style="overflow-y: scroll; max-height:300px;">
         <h2>wanted categories</h2>
     </div>
 </div>

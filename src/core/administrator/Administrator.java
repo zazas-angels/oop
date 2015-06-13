@@ -1,11 +1,13 @@
 package core.administrator;
 
+import core.category.Category;
 import core.category.CategoryInterface;
 import core.category.CategoryTree;
 import core.database.DBConnection;
 import core.user.UserInterface;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import static core.user.User.generatePassword;
 
@@ -53,7 +55,9 @@ public class Administrator implements AdminInterface {
     }
 
     @Override
-    public void addCategory(CategoryInterface parentCategory, CategoryInterface category) {
+    public void addCategory(String name, CategoryInterface parentCategory) throws SQLException {
+        int id = dbConnection.addCategory(name, parentCategory.getId());
+        Category category = new Category(id, name);
         categoryTree.add(category, parentCategory);
     }
 
@@ -74,5 +78,50 @@ public class Administrator implements AdminInterface {
 
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public ResultSet getReports() {
+        ResultSet set = null;
+        if (dbConnection != null) {
+            set = dbConnection.getReports();
+        }
+        return set;
+    }
+
+    @Override
+    public ResultSet getReports(int days) {
+        ResultSet set = null;
+        if (dbConnection != null) {
+            set = dbConnection.getReports(days);
+        }
+        return set;
+    }
+
+    @Override
+    public ResultSet getWantedCategories() {
+        ResultSet set = null;
+        if (dbConnection != null) {
+            set = dbConnection.getWantedCategories();
+        }
+        return set;
+    }
+
+    @Override
+    public ResultSet getWantedCategories(int days) {
+        ResultSet set = null;
+        if (dbConnection != null) {
+            set = dbConnection.getWantedCategories(days);
+        }
+        return set;
+    }
+
+    @Override
+    public ResultSet getNotifications() {
+        ResultSet set = null;
+        if (dbConnection != null) {
+            set = dbConnection.getNotifications();
+        }
+        return set;
     }
 }

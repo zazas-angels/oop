@@ -114,7 +114,11 @@ public class DBConnection implements core.database.Connection {
 
     public static void main(String[] args) {
         DBConnection db = new DBConnection();
-        db.addAdmin(new Administrator("nika", "paroli", new DBConnection(), null));
+        try {
+            db.addNotification("nika", "#", SiteConstants.Notification.createdUser);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -436,6 +440,7 @@ public class DBConnection implements core.database.Connection {
 
     /**
      * returns all users with given name
+     *
      * @param name user's wanted name
      * @return ResultSet of rows from users table
      */
@@ -619,4 +624,202 @@ public class DBConnection implements core.database.Connection {
         }
         return results;
     }
+
+    @Override
+    public ResultSet getReports() {
+        return reports(-1);
+    }
+
+    @Override
+    public ResultSet getReports(int days) {
+        return reports(days);
+    }
+
+    @Override
+    public ResultSet getWantedCategories(int days) {
+        return wantedCategories(days);
+    }
+
+    @Override
+    public ResultSet getWantedCategories() {
+        return wantedCategories(-1);//-1 means, that date isn't limit
+    }
+
+    /**
+     * adds in categories table new category
+     *
+     * @param name             name of new category
+     * @param parentCategoryId parent category's id, if(parentCategoryId is negative) it means that this category doesn't have parent
+     * @return id in base, of added category
+     * @throws SQLException if something went wrong we throw exception
+     */
+    @Override
+    public int addCategory(String name, int parentCategoryId) throws SQLException {
+        PreparedStatement statement = dataBaseConnection
+                .prepareStatement("insert into categories (name, ParentId) values (?,?);");
+        statement.setString(1, name);
+        if (parentCategoryId < 0) {
+            statement.setObject(2, null);
+        } else {
+            statement.setInt(2, parentCategoryId);
+        }
+        statement.executeUpdate();
+
+
+        PreparedStatement stmt = dataBaseConnection
+                .prepareStatement("select ID from categories where name = ? and ParentId = ?;");
+        stmt.setString(1, name);
+        if (parentCategoryId < 0) {
+            stmt.setObject(2, null);
+        } else {
+            stmt.setInt(2, parentCategoryId);
+        }
+
+        ResultSet set = stmt.executeQuery();
+        set.next();
+        return set.getInt("ID");
+    }
+
+    /**
+     * adds new report in database
+     *
+     * @param authorName author of report
+     * @param authorUrl  it will be null or "#", when report's author is visitor
+     * @param text       report's text
+     * @throws SQLException
+     */
+    @Override
+    public void addReport(String authorName, String authorUrl, String text) throws SQLException {
+        PreparedStatement statement = dataBaseConnection
+                .prepareStatement("insert into reports (authorName, text, postDate, authorUrl) values (?, ?, now(), ?);");
+        statement.setString(1, authorName);
+        statement.setString(2, text);
+        statement.setString(3, authorUrl);
+        statement.executeUpdate();
+    }
+
+    /**
+     * adds new wanted category in wantedCategory table
+     *
+     * @param authorName
+     * @param authorUrl
+     * @param categoryName
+     * @param parentCategoryID
+     * @throws SQLException
+     */
+    @Override
+    public void addWantedCategory(String authorName, String authorUrl, String categoryName, String parentCategoryID) throws SQLException {
+        PreparedStatement statement = dataBaseConnection
+                .prepareStatement("insert into wantedCategories (authorName, authorUrl, categoryName, postDate, parentCategoryID) values (?, ?, ?, now(), ?);");
+        statement.setString(1, authorName);
+        statement.setString(2, authorUrl);
+        statement.setString(3, categoryName);
+        statement.setString(4, parentCategoryID);
+        statement.executeUpdate();
+    }
+
+    /**
+     * adds in database new notification
+     *
+     * @param userName
+     * @param userUrl
+     * @param notification it must be from enum of notifications
+     * @throws SQLException
+     */
+    @Override
+    public void addNotification(String userName, String userUrl, SiteConstants.Notification notification) throws SQLException {
+        PreparedStatement statement = dataBaseConnection
+                .prepareStatement("insert into notifications (notification, userName, userUrl, postDate) values " +
+                        "(?, ?, ?, now());");
+        statement.setString(1, String.valueOf(notification));
+        statement.setString(2, userName);
+        statement.setString(3, userUrl);
+        statement.executeUpdate();
+    }
+
+    /**
+     * searchs all notifications
+     *
+     * @return ResultSet of all notifications
+     */
+    @Override
+    public ResultSet getNotifications() {
+        return notifications(-1);
+    }
+
+    /**
+     * searchs all notifications in last (days) days..
+     *
+     * @return ResultSet of all notifications
+     */
+    @Override
+    public ResultSet getNotifications(int days) {
+        return notifications(days);
+    }
+
+    /**
+     * if days == -1 it means that we need all data, date isn't limit
+     */
+    private ResultSet notifications(int days) {
+        return getByTable("notifications", days);
+    }
+
+    /**
+     * searches information in given table
+     *
+     * @param days the most old information age(in days) to select
+     * @return ResultSet from information from table
+     */
+    private ResultSet getByTable(String table, int days) {
+        ResultSet results = null;
+        try {
+            String dateLimit = "";
+            if (days >= 0) {
+                dateLimit = "where datediff(now(), postDate) < " + days;
+            }
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("select * from " + table + " " + dateLimit + " order by postDate desc;");
+
+            results = statement.executeQuery();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+    /**
+     * if days == -1 it means that we need all data, date isn't limit
+     */
+    private ResultSet wantedCategories(int days) {
+        ResultSet results = null;
+        try {
+            String dateLimit = "";
+            if (days >= 0) {
+                dateLimit = "where datediff(now(), postDate) < " + days;
+            }
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("select * from wantedCategories left join categories" +
+                            " on wantedCategories.parentCategoryID = categories.ID " + dateLimit + " order by postDate desc;");
+
+
+            results = statement.executeQuery();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+    /**
+     * searches reports in database
+     *
+     * @param days the most old report age(in days) to select
+     * @return ResultSet from reports table
+     */
+    private ResultSet reports(int days) {
+        return getByTable("reports", days);
+    }
+
+
 }

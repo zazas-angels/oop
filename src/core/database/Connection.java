@@ -3,12 +3,14 @@
  */
 package core.database;
 
+import core.SiteConstants;
 import core.administrator.AdminInterface;
 import core.administrator.Administrator;
 import core.category.CategoryInterface;
 import core.user.UserInterface;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface Connection {
@@ -82,4 +84,24 @@ public interface Connection {
 	public boolean addAdmin(Administrator administrator);
 
 	public boolean existsAdministrator(String mail);
+
+	public ResultSet getReports();
+
+	public ResultSet getReports(int days);
+
+	public ResultSet getWantedCategories(int days);
+
+	public ResultSet getWantedCategories();
+
+	public int addCategory(String name, int parentCategoryId) throws SQLException;
+
+	public void addReport(String authorName, String authorUrl, String text) throws SQLException;
+
+	public void addWantedCategory(String authorName, String authorUrl, String categoryName, String parentCategoryID) throws SQLException;
+
+	public void addNotification(String userName, String userUrl, SiteConstants.Notification notification) throws SQLException;
+
+	public ResultSet getNotifications();
+
+	public ResultSet getNotifications(int days);
 }
