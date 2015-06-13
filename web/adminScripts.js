@@ -10,13 +10,14 @@ $(document).ready(function () {
         $('#extendedSearch').hide();
         $('#searchByName').toggle();
     });
+
     updateReports();
     updateWantedCategories();
     updateNotifications();
     setInterval(function () {
         updateReports();
         updateWantedCategories();
-        //updateNotifications();
+        updateNotifications();
     }, 10000);
 });
 
@@ -24,16 +25,20 @@ function updateNotifications() {
     var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=not";
     $.get(link)
         .done(function (response) {
-            var data = "<h2>Notifications</h2>";
+            var data = "";
             var arr = response;
             if (arr.length === 0) {
-                data = "no notification categories"
+                data = "სიახლე არაა";
             } else {
                 for (var i = 0; i < arr.length; i++) {
                     var notification = arr[i];
                     var url = notification.url;
-                    var tmp = notification.notification + " ";
-                    tmp += "author: ";
+                    var tmp = "";
+                    if (notification.notification === "createdUser") {
+                        tmp += "ახალი მომხმარებელი: ";
+                    } else {
+                        tmp += notification.notification + " ";
+                    }
                     if (url === "#") {
                         tmp += notification.author;
                     } else {
@@ -47,30 +52,31 @@ function updateNotifications() {
         });
 }
 
+
 function updateWantedCategories() {
     var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=wc";
     $.get(link)
         .done(function (response) {
-            var data = "<h2>Wanted Categories</h2>";
+            var data = "";
             var arr = response;
             if (arr.length === 0) {
-                data = "no wanted categories"
+                data = "არაა მოთხოვნა"
             } else {
                 for (var i = 0; i < arr.length; i++) {
                     var wantedCategory = arr[i];
                     var url = wantedCategory.url;
-                    var tmp = "author: ";
+                    var tmp = "ავტორი: ";
                     if (url === "#") {
                         tmp += wantedCategory.author;
                     } else {
                         tmp += "<a href='" + url + "'> " + wantedCategory.author + "</a>";
                     }
-                    tmp += "<br>wanted categoty:   " + wantedCategory.categoryName + "" +
+                    tmp += "<br>კატეგორია:   " + wantedCategory.categoryName + "" +
                         "<br>";
                     if (wantedCategory.parentCategory === null) {
-                        tmp += "parent category: none";
+                        tmp += "მშობელი კატეგორია: არ აქვს";
                     } else {
-                        tmp += "parent categoty: " + wantedCategory.parentCategory + " (ID = " + wantedCategory.parentCategoryID + ")";
+                        tmp += "მშობელი კატეგორია: " + wantedCategory.parentCategory + " (ID = " + wantedCategory.parentCategoryID + ")";
                     }
                     data += tmp;
                     data += "<br><br>"
@@ -84,7 +90,7 @@ function updateReports() {
     var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=rep";
     $.get(link)
         .done(function (response) {
-            var data = "<h2>Reports</h2>";
+            var data = "";
             var arr = response;
             if (arr.length === 0) {
                 data = "no reports"

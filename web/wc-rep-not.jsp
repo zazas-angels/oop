@@ -57,7 +57,7 @@
                 }
                 PrintWriter out1 = response.getWriter();
                 response.setContentType("application/json");
-                out.println(list);
+                out1.println(list);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

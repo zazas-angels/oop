@@ -35,6 +35,7 @@ public class LoginServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         DBConnection dbConnection = (DBConnection) context.getAttribute("database");
 
+        boolean alreadyForwarded = true;
         if (password != null && email != null) {
             User user = null;
             if (dbConnection.getUser(email, password) != null) {
@@ -42,14 +43,18 @@ public class LoginServlet extends HttpServlet {
             }
             if (user != null) {
                 loginUser(request, response, user, context);
+                alreadyForwarded = false;
             }
             Administrator admin = (Administrator) dbConnection.getAdmin(email, password);
             if (admin != null) {
                 loginAdmin(request, response, admin, context);
+                alreadyForwarded = false;
             }
         }
-        request.getSession().setAttribute("wrong try to log in", true);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        if (alreadyForwarded) {
+            request.getSession().setAttribute("wrong try to log in", true);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -65,7 +70,7 @@ public class LoginServlet extends HttpServlet {
                 request.getRequestDispatcher("userPage.jsp").forward(request, response);
             }
         }
-
+        boolean alreadyForwarded = true;
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             ServletContext context = request.getServletContext();
@@ -75,20 +80,24 @@ public class LoginServlet extends HttpServlet {
                     UserInterface user = mapSession.get(cookie.getValue());
                     if (user != null) {
                         loginUser(request, response, user, context);
+                        alreadyForwarded = false;
                     } else {
                         HashMap<String, AdminInterface> mapSessionAd = (HashMap<String, AdminInterface>) context.getAttribute(SiteConstants.SESSIONS_MAP_ADMINS);
                         AdminInterface admin = mapSessionAd.get(cookie.getValue());
                         if (admin != null) {
                             loginAdmin(request, response, admin, context);
+                            alreadyForwarded = false;
                         }
                     }
                 }
             }
         }
-        //log out
-        request.getSession().invalidate();
-        deleteLoginCookie(request, response);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        if (alreadyForwarded) {
+            //log out
+            request.getSession().invalidate();
+            deleteLoginCookie(request, response);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
     }
 
     public static void deleteLoginCookie(HttpServletRequest request, HttpServletResponse response) {
