@@ -1,0 +1,113 @@
+@CHARSET "ISO-8859-1";
+.chatBox {
+  padding-right:50px;
+  padding-left:20px;
+  padding-bottom:10px;
+  padding-top:10px;
+  background:#ddd;
+  overflow-x:auto;
+}
+
+.bubbleLeft {
+  position: relative;
+  left: 20px;
+  width: 95%;
+  padding: 10px;
+  background: #ffffff;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.bubbleLeft:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 8px 16px 8px 0;
+  border-color: transparent #ffffff;
+  display: block;
+  width: 0;
+  z-index: 1;
+  margin-top: -8px;
+  left: -16px;
+  top: 36%;
+}
+
+.bubbleRight {
+  position: relative;
+  left: 45px;
+  width: 95%;
+  padding: 10px;
+  background: #ffee66;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.bubbleRight:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 6px 0 6px 20px;
+  border-color: transparent #ffee66;
+  display: block;
+  width: 0;
+  z-index: 1;
+  margin-top: -6px;
+  right: -20px;
+  top: 66%;
+}
+
+.bubbleLeft2 {
+  position: relative;
+  left: 20px;
+  width: 95%;
+  padding: 14px;
+  background:#33CCFF;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  text-align: left;
+  font-style:italic; 
+}
+
+.bubbleLeft2:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 6px 28px 6px 0;
+  border-color: transparent #33CCFF;
+  display: block;
+  width: 0;
+  z-index: 1;
+  margin-top: -6px;
+  left: -28px;
+  top: 50%;
+}
+
+.bubbleRight2 {
+  position: relative;
+  left: 45px;
+  width: 90%;
+  padding: 10px;
+  background: #33CCFF;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  text-shadow: 1px 1px #000;
+  color: #fff;
+}
+
+.bubbleRight2:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 6px 0 6px 28px;
+  border-color: transparent #ff6699;
+  display: block;
+  width: 0;
+  z-index: 1;
+  margin-top: -6px;
+  right: -28px;
+  top: 66%;
+}

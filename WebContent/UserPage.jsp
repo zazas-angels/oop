@@ -12,6 +12,7 @@
 
 <link rel="stylesheet" type="text/css" href="gallery.css">
 <link rel="stylesheet" type="text/css" href="AlbomImage.css">
+<link rel="stylesheet" type="text/css" href="ChatBox.css">
 <link rel="stylesheet"
 	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="UserControlButton.css">
@@ -136,30 +137,22 @@
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
-		div.innerHTML += '<div class="drsElement"'
-				+'style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">'
-
-				+ 'Comment Box'
-				+ '	<div class="drsMoveHandle" style="background: #DFC">'
-				+ '		<form action="#" >'
-				+ '			Name: <input type="text" name="usrname"> <input disabled'
-						+'			class="gobutton" type="submit" style="background: blue">'
+		div.innerHTML += ' <div class="drsElement"'
+			+'		style="left: 150px; top: 280px; width: 500px; height: 350px; background: #DFC; text-align: center">'
+				+ '		<div class="drsMoveHandle">Comment Box</div>'
+				+ '	<form action="#" id="usrform" style="background: #DFC; width: 100%; height: 20%;">'
+				+ '	Name: <input type="text" name="usrname"> <input disabled'
+				+'	class="gobutton"  value="post" type="submit" style="background: blue">'
 				+ '	</form>'
-				+ '	<br>'
-				+ '		<textarea rows="4" cols="50" name="comment" form="usrform">'
-				+ '		Enter text here...</textarea>'
-				+ '		<br> <br>'
-				+ '		<div class=rounded>'
-				+ '	<p>'
-				+ '			<a class="name 1"> name </a> comment 1'
-				+ '		</p>'
-				+ '	</div>'
-				+ '	<br>'
-				+ '	<div class=rounded>'
-				+ '		<p>'
-				+ '		<a class="name 2"> name </a> comment 2'
-				+ '	</p>'
-				+ '</div>' + '	</div>' + '	</div>';
+				+ '	<textarea rows="4" cols="50"'
+				+ 'style="width: calc(100% - 5px); height: 20%;" name="comment"'
+				+ 'form="usrform">'
+				+ 'Enter text here...</textarea>'
+				+ '	<br> <br>'
+				+ '	<div class="chatBox" style="width: calc(100% - 70px); height:calc(60% - 70px);" >'
+				+ '<p class="bubbleLeft2"><a class="name">name</a> simple comment 1</p>'
+				+ ' 	<p class="bubbleLeft2"><a class="name">name</a>simple comment 2</p>'
+				+ '	</div>	' + '</div>';
 		document.body.appendChild(div);
 		alert(2);
 	}
@@ -214,8 +207,7 @@
 <%--comment style --%>
 <style type="text/css">
 div.rounded {
-	width: 255px;
-	margin: 0;
+	width: 100%;
 	background: #3498db;
 	background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
 	background-image: -moz-linear-gradient(top, #3498db, #2980b9);
@@ -230,6 +222,7 @@ div.rounded {
 	font-size: 20px;
 	padding: 5px 10px 5px 10px;
 	text-decoration: none;
+	margin: 0;
 }
 
 a.name {
@@ -240,7 +233,7 @@ a.name {
 	color: #1100ff;
 	font-size: 25px;
 	background: #ffffff;
-	padding: 15px 15px 15px 15px;
+	padding: 3px 3px 3px 3px;
 	text-decoration: none;
 }
 
@@ -485,36 +478,33 @@ Your Text
 	</script>
 
 	<%--comment box --%>
-	<%-- 
-
+<%--
 	<div class="drsElement"
-		style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">
+		style="left: 150px; top: 280px; width: 500px; height: 350px; background: #DFC; text-align: center">
 
-		zaza
-		<div class="drsMoveHandle" style="background: #DFC">
-			<form action="#" id="usrform">
-				Name: <input type="text" name="usrname"> <input disabled
-					class="gobutton" type="submit" style="background: blue">
-			</form>
-			<br>
-			<textarea rows="4" cols="50" name="comment" form="usrform">
+		<div class="drsMoveHandle">Comment Box</div>
+		<form action="#" id="usrform"
+			style="background: #DFC; width: 100%; height: 20%;">
+			Name: <input type="text" name="usrname"> <input disabled
+				class="gobutton" value="post" type="submit" style="background: blue">
+		</form>
+		<textarea rows="4" cols="50"
+			style="width: calc(100% - 5px); height: 20%;" name="comment"
+			form="usrform">
 Enter text here...</textarea>
-			<br> <br>
-			<div class=rounded>
-				<p>
-					<a class="name"> name </a> comment 1
-				</p>
-			</div>
-			<br>
-			<div class=rounded>
-				<p>
-					<a class="name"> name </a> comment 1
-				</p>
-			</div>
-
+		<br> <br>
+		<div class="chatBox"
+			style="width: calc(100% - 70px); height: calc(60% - 70px);">
+			<p class="bubbleLeft2">
+				<a class="name">name</a> simple comment 1
+			</p>
+			<p class="bubbleLeft2">
+				<a class="name">name</a>simple comment 2
+			</p>
 		</div>
-	</div>
---%>
+
+	</div> --%>
+
 
 	<%-- gallery --%>
 	<%-- 
@@ -593,9 +583,8 @@ Youtube link: <input id="videoLink1" type="text" /> <br><input
 
 		function deleteSelected(id) {
 			var selection = document.getElementById("select" + id);
-			
-		
-			if (selection.selectedIndex >=0) {
+
+			if (selection.selectedIndex >= 0) {
 				var ImageId = selection.options[selection.selectedIndex].value;
 				selection.remove(selection.selectedIndex);
 				$("#" + ImageId).remove();
