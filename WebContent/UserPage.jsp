@@ -9,6 +9,7 @@
 
 <script type="text/javascript" src="dragresize.js"></script>
 <link rel="stylesheet" type="text/css" href="DragResizeStyle.css">
+ <link rel="stylesheet" type="text/css" href="CloseButton.css">
 
 <link rel="stylesheet" type="text/css" href="gallery.css">
 <link rel="stylesheet" type="text/css" href="AlbomImage.css">
@@ -31,6 +32,7 @@
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
+		div.setAttribute("id", "element"+numElements);
 		div.innerHTML += '<div class="drsElement "'
 		+'		style="left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center">'
 				+ '		<form id="'+numElements+'">'
@@ -45,7 +47,6 @@
 				+ '"  >'
 				+ '		<img alt="noImage" src="noImage.png " style="width: 100%;height:100%;">'
 				+ '	</div>' + '		</div>';
-
 		document.body.appendChild(div);
 		alert(2);
 	}
@@ -54,9 +55,12 @@
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
+		div.setAttribute("id", "element"+numElements);
 		div.innerHTML = "<div class=\"drsElement\""
 			+"	style=\"left: 50px; top: 150px; width: 350px; height: 90px; background: white; text-align: center\">"
-				+ "	<div class=\"drsMoveHandle\">Text:</div>"
+				+ '<div class="drsMoveHandle">Text'
+				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
+				+"</div>"
 				+ "	<div style=\"border: 1px solid green; background-color: #A5B7F2;\">"
 				+ "		Font: <input id=\"Font"
 				+ numElements
@@ -107,9 +111,12 @@
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
+		div.setAttribute("id", "element"+numElements);
 		div.innerHTML += '<div class="drsElement"'
 	+'	style="left: 150px; top: 280px; width: 500px; height: 300px; background: #DFC; text-align: center">'
-				+ '	<div class="drsMoveHandle" style="background: #DFC">Slider</div>'
+				+ '	<div class="drsMoveHandle" style="background: #DFC">Slider'
+				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
+				+'</div>'
 
 				+ '		<form id="'+numElements+'">'
 
@@ -132,14 +139,18 @@
 
 		document.body.appendChild(div);
 	}
+	
 	function createCommentBox() {
 
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
+		div.setAttribute("id", "element"+numElements);
 		div.innerHTML += ' <div class="drsElement"'
 			+'		style="left: 150px; top: 280px; width: 500px; height: 350px; background: #DFC; text-align: center">'
-				+ '		<div class="drsMoveHandle">Comment Box</div>'
+				+ '		<div class="drsMoveHandle">Comment Box'
+				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
+				+'</div>'
 				+ '	<form action="#" id="usrform" style="background: #DFC; width: 100%; height: 20%;">'
 				+ '	Name: <input type="text" name="usrname"> <input disabled'
 				+'	class="gobutton"  value="post" type="submit" style="background: blue">'
@@ -178,9 +189,12 @@
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
+		div.setAttribute("id", "element"+numElements);
 		div.innerHTML += '<div class="drsElement"'
 		+'	style="left: 150px; top: 280px; width: 560px; height: 350px; background: #DFC; text-align: center">'
-				+ '	<div class="drsMoveHandle" style="background: #DFC">Youtube Video</div>'
+				+ '	<div class="drsMoveHandle" style="background: #DFC">Youtube Video'
+				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
+				+'</div>'
 				+ '	Youtube link: <input id="videoLink'+numElements+'" type="text" /> <br><input'
 				+ '			class="gobutton"  type="button" value="Upload Video"'
 				+ '			onClick="uploadVideo('
