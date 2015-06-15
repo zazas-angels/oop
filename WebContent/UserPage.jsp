@@ -37,6 +37,7 @@
 		+'		style="left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center">'
 				+ '		<form id="'+numElements+'">'
 				+ '					<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image/gif,image/jpeg,image/jpg,,image/png" />'
+				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
 				+ '			<br /> <input class="gobutton" id="uploadBtn" type="button"'
 				+ '			value="Upload" onClick="performAjaxSubmit(0,'
 				+ numElements
