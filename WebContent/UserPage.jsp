@@ -34,7 +34,7 @@
 		var div = document.createElement('div');
 		div.setAttribute("id", "element"+numElements);
 		div.innerHTML += '<div class="drsElement "'
-		+'		style="left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center">'
+		+'		style="left: 150px; top: 280px; width: 350px; height: 150px; min-width: 270px; background: #DFC; text-align: center">'
 				+ '		<form id="'+numElements+'">'
 				+ '					<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image/gif,image/jpeg,image/jpg,,image/png" />'
 				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
@@ -58,7 +58,7 @@
 		var div = document.createElement('div');
 		div.setAttribute("id", "element"+numElements);
 		div.innerHTML = "<div class=\"drsElement\""
-			+"	style=\"left: 50px; top: 150px; width: 350px; height: 90px; background: white; text-align: center\">"
+			+"	style=\"left: 50px; top: 150px; width: 350px; height: 120px; min-width:228px; min-height:88px; background: white; text-align: center\">"
 				+ '<div class="drsMoveHandle">Text'
 				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
 				+"</div>"
@@ -74,7 +74,7 @@
 				+ "	class=\"color\" colorType=\"back\" labelId=\""
 				+ numElements
 				+ "\" value=\"FFFFFF\"  autocomplete=\"off\" style=\"color: rgb(255, 255, 255); background-image: none; background-color: rgb(0, 0, 0);\">"
-				+ "		Size:<input id=\"size"
+				+ "<br>		Size:<input id=\"size"
 				+ numElements
 				+ "\" size=\"1\" value=\"18\" onkeydown=\"changeSize("
 				+ numElements
@@ -92,9 +92,8 @@
 				+ "	</div>"
 				+ '<textarea id="'
 				+ numElements
-				+ '"style=" text-align: center; width: calc(100% - 6px); height: calc(100% - 53px); resize:none;">'
-				+ 'Your Text' + '</textarea>' + '</div>";';
-		'<input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>';
+				+ '"style=" text-align: center; width: calc(100% - 6px); height: calc(100% - 74px); resize:none;">'
+				+ 'Your Text' + '</textarea>' + '</div>"';
 		document.body.appendChild(div);
 		jscolor.init();
 		alert(2);
@@ -114,7 +113,7 @@
 		var div = document.createElement('div');
 		div.setAttribute("id", "element"+numElements);
 		div.innerHTML += '<div class="drsElement"'
-	+'	style="left: 150px; top: 280px; width: 500px; height: 300px; background: #DFC; text-align: center">'
+	+'	style="left: 150px; top: 280px; width: 500px; height: 300px; min-width:209px; min-height:167px; background: #DFC; text-align: center">'
 				+ '	<div class="drsMoveHandle" style="background: #DFC">Slider'
 				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
 				+'</div>'
@@ -148,7 +147,7 @@
 		var div = document.createElement('div');
 		div.setAttribute("id", "element"+numElements);
 		div.innerHTML += ' <div class="drsElement"'
-			+'		style="left: 150px; top: 280px; width: 500px; height: 350px; background: #DFC; text-align: center">'
+			+'		style="left: 150px; top: 280px; width: 500px; height: 350px; min-width:217px; min-height:281px;  background: #DFC; text-align: center">'
 				+ '		<div class="drsMoveHandle">Comment Box'
 				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
 				+'</div>'
@@ -192,7 +191,7 @@
 		var div = document.createElement('div');
 		div.setAttribute("id", "element"+numElements);
 		div.innerHTML += '<div class="drsElement"'
-		+'	style="left: 150px; top: 280px; width: 560px; height: 350px; background: #DFC; text-align: center">'
+		+'	style="left: 150px; top: 280px; width: 560px; height: 350px; min-width:272px; min-height:131px;background: #DFC; text-align: center">'
 				+ '	<div class="drsMoveHandle" style="background: #DFC">Youtube Video'
 				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
 				+'</div>'
@@ -268,11 +267,7 @@ a.name:hover {
 
 	var dragresize = new DragResize('dragresize', {
 		minWidth : 50,
-		minHeight : 50,
-		minLeft : 20,
-		minTop : 20,
-		maxLeft : 600,
-		maxTop : 600
+		minHeight : 50
 	});
 
 	// Optional settings/properties of the DragResize object are:
