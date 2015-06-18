@@ -9,7 +9,7 @@
 
 <script type="text/javascript" src="dragresize.js"></script>
 <link rel="stylesheet" type="text/css" href="DragResizeStyle.css">
- <link rel="stylesheet" type="text/css" href="CloseButton.css">
+<link rel="stylesheet" type="text/css" href="CloseButton.css">
 
 <link rel="stylesheet" type="text/css" href="gallery.css">
 <link rel="stylesheet" type="text/css" href="AlbomImage.css">
@@ -32,12 +32,15 @@
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
-		div.setAttribute("id", "element"+numElements);
+		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += '<div class="drsElement "'
 		+'		style="left: 150px; top: 280px; width: 350px; height: 150px; min-width: 270px; background: #DFC; text-align: center">'
 				+ '		<form id="'+numElements+'">'
 				+ '					<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image/gif,image/jpeg,image/jpg,,image/png" />'
-				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
+				+ ' <a onclick="$('
+				+ "element"
+				+ numElements
+				+ ').remove();" class="close" style="float: right;">×</a>'
 				+ '			<br /> <input class="gobutton" id="uploadBtn" type="button"'
 				+ '			value="Upload" onClick="performAjaxSubmit(0,'
 				+ numElements
@@ -56,12 +59,15 @@
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
-		div.setAttribute("id", "element"+numElements);
+		div.setAttribute("id", "element" + numElements);
 		div.innerHTML = "<div class=\"drsElement\""
 			+"	style=\"left: 50px; top: 150px; width: 350px; height: 120px; min-width:228px; min-height:88px; background: white; text-align: center\">"
 				+ '<div class="drsMoveHandle">Text'
-				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
-				+"</div>"
+				+ ' <a onclick="$('
+				+ "element"
+				+ numElements
+				+ ').remove();" class="close" style="float: right;">×</a>'
+				+ "</div>"
 				+ "	<div style=\"border: 1px solid green; background-color: #A5B7F2;\">"
 				+ "		Font: <input id=\"Font"
 				+ numElements
@@ -111,12 +117,15 @@
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
-		div.setAttribute("id", "element"+numElements);
+		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += '<div class="drsElement"'
 	+'	style="left: 150px; top: 280px; width: 500px; height: 300px; min-width:209px; min-height:167px; background: #DFC; text-align: center">'
 				+ '	<div class="drsMoveHandle" style="background: #DFC">Slider'
-				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
-				+'</div>'
+				+ ' <a onclick="$('
+				+ "element"
+				+ numElements
+				+ ').remove();" class="close" style="float: right;">×</a>'
+				+ '</div>'
 
 				+ '		<form id="'+numElements+'">'
 
@@ -139,18 +148,21 @@
 
 		document.body.appendChild(div);
 	}
-	
+
 	function createCommentBox() {
 
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
-		div.setAttribute("id", "element"+numElements);
+		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += ' <div class="drsElement"'
 			+'		style="left: 150px; top: 280px; width: 500px; height: 350px; min-width:217px; min-height:281px;  background: #DFC; text-align: center">'
 				+ '		<div class="drsMoveHandle">Comment Box'
-				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
-				+'</div>'
+				+ ' <a onclick="$('
+				+ "element"
+				+ numElements
+				+ ').remove();" class="close" style="float: right;">×</a>'
+				+ '</div>'
 				+ '	<form action="#" id="usrform" style="background: #DFC; width: 100%; height: 20%;">'
 				+ '	Name: <input type="text" name="usrname"> <input disabled'
 				+'	class="gobutton"  value="post" type="submit" style="background: blue">'
@@ -189,12 +201,15 @@
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
-		div.setAttribute("id", "element"+numElements);
+		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += '<div class="drsElement"'
 		+'	style="left: 150px; top: 280px; width: 560px; height: 350px; min-width:272px; min-height:131px;background: #DFC; text-align: center">'
 				+ '	<div class="drsMoveHandle" style="background: #DFC">Youtube Video'
-				+' <a onclick="$('+"element"+numElements+').remove();" class="close" style="float: right;">×</a>'
-				+'</div>'
+				+ ' <a onclick="$('
+				+ "element"
+				+ numElements
+				+ ').remove();" class="close" style="float: right;">×</a>'
+				+ '</div>'
 				+ '	Youtube link: <input id="videoLink'+numElements+'" type="text" /> <br><input'
 				+ '			class="gobutton"  type="button" value="Upload Video"'
 				+ '			onClick="uploadVideo('
@@ -362,33 +377,34 @@ Your Text
 
 
 
+
 	<%--control panel --%>
 	<div class="controlPanel">
 
-		<div id="circle">
+		<div class="circle" style="left: 20px; background: #253DDA;">
 			<i class="icon1 fa fa-pencil fa-lg"></i> <i
 				class="icon2 fa fa-star fa-lg"></i> <span> ADD</span>
 		</div>
-		<div id="sub">
-			<div onclick="createText();" id="circle">
-				<i class="icon1 fa fa-star fa-lg"></i> <i
+		<div class="sub">
+			<div onclick="createText();" class="circle">
+				<i class="icon1 fa  fa-edit fa-lg"></i> <i
 					class="icon2 fa fa-plus fa-lg"></i><span>Text</span>
 			</div>
-			<div onclick="createImage();" id="circle">
-				<i class="icon1 fa fa-star fa-lg"></i> <i
+			<div onclick="createImage();" class="circle">
+				<i class="icon1 fa fa-photo fa-lg"></i> <i
 					class="icon2 fa fa-plus fa-lg"></i> <span>Image</span>
 			</div>
-			<div onclick="createCommentBox();" id="circle">
-				<i class="icon1 fa fa-star fa-lg"></i> <i
+			<div onclick="createCommentBox();" class="circle">
+				<i class="icon1 fa  fa-comments-o fa-lg"></i> <i
 					class="icon2 fa fa-plus fa-lg"></i> <span>Comments Box</span>
 			</div>
 
-			<div onclick="createGallery();" id="circle">
-				<i class="icon1 fa fa-star fa-lg"></i> <i
+			<div onclick="createGallery();" class="circle">
+				<i class="icon1 fa fa-tasks fa-lg"></i> <i
 					class="icon2 fa fa-plus fa-lg"></i> <span>Slider Gallery</span>
 			</div>
-			<div onclick="createVideo();" id="circle">
-				<i class="icon1 fa fa-star fa-lg"></i> <i
+			<div onclick="createVideo();" class="circle">
+				<i class="icon1 fa fa-youtube-play fa-lg"></i> <i
 					class="icon2 fa fa-plus fa-lg"></i> <span>Youtube Video</span>
 			</div>
 
@@ -397,7 +413,19 @@ Your Text
 
 
 
+		<div class="circle" style="top: 120px; background: #FF2F2F;">
+			<i class="icon1 fa fa-save fa-lg"></i> <i
+				class="icon2 fa fa-star fa-lg"></i> <span> Save</span>
+		</div>
+		
+		<div class="circle" style="top: 215px;  background: #2BDA25;">
+			<i class="icon1 fa fa-globe  fa-lg"></i> <i
+				class="icon2 fa fa-star fa-lg"></i> <span> View</span>
+		</div>
+
 	</div>
+
+
 	<%--image --%>
 	<%-- 
 	<div class="drsElement "
@@ -447,19 +475,21 @@ Your Text
 			if (window.XMLHttpRequest) {
 				// code for IE7+, Firefox, Chrome, Opera, Safari
 				xhr = new XMLHttpRequest();
+				alert("pirveli");
 			} else {
 				// code for IE6, IE5
+				alert("meore");
 				xhr = new ActiveXObject("Microsoft.XMLHTTP");
 			}
 
 			xhr.open("POST", "FileUploader", true);
 			xhr.send(formdata);
 			alert(2);
-			xhr.onload = function(e) {
-
-				if (this.status == 200) {
+			xhr.onreadystatechange = function(e) {
+				if (xhr.readyState == 4 && xhr.status == 200) {
 					if (multi == 0) {
-						image.innerHTML = this.responseText;
+						alert(5);
+						image.innerHTML = xhr.responseText;
 					} else {
 						//var text = document.getElementById("imageText" + id);
 						//alert(text.value);
@@ -488,7 +518,7 @@ Your Text
 	</script>
 
 	<%--comment box --%>
-<%--
+	<%--
 	<div class="drsElement"
 		style="left: 150px; top: 280px; width: 500px; height: 350px; background: #DFC; text-align: center">
 

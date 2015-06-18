@@ -23,7 +23,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  */
 @WebServlet("/FileUploader")
 public class FileUploader extends HttpServlet {
-	private final String UPLOAD_DIRECTORY = "C:/Users/Guri/git/oop/WebContent";
+	private final String UPLOAD_DIRECTORY = "C:/Users/Guri";
 
 	@Override
 	protected void doPost(HttpServletRequest request,
@@ -73,6 +73,7 @@ public class FileUploader extends HttpServlet {
 		else {
 			response.getWriter().write("Error Uploading");
 		}
+		System.out.println("morcha ha");
 	}
 
 	// checks if file is image : Server Side
