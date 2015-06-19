@@ -112,12 +112,11 @@ public class DBConnection implements core.database.Connection {
         return results;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         DBConnection db = new DBConnection();
-        try {
-            db.addNotification("nika", "#", SiteConstants.Notification.createdUser);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        ResultSet set = db.getMarkers(2);
+        while (set.next()) {
+            System.out.println(set.getString("name"));
         }
     }
 
@@ -303,7 +302,7 @@ public class DBConnection implements core.database.Connection {
         try {
             ResultSet results = null;
             PreparedStatement statement = dataBaseConnection
-                    .prepareStatement("SELECT * users where 'name' = ? and 'url' = ? and 'mail' = ? and 'password' = ?;");
+                    .prepareStatement("SELECT * from users where name = ? and url = ? and mail = ? and password = ?;");
             int tmp = 1;
             statement.setString(tmp++, name);
             statement.setString(tmp++, url);
@@ -312,7 +311,7 @@ public class DBConnection implements core.database.Connection {
             results = statement.executeQuery();
             if (results != null) {
                 if (results.next()) {
-                    user = new User(results.getString("name"), results.getString("mail"), password, results.getString("url"), SiteConstants.getType(results.getString("type")), results.getInt("OD"));
+                    user = new User(results.getString("name"), results.getString("mail"), password, results.getString("url"), SiteConstants.getType(results.getString("type")), results.getInt("ID"));
                 }
             }
         } catch (SQLException e) {
@@ -842,7 +841,53 @@ public class DBConnection implements core.database.Connection {
 
 
     @Override
-    public void addMarker(String name, String address, double lat, double lang) {
-
+    public void addMarker(String name, String address, double lat, double lng, int userID) throws SQLException {
+        PreparedStatement statement = dataBaseConnection
+                .prepareStatement("insert into markers (name, address, lat, lng, userID) values " +
+                        "(?, ?, ?, ?, ?);");
+        int tmp = 1;
+        statement.setString(tmp++, name);
+        statement.setString(tmp++, address);
+        statement.setDouble(tmp++, lat);
+        statement.setDouble(tmp++, lng);
+        statement.setInt(tmp++, userID);
+        statement.executeUpdate();
     }
+
+
+    @Override
+    public ResultSet getMarkers(int userID) {
+        ResultSet set = null;
+        PreparedStatement stmt = null;
+        try {
+            stmt = dataBaseConnection
+                    .prepareStatement("select * from markers where userID = ?;");
+            stmt.setInt(1, userID);
+            set = stmt.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(set);
+        return set;
+    }
+
+    @Override
+    public void removeMarker(double lat, double lang, int userID) {
+        ResultSet set = null;
+        PreparedStatement stmt = null;
+        try {
+            stmt = dataBaseConnection
+                    .prepareStatement("delete from markers where lat = ? and lng = ? and userId = ?;");
+            stmt.setDouble(1, lat);
+            stmt.setDouble(2, lang);
+            stmt.setInt(3, userID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 }

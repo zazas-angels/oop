@@ -32,22 +32,29 @@ public class RegistrationServlet extends HttpServlet {
 
         String url = request.getParameter("url");
         String name = request.getParameter("name");
+        boolean b = true;
         if (name != null && password != null && email != null && url != null && checkName(name) && checkMail(email) && checkPassword(password) && !url.equals("")) {
             if (dbConnection.existsUser(email)) {
                 request.getSession().setAttribute("busy email", email);
                 request.getSession().setAttribute("registration", true);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
+                b = false;
             } else {
                 User user = dbConnection.addUser(name, email, password, url, SiteConstants.Type.email);
-                request.getSession().setAttribute("logged in", true);
-                request.getSession().setAttribute("user", user);
-                request.getSession().setAttribute("registration", false);
-                request.getRequestDispatcher("userPage.jsp").forward(request, response);
+                if (user != null) {
+                    request.getSession().setAttribute("logged in", true);
+                    request.getSession().setAttribute("user", user);
+                    request.getSession().setAttribute("registration", false);
+                    request.getRequestDispatcher("userPage.jsp").forward(request, response);
+                    b = false;
+                }
 
             }
         }
-        request.getSession().setAttribute("registration", true);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        if (b) {
+            request.getSession().setAttribute("registration", true);
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

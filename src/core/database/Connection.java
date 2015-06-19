@@ -107,5 +107,9 @@ public interface Connection {
 
 	public ResultSet getNotifications(int days);
 
-	public void addMarker(String name, String address, double lat, double lang);
+	public void addMarker(String name, String address, double lat, double lang, int userID) throws SQLException;
+
+	public void removeMarker(double lat, double lang, int userID) throws SQLException;
+
+	public ResultSet getMarkers(int userID);
 }
