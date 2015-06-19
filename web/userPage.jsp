@@ -29,7 +29,7 @@
 ასდასდადსასდ
 <div id="map-canvas"></div>
 adsdsadsada
-<input type="button" onclick="googleMap()" value="google-map">
+<input id="googleMap-button" type="button" onclick="googleMap()" value="google-map">
 </body>
 <%@include file="logout.jsp" %>
 </html>
