@@ -16,7 +16,7 @@
     User user = (User) request.getSession().getAttribute("user");
     ServletContext context = request.getServletContext();
     DBConnection dbConnection = (DBConnection) context.getAttribute("database");
-    String type = request.getParameter("type");
+    String type = request.getParameter("type"); // what action wants user to do (save, remove or get  markers)
     try {
         if (type.equals("save")) {
             dbConnection.addMarker(request.getParameter("name"), request.getParameter("address"), Double.parseDouble(request.getParameter("lat")), Double.parseDouble(request.getParameter("lang")), user.getID());

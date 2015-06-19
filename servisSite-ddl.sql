@@ -225,6 +225,28 @@ CREATE TABLE wantedCategories (
   FOREIGN KEY (parentCategoryID) REFERENCES categories (ID)
 );
 
+##notifications
+DROP TABLE IF EXISTS notifications;
+CREATE TABLE notifications (
+  ID           INT NOT NULL AUTO_INCREMENT,
+  notification ENUM ('createdUser'),
+  userName     VARCHAR(64),
+  userUrl      VARCHAR(64)  DEFAULT "#",
+  postDate     DATETIME,
+  PRIMARY KEY (ID)
+);
+
+DELIMITER //
+
+CREATE TRIGGER addNotification BEFORE INSERT ON users
+FOR EACH ROW
+  BEGIN
+    INSERT INTO notifications
+    SET notification = 'createdUser', userName = NEW.name, userUrl = NEW.url, postDate = now();
+  END;
+//
+DELIMITER ;
+
 
 ##markers for google maps
 DROP TABLE IF EXISTS markers;

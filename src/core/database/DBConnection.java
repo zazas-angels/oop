@@ -840,6 +840,16 @@ public class DBConnection implements core.database.Connection {
     }
 
 
+    /**
+     * adds google-map marker in markers table
+     *
+     * @param name    name of marker
+     * @param address description of marker
+     * @param lat     latitude
+     * @param lng     longitude
+     * @param userID  identifies user, for which we are adding marker
+     * @throws SQLException
+     */
     @Override
     public void addMarker(String name, String address, double lat, double lng, int userID) throws SQLException {
         PreparedStatement statement = dataBaseConnection
@@ -855,6 +865,10 @@ public class DBConnection implements core.database.Connection {
     }
 
 
+    /**
+     * @param userID identifies user, for which we are searching markers
+     * @return resultset of markers table
+     */
     @Override
     public ResultSet getMarkers(int userID) {
         ResultSet set = null;
@@ -871,6 +885,11 @@ public class DBConnection implements core.database.Connection {
         return set;
     }
 
+    /**
+     * removes marker from markers table
+     * @param lat and lang  are coordinates for marker
+     * @param userID identifies to which user belongs this marker
+     */
     @Override
     public void removeMarker(double lat, double lang, int userID) {
         ResultSet set = null;
