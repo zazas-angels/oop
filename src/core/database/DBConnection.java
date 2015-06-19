@@ -284,23 +284,42 @@ public class DBConnection implements core.database.Connection {
      * @see core.database.Connection#addUser(core.user.UserInterface)
      */
     @Override
-    public int addUser(UserInterface user) {
+    public User addUser(String name, String email, String password, String url, SiteConstants.Type type) {
 
+        User user = null;
         try {
             PreparedStatement statement = dataBaseConnection
                     .prepareStatement("insert into users (name, url, mail, password, type) values (?,?,?,?,?);");
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getURL());
-            statement.setString(3, user.getEmail());
-            statement.setString(4, user.getPassword());
-            statement.setString(5, SiteConstants.typeToString(user.getType()));
+            statement.setString(1, name);
+            statement.setString(2, url);
+            statement.setString(3, email);
+            statement.setString(4, generatePassword(password));
+            statement.setString(5, SiteConstants.typeToString(type));
             statement.executeUpdate();
         } catch (SQLException e) {
             // ignore
             e.printStackTrace();
-            return 1;
         }
-        return 0;
+        try {
+            ResultSet results = null;
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("SELECT * users where 'name' = ? and 'url' = ? and 'mail' = ? and 'password' = ?;");
+            int tmp = 1;
+            statement.setString(tmp++, name);
+            statement.setString(tmp++, url);
+            statement.setString(tmp++, email);
+            statement.setString(tmp++, generatePassword(password));
+            results = statement.executeQuery();
+            if (results != null) {
+                if (results.next()) {
+                    user = new User(results.getString("name"), results.getString("mail"), password, results.getString("url"), SiteConstants.getType(results.getString("type")), results.getInt("OD"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return user;
     }
 
     /*
@@ -317,7 +336,7 @@ public class DBConnection implements core.database.Connection {
         try {
             if (results.next()) {
                 user = new User(results.getString("name"), mail, password,
-                        results.getString("url"), SiteConstants.getType(results.getString("type")));
+                        results.getString("url"), SiteConstants.getType(results.getString("type")), results.getInt("ID"));
             }
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -822,4 +841,8 @@ public class DBConnection implements core.database.Connection {
     }
 
 
+    @Override
+    public void addMarker(String name, String address, double lat, double lang) {
+
+    }
 }

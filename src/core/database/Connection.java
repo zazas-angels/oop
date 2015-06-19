@@ -7,6 +7,7 @@ import core.SiteConstants;
 import core.administrator.AdminInterface;
 import core.administrator.Administrator;
 import core.category.CategoryInterface;
+import core.user.User;
 import core.user.UserInterface;
 
 import java.sql.ResultSet;
@@ -57,11 +58,12 @@ public interface Connection {
 	public ResultSet getElementsPictures( int id);
 	public ResultSet getAdmins( int id);
 
-
-	/**
-	 * returns 0 if successfully added else 1
-	 */
-	public int addUser(UserInterface user);
+	/*
+	 * Add user in database (non-Javadoc)
+     *
+     * @see core.database.Connection#addUser(core.user.UserInterface)
+     */
+	User addUser(String name, String email, String password, String url, SiteConstants.Type type);
 
 	public UserInterface getUser(String email, String password);
 
@@ -104,4 +106,6 @@ public interface Connection {
 	public ResultSet getNotifications();
 
 	public ResultSet getNotifications(int days);
+
+	public void addMarker(String name, String address, double lat, double lang);
 }

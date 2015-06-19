@@ -38,13 +38,12 @@ public class RegistrationServlet extends HttpServlet {
                 request.getSession().setAttribute("registration", true);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             } else {
-                User user = new User(name, email, password, url, SiteConstants.Type.email);
-                if (dbConnection.addUser(user) == 0) {
-                    request.getSession().setAttribute("logged in", true);
-                    request.getSession().setAttribute("user", user);
-                    request.getSession().setAttribute("registration", false);
-                    request.getRequestDispatcher("userPage.jsp").forward(request, response);
-                }
+                User user = dbConnection.addUser(name, email, password, url, SiteConstants.Type.email);
+                request.getSession().setAttribute("logged in", true);
+                request.getSession().setAttribute("user", user);
+                request.getSession().setAttribute("registration", false);
+                request.getRequestDispatcher("userPage.jsp").forward(request, response);
+
             }
         }
         request.getSession().setAttribute("registration", true);
