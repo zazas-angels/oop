@@ -7,6 +7,9 @@ import org.junit.Test;
 import core.SiteConstants;
 
 public class WebDataTest {
+	/*
+	 * Some simple tests for GetData method
+	 */
 	@Test
 	public void simpleGetDataTest() {
 		String data = SiteConstants.startInnerTagName + "hjrevbfhubrefh"
@@ -26,6 +29,9 @@ public class WebDataTest {
 		assertEquals(data, webData.getData());// re use
 	}
 
+	/*
+	 * Some simple tests for GetDataView method
+	 */
 	@Test
 	public void simpleGetDataView() {
 		String dataView = SiteConstants.startInnerTagName
@@ -46,6 +52,10 @@ public class WebDataTest {
 
 	}
 
+	/*
+	 * Some simple tests for ChangeDataTest method using already tested (simply)
+	 * other methods
+	 */
 	@Test
 	public void simpleChangeDataTest() {
 
@@ -68,6 +78,10 @@ public class WebDataTest {
 		assertEquals(dataView + dataView + dataView, webData.getDataView());
 		assertEquals(data, webData.getData());
 	}
+
+	/*
+	 * Some complex test for mixed methods testing
+	 */
 
 	@Test
 	public void complexWebDataMixedTest() {
@@ -105,21 +119,21 @@ public class WebDataTest {
 
 	}
 
+	/*
+	 * Some Wierd tests for this class (empty and null)
+	 */
 	@Test
 	public void wierdWebDataTest() {
-	//empty test
+		// empty test
 		WebData webData = new WebData("");
 		assertEquals("", webData.getData());
-		assertEquals("",
-				webData.getDataView());
+		assertEquals("", webData.getDataView());
 		webData.changeData(null);
-		//null test
+		// null test
 		assertEquals(null, webData.getData());
-		assertEquals(null,
-				webData.getDataView());
-		assertEquals(null,
-				webData.getDataView());//re use
-		
+		assertEquals(null, webData.getDataView());
+		assertEquals(null, webData.getDataView());// re use
+
 	}
 
 }
