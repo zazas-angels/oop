@@ -3,14 +3,24 @@
 <head>
  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
  <title>Div Drag/Resize Demo</title>
+ <link rel="stylesheet" type="text/css" href="CloseButton.css"></link>
+  <link rel="stylesheet" type="text/css" href="DragResize.css">
+ </link>
  <script type="text/javascript" src="dragresize.js"></script>
-<link rel="stylesheet" type="text/css" href="DragResizeStyle.css">
-<style type="text/css">
 
 
-</style>
-
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script type="text/javascript">
+	
+	function zaz(){
+		$( "#zaza" ).remove();
+		alert(2);
+	}
+	</script>
+	
 <script type="text/javascript">
+
 //<![CDATA[
 
 // Using DragResize is simple!
@@ -18,7 +28,7 @@
 // whose keys constitute optional parameters/settings:
 
 var dragresize = new DragResize('dragresize',
- { minWidth: 50, minHeight: 50, minLeft: 20, minTop: 20, maxLeft: 600, maxTop: 600 });
+ { minWidth: 50, minHeight: 50 });
 
 // Optional settings/properties of the DragResize object are:
 //  enabled: Toggle whether the object is active.
@@ -71,22 +81,31 @@ dragresize.apply(document);
  Easy!
 -->
 
-<div class="drsElement"
+
+<div id="zabfgza" class="drsElement"
+ style="left: 450px; top: 150px; width: 250px; height: 120px;
+ background: white; text-align: center">
+ <div class="drsMoveHandle">Color:  </div>
+<innerElement>
+<p contenteditable="true">This is a paragraph. It is editable. Try to change this text.</p>
+</innerElement>
+
+</div>
+<div id="zazfda" class="drsElement"
  style="left: 50px; top: 150px; width: 250px; height: 120px;
  background: white; text-align: center">
- <div class="drsMoveHandle">Color:</div>
-
-
+ <div class="drsMoveHandle">Color:  </div>
+<innerElement>
 <p contenteditable="true">This is a paragraph. It is editable. Try to change this text.</p>
+</innerElement>
 </div>
 <div class="drsElement"
  style="left: 20px; top: 300px; width: 150px; height: 200px;
  background:white; text-align: center"> 
  <div class="drsMoveHandle">Div 1</div>
- 
  Content
 </div>
-
+<div onresize="zaza()">
 <div class="drsElement drsMoveHandle"
  style="left: 150px; top: 280px; width: 50px; height: 100px;
  background: #DFC; text-align: center">
@@ -94,6 +113,7 @@ dragresize.apply(document);
  Content
 </div>
 
+</div>
 
 </body>
 </html>

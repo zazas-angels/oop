@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>User Page</title>
 
-<script type="text/javascript" src="dragresize.js"></script>
+<script type="text/javascript" src="dragresize1.js"></script>
 <link rel="stylesheet" type="text/css" href="DragResizeStyle.css">
 <link rel="stylesheet" type="text/css" href="CloseButton.css">
 
@@ -46,11 +46,11 @@
 				+ numElements
 				+ ');"></input>'
 				+ '				</form>'
-				+ '	<div class="drsMoveHandle " style="background: #DFC;width:100%; height:calc(100% - 50px);" id="image'
+				+ '<innerElement>	<div class="drsMoveHandle " style="background: #DFC;width:100%; height:calc(100% - 50px);" id="image'
 				+ numElements
 				+ '"  >'
 				+ '		<img alt="noImage" src="noImage.png " style="width: 100%;height:100%;">'
-				+ '	</div>' + '		</div>';
+				+ '	</div> </innerElement>' + '		</div>';
 		document.body.appendChild(div);
 		alert(2);
 	}
@@ -96,10 +96,10 @@
 				+ numElements
 				+ ');">'
 				+ "	</div>"
-				+ '<textarea id="'
+				+ '<innerElement> <textarea id="'
 				+ numElements
 				+ '"style=" text-align: center; width: calc(100% - 6px); height: calc(100% - 74px); resize:none;">'
-				+ 'Your Text' + '</textarea>' + '</div>"';
+				+ 'Your Text' + '</textarea> </innerElement>' + '</div>"';
 		document.body.appendChild(div);
 		jscolor.init();
 		alert(2);
@@ -140,11 +140,11 @@
 				+ numElements
 				+ ');"></input>'
 				+ '</form>'
-				+ '<div class="slideshow"'
+				+ '<innerElement><div class="slideshow"'
 				+ '	style="width: calc(100% - 5px); height: calc(100% - 110px);">'
 				+ '	<ul id="slider'+numElements+'">'
 
-				+ '			</ul>' + '</div>' + '</div>';
+				+ '			</ul>' + '</div>' + '</innerElement></div>';
 
 		document.body.appendChild(div);
 	}
@@ -163,7 +163,7 @@
 				+ numElements
 				+ ').remove();" class="close" style="float: right;">×</a>'
 				+ '</div>'
-				+ '	<form action="#" id="usrform" style="background: #DFC; width: 100%; height: 20%;">'
+				+ '	<innerElement><form action="#" id="usrform" style="background: #DFC; width: 100%; height: 20%;">'
 				+ '	Name: <input type="text" name="usrname"> <input disabled'
 				+'	class="gobutton"  value="post" type="submit" style="background: blue">'
 				+ '	</form>'
@@ -175,7 +175,7 @@
 				+ '	<div class="chatBox" style="width: calc(100% - 70px); height:calc(60% - 70px);" >'
 				+ '<p class="bubbleLeft2"><a class="name">name</a> simple comment 1</p>'
 				+ ' 	<p class="bubbleLeft2"><a class="name">name</a>simple comment 2</p>'
-				+ '	</div>	' + '</div>';
+				+ '	</div>	<innerElement>' + '</div>';
 		document.body.appendChild(div);
 		alert(2);
 	}
@@ -202,23 +202,23 @@
 		alert(1);
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
-		div.innerHTML += '<div class="drsElement"'
-		+'	style="left: 150px; top: 280px; width: 560px; height: 350px; min-width:272px; min-height:131px;background: #DFC; text-align: center">'
-				+ '	<div class="drsMoveHandle" style="background: #DFC">Youtube Video'
+		div.innerHTML += '<div type="video" class="drsElement"'
+		+'	style="left: 150px; top: 280px; width: 560px; height: 350px; min-width:272px; min-height:131px;background: red; text-align: center">'
+				+ '<opac>	<div class="drsMoveHandle" style="background: rgb(138, 237, 138);">Youtube Video'
 				+ ' <a onclick="$('
 				+ "element"
 				+ numElements
 				+ ').remove();" class="close" style="float: right;">×</a>'
-				+ '</div>'
+				+ '</div></opac>'
 				+ '	Youtube link: <input id="videoLink'+numElements+'" type="text" /> <br><input'
 				+ '			class="gobutton"  type="button" value="Upload Video"'
 				+ '			onClick="uploadVideo('
 				+ numElements
 				+ ');"></input>'
 
-				+ '	<div id="video'
+				+ '	<innerElement><div id="video'
 				+ numElements
-				+ '" style="width:100%;height:calc(100% - 75px);"></div>'
+				+ '" style="background:red; width:100%;height:calc(100% - 75px);"></div></innerElement>'
 				+ '	</div>';
 		document.body.appendChild(div);
 
@@ -372,7 +372,7 @@ Your Text
 
 
 
-
+vghvuygvuyh
 
 
 

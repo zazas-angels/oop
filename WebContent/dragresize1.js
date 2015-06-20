@@ -93,12 +93,15 @@ function DragResize(myName, config) {
 DragResize.prototype.apply = function(node) {
 	var obj = this;
 	addEvent(node, 'mousedown', function(e) {
+	
 		obj.mouseDown(e)
 	});
 	addEvent(node, 'mousemove', function(e) {
+		
 		obj.mouseMove(e)
 	});
 	addEvent(node, 'mouseup', function(e) {
+		
 		obj.mouseUp(e)
 	})
 };
@@ -122,9 +125,29 @@ DragResize.prototype.select = function(newElement) {
 };
 DragResize.prototype.deselect = function(delHandles) {
 	with (this) {
-		if (!document.getElementById || !enabled)
+		if (!document.getElementById || !enabled){
+			//alert("aba1");
 			return;
+		}
 		if (delHandles) {
+			//alert("ganibloka");
+			//alert(element.className);
+			
+		var innerElements = element.getElementsByTagName("innerElement");
+	
+		if(innerElements!=null){
+			
+			var inElem=innerElements[0];
+			
+			element.style.visibility="hidden";
+			inElem.style.visibility="visible";
+			if(element.getAttribute("type")=="video"){
+				var opac= element.getElementsByTagName("opac")[0];
+				opac.style.visibility="visible"
+			}
+		}else{
+			//alert("null iyo");
+		}
 			if (ondragblur)
 				this.ondragblur();
 			if (this.resizeHandleSet)
@@ -138,8 +161,9 @@ DragResize.prototype.deselect = function(delHandles) {
 };
 DragResize.prototype.mouseDown = function(e) {
 	with (this) {
-		if (!document.getElementById || !enabled)
+		if (!document.getElementById || !enabled){
 			return true;
+		}
 		var elm = e.target || e.srcElement, newElement = null, newHandle = null, hRE = new RegExp(
 				myName + '-([trmbl]{2})', '');
 		while (elm) {
@@ -158,6 +182,10 @@ DragResize.prototype.mouseDown = function(e) {
 		if (newElement && (!element || (newElement == element))) {
 			if (newHandle)
 				cancelEvent(e);
+			//alert("daibloka");
+			
+			newElement.style.visibility="visible";
+			//alert(newElement.className);
 			select(newElement, newHandle);
 			handle = newHandle;
 			if (handle && ondragstart)
@@ -217,12 +245,19 @@ DragResize.prototype.mouseMove = function(e) {
 };
 DragResize.prototype.mouseUp = function(e) {
 	with (this) {
-		if (!document.getElementById || !enabled)
+		if (!document.getElementById || !enabled){
+			//alert("up0");
 			return;
+	}
 		var hRE = new RegExp(myName + '-([trmbl]{2})', '');
-		if (handle && ondragend)
+		if (handle && ondragend){
+			//alert("up1");
+		
 			this.ondragend(hRE.test(handle.className));
+		}
+		//alert("up2");
 		deselect(false)
+		
 	}
 };
 DragResize.prototype.resizeHandleSet = function(elm, show) {
