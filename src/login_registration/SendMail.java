@@ -11,23 +11,24 @@ import javax.mail.internet.MimeMessage;
  
  
 public class SendMail {
-	static final String SRC_MAIL_ADDRESS = "akasr13@freeuni.edu.ge"; //sends from
-	static final String SRC_MAIL_PASSWORD = "12200139";	//user password
+	private static final String SRC_MAIL_ADDRESS = "akasr13@freeuni.edu.ge"; //sends from
+	private static final String SRC_MAIL_PASSWORD = "12200139";	//user password
 	
-	static Properties mailServerProperties;
-	static Session getMailSession;
-	static MimeMessage generateMailMessage;
+	private Properties mailServerProperties;
+	private Session getMailSession;
+	private MimeMessage generateMailMessage;
  
-	public static void main(String[] args) throws AddressException, MessagingException{
-		sendEmail("akasr13@freeuni.edu.ge", "idi na xui suka" + "<br/> mase jobia");
-		sendEmail("akasr13@freeuni.edu.ge", "ara zmao, kvrias mcalia \n \n \n" + "<br/> mase jobia");
+	
+	public SendMail(){
+		
 	}
- 
+	
+	
 	/*
 	 * sends message to mailAdress from SRC_MAIL_ADDRESS
 	 * message should be in HTML String format 
 	 */
-	public static void sendEmail(String mailAddress, String message) throws AddressException, MessagingException {
+	public void sendEmail(String mailAddress, String message) throws AddressException, MessagingException {
 
 		mailServerProperties = System.getProperties();
 		mailServerProperties.put("mail.smtp.port", "587");
