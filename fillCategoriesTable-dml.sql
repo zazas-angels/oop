@@ -1,4 +1,4 @@
-use servissite;
+use ServisSite;
 
 insert into categories(name, ParentId)
 values
