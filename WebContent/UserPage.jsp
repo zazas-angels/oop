@@ -372,11 +372,6 @@ Your Text
 
 
 
-vghvuygvuyh
-
-
-
-
 
 	<%--control panel --%>
 	<div class="controlPanel">
