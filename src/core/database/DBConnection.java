@@ -8,6 +8,7 @@ import core.SiteConstants;
 import core.administrator.AdminInterface;
 import core.administrator.Administrator;
 import core.category.CategoryInterface;
+import core.category.CategoryTree;
 import core.user.User;
 import core.user.UserInterface;
 
@@ -83,7 +84,7 @@ public class DBConnection implements core.database.Connection {
         ResultSet results = null;
         try {
             PreparedStatement statement = dataBaseConnection
-                    .prepareStatement("select * from " + tableName + " ;");
+                    .prepareStatement("select * from " + tableName + ";");
 
             results = statement.executeQuery();
         } catch (SQLException e) {
@@ -101,7 +102,7 @@ public class DBConnection implements core.database.Connection {
         try {
             int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
             PreparedStatement statement = dataBaseConnection
-                    .prepareStatement("select * from +tableName"
+                    .prepareStatement("select * from " + tableName
                             + " Where id=?;");
             statement.setInt(temp, id);
             results = statement.executeQuery();
@@ -114,10 +115,8 @@ public class DBConnection implements core.database.Connection {
 
     public static void main(String[] args) throws SQLException {
         DBConnection db = new DBConnection();
-        ResultSet set = db.getMarkers(2);
-        while (set.next()) {
-            System.out.println(set.getString("name"));
-        }
+        Administrator admin = db.setAdmin(1, null);
+        System.out.println(admin.getEmail());
     }
 
     @Override
@@ -365,14 +364,14 @@ public class DBConnection implements core.database.Connection {
     }
 
     @Override
-    public AdminInterface getAdmin(String email, String password) {
+    public AdminInterface getAdmin(String email, String password, CategoryTree categoryTree) {
         ResultSet results = getFromTable("admins", email, password);
         if (results == null)
             return null;
         AdminInterface admin = null;
         try {
             if (results.next()) {
-                admin = new Administrator(email, password, this, null);
+                admin = new Administrator(results.getInt("ID"), email, password, this, categoryTree);
             }
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -425,14 +424,25 @@ public class DBConnection implements core.database.Connection {
         return 0;
     }
 
+    /**
+     * sets isBanned column value given boolean(bannedStatus)
+     *
+     * @param userID       identifies user
+     * @param bannedStatus new value for isBanned column
+     */
     @Override
-    public void setBannedStatus(int id, boolean bannedStatus) {
-
-    }
-
-    @Override
-    public void setBannedStatus(UserInterface user, boolean bannedStatus) {
-        // TODO
+    public void setBannedStatus(int userID, boolean bannedStatus) {
+        try {
+            int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("update users set isBanned = ? WHERE ID = ?;");
+            statement.setBoolean(1, bannedStatus);
+            statement.setInt(2, userID);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -470,23 +480,37 @@ public class DBConnection implements core.database.Connection {
     /**
      * adds administrator in database
      *
-     * @return true, if operation was successful else false
+     * @return returns just added administrator as Administrator(class), if there went something wrong, returns false.
      */
     @Override
-    public boolean addAdmin(Administrator administrator) {
-
+    public AdminInterface addAdmin(String mail, String password, CategoryTree categoryTree) {
+        Administrator admin = null;
         try {
             PreparedStatement statement = dataBaseConnection
                     .prepareStatement("insert into admins (mail, password) values (?,?);");
-            statement.setString(1, administrator.getEmail());
-            statement.setString(2, administrator.getPassword());
+            statement.setString(1, mail);
+            statement.setString(2, password);
             statement.executeUpdate();
+
+            // I do this, for get admin id
+            ResultSet results = null;
+            statement = dataBaseConnection
+                    .prepareStatement("SELECT * from admins where mail = ? and password = ?;");
+            int tmp = 1;
+            statement.setString(tmp++, mail);
+            statement.setString(tmp++, password);
+            results = statement.executeQuery();
+            if (results != null) {
+                if (results.next()) {
+                    admin = new Administrator(results.getInt("ID"), results.getString("mail"), password, true, this, categoryTree);
+                }
+            }
         } catch (SQLException e) {
             // ignore
             e.printStackTrace();
-            return false;
+            admin = null;
         }
-        return true;
+        return admin;
     }
 
     /**
@@ -892,7 +916,6 @@ public class DBConnection implements core.database.Connection {
      */
     @Override
     public void removeMarker(double lat, double lang, int userID) {
-        ResultSet set = null;
         PreparedStatement stmt = null;
         try {
             stmt = dataBaseConnection
@@ -907,6 +930,60 @@ public class DBConnection implements core.database.Connection {
     }
 
 
+    /**
+     * creates admin and deletes user form users table
+     *
+     * @param userID       id of user, which we want to set as admin
+     * @param categoryTree need to create new Administrator
+     * @return new Administrator if everything went ok, else null
+     */
+    @Override
+    public Administrator setAdmin(int userID, CategoryTree categoryTree) {
+        Administrator administrator = null;
+        ResultSet set = getUsers(userID);
+        try {
+            if (set.next()) {
+                administrator = (Administrator) addAdmin(set.getString("name"), set.getString("password"), categoryTree);
+                deleteUser(userID);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return administrator;
+    }
 
+    /**
+     * deletes admin from database
+     *
+     * @param adminID identifies administrator in admins table
+     */
+    @Override
+    public void deleteAdmin(int adminID) {
+        PreparedStatement stmt;
+        try {
+            stmt = dataBaseConnection
+                    .prepareStatement("delete from admins where ID = ?;");
+            stmt.setInt(1, adminID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * deletes user from users table where id == userID
+     *
+     * @param userID identifies user in users table
+     */
+    private void deleteUser(int userID) {
+        PreparedStatement stmt;
+        try {
+            stmt = dataBaseConnection
+                    .prepareStatement("delete from users where ID = ?;");
+            stmt.setInt(1, userID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

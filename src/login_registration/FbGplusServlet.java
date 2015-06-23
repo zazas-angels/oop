@@ -50,7 +50,8 @@ public class FbGplusServlet extends HttpServlet {
         String id = request.getParameter("id");
         String type = request.getParameter("type");
         ServletContext context = request.getServletContext();
-        DBConnection dbConnection = (DBConnection) context.getAttribute("database");
+        DBConnection dbConnection = (DBConnection) context.getAttribute(SiteConstants.DATABASE);
+        CategoryTree categoryTree = (CategoryTree) context.getAttribute(SiteConstants.CATEGORY_TREE);
 
         // in our base id must be unique, but we have not guarantee that fb user id != g+ user id, so i do this..
         if (type.equals("fb")) {
@@ -64,8 +65,7 @@ public class FbGplusServlet extends HttpServlet {
             loginUser(user, request, response, context);
         } else {
             if (dbConnection.existsAdministrator(id)) {
-                Administrator admin = (Administrator) dbConnection.getAdmin(id, "");
-                admin.setCategoryTree((CategoryTree) context.getAttribute(SiteConstants.CATEGORY_TREE));
+                Administrator admin = (Administrator) dbConnection.getAdmin(id, "", categoryTree);
                 loginAdmin(admin, request, response, context);
 
             } else {

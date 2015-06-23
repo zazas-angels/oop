@@ -3,6 +3,7 @@ package login_registration;
 import core.SiteConstants;
 import core.administrator.AdminInterface;
 import core.administrator.Administrator;
+import core.category.CategoryTree;
 import core.database.DBConnection;
 import core.user.User;
 import core.user.UserInterface;
@@ -33,7 +34,8 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         ServletContext context = request.getServletContext();
-        DBConnection dbConnection = (DBConnection) context.getAttribute("database");
+        DBConnection dbConnection = (DBConnection) context.getAttribute(SiteConstants.DATABASE);
+        CategoryTree categoryTree = (CategoryTree) context.getAttribute(SiteConstants.CATEGORY_TREE);
 
         boolean alreadyForwarded = true;
         if (password != null && email != null) {
@@ -45,7 +47,7 @@ public class LoginServlet extends HttpServlet {
                 loginUser(request, response, user, context);
                 alreadyForwarded = false;
             }
-            Administrator admin = (Administrator) dbConnection.getAdmin(email, password);
+            Administrator admin = (Administrator) dbConnection.getAdmin(email, password, categoryTree);
             if (admin != null) {
                 loginAdmin(request, response, admin, context);
                 alreadyForwarded = false;

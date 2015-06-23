@@ -154,9 +154,10 @@ function update(response) {
                 + user.isActive + "<br>"
                 + "type: " + user.type + "<br>"
                 + "rating " + user.rating + "<br>"
+                + "<button class='bann-button' onclick='console.log(zaza)'>ბანის დადება</button>"
                 + "</p></div></li>";
             data += tmp;
-        }
+        }0
         data += "</ul>" +
             "<script src=\"searchResults.js\"></script><link rel=\"stylesheet\" href=\"searchResults.css\">";
     }

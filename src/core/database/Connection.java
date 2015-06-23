@@ -7,6 +7,7 @@ import core.SiteConstants;
 import core.administrator.AdminInterface;
 import core.administrator.Administrator;
 import core.category.CategoryInterface;
+import core.category.CategoryTree;
 import core.user.User;
 import core.user.UserInterface;
 
@@ -69,7 +70,7 @@ public interface Connection {
 
 	public boolean existsUser(String email);
 
-	public AdminInterface getAdmin(String email, String password);
+	public AdminInterface getAdmin(String email, String password, CategoryTree categoryTree);
 
 	public int insertUserConfCode(int UserId, String confCode);
 	
@@ -79,11 +80,9 @@ public interface Connection {
 	
 	public int deleteUserConfCode(int id);
 
-	public void setBannedStatus(int id, boolean bannedStatus);
+	public void setBannedStatus(int userId, boolean bannedStatus);
 
-	void setBannedStatus(UserInterface user, boolean bannedStatus);
-
-	public boolean addAdmin(Administrator administrator);
+	public AdminInterface addAdmin(String mail, String password, CategoryTree categoryTree);
 
 	public boolean existsAdministrator(String mail);
 
@@ -112,4 +111,8 @@ public interface Connection {
 	public void removeMarker(double lat, double lang, int userID) throws SQLException;
 
 	public ResultSet getMarkers(int userID);
+
+	public Administrator setAdmin(int userID, CategoryTree categoryTree);
+
+	public void deleteAdmin(int adminID);
 }

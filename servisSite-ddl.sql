@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS ServisSite;
-CREATE DATABASE ServisSite;
+CREATE DATABASE ServisSite
+  CHARACTER SET 'utf8';
 USE ServisSite;
-
 
 DROP TABLE IF EXISTS pictures;
 CREATE TABLE pictures (
@@ -67,9 +67,10 @@ CREATE TABLE users_confcodes (
   ID          INT NOT NULL AUTO_INCREMENT,
   userId      INT NOT NULL,
   confirmCode CHAR(64),
-  FOREIGN KEY (userId) REFERENCES users (ID),
   UNIQUE (userId),
-  PRIMARY KEY (ID)
+  PRIMARY KEY (ID),
+  FOREIGN KEY (userId) REFERENCES users (ID)
+    ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS categories;
@@ -88,8 +89,10 @@ CREATE TABLE users_categories (
   UserID     INT NOT NULL,
   CategoryID INT NOT NULL,
   PRIMARY KEY (ID),
-  FOREIGN KEY (UserID) REFERENCES users (ID),
   FOREIGN KEY (CategoryID) REFERENCES categories (ID)
+    ON DELETE CASCADE,
+  FOREIGN KEY (UserID) REFERENCES users (ID)
+    ON DELETE CASCADE
 );
 
 
@@ -110,7 +113,8 @@ CREATE TABLE elements (
   hyperLink VARCHAR(64)  DEFAULT NULL,
 
   PRIMARY KEY (ID),
-  FOREIGN KEY (UserID) REFERENCES users (ID),
+  FOREIGN KEY (UserID) REFERENCES users (ID)
+    ON DELETE CASCADE,
   FOREIGN KEY (ColorID) REFERENCES colors (ID)
 
 );
@@ -135,7 +139,8 @@ CREATE TABLE elements_info (
   IsItalyc  BOOL         DEFAULT FALSE,
   ColorID   INT NOT NULL,
   PRIMARY KEY (ID),
-  FOREIGN KEY (ElementID) REFERENCES elements (ID),
+  FOREIGN KEY (ElementID) REFERENCES elements (ID)
+    ON DELETE CASCADE,
   FOREIGN KEY (FontID) REFERENCES fonts (ID),
   FOREIGN KEY (ColorID) REFERENCES colors (ID)
 );
@@ -218,12 +223,13 @@ CREATE TABLE wantedCategories (
   ID               INT NOT NULL AUTO_INCREMENT,
   authorName       VARCHAR(64),
   authorUrl        VARCHAR(64)  DEFAULT "#",
-  cateogotyName    VARCHAR(64),
+  categoryName VARCHAR(64),
   parentCategoryID INT          DEFAULT NULL,
   postDate         DATE,
   PRIMARY KEY (ID),
   FOREIGN KEY (parentCategoryID) REFERENCES categories (ID)
 );
+
 
 ##notifications
 DROP TABLE IF EXISTS notifications;
@@ -247,7 +253,6 @@ FOR EACH ROW
 //
 DELIMITER ;
 
-
 ##markers for google maps
 DROP TABLE IF EXISTS markers;
 CREATE TABLE markers (
@@ -259,4 +264,5 @@ CREATE TABLE markers (
   userID  INT         NOT NULL,
   UNIQUE (userId, lat, lng),
   FOREIGN KEY (userID) REFERENCES users (ID)
+    ON DELETE CASCADE
 );
