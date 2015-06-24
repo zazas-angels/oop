@@ -33,8 +33,8 @@
 		alert(1);
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
-		div.innerHTML += '<div class="drsElement "'
-		+'		style="left: 150px; top: 280px; width: 350px; height: 150px; min-width: 270px; background: #DFC; text-align: center">'
+		div.innerHTML += '<div  class="drsElement"'
+		+'		style="left: 150px; position: absolute; top: 280px; width: 350px; height: 150px; min-width: 270px; background: #DFC; text-align: center">'
 				+ '		<form id="'+numElements+'">'
 				+ '					<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image/gif,image/jpeg,image/jpg,,image/png" />'
 				+ ' <a onclick="$('
@@ -46,7 +46,7 @@
 				+ numElements
 				+ ');"></input>'
 				+ '				</form>'
-				+ '<innerElement>	<div class="drsMoveHandle " style="background: #DFC;width:100%; height:calc(100% - 50px);" id="image'
+				+ '<innerElement>	<div class="drsMoveHandle" style="background: #DFC;width:100%; height:calc(100% - 50px);" id="image'
 				+ numElements
 				+ '"  >'
 				+ '		<img alt="noImage" src="noImage.png " style="width: 100%;height:100%;">'
@@ -61,7 +61,7 @@
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML = "<div class=\"drsElement\""
-			+"	style=\"left: 50px; top: 150px; width: 350px; height: 120px; min-width:228px; min-height:88px; background: white; text-align: center\">"
+			+"	style=\"left: 50px; position: absolute; top: 150px; width: 350px; height: 120px; min-width:228px; min-height:88px; background: white; text-align: center\">"
 				+ '<div class="drsMoveHandle">Text'
 				+ ' <a onclick="$('
 				+ "element"
@@ -119,7 +119,7 @@
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += '<div class="drsElement"'
-	+'	style="left: 150px; top: 280px; width: 500px; height: 300px; min-width:209px; min-height:167px; background: #DFC; text-align: center">'
+	+'	style="left: 150px; top: 280px; position: absolute; width: 500px; height: 300px; min-width:209px; min-height:167px; background: #DFC; text-align: center">'
 				+ '	<div class="drsMoveHandle" style="background: #DFC">Slider'
 				+ ' <a onclick="$('
 				+ "element"
@@ -156,7 +156,7 @@
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += ' <div class="drsElement"'
-			+'		style="left: 150px; top: 280px; width: 500px; height: 350px; min-width:217px; min-height:281px;  background: #DFC; text-align: center">'
+			+'		style="left: 150px; position: absolute;top: 280px; width: 500px; height: 350px; min-width:217px; min-height:281px;  background: #DFC; text-align: center">'
 				+ '		<div class="drsMoveHandle">Comment Box'
 				+ ' <a onclick="$('
 				+ "element"
@@ -203,7 +203,7 @@
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += '<div type="video" class="drsElement"'
-		+'	style="left: 150px; top: 280px; width: 560px; height: 350px; min-width:272px; min-height:131px;background: red; text-align: center">'
+		+'	style="left: 150px; top: 280px; position: absolute; width: 560px; height: 350px; min-width:272px; min-height:131px;background: red; text-align: center">'
 				+ '<opac>	<div class="drsMoveHandle" style="background: rgb(138, 237, 138);">Youtube Video'
 				+ ' <a onclick="$('
 				+ "element"
@@ -271,6 +271,79 @@ a.name:hover {
 	text-decoration: none;
 }
 </style>
+<%--upload --%>
+<script type="text/javascript">
+	function save() {
+		alert(0);
+		var txt = document.body.innerHTML;
+
+		$.post("UserPageData", {
+			data : txt,
+			view : 0
+		}, function(result) {
+			alert(1);
+		});
+	}
+	function view() {
+		alert(0);
+		var txt = document.body.innerHTML;
+
+		$
+				.post(
+						"UserPageData",
+						{
+							data : txt,
+							view : 1
+						},
+						function(result) {
+							alert(result);
+							document.body.innerHTML="";
+							var div = document.createElement('div');
+							div.innerHTML=result;
+							document.body.appendChild(div);
+							var elements = document.getElementsByTagName("div");
+							alert("len: " + elements.length)
+							for (var i = 0; i < elements.length; i++) {
+								var element = elements[i];
+								//var innerEl = element.getElementsByTagName("innerElement");
+								alert(element.className)
+								if (element.className == "drsMoveHandle") {
+									element.className = "dummyHand";
+								}
+								if (element.className == "drsElement") {
+									alert("opa");
+									element.style.visibility = "hidden";
+									//innerEl.style.visible="visible";
+									element
+											.getElementsByTagName("innerElement")[0].style.visibility = "visible";
+									element.className = "dummyElem";
+								}
+							}
+							document.getElementById("control").style.visibility = "hidden";
+							document.getElementById("edit").style.visibility = "visible";
+						});
+	}
+
+	function makeEdition() {
+		alert(0);
+		document.getElementById("control").style.visibility = "visible";
+		document.getElementById("edit").style.visibility = "hidden";
+		var elements = document.getElementsByTagName("div");
+		alert("len: " + elements.length)
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			alert(element.className)
+			if (element.className == "dummyHand") {
+				element.className = "drsMoveHandle";
+			}
+			if (element.className == "dummyElem") {
+				element.className = "drsElement";
+			}
+		}
+		jscolor.init();
+
+	}
+</script>
 <%--uploader style --%>
 <link rel="stylesheet" type="text/css" href="Uploader.css">
 <script type="text/javascript">
@@ -344,6 +417,105 @@ a.name:hover {
 		$('.slider').sss();
 	});
 </script>
+
+
+
+<script type="text/javascript">
+	/*The code is pretty simple, we animate the ul with a -500px margin left. Then we find the first li and put it last to get the infinite animation.*/
+	$(function() {
+		//alert(document.getElementById("oo").style.width);
+		setInterval(function() {
+
+			$(".slideshow ul").animate({
+			//marginLeft : -document.getElementById("oo").style.width
+			}, 1000, function() {
+				$(this).css({
+					marginLeft : 0
+				}).find("li:last").after($(this).find("li:first"));
+			})
+		}, 1500);
+	});
+
+	function deleteSelected(id) {
+		var selection = document.getElementById("select" + id);
+
+		if (selection.selectedIndex >= 0) {
+			var ImageId = selection.options[selection.selectedIndex].value;
+			selection.remove(selection.selectedIndex);
+			$("#" + ImageId).remove();
+		}
+
+	}
+</script>
+
+
+
+
+
+<script type="text/javascript">
+	function performAjaxSubmit(multi, id) {
+		alert("movida");
+		var sampleFile = document.getElementById("sampleFile" + id).files[0];
+
+		var formdata = new FormData();
+
+		var image;
+		var slider;
+		alert("Dam");
+		if (multi == 0) {
+			image = document.getElementById("image" + id);
+		} else {
+			alert("Das");
+			slider = document.getElementById("slider" + id);
+			alert("bol");
+		}
+
+		formdata.append("sampleFile", sampleFile);
+		alert(1);
+		if (window.XMLHttpRequest) {
+			// code for IE7+, Firefox, Chrome, Opera, Safari
+			xhr = new XMLHttpRequest();
+			alert("pirveli");
+		} else {
+			// code for IE6, IE5
+			alert("meore");
+			xhr = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+
+		xhr.open("POST", "FileUploader", true);
+		xhr.send(formdata);
+		alert(2);
+		xhr.onreadystatechange = function(e) {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				if (multi == 0) {
+					alert(5);
+					image.innerHTML = xhr.responseText;
+				} else {
+					//var text = document.getElementById("imageText" + id);
+					//alert(text.value);
+					/* alert("qeia+");
+					var additionalText = "";
+					if (text.value != "") {
+						alert("no");
+						additionalText = '<span class="caption">'
+								+ text.value + '</span>';
+					} */
+					alert(3);
+					numElements += 1;
+					slider.innerHTML += '<li id='+numElements+'>'
+							+ this.responseText + '</li>';
+					document.getElementById('select' + id).innerHTML += '<option value='+numElements+'>'
+							+ sampleFile.name + '</option>';
+
+				}
+				alert(this.responseText);
+
+			}
+
+		};
+
+	}
+</script>
 </head>
 
 <body>
@@ -374,7 +546,12 @@ Your Text
 
 
 	<%--control panel --%>
-	<div class="controlPanel">
+	<div id="edit" onclick="makeEdition()" class="circle"
+		style="visibility: hidden; left: 20px; background: #253DDA;">
+		<i class="icon1 fa fa-edit fa-lg"></i> <i
+			class="icon2 fa fa-star fa-lg"></i> <span> Edit</span>
+	</div>
+	<div id="control">
 
 		<div class="circle" style="left: 20px; background: #253DDA;">
 			<i class="icon1 fa fa-pencil fa-lg"></i> <i
@@ -408,12 +585,12 @@ Your Text
 
 
 
-		<div class="circle" style="top: 120px; background: #FF2F2F;">
+		<div id="save" onclick="save()" class="circle" style="top: 120px; background: #FF2F2F;">
 			<i class="icon1 fa fa-save fa-lg"></i> <i
 				class="icon2 fa fa-star fa-lg"></i> <span> Save</span>
 		</div>
-		
-		<div class="circle" style="top: 215px;  background: #2BDA25;">
+
+		<div id="view" onclick="view()" class="circle" style="top: 215px; background: #2BDA25;">
 			<i class="icon1 fa fa-globe  fa-lg"></i> <i
 				class="icon2 fa fa-star fa-lg"></i> <span> View</span>
 		</div>
@@ -444,73 +621,6 @@ Your Text
 	--%>
 
 
-
-
-
-	<script type="text/javascript">
-		function performAjaxSubmit(multi, id) {
-			alert("movida");
-			var sampleFile = document.getElementById("sampleFile" + id).files[0];
-
-			var formdata = new FormData();
-
-			var image;
-			var slider;
-			alert("Dam");
-			if (multi == 0) {
-				image = document.getElementById("image" + id);
-			} else {
-				alert("Das");
-				slider = document.getElementById("slider" + id);
-				alert("bol");
-			}
-
-			formdata.append("sampleFile", sampleFile);
-			alert(1);
-			if (window.XMLHttpRequest) {
-				// code for IE7+, Firefox, Chrome, Opera, Safari
-				xhr = new XMLHttpRequest();
-				alert("pirveli");
-			} else {
-				// code for IE6, IE5
-				alert("meore");
-				xhr = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-
-			xhr.open("POST", "FileUploader", true);
-			xhr.send(formdata);
-			alert(2);
-			xhr.onreadystatechange = function(e) {
-				if (xhr.readyState == 4 && xhr.status == 200) {
-					if (multi == 0) {
-						alert(5);
-						image.innerHTML = xhr.responseText;
-					} else {
-						//var text = document.getElementById("imageText" + id);
-						//alert(text.value);
-						/* alert("qeia+");
-						var additionalText = "";
-						if (text.value != "") {
-							alert("no");
-							additionalText = '<span class="caption">'
-									+ text.value + '</span>';
-						} */
-						alert(3);
-						numElements += 1;
-						slider.innerHTML += '<li id='+numElements+'>'
-								+ this.responseText + '</li>';
-						document.getElementById('select' + id).innerHTML += '<option value='+numElements+'>'
-								+ sampleFile.name + '</option>';
-
-					}
-					alert(this.responseText);
-
-				}
-
-			};
-
-		}
-	</script>
 
 	<%--comment box --%>
 	<%--
@@ -598,36 +708,6 @@ Youtube link: <input id="videoLink1" type="text" /> <br><input
 		<div id="video1" style="width:100%;height:calc(100% - 75px);"></div>
 </div>
 --%>
-
-
-	<script type="text/javascript">
-		/*The code is pretty simple, we animate the ul with a -500px margin left. Then we find the first li and put it last to get the infinite animation.*/
-		$(function() {
-			//alert(document.getElementById("oo").style.width);
-			setInterval(function() {
-
-				$(".slideshow ul").animate({
-				//marginLeft : -document.getElementById("oo").style.width
-				}, 1000, function() {
-					$(this).css({
-						marginLeft : 0
-					}).find("li:last").after($(this).find("li:first"));
-				})
-			}, 1500);
-		});
-
-		function deleteSelected(id) {
-			var selection = document.getElementById("select" + id);
-
-			if (selection.selectedIndex >= 0) {
-				var ImageId = selection.options[selection.selectedIndex].value;
-				selection.remove(selection.selectedIndex);
-				$("#" + ImageId).remove();
-			}
-
-		}
-	</script>
-
 
 </body>
 </html>

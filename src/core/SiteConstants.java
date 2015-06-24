@@ -8,7 +8,7 @@ public final class SiteConstants {
 	public static final double USER_IMG_WIDTH = 80;
 	public static final String DOMAIN = "chveniSaiti.ge";
 	// inner html taggs constants for user page
-	private static final String innertagName = "innerElement";
+	private static final String innertagName = "innerelement";
 	public static final String startInnerTagName = "<" + innertagName + ">";
 	public static final String endInnerTagName = "</" + innertagName + ">";
 
