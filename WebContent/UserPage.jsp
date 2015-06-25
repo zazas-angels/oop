@@ -12,6 +12,7 @@
 <link rel="stylesheet" type="text/css" href="CloseButton.css">
 
 <link rel="stylesheet" type="text/css" href="gallery.css">
+<link rel="stylesheet" type="text/css" href="rating.css">
 <link rel="stylesheet" type="text/css" href="AlbomImage.css">
 <link rel="stylesheet" type="text/css" href="ChatBox.css">
 <link rel="stylesheet"
@@ -35,6 +36,7 @@ body {
 </style>
 <script type="text/javascript">
 	var numElements = 23;//need threading?
+	
 	function createImage() {
 
 		numElements += 1;
@@ -121,7 +123,27 @@ body {
 			element.style.fontSize = size + "px";
 
 	}
-	function createGallery() {
+	function changeRating(num){
+		var element = document.getElementById("rate");
+		var numVote= +element.getAttribute("numVote") + 1;
+		var sumVote= +element.getAttribute("sumVote") + +num;
+		element.setAttribute("numVote",numVote);
+		element.setAttribute("sumVote",sumVote);
+		for(var i=1; i<=5; i++){
+			if(sumVote/numVote>=i){
+				document.getElementById("star"+i).className="fa fa-star filled";
+			}else{
+				document.getElementById("star"+i).className="fa fa-star";
+			}
+			
+		
+		}
+		//var sumVote=parseInt(element.sumVote);
+		save();
+		alert(numVote); 
+		alert(sumVote);
+	}
+	function createGallery() { 
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
@@ -156,7 +178,6 @@ body {
 
 		document.body.appendChild(div);
 	}
-	
 
 	function createCommentBox() {
 
@@ -216,6 +237,7 @@ body {
 				+ ').remove();" class="close" style="float: right;">×</a><opac>'
 				+ '</p>'
 		document.getElementById("comments" + id).innerHTML += elem;
+				save();
 
 	}
 	function uploadVideo(id) {
@@ -233,10 +255,11 @@ body {
 		}
 
 	}
-	function changeBackground(){
-		document.body.style.backgroundImage ='url("'+document.getElementById("themeselect").value+'")';
+	function changeBackground() {
+		document.body.style.backgroundImage = 'url("'
+				+ document.getElementById("themeselect").value + '")';
 	}
-	function changeTheme(){
+	function changeTheme() {
 		var elem = document.getElementById("themeselect");
 		if (elem.style.visibility == "visible") {
 			elem.style.visibility = "hidden";
@@ -398,7 +421,7 @@ a.name:hover {
 							}
 
 							document.getElementById("control").style.visibility = "hidden";
-							
+
 							document.getElementById("themeselect").style.visibility = "hidden";
 							document.getElementById("edit").style.visibility = "visible";
 							document.getElementById("addSub").style.visibility = "hidden";
@@ -639,12 +662,12 @@ Your Text
 
 
 	<%--control panel --%>
-	<div id="edit" onclick="makeEdition()" class="circle"
-		style="visibility: hidden; left: 20px; background: #FF3399;">
+	<div  id="edit" onclick="makeEdition()" class="circle"
+		style="position:fixed; visibility: hidden; left: 20px; background: #FF3399;">
 		<i class="icon1 fa fa-edit fa-lg"></i> <i
 			class="icon2 fa fa-star fa-lg"></i> <span> Edit</span>
 	</div>
-	<div id="control">
+	<div id="control" style="position:fixed;">
 
 		<div class="circle" onclick="changeSubVisibility()"
 			style="left: 20px; background: #253DDA;">
@@ -697,20 +720,20 @@ Your Text
 				class="icon2 fa fa-star fa-lg"></i> <span> Show statistic </span>
 		</div>
 
-		
+
 		<div id="theme" onclick="changeTheme()" class="circle"
 			style="top: 405px; background: #33CCFF;">
 			<i class="icon1 fa fa-th-large  fa-lg"></i> <i
 				class="icon2 fa fa-star fa-lg"></i> <span> Change Theme
 				BackGround</span>
 		</div>
-<div id="setting" onclick="set()" class="circle"
+		<div id="setting" onclick="set()" class="circle"
 			style="top: 500px; background: #CC33FF;">
 			<i class="icon1 fa fa-wrench fa-lg"></i> <i
 				class="icon2 fa fa-star fa-lg"></i> <span> Settings </span>
 		</div>
 		<select id="themeselect" onchange="changeBackground()"
-			style="position: absolute;visibility:hidden; top: 460px; left: 110px;">
+			style="position: absolute; visibility: hidden; top: 460px; left: 110px;">
 			<option value="">None
 			<option
 				value="http://img72.imageshack.us/img72/999/background62column.jpg">Red
@@ -731,14 +754,17 @@ Your Text
 				value="http://i960.photobucket.com/albums/ae84/homebakedblogs/ramona_sisters_column3.jpg">flowers
 
 
+
 			
 			<option
 				value="http://1.bp.blogspot.com/_JR1wtGyGotU/S8U_5R3ktHI/AAAAAAAAAo8/iDlD4cK2D6A/s1600/Perfectly+Pink+2.gif">Pink
 
 
+
 			
 			<option
 				value="http://i221.photobucket.com/albums/dd189/txnbyubabe/backgrounds/gray-grid.jpg">kletka
+
 
 
 
@@ -770,6 +796,15 @@ Your Text
 	--%>
 
 
+<div id="rate" style="float: right;" numVote="0" sumVote="0">
+  <div class="rating" >
+  <i id="star5" onclick="changeRating(5)" class="fa fa-star"></i> 
+  <i id="star4" onclick="changeRating(4)"  class="fa fa-star "></i>
+  <i id="star3" onclick="changeRating(3)"  class="fa fa-star"></i>
+  <i id="star2" onclick="changeRating(2)"  class="fa fa-star"></i>
+  <i id="star1" onclick="changeRating(1)"  class="fa fa-star " ></i>
+</div>
+</div>
 
 	<%--comment box --%>
 	<%--
