@@ -7,6 +7,7 @@ package core.database;
 import core.SiteConstants;
 import core.administrator.AdminInterface;
 import core.administrator.Administrator;
+import core.administrator.SuperAdministrator;
 import core.category.CategoryInterface;
 import core.category.CategoryTree;
 import core.user.User;
@@ -560,6 +561,42 @@ public class DBConnection implements core.database.Connection {
     }
 
     /**
+     * adds administrator in database
+     *
+     * @return returns just added administrator as Administrator(class), if there went something wrong, returns false.
+     */
+    public AdminInterface addSuperAdmin(String mail, String password, CategoryTree categoryTree) {
+        SuperAdministrator superAdmin = null;
+        try {
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("insert into superadmins (mail, password) values (?,?);");
+            statement.setString(1, mail);
+            statement.setString(2, password);
+            statement.executeUpdate();
+
+            // I do this, for get admin id
+            ResultSet results = null;
+            statement = dataBaseConnection
+                    .prepareStatement("SELECT * from superadmins where mail = ? and password = ?;");
+            int tmp = 1;
+            statement.setString(tmp++, mail);
+            statement.setString(tmp++, password);
+            results = statement.executeQuery();
+            if (results != null) {
+                if (results.next()) {
+                    superAdmin = new SuperAdministrator(results.getInt("ID"), results.getString("mail"), password, true, this, categoryTree);
+                }
+            }
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+            superAdmin = null;
+        }
+        return superAdmin;
+    }
+
+
+    /**
      * checks if administrator is already regisrired with given mail
      *
      * @return true if is already registrired, otherwise false;
@@ -633,7 +670,6 @@ public class DBConnection implements core.database.Connection {
                     else statement.setString(3, "%");
                 }
                 results = statement.executeQuery();
-                System.out.println(results);
             } catch (SQLException e) {
                 // ignore
                 e.printStackTrace();
@@ -704,7 +740,6 @@ public class DBConnection implements core.database.Connection {
                     else statement.setString(4, "%");
                 }
                 results = statement.executeQuery();
-                System.out.println(results);
             } catch (SQLException e) {
                 // ignore
                 e.printStackTrace();
@@ -951,13 +986,13 @@ public class DBConnection implements core.database.Connection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(set);
         return set;
     }
 
     /**
      * removes marker from markers table
-     * @param lat and lang  are coordinates for marker
+     *
+     * @param lat    and lang  are coordinates for marker
      * @param userID identifies to which user belongs this marker
      */
     @Override

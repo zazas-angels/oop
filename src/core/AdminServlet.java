@@ -20,7 +20,24 @@ import java.sql.SQLException;
 @WebServlet(value = "/admin", name = "admin")
 public class AdminServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String type = request.getParameter("requestType");
+        if (type != null) {
+            Administrator admin = (Administrator) request.getSession().getAttribute("admin");
+            if (type.equals("bann"))
+                addBann(admin, request.getParameter("bannType"), request.getParameter("userID"));
+            else
+                if(type.equals("release-bann"))
+                admin.releaseBann(Integer.parseInt(request.getParameter("userID")));
 
+        }
+    }
+
+    private void addBann(Administrator administrator, String bannType, String userID) {
+        if (bannType.equals("undefined")) {
+            administrator.bannUser(Integer.parseInt(userID));
+        } else {
+            administrator.bannUser(Integer.parseInt(userID), Integer.parseInt(bannType));
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,6 +56,7 @@ public class AdminServlet extends HttpServlet {
                     while (set.next()) {
                         userObj = new JsonObject();
                         userObj.addProperty("name", set.getString("name"));
+                        userObj.addProperty("ID", set.getInt("ID"));
                         userObj.addProperty("url", set.getString("url"));
                         userObj.addProperty("type", set.getString("type"));
                         userObj.addProperty("avatarFile", set.getString("avatarFile"));

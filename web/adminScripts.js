@@ -21,6 +21,25 @@ $(document).ready(function () {
     }, 10000);
 });
 
+function hideBannSection() {
+    $("#bann-section").hide();
+    $("#bann-background").hide();
+}
+
+function showBannSection(username, url, isActive, type, rating, ID) {
+    userID = ID;
+    $("#bann-userName").text(username);
+    $("#bann-userLink").text(url);
+    if (isActive === "active")
+        $("#bann-userIsActive").text("გააქტიურებულია");
+    else
+        $("#bann-userIsActive").text("არაა გააქტიურებული");
+    $("#bann-userType").text(type);
+    $("#bann-userRating").text("" + rating);
+    $("#bann-section").show();
+    $("#bann-background").show();
+}
+
 function updateNotifications() {
     var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=not";
     $.get(link)
@@ -93,7 +112,7 @@ function updateReports() {
             var data = "";
             var arr = response;
             if (arr.length === 0) {
-                data = "no reports"
+                data = "არაა რეპორტები"
             } else {
                 for (var i = 0; i < arr.length; i++) {
                     var report = arr[i];
@@ -126,7 +145,6 @@ function searchByName() {
 
 function extendedSearch() {
     var link = "http://localhost:8080/admin?name=" + $("#nameExtendedSearch").val() + "&category=" + $("#categoryCombo").val() + "&bann=" + $("#bannCombo").val() + "&active=" + $("#activeCombo").val();
-    console.log(link);
     $.get(link)
         .done(function (response) {
             update(response);
@@ -136,10 +154,43 @@ function extendedSearch() {
         });
 }
 
+var userID;
+function addBann() {
+    var type = $("#bann-type").val();
+    $.post("admin",
+        {requestType: "bann", userID: userID, bannType: type},
+        function (data) {
+            if (data === "added") {
+            }
+        }
+    );
+    hideBannSection();
+    if ($('#extendedSearch').css('display') == 'none') {
+        searchByName();
+    } else {
+        extendedSearch();
+    }
+}
+
+function releaseBann(userID) {
+    $.post("admin",
+        {requestType: "release-bann", userID: userID},
+        function (data) {
+            if (data === "added") {
+            }
+        }
+    );
+    hideBannSection();
+    if ($('#extendedSearch').css('display') == 'none') {
+        searchByName();
+    } else {
+        extendedSearch();
+    }
+}
+
 function update(response) {
     var data = "";
     var arr = response;
-    console.log(response);
     if (arr.length === 0) {
         data = "ასეთი მომხმარებელი არ არსებობს"
     } else {
@@ -154,10 +205,24 @@ function update(response) {
                 + user.isActive + "<br>"
                 + "type: " + user.type + "<br>"
                 + "rating " + user.rating + "<br>"
-                + "<button class='bann-button' onclick='console.log(zaza)'>ბანის დადება</button>"
-                + "</p></div></li>";
+                + "</p></div>";
+
+            if (user.isBanned === "banned") {
+                tmp += "<button class='bann-button' onclick=releaseBann('" + user.ID + "');>ბანის მოხსნა</button></li>";
+            } else {
+                var isActive;
+                console.log(isActive);
+                if (user.isActive === "active") {
+                    console.log("sadadsadadad000");
+                    isActive = "active"; // remove whitespace
+                } else {
+                    isActive = "notActive"
+                    console.log("equals");
+                }
+                tmp += "<button class='bann-button' onclick=showBannSection('" + user.name + "','" + user.url + "','" + isActive + "','" + user.type + "','" + user.rating + "','" + user.ID + "');>ბანის დადება</button></li>";
+            }
             data += tmp;
-        }0
+        }
         data += "</ul>" +
             "<script src=\"searchResults.js\"></script><link rel=\"stylesheet\" href=\"searchResults.css\">";
     }

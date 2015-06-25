@@ -22,4 +22,8 @@
         }
     }
 %>
-<a href="/logout" onclick=<%=logoutFunction%>>Logout</a>
+<a href="/logout">
+<button type="button" class="btn btn-default btn-sm" onclick=<%=logoutFunction%>>
+        <span class="glyphicon glyphicon-log-out"></span> გასვლა
+    </button>
+</a>

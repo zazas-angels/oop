@@ -8,8 +8,10 @@
     font-family: 'Monospaced';
 }
 
-.bann-button{
-    float: right;
+.bann-button {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
     z-index: 999999;
 }
 
@@ -26,11 +28,11 @@
 }
 
 body {
+    overflow-y: scroll;
     padding: 5px;
     background-color: rgba(152, 175, 90, 0.13);
 !important;
-    font-size: 100%;
-    font-family: 'Open Sans';
+    font-size: 100% font-family : 'Open Sans';
 }
 
 #main-section {
@@ -87,7 +89,8 @@ body {
 
 #left-panel {
     overflow-x: hidden;
-    width: 25% !important;
+    width: 25% !important;;
+    min-height: 125% !important;
     float: left;
     border-radius: 6px;
     border-color: #e5e6e9 #dfe0e4 #d0d1d5;

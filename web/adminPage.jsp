@@ -13,11 +13,12 @@ To change this template use File | Settings | File Templates.
 <head>
     <title></title>
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="adminScripts.js"></script>
     <link rel="stylesheet" type="text/css" href="adminPageStyle.css">
 </head>
 <body>
-<h1>გამარჯობა შე მსუქანო ადმინისტრატორო</h1>
+<h1>ადმინისტრატორის გვერდი</h1>
 
 <div id="upPanel">
     <div id="logout">
@@ -29,7 +30,7 @@ To change this template use File | Settings | File Templates.
             <table class="up-panel-text">
                 <tr>
                     <td>სახელი:</td>
-                    <td><input id="name" type="text">
+                    <td><input id="name" type="text" style="color: black">
                     </td>
                 </tr>
                 <tr>
@@ -37,7 +38,7 @@ To change this template use File | Settings | File Templates.
                         <a style="color:white" href="#" id="enableExtended">გაფართოებული ძებნა</a>
                     </td>
                     <td>
-                        <input type="button" value="ძებნა" onclick="searchByName()">
+                        <input type="button" style="color: black" value="ძებნა" onclick="searchByName()">
                     </td>
                 </tr>
             </table>
@@ -46,11 +47,11 @@ To change this template use File | Settings | File Templates.
             <table class="up-panel-text">
                 <tr>
                     <td>სახელი:</td>
-                    <td><input type="text" id="nameExtendedSearch"></td>
+                    <td><input type="text" id="nameExtendedSearch" style="color: black"></td>
                 </tr>
                 <tr>
                     <td>
-                        <select id="categoryCombo">
+                        <select id="categoryCombo" style="color: rgba(17, 17, 17, 0.64)">
                             <option value="default">აირჩიეთ კატეგორია</option>
                             <%
                                 ServletContext context = request.getServletContext();
@@ -72,7 +73,7 @@ To change this template use File | Settings | File Templates.
                     </td>
                     <td>
                         ბანი:
-                        <select id="bannCombo">
+                        <select id="bannCombo" style="color: rgba(17, 17, 17, 0.64)">
                             <option value="all">ყველა</option>
                             <option value="on">კი</option>
                             <option value="off">არა</option>
@@ -80,7 +81,7 @@ To change this template use File | Settings | File Templates.
                     </td>
                     <td>
                         გააქტიურებულია:
-                        <select id="activeCombo">
+                        <select id="activeCombo" style="color: rgba(17, 17, 17, 0.64)">
                             <option value="all">ყველა</option>
                             <option value="on">კი</option>
                             <option value="off">არა</option>
@@ -91,7 +92,8 @@ To change this template use File | Settings | File Templates.
                     <td><a style="color:white" href="#" id="disableExtended">სახელით ძებნა</a></td>
                     <td></td>
                     <td>
-                        <input type="button" value="ძებნა" onclick="extendedSearch()">
+                        <input type="button" style="color: rgba(17, 17, 17, 0.64)" value="ძებნა"
+                               onclick="extendedSearch()">
                     </td>
                 </tr>
             </table>
@@ -116,9 +118,42 @@ To change this template use File | Settings | File Templates.
     <div id="notifications">
     </div>
 </div>
-<h2>Users:</h2>
+<h2>მომხმარებლები:</h2>
 <div id=main-section>
     <script>searchByName();</script>
 </div>
+
+<div class="modal fade in" id="bann-section" role="dialog" aria-hidden="false"
+     style="display: none; padding-right: 15px;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="hideBannSection()">×</button>
+                <h4 class="modal-title">ბანის დადება</h4>
+            </div>
+            <div class="modal-body">
+                <label style="margin-right: 50px;">მომხმარებელი:</label><label id="bann-userName">სახელი</label><br>
+                <label style="margin-right: 90px;">ლინკი: </label><label id="bann-userLink">სახელი</label><br>
+                <label style="margin-right: 40px;" id="bann-userIsActive"></label><br>
+                <label style="margin-right: 30px;">მომხმარებლის ტიპი </label><label id="bann-userType"></label><br>
+                <label style="margin-right: 10px;">მომხმარებლის რეიტინგი </label><label
+                    id="bann-userRating"></label><br>
+
+                <label>ბანის ტიპი:</label>
+                <select id="bann-type">
+                    <option value="undefined">უვადო</option>
+                    <option value="30">30 დღე</option>
+                    <option value="10">10 დღე</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="ბანის დადება" onclick="addBann()">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade in" id="bann-background" style="display: none;"></div>
+
+
 </body>
 </html>
