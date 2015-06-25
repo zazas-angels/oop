@@ -14,6 +14,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -62,7 +65,8 @@ public class LoginServlet extends HttpServlet {
      * or refresh logged in state
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getSession().getAttribute("logged in") != null && (boolean) (request.getSession().getAttribute("logged in")) && request.getSession().getAttribute("type") != null) {
+        System.out.println("loginservlet doget");
+    	if (request.getSession().getAttribute("logged in") != null && (boolean) (request.getSession().getAttribute("logged in")) && request.getSession().getAttribute("type") != null) {
             if (request.getSession().getAttribute("type").equals("admin") && request.getSession().getAttribute("admin") != null) {
                 request.getRequestDispatcher("adminPage.jsp").forward(request, response);
             }

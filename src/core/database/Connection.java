@@ -71,13 +71,13 @@ public interface Connection {
 
 	public AdminInterface getAdmin(String email, String password);
 
-	public int insertUserConfCode(int UserId, String confCode);
+	public void insertUserConfCode(int UserId, String confCode);
 	
 	public boolean isActiveUser(int id);
 	
-	public int activateUser(int id);
+	public void activateUser(int id);
 	
-	public int deleteUserConfCode(int id);
+	public void deleteUserConfCode(int userId);
 
 	public void setBannedStatus(int id, boolean bannedStatus);
 
@@ -112,4 +112,6 @@ public interface Connection {
 	public void removeMarker(double lat, double lang, int userID) throws SQLException;
 
 	public ResultSet getMarkers(int userID);
+	
+	public String getConf(int UserId);
 }

@@ -114,10 +114,8 @@ public class DBConnection implements core.database.Connection {
 
     public static void main(String[] args) throws SQLException {
         DBConnection db = new DBConnection();
-        ResultSet set = db.getMarkers(2);
-        while (set.next()) {
-            System.out.println(set.getString("name"));
-        }
+    
+        System.out.println(db.getConf(1));
     }
 
     @Override
@@ -402,27 +400,68 @@ public class DBConnection implements core.database.Connection {
     }
 
     @Override
-    public int insertUserConfCode(int UserId, String confCode) {
-        // TODO Auto-generated method stub
-        return 0;
+    public void insertUserConfCode(int UserId, String confCode) {
+        try {
+        	// at first remove(if exists) older confcode from database
+        	deleteUserConfCode(UserId);
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("insert into users_confcodes (userId, confirmCode) values (?,?);");
+            statement.setInt(1, UserId);
+            statement.setString(2, confCode);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+        
     }
 
     @Override
     public boolean isActiveUser(int id) {
-        // TODO Auto-generated method stub
-        return false;
+    	boolean b = false;
+    	ResultSet results = null;
+        try {
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("select * from users"
+                            + " Where ID=?;");
+            statement.setInt(1, id);
+            results = statement.executeQuery();
+            if(Integer.parseInt(results.getString("isActive")) == 1){
+            	b = true;
+            }
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+        return b;
     }
 
     @Override
-    public int activateUser(int id) {
-        // TODO Auto-generated method stub
-        return 0;
+    public void activateUser(int id) {
+    	PreparedStatement stmt = null;
+        try {
+            stmt = dataBaseConnection
+                    .prepareStatement("update users set isActive = true where ID = ?;");
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public int deleteUserConfCode(int id) {
-        // TODO Auto-generated method stub
-        return 0;
+    public void deleteUserConfCode(int userId) {
+    	 PreparedStatement stmt = null;
+         try {
+             stmt = dataBaseConnection
+                     .prepareStatement("delete from users_confcodes where userId = ?;");
+             stmt.setInt(1, userId);
+             stmt.executeUpdate();
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+     
+        
     }
 
     @Override
@@ -904,6 +943,27 @@ public class DBConnection implements core.database.Connection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+	@Override
+	public String getConf(int userId) {
+        String confCode = "";
+        ResultSet results = null;
+        try {
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("select * from users_confcodes"
+                            + " Where userId=?;");
+            statement.setInt(1, userId);
+            results = statement.executeQuery();
+            if (results.next()) {
+                confCode = results.getString("confirmCode");
+            }
+
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+        return confCode;
     }
 
 

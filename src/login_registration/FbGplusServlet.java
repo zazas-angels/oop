@@ -36,6 +36,7 @@ public class FbGplusServlet extends HttpServlet {
         if (name != null && url != null && checkName(name) && !url.equals("")) {
             SiteConstants.Type tp = SiteConstants.getType(type);
             User user = dbConnection.addUser(name, id, "", url, SiteConstants.getType(type));
+            dbConnection.activateUser(user.getID());
             loginUser(user, request, response, context);
         } else {
             request.getRequestDispatcher("fbG+Registration.jsp").forward(request, response);
