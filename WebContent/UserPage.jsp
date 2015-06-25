@@ -96,7 +96,7 @@
 				+ numElements
 				+ ');">'
 				+ "	</div>"
-				+ '<innerElement> <textarea id="'
+				+ '<innerElement> <textarea class="textF" id="'
 				+ numElements
 				+ '"style=" text-align: center; width: calc(100% - 6px); height: calc(100% - 74px); resize:none;">'
 				+ 'Your Text' + '</textarea> </innerElement>' + '</div>"';
@@ -163,23 +163,40 @@
 				+ numElements
 				+ ').remove();" class="close" style="float: right;">×</a>'
 				+ '</div>'
-				+ '	<innerElement><form action="#" id="usrform" style="background: #DFC; width: 100%; height: 20%;">'
-				+ '	Name: <input type="text" name="usrname"> <input disabled'
-				+'	class="gobutton"  value="post" type="submit" style="background: blue">'
+				+ '	<innerElement><form action="#" id="usrform'+ numElements+'" '
+				+' style="background: #DFC; width: 100%; height: 20%;">'
+				+ '	Name: <input id="input'+numElements+'" '
+				+'type="text" name="usrname"> <input '
+				+'	class="gobutton"  onclick="comment('+numElements+')" '
+				+'value="post"  style="background: blue; width:35px">'
 				+ '	</form>'
-				+ '	<textarea rows="4" cols="50"'
+				+ '	<textarea id="textCom'+ numElements+'" '
+				+'rows="4" cols="50"'
 				+ 'style="width: calc(100% - 5px); height: 20%;" name="comment"'
 				+ 'form="usrform">'
 				+ 'Enter text here...</textarea>'
 				+ '	<br> <br>'
-				+ '	<div class="chatBox" style="width: calc(100% - 70px); height:calc(60% - 70px);" >'
-				+ '<p class="bubbleLeft2"><a class="name">name</a> simple comment 1</p>'
-				+ ' 	<p class="bubbleLeft2"><a class="name">name</a>simple comment 2</p>'
+				+ '	<div id="comments'+numElements
+				+'"  class="chatBox" style="width: calc(100% - 70px); height:calc(60% - 70px);" >'
+				
 				+ '	</div>	<innerElement>' + '</div>';
 		document.body.appendChild(div);
 		alert(2);
 	}
-
+	function comment(id){
+		alert(1);
+		numElements+=1;
+		
+		var elem= '<p id="comment'+ numElements
+		+ '" class="bubbleLeft2"><a class="name">name</a> simple comment 1'
+		+ ' <opac><a onclick="$('
+		+ "comment"
+		+ numElements
+		+ ').remove();" class="close" style="float: right;">×</a><opac>'
+		+'</p>'
+		document.getElementById("comments"+id).innerHTML+=elem;
+			
+	}
 	function uploadVideo(id) {
 		var link = document.getElementById("videoLink" + id).value;
 		if (link.substring(0, 32) == "https://www.youtube.com/watch?v=") {
@@ -195,14 +212,14 @@
 		}
 
 	}
-function changeSubVisibility(){
-	var elem = document.getElementById("addSub");
-	if(elem.style.visibility=="visible"){
-		elem.style.visibility="hidden";
-	}else{
-		elem.style.visibility="visible";
+	function changeSubVisibility() {
+		var elem = document.getElementById("addSub");
+		if (elem.style.visibility == "visible") {
+			elem.style.visibility = "hidden";
+		} else {
+			elem.style.visibility = "visible";
+		}
 	}
-}
 	function createVideo() {
 
 		numElements += 1;
@@ -328,8 +345,18 @@ a.name:hover {
 								var element = elements[i];
 								element.style.visibility = "hidden";
 							}
+							elements = document
+									.getElementsByTagName("textArea");
+							for (var i = 0; i < elements.length; i++) {
+								var element = elements[i];
+								if (element.className == "textF") {
+									element.readOnly = true;
+								}
+							}
+
 							document.getElementById("control").style.visibility = "hidden";
 							document.getElementById("edit").style.visibility = "visible";
+							document.getElementById("addSub").style.visibility = "hidden";
 						});
 	}
 
@@ -353,6 +380,13 @@ a.name:hover {
 		for (var i = 0; i < elements.length; i++) {
 			var element = elements[i];
 			element.style.visibility = "visible";
+		}
+		elements = document.getElementsByTagName("textArea");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			if (element.className == "textF") {
+				element.readOnly = false;
+			}
 		}
 		jscolor.init();
 
@@ -567,11 +601,12 @@ Your Text
 	</div>
 	<div id="control">
 
-		<div class="circle" onclick = "changeSubVisibility()" style="left: 20px; background: #253DDA;">
+		<div class="circle" onclick="changeSubVisibility()"
+			style="left: 20px; background: #253DDA;">
 			<i class="icon1 fa fa-pencil fa-lg"></i> <i
 				class="icon2 fa fa-star fa-lg"></i> <span> ADD</span>
 		</div>
-		<div id="addSub"  style="visibility:hidden">
+		<div id="addSub" style="visibility: hidden">
 			<div class="sub">
 				<div onclick="createText();" class="circle">
 					<i class="icon1 fa  fa-edit fa-lg"></i> <i
