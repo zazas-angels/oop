@@ -158,44 +158,56 @@
 		div.innerHTML += ' <div class="drsElement"'
 			+'		style="left: 150px; position: absolute;top: 280px; width: 500px; height: 350px; min-width:217px; min-height:281px;  background: #DFC; text-align: center">'
 				+ '		<div class="drsMoveHandle">Comment Box'
-				+ ' <a onclick="$('
-				+ "element"
+				+ ' <a onclick="$(' + "element"
 				+ numElements
 				+ ').remove();" class="close" style="float: right;">×</a>'
 				+ '</div>'
-				+ '	<innerElement><form action="#" id="usrform'+ numElements+'" '
-				+' style="background: #DFC; width: 100%; height: 20%;">'
-				+ '	Name: <input id="input'+numElements+'" '
+				+ '	<innerElement><form action="#" id="usrform'
+				+ numElements
+				+ '" '
+				+ ' style="background: #DFC; width: 100%; height: 20%;">'
+				+ '	Name: <input class="comment" id="input'+numElements+'" '
 				+'type="text" name="usrname"> <input '
-				+'	class="gobutton"  onclick="comment('+numElements+')" '
-				+'value="post"  style="background: blue; width:35px">'
+				+ '	class="gobutton"  onclick="comment('
+				+ numElements
+				+ ')" '
+				+ 'value="post"  style="background: blue; width:35px">'
 				+ '	</form>'
-				+ '	<textarea id="textCom'+ numElements+'" '
-				+'rows="4" cols="50"'
+				+ '	<textarea class="comment" id="textcom'
+				+ numElements
+				+ '" '
+				+ 'rows="4" cols="50"'
 				+ 'style="width: calc(100% - 5px); height: 20%;" name="comment"'
-				+ 'form="usrform">'
-				+ 'Enter text here...</textarea>'
+				+ 'form="usrform" placeholder="Enter text here...">'
+				+ '</textarea>'
 				+ '	<br> <br>'
-				+ '	<div id="comments'+numElements
-				+'"  class="chatBox" style="width: calc(100% - 70px); height:calc(60% - 70px);" >'
-				
+				+ '	<div id="comments'
+				+ numElements
+				+ '"  class="chatBox" style="width: calc(100% - 70px); height:calc(60% - 70px);" >'
+
 				+ '	</div>	<innerElement>' + '</div>';
 		document.body.appendChild(div);
 		alert(2);
 	}
-	function comment(id){
+	function comment(id) {
 		alert(1);
-		numElements+=1;
-		
-		var elem= '<p id="comment'+ numElements
-		+ '" class="bubbleLeft2"><a class="name">name</a> simple comment 1'
-		+ ' <opac><a onclick="$('
-		+ "comment"
-		+ numElements
-		+ ').remove();" class="close" style="float: right;">×</a><opac>'
-		+'</p>'
-		document.getElementById("comments"+id).innerHTML+=elem;
-			
+		numElements += 1;
+		var text = document.getElementById("textcom" + id).value;
+		var name = document.getElementById("input" + id).value;
+		if (text == "" || name == "")
+			return;
+		var elem = '<p id="comment'+ numElements
+		+ '" class="bubbleLeft2"><a class="name">'
+				+ name
+				+ '</a> '
+				+ text
+				+ ' <opac><a onclick="$('
+				+ "comment"
+				+ numElements
+				+ ').remove();" class="close" style="float: right;">×</a><opac>'
+				+ '</p>'
+		document.getElementById("comments" + id).innerHTML += elem;
+
 	}
 	function uploadVideo(id) {
 		var link = document.getElementById("videoLink" + id).value;
@@ -349,9 +361,20 @@ a.name:hover {
 									.getElementsByTagName("textArea");
 							for (var i = 0; i < elements.length; i++) {
 								var element = elements[i];
+								if (element.className == "comment") {
+									element.value = "";
+								}
 								if (element.className == "textF") {
 									element.readOnly = true;
 								}
+							}
+							elements = document.getElementsByTagName("input");
+							for (var i = 0; i < elements.length; i++) {
+								var element = elements[i];
+								if (element.className == "comment") {
+									element.value = "";
+								}
+
 							}
 
 							document.getElementById("control").style.visibility = "hidden";
