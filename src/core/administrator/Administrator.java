@@ -4,7 +4,6 @@ import core.category.Category;
 import core.category.CategoryInterface;
 import core.category.CategoryTree;
 import core.database.DBConnection;
-import core.user.UserInterface;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,31 +15,29 @@ import static core.user.User.generatePassword;
  */
 public class Administrator implements AdminInterface {
 
+    private int id;
     private String email;
     private String password;
     private DBConnection dbConnection;
     private CategoryTree categoryTree;
 
-    public Administrator(String email, String password, DBConnection dbConnection, CategoryTree categoryTree) {
+    public Administrator(int id, String email, String password, DBConnection dbConnection, CategoryTree categoryTree) {
+        this.id = id;
         this.email = email;
         this.password = generatePassword(password);
         this.dbConnection = dbConnection;
         this.categoryTree = categoryTree;
     }
 
-    @Override
-    public void bannUser(UserInterface user) {
-        dbConnection.setBannedStatus(user, true);
-    }
-
-    @Override
-    public void bannUser(UserInterface user, int hours) {
-        dbConnection.setBannedStatus(user, true);
-    }
-
-    @Override
-    public void releaseBann(UserInterface user) {
-        dbConnection.setBannedStatus(user, false);
+    public Administrator(int id, String email, String password, boolean alreadyHashedPassword, DBConnection dbConnection, CategoryTree categoryTree) {
+        this.id = id;
+        this.email = email;
+        if (alreadyHashedPassword)
+            this.password = password;
+        else
+            this.password = generatePassword(password);
+        this.dbConnection = dbConnection;
+        this.categoryTree = categoryTree;
     }
 
     @Override
@@ -78,6 +75,18 @@ public class Administrator implements AdminInterface {
 
     public String getPassword() {
         return password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public DBConnection getDbConnection() {
+        return dbConnection;
+    }
+
+    public CategoryTree getCategoryTree() {
+        return categoryTree;
     }
 
     @Override
@@ -124,4 +133,20 @@ public class Administrator implements AdminInterface {
         }
         return set;
     }
+
+    @Override
+    public void bannUser(int userID) {
+        dbConnection.setBannedStatus(userID, true);
+    }
+
+    @Override
+    public void bannUser(int userID, int days) {
+
+    }
+
+    @Override
+    public void releaseBann(int userID) {
+        dbConnection.setBannedStatus(userID, false);
+    }
+
 }

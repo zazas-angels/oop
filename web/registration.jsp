@@ -11,7 +11,7 @@
         რეგისტრაცია
     </h1>
 
-    <form action="/registration" , method="post">
+    <form action="registration"  method="post">
         <table>
             <tbody>
             <tr>

@@ -1,6 +1,7 @@
 package login_registration;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -12,12 +13,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.xml.internal.bind.CycleRecoverable.Context;
+
+import core.database.DBConnection;
+import core.user.User;
+
+import javax.servlet.ServletContext;
+
 /**
  * Servlet implementation class GenAndSendConf
  */
 @WebServlet("/GenAndSendConf")
 public class GenAndSendConf extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String DELIMITER = "$";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -31,38 +40,44 @@ public class GenAndSendConf extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String conf = "http://localhost:8080/OOP/GenAndSendConf?conf=" + genConf("28");
+	
+		User user = (User)request.getSession().getAttribute("user");
 		
-		/*try {
+		String conf = genConf("" + user.getID());
+		String link = "http://localhost:8080/OOP/ConfirmUser?conf=" + user.getID() + DELIMITER + conf;
+		ServletContext context = request.getServletContext();
+		DBConnection dbConnection = (DBConnection) context.getAttribute("database");
+		dbConnection.insertUserConfCode(user.getID(), conf);
+		
+		try {
 			SendMail obj = new SendMail(); 
-			obj.sendEmail("akasr13@freeuni.edu.ge", conf);
+			obj.sendEmail(user.getEmail(), link);
 		} catch (AddressException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 		System.out.println(conf);
+		request.getRequestDispatcher("ConfirmSent.html").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 	
 	
 	
 	private  String genConf(String id) {
-        String conf = id;
-
-        try {
+		try {
             MessageDigest ms = MessageDigest.getInstance("MD5");
-            ms.update(conf.getBytes());
+            ms.update(id.getBytes());
             byte[] digest = ms.digest();
-            return (conf + "$" + hexToString(digest));
+            return (hexToString(digest));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

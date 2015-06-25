@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,11 +25,11 @@ public class RegistrationServlet extends HttpServlet {
      * else forwards back
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String password = request.getParameter("password");
+    	String password = request.getParameter("password");
         String email = request.getParameter("email");
         ServletContext context = request.getServletContext();
         DBConnection dbConnection = (DBConnection) context.getAttribute("database");
-
+        
 
         String url = request.getParameter("url");
         String name = request.getParameter("name");
@@ -42,10 +43,11 @@ public class RegistrationServlet extends HttpServlet {
             } else {
                 User user = dbConnection.addUser(name, email, password, url, SiteConstants.Type.email);
                 if (user != null) {
-                    request.getSession().setAttribute("logged in", true);
+                    //request.getSession().setAttribute("logged in", true);
                     request.getSession().setAttribute("user", user);
-                    request.getSession().setAttribute("registration", false);
-                    request.getRequestDispatcher("userPage.jsp").forward(request, response);
+                    request.getRequestDispatcher("/GenAndSendConf").forward(request, response);
+                    //request.getSession().setAttribute("registration", false);
+                    //request.getRequestDispatcher("userPage.jsp").forward(request, response);
                     b = false;
                 }
 
