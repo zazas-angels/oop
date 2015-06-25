@@ -195,7 +195,14 @@
 		}
 
 	}
-
+function changeSubVisibility(){
+	var elem = document.getElementById("addSub");
+	if(elem.style.visibility=="visible"){
+		elem.style.visibility="hidden";
+	}else{
+		elem.style.visibility="visible";
+	}
+}
 	function createVideo() {
 
 		numElements += 1;
@@ -297,10 +304,7 @@ a.name:hover {
 						},
 						function(result) {
 							alert(result);
-							document.body.innerHTML="";
-							var div = document.createElement('div');
-							div.innerHTML=result;
-							document.body.appendChild(div);
+
 							var elements = document.getElementsByTagName("div");
 							alert("len: " + elements.length)
 							for (var i = 0; i < elements.length; i++) {
@@ -318,6 +322,11 @@ a.name:hover {
 											.getElementsByTagName("innerElement")[0].style.visibility = "visible";
 									element.className = "dummyElem";
 								}
+							}
+							elements = document.getElementsByTagName("opac");
+							for (var i = 0; i < elements.length; i++) {
+								var element = elements[i];
+								element.style.visibility = "hidden";
 							}
 							document.getElementById("control").style.visibility = "hidden";
 							document.getElementById("edit").style.visibility = "visible";
@@ -339,6 +348,11 @@ a.name:hover {
 			if (element.className == "dummyElem") {
 				element.className = "drsElement";
 			}
+		}
+		elements = document.getElementsByTagName("opac");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			element.style.visibility = "visible";
 		}
 		jscolor.init();
 
@@ -547,50 +561,53 @@ Your Text
 
 	<%--control panel --%>
 	<div id="edit" onclick="makeEdition()" class="circle"
-		style="visibility: hidden; left: 20px; background: #253DDA;">
+		style="visibility: hidden; left: 20px; background: #FF3399;">
 		<i class="icon1 fa fa-edit fa-lg"></i> <i
 			class="icon2 fa fa-star fa-lg"></i> <span> Edit</span>
 	</div>
 	<div id="control">
 
-		<div class="circle" style="left: 20px; background: #253DDA;">
+		<div class="circle" onclick = "changeSubVisibility()" style="left: 20px; background: #253DDA;">
 			<i class="icon1 fa fa-pencil fa-lg"></i> <i
 				class="icon2 fa fa-star fa-lg"></i> <span> ADD</span>
 		</div>
-		<div class="sub">
-			<div onclick="createText();" class="circle">
-				<i class="icon1 fa  fa-edit fa-lg"></i> <i
-					class="icon2 fa fa-plus fa-lg"></i><span>Text</span>
-			</div>
-			<div onclick="createImage();" class="circle">
-				<i class="icon1 fa fa-photo fa-lg"></i> <i
-					class="icon2 fa fa-plus fa-lg"></i> <span>Image</span>
-			</div>
-			<div onclick="createCommentBox();" class="circle">
-				<i class="icon1 fa  fa-comments-o fa-lg"></i> <i
-					class="icon2 fa fa-plus fa-lg"></i> <span>Comments Box</span>
-			</div>
+		<div id="addSub"  style="visibility:hidden">
+			<div class="sub">
+				<div onclick="createText();" class="circle">
+					<i class="icon1 fa  fa-edit fa-lg"></i> <i
+						class="icon2 fa fa-plus fa-lg"></i><span>Text</span>
+				</div>
+				<div onclick="createImage();" class="circle">
+					<i class="icon1 fa fa-photo fa-lg"></i> <i
+						class="icon2 fa fa-plus fa-lg"></i> <span>Image</span>
+				</div>
+				<div onclick="createCommentBox();" class="circle">
+					<i class="icon1 fa  fa-comments-o fa-lg"></i> <i
+						class="icon2 fa fa-plus fa-lg"></i> <span>Comments Box</span>
+				</div>
 
-			<div onclick="createGallery();" class="circle">
-				<i class="icon1 fa fa-tasks fa-lg"></i> <i
-					class="icon2 fa fa-plus fa-lg"></i> <span>Slider Gallery</span>
-			</div>
-			<div onclick="createVideo();" class="circle">
-				<i class="icon1 fa fa-youtube-play fa-lg"></i> <i
-					class="icon2 fa fa-plus fa-lg"></i> <span>Youtube Video</span>
-			</div>
+				<div onclick="createGallery();" class="circle">
+					<i class="icon1 fa fa-tasks fa-lg"></i> <i
+						class="icon2 fa fa-plus fa-lg"></i> <span>Slider Gallery</span>
+				</div>
+				<div onclick="createVideo();" class="circle">
+					<i class="icon1 fa fa-youtube-play fa-lg"></i> <i
+						class="icon2 fa fa-plus fa-lg"></i> <span>Youtube Video</span>
+				</div>
 
 
+			</div>
 		</div>
 
 
-
-		<div id="save" onclick="save()" class="circle" style="top: 120px; background: #FF2F2F;">
+		<div id="save" onclick="save()" class="circle"
+			style="top: 120px; background: #FF2F2F;">
 			<i class="icon1 fa fa-save fa-lg"></i> <i
 				class="icon2 fa fa-star fa-lg"></i> <span> Save</span>
 		</div>
 
-		<div id="view" onclick="view()" class="circle" style="top: 215px; background: #2BDA25;">
+		<div id="view" onclick="view()" class="circle"
+			style="top: 215px; background: #2BDA25;">
 			<i class="icon1 fa fa-globe  fa-lg"></i> <i
 				class="icon2 fa fa-star fa-lg"></i> <span> View</span>
 		</div>

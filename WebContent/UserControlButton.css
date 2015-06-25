@@ -70,14 +70,13 @@
   height: 50%;
   z-index: 1;
   position: absolute;
-  visibility:hidden;
 }
 .sub .circle {
     width: 50px;
     height: 50px;
     top: 1;
     left: 105px;
-    opacity: 0;
+    opacity: 1;
     transition: 0.2s opacity;
 }
 .sub .circle:nth-child(1) {
