@@ -25,6 +25,14 @@
 	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link href='http://fonts.googleapis.com/css?family=Comfortaa'
 	rel='stylesheet' type='text/css'>
+<style type="text/css">
+body {
+	background-image: "";
+	background-position: center;
+	-webkit-background-size: 100%,, cover;
+	background-size: 100%, cover;
+}
+</style>
 <script type="text/javascript">
 	var numElements = 23;//need threading?
 	function createImage() {
@@ -99,7 +107,7 @@
 				+ '<innerElement> <textarea class="textF" id="'
 				+ numElements
 				+ '"style=" text-align: center; width: calc(100% - 6px); height: calc(100% - 74px); resize:none;">'
-				+ 'Your Text' + '</textarea> </innerElement>' + '</div>"';
+				+ 'Your Text' + '</textarea> </innerElement>' + '</div>';
 		document.body.appendChild(div);
 		jscolor.init();
 		alert(2);
@@ -148,6 +156,7 @@
 
 		document.body.appendChild(div);
 	}
+	
 
 	function createCommentBox() {
 
@@ -223,6 +232,17 @@
 
 		}
 
+	}
+	function changeBackground(){
+		document.body.style.backgroundImage ='url("'+document.getElementById("themeselect").value+'")';
+	}
+	function changeTheme(){
+		var elem = document.getElementById("themeselect");
+		if (elem.style.visibility == "visible") {
+			elem.style.visibility = "hidden";
+		} else {
+			elem.style.visibility = "visible";
+		}
 	}
 	function changeSubVisibility() {
 		var elem = document.getElementById("addSub");
@@ -378,6 +398,8 @@ a.name:hover {
 							}
 
 							document.getElementById("control").style.visibility = "hidden";
+							
+							document.getElementById("themeselect").style.visibility = "hidden";
 							document.getElementById("edit").style.visibility = "visible";
 							document.getElementById("addSub").style.visibility = "hidden";
 						});
@@ -669,9 +691,61 @@ Your Text
 			<i class="icon1 fa fa-globe  fa-lg"></i> <i
 				class="icon2 fa fa-star fa-lg"></i> <span> View</span>
 		</div>
+		<div id="statistik" onclick="st()" class="circle"
+			style="top: 310px; background: #FFCC00;">
+			<i class="icon1 fa  fa-bar-chart-o fa-lg"></i> <i
+				class="icon2 fa fa-star fa-lg"></i> <span> Show statistic </span>
+		</div>
+
+		
+		<div id="theme" onclick="changeTheme()" class="circle"
+			style="top: 405px; background: #33CCFF;">
+			<i class="icon1 fa fa-th-large  fa-lg"></i> <i
+				class="icon2 fa fa-star fa-lg"></i> <span> Change Theme
+				BackGround</span>
+		</div>
+<div id="setting" onclick="set()" class="circle"
+			style="top: 500px; background: #CC33FF;">
+			<i class="icon1 fa fa-wrench fa-lg"></i> <i
+				class="icon2 fa fa-star fa-lg"></i> <span> Settings </span>
+		</div>
+		<select id="themeselect" onchange="changeBackground()"
+			style="position: absolute;visibility:hidden; top: 460px; left: 110px;">
+			<option value="">None
+			<option
+				value="http://img72.imageshack.us/img72/999/background62column.jpg">Red
+				Columns
+			<option
+				value="http://www.unsigneddesign.com/Seamless_background_textures/thumbs/seamlesstexture21_1200.jpg">Simple
+				Gray
+			<option value="http://media.24ways.org/2011/verou/8.png">Green
+				Lines
+			<option
+				value="http://blog.boxedart.com/images-vd/repeat-background.gif">Simple
+				blue
+			<option
+				value="http://janeblogs.net/cutesify/backgrounds/dollydaze3col.jpg">Blue
+				columns
+			<option value="http://i.stack.imgur.com/z3PLR.png">Rainbow
+			<option
+				value="http://i960.photobucket.com/albums/ae84/homebakedblogs/ramona_sisters_column3.jpg">flowers
+
+
+			
+			<option
+				value="http://1.bp.blogspot.com/_JR1wtGyGotU/S8U_5R3ktHI/AAAAAAAAAo8/iDlD4cK2D6A/s1600/Perfectly+Pink+2.gif">Pink
+
+
+			
+			<option
+				value="http://i221.photobucket.com/albums/dd189/txnbyubabe/backgrounds/gray-grid.jpg">kletka
+
+
+
+			
+		</select>
 
 	</div>
-
 
 	<%--image --%>
 	<%-- 
