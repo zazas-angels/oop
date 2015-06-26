@@ -27,8 +27,8 @@ import java.util.HashMap;
 @WebServlet(value = "/login", name = "login")
 public class LoginServlet extends HttpServlet {
 
-    /**
-     * try to log in with given parameters, wich are stored in request object.
+	/**
+     * try to log in with given parameters, which are stored in request object.
      * if login is successful, forwards to user page,
      * else forwards to same page, and sets wrong try login attribute true.
      */
@@ -40,23 +40,28 @@ public class LoginServlet extends HttpServlet {
         DBConnection dbConnection = (DBConnection) context.getAttribute(SiteConstants.DATABASE);
         CategoryTree categoryTree = (CategoryTree) context.getAttribute(SiteConstants.CATEGORY_TREE);
 
-        boolean alreadyForwarded = true;
+        boolean notAlreadyForwarded = true;
         if (password != null && email != null) {
             User user = null;
             if (dbConnection.getUser(email, password) != null) {
                 user = (User) dbConnection.getUser(email, password);
             }
-            if (user != null) {
-                loginUser(request, response, user, context);
-                alreadyForwarded = false;
+            if (user != null ) {
+            	if(dbConnection.isActiveUser(user.getID())){
+	                loginUser(request, response, user, context);
+	                notAlreadyForwarded = false;
+            	}else{
+            		request.getRequestDispatcher("ConfirmSent.html").forward(request, response);
+            		notAlreadyForwarded = false;
+            	}
             }
             Administrator admin = (Administrator) dbConnection.getAdmin(email, password, categoryTree);
             if (admin != null) {
                 loginAdmin(request, response, admin, context);
-                alreadyForwarded = false;
+                notAlreadyForwarded = false;
             }
         }
-        if (alreadyForwarded) {
+        if (notAlreadyForwarded) {
             request.getSession().setAttribute("wrong try to log in", true);
             request.getRequestDispatcher("index.jsp").forward(request, response);
         }
@@ -76,7 +81,7 @@ public class LoginServlet extends HttpServlet {
                 request.getRequestDispatcher("userPage.jsp").forward(request, response);
             }
         }
-        boolean alreadyForwarded = true;
+        boolean notAlreadyForwarded = true;
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             ServletContext context = request.getServletContext();
@@ -86,19 +91,19 @@ public class LoginServlet extends HttpServlet {
                     UserInterface user = mapSession.get(cookie.getValue());
                     if (user != null) {
                         loginUser(request, response, user, context);
-                        alreadyForwarded = false;
+                        notAlreadyForwarded = false;
                     } else {
                         HashMap<String, AdminInterface> mapSessionAd = (HashMap<String, AdminInterface>) context.getAttribute(SiteConstants.SESSIONS_MAP_ADMINS);
                         AdminInterface admin = mapSessionAd.get(cookie.getValue());
                         if (admin != null) {
                             loginAdmin(request, response, admin, context);
-                            alreadyForwarded = false;
+                            notAlreadyForwarded = false;
                         }
                     }
                 }
             }
         }
-        if (alreadyForwarded) {
+        if (notAlreadyForwarded) {
             //log out
             request.getSession().invalidate();
             deleteLoginCookie(request, response);

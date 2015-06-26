@@ -116,12 +116,9 @@ public class DBConnection implements core.database.Connection {
 
     public static void main(String[] args) throws SQLException {
         DBConnection db = new DBConnection();
-
+        System.out.println(db.isActiveUser(1));
     
-        System.out.println(db.getConf(1));
-
-        Administrator admin = db.setAdmin(1, null);
-        System.out.println(admin.getEmail());
+       
 
     }
 
@@ -433,8 +430,10 @@ public class DBConnection implements core.database.Connection {
                             + " Where ID=?;");
             statement.setInt(1, id);
             results = statement.executeQuery();
-            if(Integer.parseInt(results.getString("isActive")) == 1){
-            	b = true;
+            if(results != null && results.next()){
+	            if(results.getBoolean("isActive") == true){
+	            	b = true;
+	            }
             }
         } catch (SQLException e) {
             // ignore
