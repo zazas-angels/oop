@@ -11,6 +11,8 @@ public interface CategoryTreeInterface {
 
 	public List<CategoryInterface> getRoots();
 
+	void add(CategoryInterface newOne, int parentID);
+
 	public CategoryInterface getParent(CategoryInterface cur);
 
 	public int remove(CategoryInterface cur);
