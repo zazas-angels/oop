@@ -6,12 +6,16 @@
 <%-- Author: glaba13 --%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>User Page</title>
-
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript" src="dragresize1.js"></script>
+
 <link rel="stylesheet" type="text/css" href="DragResizeStyle.css">
 <link rel="stylesheet" type="text/css" href="CloseButton.css">
 
 <link rel="stylesheet" type="text/css" href="gallery.css">
+<link rel="stylesheet" type="text/css" href="body.css">
+<link rel="stylesheet" type="text/css" href="commentStyle.css">
 <link rel="stylesheet" type="text/css" href="rating.css">
 <link rel="stylesheet" type="text/css" href="AlbomImage.css">
 <link rel="stylesheet" type="text/css" href="ChatBox.css">
@@ -20,23 +24,18 @@
 <link rel="stylesheet" type="text/css" href="UserControlButton.css">
 <style type="text/css">
 </style>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 <link rel="stylesheet"
 	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link href='http://fonts.googleapis.com/css?family=Comfortaa'
 	rel='stylesheet' type='text/css'>
-<style type="text/css">
-body {
-	background-image: "";
-	background-position: center;
-	-webkit-background-size: 100%,, cover;
-	background-size: 100%, cover;
-}
-</style>
+
+<script type="text/javascript" src="slider.js"></script>
+
+<script type="text/javascript" src="ControlFunctions.js"></script>
 <script type="text/javascript">
 	var numElements = 33;//Jesus <3
-
+	var viewMode=false;
 	window.onload = function() {
 		alert(1);
 		$.post("UserPageData", {
@@ -140,25 +139,7 @@ body {
 			element.style.fontSize = size + "px";
 
 	}
-	function changeRating(num) {
-		var element = document.getElementById("rate");
-		var numVote = +element.getAttribute("numVote") + 1;
-		var sumVote = +element.getAttribute("sumVote") + +num;
-		element.setAttribute("numVote", numVote);
-		element.setAttribute("sumVote", sumVote);
-		for (var i = 1; i <= 5; i++) {
-			if (sumVote / numVote >= i) {
-				document.getElementById("star" + i).className = "fa fa-star filled";
-			} else {
-				document.getElementById("star" + i).className = "fa fa-star";
-			}
-
-		}
-		//var sumVote=parseInt(element.sumVote);
-		save();
-		alert(numVote);
-		alert(sumVote);
-	}
+	
 	function createGallery() {
 		numElements += 1;
 		alert(1);
@@ -214,7 +195,7 @@ body {
 				+ ' style="background: #DFC; width: 100%; height: 20%;">'
 				+ '	Name: <input class="comment" id="input'+numElements+'" '
 				+'type="text" name="usrname"> <input '
-				+ '	class="gobutton"  onclick="comment('
+				+ '	class="gobutton" readonly  onclick="comment('
 				+ numElements
 				+ ')" '
 				+ 'value="post"  style="background: blue; width:35px">'
@@ -235,27 +216,7 @@ body {
 		document.body.appendChild(div);
 		alert(2);
 	}
-	function comment(id) {
-		alert(1);
-		numElements += 1;
-		var text = document.getElementById("textcom" + id).value;
-		var name = document.getElementById("input" + id).value;
-		if (text == "" || name == "")
-			return;
-		var elem = '<p id="comment'+ numElements
-		+ '" class="bubbleLeft2"><a class="name">'
-				+ name
-				+ '</a> '
-				+ text
-				+ ' <opac><a onclick="$('
-				+ "comment"
-				+ numElements
-				+ ').remove();" class="close" style="float: right;">×</a><opac>'
-				+ '</p>'
-		document.getElementById("comments" + id).innerHTML += elem;
-		save();
-
-	}
+	
 	function uploadVideo(id) {
 		var link = document.getElementById("videoLink" + id).value;
 		if (link.substring(0, 32) == "https://www.youtube.com/watch?v=") {
@@ -331,129 +292,12 @@ body {
 		}
 	}
 </script>
-<%--comment style --%>
-<style type="text/css">
-div.rounded {
-	width: 100%;
-	background: #3498db;
-	background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-	background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-	background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-	background-image: -o-linear-gradient(top, #3498db, #2980b9);
-	background-image: linear-gradient(to bottom, #3498db, #2980b9);
-	-webkit-border-radius: 17;
-	-moz-border-radius: 17;
-	border-radius: 17px;
-	font-family: Arial;
-	color: #ffffff;
-	font-size: 20px;
-	padding: 5px 10px 5px 10px;
-	text-decoration: none;
-	margin: 0;
-}
 
-a.name {
-	-webkit-border-radius: 30;
-	-moz-border-radius: 30;
-	border-radius: 30px;
-	font-family: Arial;
-	color: #1100ff;
-	font-size: 25px;
-	background: #ffffff;
-	padding: 3px 3px 3px 3px;
-	text-decoration: none;
-}
-
-a.name:hover {
-	background: #edf1f5;
-	text-decoration: none;
-}
-</style>
 <%--upload --%>
 <script type="text/javascript">
-	function save() {
-		alert(0);
-
-		var elements = document.getElementsByTagName("input");
-		for (var i = 0; i < elements.length; i++) {
-			var element = elements[i];
-			if (element.className != "comment") {
-				element.setAttribute("val", element.value);
-			}
-		}
-		elements = document.getElementsByTagName("textarea");
-		for (var i = 0; i < elements.length; i++) {
-			var element = elements[i];
-			if (element.className != "comment") {
-				element.setAttribute("val", element.value);
-			}
-		}
-
-		elements = document.getElementsByTagName("select");
-		for (var i = 0; i < elements.length; i++) {
-			var element = elements[i];
-			element.setAttribute("val", element.value);
-		}
-
-		var txt = document.body.innerHTML;
-		$.post("UserPageData", {
-			data : txt,
-			view : 0
-		}, function(result) {
-			alert(1);
-		});
-	}
-	function view() {
-
-		var elements = document.getElementsByTagName("div");
-		alert("len: " + elements.length)
-		for (var i = 0; i < elements.length; i++) {
-			var element = elements[i];
-			//var innerEl = element.getElementsByTagName("innerElement");
-			alert(element.className)
-			if (element.className == "drsMoveHandle") {
-				element.className = "dummyHand";
-			}
-			if (element.className == "drsElement") {
-				alert("opa");
-				element.style.visibility = "hidden";
-				//innerEl.style.visible="visible";
-				element.getElementsByTagName("innerElement")[0].style.visibility = "visible";
-				element.className = "dummyElem";
-			}
-		}
-		elements = document.getElementsByTagName("opac");
-		for (var i = 0; i < elements.length; i++) {
-			var element = elements[i];
-			element.style.visibility = "hidden";
-		}
-		elements = document.getElementsByTagName("textArea");
-		for (var i = 0; i < elements.length; i++) {
-			var element = elements[i];
-			if (element.className == "comment") {
-				element.value = "";
-			}
-			if (element.className == "textF") {
-				element.readOnly = true;
-			}
-		}
-		elements = document.getElementsByTagName("input");
-		for (var i = 0; i < elements.length; i++) {
-			var element = elements[i];
-			if (element.className == "comment") {
-				element.value = "";
-			}
-		}
-
-		document.getElementById("control").style.visibility = "hidden";
-
-		document.getElementById("themeselect").style.visibility = "hidden";
-		document.getElementById("edit").style.visibility = "visible";
-		document.getElementById("addSub").style.visibility = "hidden";
-
-	}
-
+	
 	function makeEdition() {
+		viewMode=false;
 		alert(0);
 		document.getElementById("control").style.visibility = "visible";
 		document.getElementById("edit").style.visibility = "hidden";
@@ -479,15 +323,16 @@ a.name:hover {
 					&& element.getAttribute("ch") == "1") {
 				element.checked = true;
 			}
-			if (element.className != "comment") {
-				element.value = element.getAttribute("val");
-			}
+	
 
 		}
 		elements = document.getElementsByTagName("opac");
 		for (var i = 0; i < elements.length; i++) {
 			var element = elements[i];
 			element.style.visibility = "visible";
+			if (element.className == "close") {
+				element.innerHTML="x";
+			}
 		}
 		elements = document.getElementsByTagName("textArea");
 		for (var i = 0; i < elements.length; i++) {
@@ -495,9 +340,7 @@ a.name:hover {
 			if (element.className == "textF") {
 				element.readOnly = false;
 			}
-			if (element.className != "comment") {
-				element.value = element.getAttribute("val");
-			}
+
 
 		}
 
@@ -600,41 +443,7 @@ a.name:hover {
 <link rel="stylesheet" href="sss.css" type="text/css" media="all">
 
 
-<script>
-	jQuery(function($) {
-		$('.slider').sss();
-	});
-</script>
 
-
-
-<script type="text/javascript">
-	/*The code is pretty simple, we animate the ul with a -500px margin left. Then we find the first li and put it last to get the infinite animation.*/
-	$(function() {
-		//alert(document.getElementById("oo").style.width);
-		setInterval(function() {
-
-			$(".slideshow ul").animate({
-			//marginLeft : -document.getElementById("oo").style.width
-			}, 1000, function() {
-				$(this).css({
-					marginLeft : 0
-				}).find("li:last").after($(this).find("li:first"));
-			})
-		}, 1500);
-	});
-
-	function deleteSelected(id) {
-		var selection = document.getElementById("select" + id);
-
-		if (selection.selectedIndex >= 0) {
-			var ImageId = selection.options[selection.selectedIndex].value;
-			selection.remove(selection.selectedIndex);
-			$("#" + ImageId).remove();
-		}
-
-	}
-</script>
 
 
 

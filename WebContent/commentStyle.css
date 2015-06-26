@@ -1,0 +1,36 @@
+@CHARSET "ISO-8859-1";
+div.rounded {
+	width: 100%;
+	background: #3498db;
+	background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+	background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+	background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+	background-image: -o-linear-gradient(top, #3498db, #2980b9);
+	background-image: linear-gradient(to bottom, #3498db, #2980b9);
+	-webkit-border-radius: 17;
+	-moz-border-radius: 17;
+	border-radius: 17px;
+	font-family: Arial;
+	color: #ffffff;
+	font-size: 20px;
+	padding: 5px 10px 5px 10px;
+	text-decoration: none;
+	margin: 0;
+}
+
+a.name {
+	-webkit-border-radius: 30;
+	-moz-border-radius: 30;
+	border-radius: 30px;
+	font-family: Arial;
+	color: #1100ff;
+	font-size: 25px;
+	background: #ffffff;
+	padding: 3px 3px 3px 3px;
+	text-decoration: none;
+}
+
+a.name:hover {
+	background: #edf1f5;
+	text-decoration: none;
+}

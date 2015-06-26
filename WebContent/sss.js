@@ -117,3 +117,33 @@
 
 	};
 })(jQuery, window, document);
+
+jQuery(function($) {
+	$('.slider').sss();
+});
+
+/*The code is pretty simple, we animate the ul with a -500px margin left. Then we find the first li and put it last to get the infinite animation.*/
+$(function() {
+	//alert(document.getElementById("oo").style.width);
+	setInterval(function() {
+
+		$(".slideshow ul").animate({
+		//marginLeft : -document.getElementById("oo").style.width
+		}, 1000, function() {
+			$(this).css({
+				marginLeft : 0
+			}).find("li:last").after($(this).find("li:first"));
+		})
+	}, 1500);
+});
+
+function deleteSelected(id) {
+	var selection = document.getElementById("select" + id);
+
+	if (selection.selectedIndex >= 0) {
+		var ImageId = selection.options[selection.selectedIndex].value;
+		selection.remove(selection.selectedIndex);
+		$("#" + ImageId).remove();
+	}
+
+}
