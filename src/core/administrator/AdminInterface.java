@@ -30,4 +30,6 @@ public interface AdminInterface {
     public void bannUser(int userID, int days);
 
     public void releaseBann(int userID);
+
+    public void deleteWantedCategory(int wcID);
 }

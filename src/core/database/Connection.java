@@ -119,5 +119,7 @@ public interface Connection {
 	public Administrator setAdmin(int userID, CategoryTree categoryTree);
 
 	public void deleteAdmin(int adminID);
+
+	public void deleteWantedCategory(int wcID);
 //>>>>>>> refs/remotes/origin/master
 }

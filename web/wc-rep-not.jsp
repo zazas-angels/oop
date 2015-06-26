@@ -40,12 +40,10 @@
                     } else {
                         //wanted categories
                         if (toUpdate.equals("wc")) {
+                            userObj.addProperty("ID", set.getString("ID"));
                             userObj.addProperty("author", set.getString("authorName"));
                             userObj.addProperty("url", set.getString("authorUrl"));
                             userObj.addProperty("categoryName", set.getString("categoryName"));
-                            userObj.addProperty("date", set.getString("postDate"));
-                            userObj.addProperty("parentCategory", set.getString("name"));
-                            userObj.addProperty("parentCategoryID", set.getString("parentCategoryID"));
                         } else {
                             userObj.addProperty("author", set.getString("userName"));
                             userObj.addProperty("url", set.getString("userUrl"));
@@ -55,9 +53,8 @@
                     }
                     list.add(userObj);
                 }
-                PrintWriter out1 = response.getWriter();
                 response.setContentType("application/json");
-                out1.println(list);
+                out.println(list);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -71,6 +71,17 @@ function updateNotifications() {
         });
 }
 
+function deleteWantedCategory(wcID){
+
+    $.post("admin",
+        {requestType: "delete-wc", wcID: wcID},
+        function (data) {
+
+        }
+    );
+    updateWantedCategories();
+}
+
 
 function updateWantedCategories() {
     var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=wc";
@@ -84,7 +95,7 @@ function updateWantedCategories() {
                 for (var i = 0; i < arr.length; i++) {
                     var wantedCategory = arr[i];
                     var url = wantedCategory.url;
-                    var tmp = "ავტორი: ";
+                    var tmp = "<div>ავტორი: ";
                     if (url === "#") {
                         tmp += wantedCategory.author;
                     } else {
@@ -92,11 +103,7 @@ function updateWantedCategories() {
                     }
                     tmp += "<br>კატეგორია:   " + wantedCategory.categoryName + "" +
                         "<br>";
-                    if (wantedCategory.parentCategory === null) {
-                        tmp += "მშობელი კატეგორია: არ აქვს";
-                    } else {
-                        tmp += "მშობელი კატეგორია: " + wantedCategory.parentCategory + " (ID = " + wantedCategory.parentCategoryID + ")";
-                    }
+                    tmp += "<button onclick=deleteWantedCategory('" + wantedCategory.ID + "');>წაშლა</button></div>";
                     data += tmp;
                     data += "<br><br>"
                 }
@@ -139,7 +146,7 @@ function searchByName() {
             update(response);
         })
         .fail(function () {
-            alert("fail");
+            alert("search fail");
         });
 }
 
@@ -150,7 +157,7 @@ function extendedSearch() {
             update(response);
         })
         .fail(function () {
-            alert("fail");
+            alert("search fail");
         });
 }
 
@@ -211,13 +218,10 @@ function update(response) {
                 tmp += "<button class='bann-button' onclick=releaseBann('" + user.ID + "');>ბანის მოხსნა</button></li>";
             } else {
                 var isActive;
-                console.log(isActive);
                 if (user.isActive === "active") {
-                    console.log("sadadsadadad000");
                     isActive = "active"; // remove whitespace
                 } else {
-                    isActive = "notActive"
-                    console.log("equals");
+                    isActive = "notActive";
                 }
                 tmp += "<button class='bann-button' onclick=showBannSection('" + user.name + "','" + user.url + "','" + isActive + "','" + user.type + "','" + user.rating + "','" + user.ID + "');>ბანის დადება</button></li>";
             }

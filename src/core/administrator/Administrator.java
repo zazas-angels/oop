@@ -149,4 +149,8 @@ public class Administrator implements AdminInterface {
         dbConnection.setBannedStatus(userID, false);
     }
 
+    @Override
+    public void deleteWantedCategory(int wcID) {
+        dbConnection.deleteWantedCategory(wcID);
+    }
 }

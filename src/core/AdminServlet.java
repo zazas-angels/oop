@@ -23,12 +23,19 @@ public class AdminServlet extends HttpServlet {
         String type = request.getParameter("requestType");
         if (type != null) {
             Administrator admin = (Administrator) request.getSession().getAttribute("admin");
-            if (type.equals("bann"))
-                addBann(admin, request.getParameter("bannType"), request.getParameter("userID"));
-            else
-                if(type.equals("release-bann"))
-                admin.releaseBann(Integer.parseInt(request.getParameter("userID")));
-
+            switch (type){
+                case "bann":
+                    addBann(admin, request.getParameter("bannType"), request.getParameter("userID"));
+                    break;
+                case "release-bann":
+                    admin.releaseBann(Integer.parseInt(request.getParameter("userID")));
+                    break;
+                case "delete-wc":
+                    admin.deleteWantedCategory(Integer.parseInt(request.getParameter("wcID")));
+                    break;
+                default:
+                    System.out.println("zazaaaaa");
+            }
         }
     }
 

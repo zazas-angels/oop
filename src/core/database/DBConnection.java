@@ -466,8 +466,19 @@ public class DBConnection implements core.database.Connection {
          } catch (SQLException e) {
              e.printStackTrace();
          }
-     
-        
+    }
+
+    @Override
+    public void deleteWantedCategory(int wcID) {
+        PreparedStatement stmt = null;
+        try {
+            stmt = dataBaseConnection
+                    .prepareStatement("delete from wantedCategories where ID = ?;");
+            stmt.setInt(1, wcID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -921,8 +932,7 @@ public class DBConnection implements core.database.Connection {
                 dateLimit = "where datediff(now(), postDate) < " + days;
             }
             PreparedStatement statement = dataBaseConnection
-                    .prepareStatement("select * from wantedCategories left join categories" +
-                            " on wantedCategories.parentCategoryID = categories.ID " + dateLimit + " order by postDate desc;");
+                    .prepareStatement("select * from wantedCategories " + dateLimit + " order by postDate desc;");
 
 
             results = statement.executeQuery();
