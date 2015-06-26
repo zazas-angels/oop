@@ -107,8 +107,9 @@ public class DBConnection implements core.database.Connection {
 
 	public static void main(String[] args) {
 		DBConnection db = new DBConnection();
-		db.addUser(new User("nika", "nika@yahoo.com", "paroli", "ragaca.com", SiteConstants.Type.email));
-
+	//	db.addUser(new User("nika", "nika@yahoo.com", "paroli", "ragaca.com", SiteConstants.Type.email));
+	//	db.changeData(3, "ooo");
+		db.getData(1);
 	}
 
 	@Override
@@ -353,6 +354,53 @@ public class DBConnection implements core.database.Connection {
 			e.printStackTrace();
 		}
 		return existResult;
+	}
+
+	@Override
+	/*
+	 * Changing page data for this user id
+	 * (non-Javadoc)
+	 * @see core.database.Connection#changeData(int, java.lang.String)
+	 */
+	public void changeData(int id, String data) {
+		// TODO Auto-generated method stub
+		try {
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("Update user_page Set page=? where userId=?;");
+			statement.setString(1,data );
+			statement.setInt(2,id);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			// ignore
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	/*
+	 * returnes page data whith this user, if problem occured retuns empty
+	 * (non-Javadoc)
+	 * @see core.database.Connection#getData(int)
+	 */
+	public String getData(int id) {
+		// TODO Auto-generated method stub
+		ResultSet results=null;
+		
+		String res="";
+		try {
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("select * from user_page where UserId=?;");
+			statement.setInt(1, id);
+			results = statement.executeQuery();
+			if(results!=null&&results.next())
+				res =results.getString("page");
+			System.out.println(res);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
+		
 	}
 
 }

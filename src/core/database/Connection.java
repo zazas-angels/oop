@@ -48,7 +48,8 @@ public interface Connection {
 	public ResultSet getAlbomsPictures( int id);
 	public ResultSet getElementsPictures( int id);
 	public ResultSet getAdmins( int id);
-
+	public void changeData(int id, String Data);
+	public String getData(int id);
 
 	/**
 	 * returns 0 if successfully added else 1

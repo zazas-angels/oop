@@ -1,11 +1,14 @@
 package core.user;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import core.database.Connection;
 
 /**
  * Servlet implementation class UserPageData
@@ -45,23 +48,29 @@ public class UserPageData extends HttpServlet {
 		String data = request.getParameter("data");
 		
 		String needViewMassage = request.getParameter("view");
-		
+		 
 		if(needViewMassage==null)return;
 		boolean needView = needViewMassage.equals("1");
 		WebData webData = (WebData) request.getSession().getAttribute("webData");
 		webData.changeData(data);
+		
 		System.out.println(data);
 		String res="";
+		Connection database = (Connection) request.getServletContext().getAttribute("database");
+		int userId=(int) request.getSession().getAttribute("userPage");
 		if(needView){
-			res=webData.getData();
+			//res=webData.getData(); 
 		//	if(res!=null)
 				response.setContentType("text/plain");
-			response.getWriter().write(res);
-			System.out.println(webData.getDataView());
-			System.out.println("needView");
+			response.getWriter().write(database.getData(userId));
+			
+			//System.out.println(webData.getDataView());
+			//System.out.println("needView");
 		}else{
 			//nothing to write
-			System.out.println("notneedView");
+		
+			database.changeData( userId,data);
+			System.out.println("save");
 		}
 		System.out.println(needViewMassage);
 		System.out.println("result" +res);

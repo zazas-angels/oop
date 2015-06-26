@@ -35,8 +35,25 @@ body {
 }
 </style>
 <script type="text/javascript">
-	var numElements = 23;//need threading?
-	
+	var numElements = 33;//Jesus <3
+
+	window.onload = function() {
+		alert(1);
+		$.post("UserPageData", {
+			data : "",
+			view : 1
+		}, function(result) {
+			alert(result);
+			if (result != "") {
+				document.body.innerHTML = result;
+				alert("div" + document.getElementsByTagName("div").length)
+				numElements += document.getElementsByTagName("div").length;
+			}
+			makeEdition();
+			initValElems();
+
+		});
+	};
 	function createImage() {
 
 		numElements += 1;
@@ -100,7 +117,7 @@ body {
 				+ ");\" oninput=\"changeSize("
 				+ numElements
 				+ ");\">"
-				+ 'Bold: <input type="checkbox" id="bold'
+				+ 'Bold: <input type="checkbox" ch="0" id="bold'
 				+ numElements
 				+ '" onclick="changeBold('
 				+ numElements
@@ -123,27 +140,26 @@ body {
 			element.style.fontSize = size + "px";
 
 	}
-	function changeRating(num){
+	function changeRating(num) {
 		var element = document.getElementById("rate");
-		var numVote= +element.getAttribute("numVote") + 1;
-		var sumVote= +element.getAttribute("sumVote") + +num;
-		element.setAttribute("numVote",numVote);
-		element.setAttribute("sumVote",sumVote);
-		for(var i=1; i<=5; i++){
-			if(sumVote/numVote>=i){
-				document.getElementById("star"+i).className="fa fa-star filled";
-			}else{
-				document.getElementById("star"+i).className="fa fa-star";
+		var numVote = +element.getAttribute("numVote") + 1;
+		var sumVote = +element.getAttribute("sumVote") + +num;
+		element.setAttribute("numVote", numVote);
+		element.setAttribute("sumVote", sumVote);
+		for (var i = 1; i <= 5; i++) {
+			if (sumVote / numVote >= i) {
+				document.getElementById("star" + i).className = "fa fa-star filled";
+			} else {
+				document.getElementById("star" + i).className = "fa fa-star";
 			}
-			
-		
+
 		}
 		//var sumVote=parseInt(element.sumVote);
 		save();
-		alert(numVote); 
+		alert(numVote);
 		alert(sumVote);
 	}
-	function createGallery() { 
+	function createGallery() {
 		numElements += 1;
 		alert(1);
 		var div = document.createElement('div');
@@ -237,7 +253,7 @@ body {
 				+ ').remove();" class="close" style="float: right;">×</a><opac>'
 				+ '</p>'
 		document.getElementById("comments" + id).innerHTML += elem;
-				save();
+		save();
 
 	}
 	function uploadVideo(id) {
@@ -304,10 +320,13 @@ body {
 	}
 
 	function changeBold(id) {
-		var isChecked = document.getElementById("bold" + id).checked;
+		var elem = document.getElementById("bold" + id);
+		var isChecked = elem.checked;
 		if (isChecked) {
+			elem.setAttribute("ch", "1");
 			document.getElementById(id).style.fontWeight = "Bold";
 		} else {
+			elem.setAttribute("ch", "0");
 			document.getElementById(id).style.fontWeight = "normal";
 		}
 	}
@@ -354,8 +373,29 @@ a.name:hover {
 <script type="text/javascript">
 	function save() {
 		alert(0);
-		var txt = document.body.innerHTML;
 
+		var elements = document.getElementsByTagName("input");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			if (element.className != "comment") {
+				element.setAttribute("val", element.value);
+			}
+		}
+		elements = document.getElementsByTagName("textarea");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			if (element.className != "comment") {
+				element.setAttribute("val", element.value);
+			}
+		}
+
+		elements = document.getElementsByTagName("select");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			element.setAttribute("val", element.value);
+		}
+
+		var txt = document.body.innerHTML;
 		$.post("UserPageData", {
 			data : txt,
 			view : 0
@@ -364,74 +404,61 @@ a.name:hover {
 		});
 	}
 	function view() {
-		alert(0);
-		var txt = document.body.innerHTML;
 
-		$
-				.post(
-						"UserPageData",
-						{
-							data : txt,
-							view : 1
-						},
-						function(result) {
-							alert(result);
+		var elements = document.getElementsByTagName("div");
+		alert("len: " + elements.length)
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			//var innerEl = element.getElementsByTagName("innerElement");
+			alert(element.className)
+			if (element.className == "drsMoveHandle") {
+				element.className = "dummyHand";
+			}
+			if (element.className == "drsElement") {
+				alert("opa");
+				element.style.visibility = "hidden";
+				//innerEl.style.visible="visible";
+				element.getElementsByTagName("innerElement")[0].style.visibility = "visible";
+				element.className = "dummyElem";
+			}
+		}
+		elements = document.getElementsByTagName("opac");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			element.style.visibility = "hidden";
+		}
+		elements = document.getElementsByTagName("textArea");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			if (element.className == "comment") {
+				element.value = "";
+			}
+			if (element.className == "textF") {
+				element.readOnly = true;
+			}
+		}
+		elements = document.getElementsByTagName("input");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			if (element.className == "comment") {
+				element.value = "";
+			}
+		}
 
-							var elements = document.getElementsByTagName("div");
-							alert("len: " + elements.length)
-							for (var i = 0; i < elements.length; i++) {
-								var element = elements[i];
-								//var innerEl = element.getElementsByTagName("innerElement");
-								alert(element.className)
-								if (element.className == "drsMoveHandle") {
-									element.className = "dummyHand";
-								}
-								if (element.className == "drsElement") {
-									alert("opa");
-									element.style.visibility = "hidden";
-									//innerEl.style.visible="visible";
-									element
-											.getElementsByTagName("innerElement")[0].style.visibility = "visible";
-									element.className = "dummyElem";
-								}
-							}
-							elements = document.getElementsByTagName("opac");
-							for (var i = 0; i < elements.length; i++) {
-								var element = elements[i];
-								element.style.visibility = "hidden";
-							}
-							elements = document
-									.getElementsByTagName("textArea");
-							for (var i = 0; i < elements.length; i++) {
-								var element = elements[i];
-								if (element.className == "comment") {
-									element.value = "";
-								}
-								if (element.className == "textF") {
-									element.readOnly = true;
-								}
-							}
-							elements = document.getElementsByTagName("input");
-							for (var i = 0; i < elements.length; i++) {
-								var element = elements[i];
-								if (element.className == "comment") {
-									element.value = "";
-								}
+		document.getElementById("control").style.visibility = "hidden";
 
-							}
+		document.getElementById("themeselect").style.visibility = "hidden";
+		document.getElementById("edit").style.visibility = "visible";
+		document.getElementById("addSub").style.visibility = "hidden";
 
-							document.getElementById("control").style.visibility = "hidden";
-
-							document.getElementById("themeselect").style.visibility = "hidden";
-							document.getElementById("edit").style.visibility = "visible";
-							document.getElementById("addSub").style.visibility = "hidden";
-						});
 	}
 
 	function makeEdition() {
 		alert(0);
 		document.getElementById("control").style.visibility = "visible";
 		document.getElementById("edit").style.visibility = "hidden";
+		document.getElementById("themeselect").style.visibility = "hidden";
+		document.getElementById("addSub").style.visibility = "hidden";
 		var elements = document.getElementsByTagName("div");
 		alert("len: " + elements.length)
 		for (var i = 0; i < elements.length; i++) {
@@ -444,6 +471,19 @@ a.name:hover {
 				element.className = "drsElement";
 			}
 		}
+		elements = document.getElementsByTagName("input");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+
+			if (element.getAttribute("type") == "checkbox"
+					&& element.getAttribute("ch") == "1") {
+				element.checked = true;
+			}
+			if (element.className != "comment") {
+				element.value = element.getAttribute("val");
+			}
+
+		}
 		elements = document.getElementsByTagName("opac");
 		for (var i = 0; i < elements.length; i++) {
 			var element = elements[i];
@@ -455,8 +495,40 @@ a.name:hover {
 			if (element.className == "textF") {
 				element.readOnly = false;
 			}
+			if (element.className != "comment") {
+				element.value = element.getAttribute("val");
+			}
+
 		}
+
 		jscolor.init();
+
+	}
+
+	function initValElems() {
+		var elements = document.getElementsByTagName("input");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+
+			if (element.className != "comment") {
+				element.value = element.getAttribute("val");
+			}
+
+		}
+		elements = document.getElementsByTagName("textArea");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			if (element.className != "comment") {
+				element.value = element.getAttribute("val");
+			}
+
+		}
+		elements = document.getElementsByTagName("select");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			element.value = element.getAttribute("val");
+			changeBackground();
+		}
 
 	}
 </script>
@@ -659,15 +731,18 @@ Your Text
 
 
 
-
+	<%
+		
+	%>
 
 	<%--control panel --%>
-	<div  id="edit" onclick="makeEdition()" class="circle"
-		style="position:fixed; visibility: hidden; left: 20px; background: #FF3399;">
+
+	<div id="edit" onclick="makeEdition()" class="circle"
+		style="position: fixed; visibility: hidden; left: 20px; background: #FF3399;">
 		<i class="icon1 fa fa-edit fa-lg"></i> <i
 			class="icon2 fa fa-star fa-lg"></i> <span> Edit</span>
 	</div>
-	<div id="control" style="position:fixed;">
+	<div id="control" style="position: fixed;">
 
 		<div class="circle" onclick="changeSubVisibility()"
 			style="left: 20px; background: #253DDA;">
@@ -755,15 +830,27 @@ Your Text
 
 
 
+
+
+
+
 			
 			<option
 				value="http://1.bp.blogspot.com/_JR1wtGyGotU/S8U_5R3ktHI/AAAAAAAAAo8/iDlD4cK2D6A/s1600/Perfectly+Pink+2.gif">Pink
 
 
 
+
+
+
+
 			
 			<option
 				value="http://i221.photobucket.com/albums/dd189/txnbyubabe/backgrounds/gray-grid.jpg">kletka
+
+
+
+
 
 
 
@@ -796,15 +883,15 @@ Your Text
 	--%>
 
 
-<div id="rate" style="float: right;" numVote="0" sumVote="0">
-  <div class="rating" >
-  <i id="star5" onclick="changeRating(5)" class="fa fa-star"></i> 
-  <i id="star4" onclick="changeRating(4)"  class="fa fa-star "></i>
-  <i id="star3" onclick="changeRating(3)"  class="fa fa-star"></i>
-  <i id="star2" onclick="changeRating(2)"  class="fa fa-star"></i>
-  <i id="star1" onclick="changeRating(1)"  class="fa fa-star " ></i>
-</div>
-</div>
+	<div id="rate" style="float: right;" numVote="0" sumVote="0">
+		<div class="rating">
+			<i id="star5" onclick="changeRating(5)" class="fa fa-star"></i> <i
+				id="star4" onclick="changeRating(4)" class="fa fa-star "></i> <i
+				id="star3" onclick="changeRating(3)" class="fa fa-star"></i> <i
+				id="star2" onclick="changeRating(2)" class="fa fa-star"></i> <i
+				id="star1" onclick="changeRating(1)" class="fa fa-star "></i>
+		</div>
+	</div>
 
 	<%--comment box --%>
 	<%--
