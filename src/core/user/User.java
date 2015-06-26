@@ -100,4 +100,5 @@ public class User implements UserInterface {
         return getEmail().hashCode();
     }
 
+
 }

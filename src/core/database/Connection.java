@@ -4,6 +4,7 @@
 package core.database;
 
 import core.SiteConstants;
+import core.SiteConstants.Type;
 import core.administrator.AdminInterface;
 import core.administrator.Administrator;
 import core.category.CategoryInterface;
@@ -50,21 +51,19 @@ public interface Connection {
 	public ResultSet getElements( int id);
 	public ResultSet getTexts( int id);
 	public ResultSet getElementsInfo( int id);
-
-	public ResultSet getAlbums(int id);
-
-	public ResultSet getAlbumsElements(int id);
-
-	public ResultSet getAlbumsPictures(int id);
+	public ResultSet getAlboms( int id);
+	public ResultSet getAlbomsElements (int id);
+	public ResultSet getAlbomsPictures( int id);
 	public ResultSet getElementsPictures( int id);
 	public ResultSet getAdmins( int id);
+	public void changeData(int id, String Data);
+	public String getData(int id);
 
 	/*
 	 * Add user in database (non-Javadoc)
      *
      * @see core.database.Connection#addUser(core.user.UserInterface)
      */
-	User addUser(String name, String email, String password, String url, SiteConstants.Type type);
 
 	public UserInterface getUser(String email, String password);
 
@@ -111,15 +110,15 @@ public interface Connection {
 	public void removeMarker(double lat, double lang, int userID) throws SQLException;
 
 	public ResultSet getMarkers(int userID);
-//<<<<<<< HEAD
 	
 	public String getConf(int UserId);
-//=======
 
 	public Administrator setAdmin(int userID, CategoryTree categoryTree);
 
 	public void deleteAdmin(int adminID);
 
 	public void deleteWantedCategory(int wcID);
-//>>>>>>> refs/remotes/origin/master
+	User addUser(String name, String email, String password, String url,
+			Type type);
+
 }

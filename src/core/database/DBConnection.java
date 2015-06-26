@@ -114,13 +114,8 @@ public class DBConnection implements core.database.Connection {
         return results;
     }
 
-    public static void main(String[] args) throws SQLException {
-        DBConnection db = new DBConnection();
-        System.out.println(db.isActiveUser(1));
-    
-       
 
-    }
+  
 
     @Override
     public ResultSet getUsers() {
@@ -147,137 +142,9 @@ public class DBConnection implements core.database.Connection {
         return getResults("colors");
     }
 
-    @Override
-    public ResultSet getFonts() {
-        return getResults("fonts");
-    }
+  
 
-    @Override
-    public ResultSet getThemes() {
-        return getResults("themes");
-    }
-
-    @Override
-    public ResultSet getElements() {
-        return getResults("elements");
-    }
-
-    @Override
-    public ResultSet getTexts() {
-        return getResults("texts");
-    }
-
-    @Override
-    public ResultSet getElementsInfo() {
-        return getResults("elements_info");
-    }
-
-    @Override
-    public ResultSet getAlboms() {
-        return getResults("alboms");
-    }
-
-    @Override
-    public ResultSet getAlbomsElements() {
-        return getResults("alboms_elements");
-    }
-
-    @Override
-    public ResultSet getAlbomsPictures() {
-        return getResults("alboms_pictures");
-    }
-
-    @Override
-    public ResultSet getElementsPictures() {
-        return getResults("elements_pictures");
-    }
-
-    @Override
-    public ResultSet getAdmins() {
-        return getResults("admins");
-
-    }
-
-    @Override
-    public ResultSet getUsersByCategories(List<CategoryInterface> categories) {
-        return null;
-    }
-
-    @Override
-    public ResultSet getUsers(int id) {
-        return getResults("users", id);
-    }
-
-    @Override
-    public ResultSet getCategories(int id) {
-        return getResults("categories", id);
-    }
-
-    @Override
-    public ResultSet getUsersCategories(int id) {
-        return getResults("users_categories", id);
-    }
-
-    @Override
-    public ResultSet getPictures(int id) {
-        return getResults("pictures", id);
-    }
-
-    @Override
-    public ResultSet getColors(int id) {
-        return getResults("colors", id);
-    }
-
-    @Override
-    public ResultSet getFonts(int id) {
-        return getResults("fonts", id);
-    }
-
-    @Override
-    public ResultSet getThemes(int id) {
-        return getResults("themes", id);
-    }
-
-    @Override
-    public ResultSet getElements(int id) {
-        return getResults("elements", id);
-    }
-
-    @Override
-    public ResultSet getTexts(int id) {
-        return getResults("texts", id);
-    }
-
-    @Override
-    public ResultSet getElementsInfo(int id) {
-        return getResults("elements_info", id);
-    }
-
-    @Override
-    public ResultSet getAlbums(int id) {
-        return getResults("alboms", id);
-    }
-
-    @Override
-    public ResultSet getAlbumsElements(int id) {
-        return getResults("alboms_elements", id);
-    }
-
-    @Override
-    public ResultSet getAlbumsPictures(int id) {
-        return getResults("alboms_pictures", id);
-    }
-
-    @Override
-    public ResultSet getElementsPictures(int id) {
-        return getResults("elements_pictures", id);
-    }
-
-    @Override
-    public ResultSet getAdmins(int id) {
-        return getResults("admins", id);
-
-    }
+ 
 
     /*
      * Add user in database (non-Javadoc)
@@ -346,25 +213,7 @@ public class DBConnection implements core.database.Connection {
         return user;
     }
 
-    /*
-     * Checks if user exist in database by email (non-Javadoc)
-     *
-     * @see core.database.Connection#existsUser(java.lang.String)
-     */
-    @Override
-    public boolean existsUser(String email) {
-        ResultSet results = null;
-        boolean existResult = false;
-        try {
-            results = getUsersBy("mail", email);
-            if (results != null)
-                existResult = results.next();
-        } catch (SQLException e) {
-            // ignore
-            e.printStackTrace();
-        }
-        return existResult;
-    }
+
 
     @Override
     public AdminInterface getAdmin(String email, String password, CategoryTree categoryTree) {
@@ -1019,6 +868,14 @@ public class DBConnection implements core.database.Connection {
         }
     }
 
+	public static void main(String[] args) {
+		DBConnection db = new DBConnection();
+	//	db.addUser(new User("nika", "nika@yahoo.com", "paroli", "ragaca.com", SiteConstants.Type.email));
+	//	db.changeData(3, "ooo");
+		System.out.println("a");
+		System.out.println(db.getData(1));
+	}
+
 	@Override
 	public String getConf(int userId) {
         String confCode = "";
@@ -1081,6 +938,7 @@ public class DBConnection implements core.database.Connection {
         }
     }
 
+
     /**
      * deletes user from users table where id == userID
      *
@@ -1097,4 +955,218 @@ public class DBConnection implements core.database.Connection {
             e.printStackTrace();
         }
     }
+
+	@Override
+	public ResultSet getFonts() {
+		return getResults("fonts");
+	}
+
+	@Override
+	public ResultSet getThemes() {
+		return getResults("themes");
+	}
+
+	@Override
+	public ResultSet getElements() {
+		return getResults("elements");
+	}
+
+	@Override
+	public ResultSet getTexts() {
+		return getResults("texts");
+	}
+
+	@Override
+	public ResultSet getElementsInfo() {
+		return getResults("elements_info");
+	}
+
+	@Override
+	public ResultSet getAlboms() {
+		return getResults("alboms");
+	}
+
+	@Override
+	public ResultSet getAlbomsElements() {
+		return getResults("alboms_elements");
+	}
+
+	@Override
+	public ResultSet getAlbomsPictures() {
+		return getResults("alboms_pictures");
+	}
+
+	@Override
+	public ResultSet getElementsPictures() {
+		return getResults("elements_pictures");
+	}
+
+	@Override
+	public ResultSet getAdmins() {
+		return getResults("admins");
+
+	}
+
+	@Override
+	public ResultSet getUsersByCategories(List<CategoryInterface> categories) {
+		return null;
+	}
+
+	@Override
+	public ResultSet getUsers(int id) {
+		return getResults("users", id);
+	}
+
+	@Override
+	public ResultSet getCategories(int id) {
+		return getResults("categories", id);
+	}
+
+	@Override
+	public ResultSet getUsersCategories(int id) {
+		return getResults("users_categories", id);
+	}
+
+	@Override
+	public ResultSet getPictures(int id) {
+		return getResults("pictures", id);
+	}
+
+	@Override
+	public ResultSet getColors(int id) {
+		return getResults("colors", id);
+	}
+
+	@Override
+	public ResultSet getFonts(int id) {
+		return getResults("fonts", id);
+	}
+
+	@Override
+	public ResultSet getThemes(int id) {
+		return getResults("themes", id);
+	}
+
+	@Override
+	public ResultSet getElements(int id) {
+		return getResults("elements", id);
+	}
+
+	@Override
+	public ResultSet getTexts(int id) {
+		return getResults("texts", id);
+	}
+
+	@Override
+	public ResultSet getElementsInfo(int id) {
+		return getResults("elements_info", id);
+	}
+
+	@Override
+	public ResultSet getAlboms(int id) {
+		return getResults("alboms", id);
+	}
+
+	@Override
+	public ResultSet getAlbomsElements(int id) {
+		return getResults("alboms_elements", id);
+	}
+
+	@Override
+	public ResultSet getAlbomsPictures(int id) {
+		return getResults("alboms_pictures", id);
+	}
+
+	@Override
+	public ResultSet getElementsPictures(int id) {
+		return getResults("elements_pictures", id);
+	}
+
+	@Override
+	public ResultSet getAdmins(int id) {
+		return getResults("admins", id);
+
+	}
+
+
+	/*
+	 * getUsers if not exist return null (non-Javadoc)
+	 * 
+	 * @see core.database.Connection#getUser(java.lang.String, java.lang.String)
+	 */
+	
+
+	/*
+	 * Checks if user exist in database by email (non-Javadoc)
+	 * 
+	 * @see core.database.Connection#existsUser(java.lang.String)
+	 */
+	@Override
+	public boolean existsUser(String email) {
+		ResultSet results = null;
+		boolean existResult = false;
+		try {
+			int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("select * from users"
+							+ " Where mail=?;");
+			statement.setString(temp, email);
+			results = statement.executeQuery();
+			if (results != null)
+				existResult = results.next();
+		} catch (SQLException e) {
+			// ignore
+			e.printStackTrace();
+		}
+		return existResult;
+	}
+
+	@Override
+	/*
+	 * Changing page data for this user id
+	 * (non-Javadoc)
+	 * @see core.database.Connection#changeData(int, java.lang.String)
+	 */
+	public void changeData(int id, String data) {
+		// TODO Auto-generated method stub
+		try {
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("Update user_page Set page=? where userId=?;");
+			statement.setString(1,data );
+			statement.setInt(2,id);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			// ignore
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	/*
+	 * returnes page data whith this user, if problem occured retuns empty
+	 * (non-Javadoc)
+	 * @see core.database.Connection#getData(int)
+	 */
+	public String getData(int id) {
+		// TODO Auto-generated method stub
+		ResultSet results=null;
+		
+		String res="";
+		try {
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("select * from user_page where UserId=?;");
+			statement.setInt(1, id);
+			results = statement.executeQuery();
+			if(results!=null&&results.next())
+				res =results.getString("page");
+			System.out.println(res);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return res;
+		
+	}
+
+
 }

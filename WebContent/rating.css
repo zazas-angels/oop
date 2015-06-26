@@ -1,0 +1,20 @@
+#rate, #unrate {
+  position: relative;
+  text-align: left;
+  display: block;
+  clear: both;
+}
+#rate .rating, #unrate .rating {
+  direction: rtl;
+}
+#rate .rating i, #unrate .rating i {
+  color: #999;
+}
+#rate .rating i.filled, #unrate .rating i.filled {
+  color: orange !important;
+}
+#rate .rating > i:hover:before,
+#rate .rating > i:hover ~ i:before, #unrate .rating > i:hover:before,
+#unrate .rating > i:hover ~ i:before {
+  color: orange;
+}

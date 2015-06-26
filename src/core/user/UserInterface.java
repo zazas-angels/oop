@@ -12,6 +12,7 @@ public interface UserInterface {
 
     public String getURL();
     public String getName();
+    public int getID();
 
     public SiteConstants.Type getType();
 }

@@ -3,46 +3,6 @@ CREATE DATABASE ServisSite
   CHARACTER SET 'utf8';
 USE ServisSite;
 
-DROP TABLE IF EXISTS pictures;
-CREATE TABLE pictures (
-  ID        INT NOT NULL AUTO_INCREMENT,
-  imagefile CHAR(64),
-  PRIMARY KEY (ID)
-);
-
-##colors
-DROP TABLE IF EXISTS colors;
-CREATE TABLE colors (
-  ID    INT NOT NULL AUTO_INCREMENT,
-  value VARCHAR(32),
-  PRIMARY KEY (ID)
-);
-
-
-##font
-DROP TABLE IF EXISTS fonts;
-CREATE TABLE fonts (
-  ID    INT NOT NULL AUTO_INCREMENT,
-  value VARCHAR(32),
-  PRIMARY KEY (ID)
-);
-##theme
-DROP TABLE IF EXISTS themes;
-CREATE TABLE themes (
-  ID            INT NOT NULL AUTO_INCREMENT,
-  FontID        INT          DEFAULT 1,
-  BackColorID   INT          DEFAULT 1,
-  FontColorID   INT          DEFAULT 1,
-  FontSize      DOUBLE       DEFAULT 11,
-  IsBold        BOOL         DEFAULT FALSE,
-  IsItalyc      BOOL         DEFAULT FALSE,
-  BackPictureID INT          DEFAULT NULL,
-  PRIMARY KEY (ID),
-  FOREIGN KEY (FontID) REFERENCES fonts (ID),
-  FOREIGN KEY (BackColorID) REFERENCES colors (ID),
-  FOREIGN KEY (FontColorID) REFERENCES colors (ID),
-  FOREIGN KEY (BackPictureID) REFERENCES pictures (ID)
-);
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   ID         INT                            NOT NULL AUTO_INCREMENT,
@@ -55,11 +15,11 @@ CREATE TABLE users (
   password   VARCHAR(64),
   raiting    DOUBLE                                  DEFAULT 0,
   avatarFile CHAR(64) DEFAULT "default.png" NOT NULL,
-  ThemeID    INT                                     DEFAULT 1,
+
   PRIMARY KEY (ID),
   UNIQUE (url),
-  UNIQUE (mail),
-  FOREIGN KEY (ThemeID) REFERENCES themes (ID)
+  UNIQUE (mail)
+
 );
 
 DROP TABLE IF EXISTS users_confcodes;
@@ -83,6 +43,17 @@ CREATE TABLE categories (
   FOREIGN KEY (ParentId) REFERENCES categories (ID)
 );
 
+DROP TABLE IF EXISTS user_page;
+CREATE TABLE user_page (
+  ID       INT NOT NULL AUTO_INCREMENT,
+  page		LONGTEXT,
+  UserId INT          DEFAULT NULL,
+  unique(UserId),
+  PRIMARY KEY (ID),
+  FOREIGN KEY (UserId) REFERENCES users (ID)
+);
+
+
 DROP TABLE IF EXISTS users_categories;
 CREATE TABLE users_categories (
   ID         INT NOT NULL AUTO_INCREMENT,
@@ -95,105 +66,6 @@ CREATE TABLE users_categories (
     ON DELETE CASCADE
 );
 
-
-DROP TABLE IF EXISTS elements;
-CREATE TABLE elements (
-  ID        INT NOT NULL AUTO_INCREMENT,
-  UserID    INT NOT NULL,
-  Type      ENUM('text', 'albom', 'picture', 'panel', 'comment'),
-  X         DOUBLE       DEFAULT 0,
-  Y         DOUBLE       DEFAULT 0,
-  name      VARCHAR(64)  DEFAULT "",
-  ##background
-  ColorID   INT          DEFAULT NULL,
-  Width     DOUBLE       DEFAULT 0,
-  Heigth    DOUBLE       DEFAULT 0,
-  ##plani
-  ##also indicator is null
-  hyperLink VARCHAR(64)  DEFAULT NULL,
-
-  PRIMARY KEY (ID),
-  FOREIGN KEY (UserID) REFERENCES users (ID)
-    ON DELETE CASCADE,
-  FOREIGN KEY (ColorID) REFERENCES colors (ID)
-
-);
-
-DROP TABLE IF EXISTS texts;
-CREATE TABLE texts (
-  ID        INT NOT NULL AUTO_INCREMENT,
-  ElementID INT NOT NULL,
-  value     CHAR(200),
-  PRIMARY KEY (ID),
-  FOREIGN KEY (ElementID) REFERENCES elements (ID)
-);
-
-##elements_info
-DROP TABLE IF EXISTS elements_info;
-CREATE TABLE elements_info (
-  ID        INT NOT NULL AUTO_INCREMENT,
-  ElementID INT NOT NULL,
-  FontID    INT NOT NULL,
-  FontSize  DOUBLE       DEFAULT 11,
-  IsBold    BOOL         DEFAULT FALSE,
-  IsItalyc  BOOL         DEFAULT FALSE,
-  ColorID   INT NOT NULL,
-  PRIMARY KEY (ID),
-  FOREIGN KEY (ElementID) REFERENCES elements (ID)
-    ON DELETE CASCADE,
-  FOREIGN KEY (FontID) REFERENCES fonts (ID),
-  FOREIGN KEY (ColorID) REFERENCES colors (ID)
-);
-
-
-##alboms
-DROP TABLE IF EXISTS alboms;
-CREATE TABLE alboms (
-  ID            INT NOT NULL AUTO_INCREMENT,
-  AlbomID       INT NOT NULL,
-  ##albom
-  ParentAlbomID INT          DEFAULT NULL,
-  PRIMARY KEY (ID),
-  FOREIGN KEY (AlbomID) REFERENCES alboms (ID)
-);
-
-
-##albom elemnt
-
-DROP TABLE IF EXISTS alboms_elements;
-CREATE TABLE alboms_elements (
-  ID        INT NOT NULL AUTO_INCREMENT,
-  ElementID INT NOT NULL,
-  AlbomID   INT NOT NULL,
-  PRIMARY KEY (ID),
-  FOREIGN KEY (AlbomID) REFERENCES alboms (ID),
-  FOREIGN KEY (ElementID) REFERENCES elements (ID)
-);
-
-
-##albompicture
-
-DROP TABLE IF EXISTS alboms_pictures;
-CREATE TABLE alboms_pictures (
-  ID        INT NOT NULL AUTO_INCREMENT,
-  AlbomID   INT NOT NULL,
-  PictureID INT NOT NULL,
-  PRIMARY KEY (ID),
-  FOREIGN KEY (AlbomID) REFERENCES alboms (ID),
-  FOREIGN KEY (PictureID) REFERENCES pictures (ID)
-);
-
-
-##picture element and can be add something easily(eg. frame)
-DROP TABLE IF EXISTS elements_pictures;
-CREATE TABLE elements_pictures (
-  ID        INT NOT NULL AUTO_INCREMENT,
-  ElementID INT NOT NULL,
-  PictureID INT NOT NULL,
-  PRIMARY KEY (ID),
-  FOREIGN KEY (ElementID) REFERENCES elements (ID),
-  FOREIGN KEY (PictureID) REFERENCES pictures (ID)
-);
 
 
 ##admins
@@ -244,11 +116,14 @@ CREATE TABLE notifications (
 
 DELIMITER //
 
-CREATE TRIGGER addNotification BEFORE INSERT ON users
+
+CREATE TRIGGER addNotification After INSERT ON users
 FOR EACH ROW
   BEGIN
     INSERT INTO notifications
     SET notification = 'createdUser', userName = NEW.name, userUrl = NEW.url, postDate = now();
+    INSERT INTO user_page   SET page = '', UserId = NEW.ID;
+
   END;
 //
 DELIMITER ;
