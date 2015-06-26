@@ -57,20 +57,36 @@ public class CategoryTree implements CategoryTreeInterface {
 	}
 
 	@Override
-	public int add(CategoryInterface newOne, CategoryInterface parent) {
+	public void add(CategoryInterface newOne, CategoryInterface parent) {
 		if (parent == null) {
 			roots.add(newOne);
-			return 0;
 		} else {
 			if (map.containsKey(parent)) {
 				ArrayList<CategoryInterface> arr = map.get(parent);
 				arr.add(newOne);
 				map.put(parent, arr);
 				chParent.put(newOne, parent);
-				return 0;
 			}
 		}
-		return 1;
+	}
+	
+	@Override
+	public void add(CategoryInterface newOne, int parentID) {
+		CategoryInterface parent = null;
+		if(parentID == -1){
+			roots.add(newOne);
+		}else{
+			if(db.containsKey(parentID)){
+				parent = new Category(parentID, db.get(parentID));
+				if (map.containsKey(parent)) {
+					ArrayList<CategoryInterface> arr = map.get(parent);
+					arr.add(newOne);
+					map.put(parent, arr);
+					chParent.put(newOne, parent);
+				}
+			}
+		}
+		
 	}
 
 
@@ -83,7 +99,7 @@ public class CategoryTree implements CategoryTreeInterface {
 
 	@Override
 	//amas gonia racxa akliaa :/
-	public int remove(CategoryInterface cur) {
+	public void remove(CategoryInterface cur) {
 		if (roots.contains(cur)) {
 			roots.remove(cur);
 			ArrayList<CategoryInterface> temp = map.remove(cur);
@@ -101,7 +117,6 @@ public class CategoryTree implements CategoryTreeInterface {
 			}
 			map.put(par, parChilds);
 		}
-		return 0;
 	}
 
 
@@ -139,5 +154,7 @@ public class CategoryTree implements CategoryTreeInterface {
 		if(map.containsKey(obj)) return true;
 		return false;
 	}
+
+	
 
 }
