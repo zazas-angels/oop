@@ -232,10 +232,7 @@
 		}
 
 	}
-	function changeBackground() {
-		document.body.style.backgroundImage = 'url("'
-				+ document.getElementById("themeselect").value + '")';
-	}
+
 	function changeTheme() {
 		var elem = document.getElementById("themeselect");
 		if (elem.style.visibility == "visible") {

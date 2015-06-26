@@ -42,6 +42,10 @@ function comment(id) {
 	save();
 
 }
+function changeBackground() {
+	document.body.style.backgroundImage = 'url("'
+			+ document.getElementById("themeselect").value + '")';
+}
 function save() {
 	alert(0);
 

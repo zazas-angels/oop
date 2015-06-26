@@ -52,6 +52,12 @@
 				}
 
 			}
+			var elements = document.getElementsByTagName("select");
+			for (var i = 0; i < elements.length; i++) {
+				var element = elements[i];
+				element.value = element.getAttribute("val");
+				changeBackground();
+			}
 
 		});
 	};
