@@ -19,10 +19,10 @@ To change this template use File | Settings | File Templates.
 </head>
 <body>
 
-<%if (request.getSession().getAttribute("superAdmin") != null && (Boolean) request.getSession().getAttribute("superAdmin")) {%>
-<h1>ადმინისტრატორის გვერდი</h1>
-<%} else {%>
+<%if (request.getSession().getAttribute("type") != null && request.getSession().getAttribute("type").equals("superAdmin")) {%>
 <h1>სუპერ-ადმინისტრატორის გვერდი</h1>
+<%} else {%>
+<h1>ადმინისტრატორის გვერდი</h1>
 <%}%>
 
 <div id="upPanel">
@@ -56,7 +56,7 @@ To change this template use File | Settings | File Templates.
                 </tr>
                 <tr>
                     <td>
-                        <select id="categoryCombo" style="color: rgba(17, 17, 17, 0.64)">
+                        <select id="categoryCombo" style="color: rgba(17, 17, 17, 0.64); max-width: 250px;">
                             <option value="default">აირჩიეთ კატეგორია</option>
                             <%
                                 ServletContext context = request.getServletContext();

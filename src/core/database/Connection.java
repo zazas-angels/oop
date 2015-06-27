@@ -7,6 +7,7 @@ import core.SiteConstants;
 import core.SiteConstants.Type;
 import core.administrator.AdminInterface;
 import core.administrator.Administrator;
+import core.administrator.SuperAdministrator;
 import core.category.CategoryInterface;
 import core.category.CategoryTree;
 import core.user.User;
@@ -130,8 +131,9 @@ public interface Connection {
 
 	public void deleteReport(int reportID);
 
-	User addUser(String name, String email, String password, String url,
-			Type type);
+	public User addUser(String name, String email, String password, String url, Type type);
+
+	public SuperAdministrator getSuperAdmin(String email, String password, CategoryTree categoryTree);
 	
 	public void addUserCategories(int id, Vector<Integer> categories);
 

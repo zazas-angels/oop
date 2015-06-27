@@ -3,6 +3,7 @@ package login_registration;
 import core.SiteConstants;
 import core.administrator.AdminInterface;
 import core.administrator.Administrator;
+import core.administrator.SuperAdministrator;
 import core.category.CategoryTree;
 import core.database.DBConnection;
 import core.user.User;
@@ -15,9 +16,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
-
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -27,7 +25,7 @@ import java.util.HashMap;
 @WebServlet(value = "/login", name = "login")
 public class LoginServlet extends HttpServlet {
 
-	/**
+    /**
      * try to log in with given parameters, which are stored in request object.
      * if login is successful, forwards to user page,
      * else forwards to same page, and sets wrong try login attribute true.
@@ -43,24 +41,28 @@ public class LoginServlet extends HttpServlet {
         boolean notAlreadyForwarded = true;
         if (password != null && email != null) {
             User user = null;
-            if (dbConnection.getUser(email, password) != null) {
-                user = (User) dbConnection.getUser(email, password);
-            }
-            
-            if (user != null ) {
-            	if(dbConnection.isActiveUser(user.getID())){
-	                loginUser(request, response, user, context);
-	                notAlreadyForwarded = false;
-            	}else{
-            		request.getSession().setAttribute("user", user);
-            		request.getRequestDispatcher("GenAndSendConf").forward(request, response);
-            		notAlreadyForwarded = false;
-            	}
-            }
-            Administrator admin = (Administrator) dbConnection.getAdmin(email, password, categoryTree);
-            if (admin != null) {
-                loginAdmin(request, response, admin, context);
-                notAlreadyForwarded = false;
+            user = (User) dbConnection.getUser(email, password);
+            if (user != null) {
+                if (dbConnection.isActiveUser(user.getID())) {
+                    loginUser(request, response, user, context);
+                    notAlreadyForwarded = false;
+                } else {
+                    request.getSession().setAttribute("user", user);
+                    request.getRequestDispatcher("GenAndSendConf").forward(request, response);
+                    notAlreadyForwarded = false;
+                }
+            } else {
+                Administrator admin = (Administrator) dbConnection.getAdmin(email, password, categoryTree);
+                if (admin != null) {
+                    loginAdmin(request, response, admin, context, false);
+                    notAlreadyForwarded = false;
+                } else {
+                    SuperAdministrator superAdmin = (SuperAdministrator) dbConnection.getSuperAdmin(email, password, categoryTree);
+                    if (superAdmin != null) {
+                        loginAdmin(request, response, superAdmin, context, true);
+                        notAlreadyForwarded = false;
+                    }
+                }
             }
         }
         if (notAlreadyForwarded) {
@@ -75,7 +77,7 @@ public class LoginServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("loginservlet doget");
-    	if (request.getSession().getAttribute("logged in") != null && (boolean) (request.getSession().getAttribute("logged in")) && request.getSession().getAttribute("type") != null) {
+        if (request.getSession().getAttribute("logged in") != null && (boolean) (request.getSession().getAttribute("logged in")) && request.getSession().getAttribute("type") != null) {
             if (request.getSession().getAttribute("type").equals("admin") && request.getSession().getAttribute("admin") != null) {
                 request.getRequestDispatcher("adminPage.jsp").forward(request, response);
             }
@@ -98,7 +100,8 @@ public class LoginServlet extends HttpServlet {
                         HashMap<String, AdminInterface> mapSessionAd = (HashMap<String, AdminInterface>) context.getAttribute(SiteConstants.SESSIONS_MAP_ADMINS);
                         AdminInterface admin = mapSessionAd.get(cookie.getValue());
                         if (admin != null) {
-                            loginAdmin(request, response, admin, context);
+                            System.out.println(admin.getClass());
+                            loginAdmin(request, response, admin, context, false);
                             notAlreadyForwarded = false;
                         }
                     }
@@ -130,9 +133,13 @@ public class LoginServlet extends HttpServlet {
     /**
      * logs in user, saves information in session and saves session id in cookie
      */
-    private void loginAdmin(HttpServletRequest request, HttpServletResponse response, AdminInterface admin, ServletContext context) throws ServletException, IOException {
+    private void loginAdmin(HttpServletRequest request, HttpServletResponse response, AdminInterface admin, ServletContext context, boolean superAdmin) throws ServletException, IOException {
         request.getSession().setAttribute("logged in", true);
-        request.getSession().setAttribute("type", "admin");
+        if (superAdmin) {
+            request.getSession().setAttribute("type", "superAdmin");
+        } else {
+            request.getSession().setAttribute("type", "admin");
+        }
         request.getSession().setAttribute("admin", admin);
 
         addCookie(request, response, context, admin);
