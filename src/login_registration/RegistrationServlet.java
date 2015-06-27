@@ -51,7 +51,7 @@ public class RegistrationServlet extends HttpServlet {
                 if (user != null) {
                     //request.getSession().setAttribute("logged in", true);
                     request.getSession().setAttribute("user", user);
-                    request.getRequestDispatcher("/GenAndSendConf").forward(request, response);
+                    request.getRequestDispatcher("/CategoryChoosing.jsp").forward(request, response);
                     //request.getSession().setAttribute("registration", false);
                     //request.getRequestDispatcher("userPage.jsp").forward(request, response);
                     b = false;

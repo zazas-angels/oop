@@ -42,6 +42,9 @@ public class ConfirmUser extends HttpServlet {
 			dbConnection.deleteUserConfCode(userId);
 			dbConnection.activateUser(userId);
 			request.getRequestDispatcher("ConfirmationEnd.html").forward(request, response);
+		}else{
+			request.getRequestDispatcher("NotFound.html").forward(request, response);
+			
 		}
 	}
 

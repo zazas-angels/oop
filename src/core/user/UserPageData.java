@@ -50,28 +50,36 @@ public class UserPageData extends HttpServlet {
 		String needViewMassage = request.getParameter("view");
 		 
 		if(needViewMassage==null)return;
-		boolean needView = needViewMassage.equals("1");
+		
 		WebData webData = (WebData) request.getSession().getAttribute("webData");
 		webData.changeData(data);
 		
-		System.out.println(data);
+		System.out.println("ა");
 		String res="";
 		Connection database = (Connection) request.getServletContext().getAttribute("database");
-		int userId=(int) request.getSession().getAttribute("userPage");
-		if(needView){
+		int userId;
+		if(request.getParameter("id")!=null){
+			userId=Integer.parseInt(request.getParameter("id"));
+		}else{
+		userId=((User) request.getSession().getAttribute("user")).getID();
+		}
+		if(needViewMassage.equals("0")){
 			//res=webData.getData(); 
 		//	if(res!=null)
-				response.setContentType("text/plain");
-			response.getWriter().write(database.getData(userId));
+			database.changeData( userId,data);
+			System.out.println("save");
+			
 			
 			//System.out.println(webData.getDataView());
 			//System.out.println("needView");
 		}else{
 			//nothing to write
+			response.setContentType("text/plain;; charset=UTF-8");
+			response.getWriter().write(database.getData(userId));
 		
-			database.changeData( userId,data);
-			System.out.println("save");
+		
 		}
+		System.out.println(database.getData(userId));
 		System.out.println(needViewMassage);
 		System.out.println("result" +res);
 	}

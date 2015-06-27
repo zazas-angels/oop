@@ -14,7 +14,7 @@ public final class SiteConstants {
 	public static final String SESSIONS_MAP_USERS = "sessions_map_users";
 	public static final String LOGIN_COOKIE_NAME = "login_session_id";
 	public static final String DATABASE = "database";
-	public static final String CATEGORY_TREE = "categoriess";
+	public static final String CATEGORY_TREE = "categories";
 
 	public static final String BUSY_MAIL = " ეს მეილი გამოყენებულია ";
 	public static final String BUSY_URL = " ასეთი url დაკავებულია ";

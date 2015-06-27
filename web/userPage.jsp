@@ -53,6 +53,47 @@
 
 		});
 	};
+	function save() {
+		alert(0);
+
+		var elements = document.getElementsByTagName("input");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			if (element.className != "comment") {
+				element.setAttribute("val", element.value);
+			}
+		}
+		elements = document.getElementsByTagName("textarea");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			if (element.className != "comment") {
+				element.setAttribute("val", element.value);
+			}
+		}
+
+		elements = document.getElementsByTagName("select");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			element.setAttribute("val", element.value);
+		}
+		var wasVisible = (document.getElementById("control").style.visibility =="visible") ;
+		document.getElementById("control").style.visibility = "hidden";
+		
+		document.getElementById("themeselect").style.visibility = "hidden";
+		document.getElementById("edit").style.visibility = "hidden";
+		document.getElementById("addSub").style.visibility = "hidden";
+		var txt = document.body.innerHTML;
+		alert(txt);
+		$.post("UserPageData", {
+			data : txt,
+			view : 0
+		}, function(result) {
+			alert(1);
+		});
+		if(wasVisible)
+		document.getElementById("control").style.visibility = "visible";
+
+	}
 	function createImage() {
 
 		numElements += 1;
@@ -68,7 +109,7 @@
 				+ numElements
 				+ ').remove();" class="close" style="float: right;">×</a>'
 				+ '			<br /> <input class="gobutton" id="uploadBtn" type="button"'
-				+ '			value="Upload" onClick="performAjaxSubmit(0,'
+				+ '			value="ატვირთვა" onClick="performAjaxSubmit(0,'
 				+ numElements
 				+ ');"></input>'
 				+ '				</form>'
@@ -88,25 +129,25 @@
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML = "<div class=\"drsElement\""
 			+"	style=\"left: 50px; position: absolute; top: 150px; width: 350px; height: 120px; min-width:228px; min-height:88px; background: white; text-align: center\">"
-				+ '<div class="drsMoveHandle">Text'
+				+ '<div class="drsMoveHandle">ტექსტი'
 				+ ' <a onclick="$('
 				+ "element"
 				+ numElements
 				+ ').remove();" class="close" style="float: right;">×</a>'
 				+ "</div>"
 				+ "	<div style=\"border: 1px solid green; background-color: #A5B7F2;\">"
-				+ "		Font: <input id=\"Font"
+				+ "		ფონტი: <input id=\"Font"
 				+ numElements
 				+ "\" size=\"5\" class=\"color\" colorType=\"font\""
 				+ "	labelId=\""
 				+ numElements
-				+ "\" value=\"000000\"  autocomplete=\"off\" style=\"color: rgb(255, 255, 255); background-image: none; background-color: rgb(0, 0, 0);\"> Back: <input id=\"Back"
+				+ "\" value=\"000000\"  autocomplete=\"off\" style=\"color: rgb(255, 255, 255); background-image: none; background-color: rgb(0, 0, 0);\"> ფონი: <input id=\"back"
 				+ numElements
 				+ "\" size=\"5\""
 				+ "	class=\"color\" colorType=\"back\" labelId=\""
 				+ numElements
 				+ "\" value=\"FFFFFF\"  autocomplete=\"off\" style=\"color: rgb(255, 255, 255); background-image: none; background-color: rgb(0, 0, 0);\">"
-				+ "<br>		Size:<input id=\"size"
+				+ "<br>		ზომა:<input id=\"size"
 				+ numElements
 				+ "\" size=\"1\" value=\"18\" onkeydown=\"changeSize("
 				+ numElements
@@ -116,7 +157,7 @@
 				+ ");\" oninput=\"changeSize("
 				+ numElements
 				+ ");\">"
-				+ 'Bold: <input type="checkbox" ch="0" id="bold'
+				+ 'ბოლდი: <input type="checkbox" ch="0" id="bold'
 				+ numElements
 				+ '" onclick="changeBold('
 				+ numElements
@@ -125,7 +166,7 @@
 				+ '<innerElement> <textarea class="textF" id="'
 				+ numElements
 				+ '"style=" text-align: center; width: calc(100% - 6px); height: calc(100% - 74px); resize:none;">'
-				+ 'Your Text' + '</textarea> </innerElement>' + '</div>';
+				+ 'ტექსტი' + '</textarea> </innerElement>' + '</div>';
 		document.body.appendChild(div);
 		jscolor.init();
 		alert(2);
@@ -147,7 +188,7 @@
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += '<div class="drsElement"'
 	+'	style="left: 150px; top: 280px; position: absolute; width: 500px; height: 300px; min-width:209px; min-height:167px; background: #DFC; text-align: center">'
-				+ '	<div class="drsMoveHandle" style="background: #DFC">Slider'
+				+ '	<div class="drsMoveHandle" style="background: #DFC">სლაიდერი'
 				+ ' <a onclick="$('
 				+ "element"
 				+ numElements
@@ -157,12 +198,12 @@
 				+ '		<form id="'+numElements+'">'
 
 				+ '	<input id="sampleFile'+numElements+'" name="sampleFile" type="file" accept="image/gif,image/jpeg,image/jpg,,image/png" /><input'
-				+ '		class="gobutton" id="uploadBtn" type="button" value="Upload"'
+				+ '		class="gobutton" id="uploadBtn" type="button" value="ატვირთვა"'
 				+ '		onClick="performAjaxSubmit(1,'
 				+ numElements
 				+ ');"></input> <br /> <select'
 	+'		id="select'+numElements+'">'
-				+ '	</select> <input class="gobutton" type="button" value="Delete"'
+				+ '	</select> <input class="gobutton" type="button" value="წაშლა"'
 				+ '		onClick="deleteSelected('
 				+ numElements
 				+ ');"></input>'
@@ -184,7 +225,7 @@
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += ' <div class="drsElement"'
 			+'		style="left: 150px; position: absolute;top: 280px; width: 500px; height: 350px; min-width:217px; min-height:281px;  background: #DFC; text-align: center">'
-				+ '		<div class="drsMoveHandle">Comment Box'
+				+ '		<div class="drsMoveHandle">კომენტარები'
 				+ ' <a onclick="$(' + "element"
 				+ numElements
 				+ ').remove();" class="close" style="float: right;">×</a>'
@@ -193,19 +234,19 @@
 				+ numElements
 				+ '" '
 				+ ' style="background: #DFC; width: 100%; height: 20%;">'
-				+ '	Name: <input class="comment" id="input'+numElements+'" '
+				+ '	სახელი: <input class="comment" id="input'+numElements+'" '
 				+'type="text" name="usrname"> <input '
 				+ '	class="gobutton" readonly  onclick="comment('
 				+ numElements
 				+ ')" '
-				+ 'value="post"  style="background: blue; width:35px">'
+				+ 'value="გაშვება"  style="background: blue; width:35px">'
 				+ '	</form>'
 				+ '	<textarea class="comment" id="textcom'
 				+ numElements
 				+ '" '
 				+ 'rows="4" cols="50"'
 				+ 'style="width: calc(100% - 5px); height: 20%;" name="comment"'
-				+ 'form="usrform" placeholder="Enter text here...">'
+				+ 'form="usrform" placeholder="შეიყვანე ტექსტი...">'
 				+ '</textarea>'
 				+ '	<br> <br>'
 				+ '	<div id="comments'
@@ -257,14 +298,14 @@
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += '<div type="video" class="drsElement"'
 		+'	style="left: 150px; top: 280px; position: absolute; width: 560px; height: 350px; min-width:272px; min-height:131px;background: red; text-align: center">'
-				+ '<opac>	<div class="drsMoveHandle" style="background: rgb(138, 237, 138);">Youtube Video'
+				+ '<opac>	<div class="drsMoveHandle" style="background: rgb(138, 237, 138);">Youtube ვიდეო'
 				+ ' <a onclick="$('
 				+ "element"
 				+ numElements
 				+ ').remove();" class="close" style="float: right;">×</a>'
 				+ '</div></opac>'
-				+ '	Youtube link: <input id="videoLink'+numElements+'" type="text" /> <br><input'
-				+ '			class="gobutton"  type="button" value="Upload Video"'
+				+ '	Youtube ლინკი: <input id="videoLink'+numElements+'" type="text" /> <br><input'
+				+ '			class="gobutton"  type="button" value="ატვირთვა"'
 				+ '			onClick="uploadVideo('
 				+ numElements
 				+ ');"></input>'
@@ -545,37 +586,37 @@ Your Text
 	<div id="edit" onclick="makeEdition()" class="circle"
 		style="position: fixed; visibility: hidden; left: 20px; background: #FF3399;">
 		<i class="icon1 fa fa-edit fa-lg"></i> <i
-			class="icon2 fa fa-star fa-lg"></i> <span> Edit</span>
+			class="icon2 fa fa-star fa-lg"></i> <span> შეცვლა</span>
 	</div>
 	<div id="control" style="position: fixed;">
 
 		<div class="circle" onclick="changeSubVisibility()"
 			style="left: 20px; background: #253DDA;">
 			<i class="icon1 fa fa-pencil fa-lg"></i> <i
-				class="icon2 fa fa-star fa-lg"></i> <span> ADD</span>
+				class="icon2 fa fa-star fa-lg"></i> <span> დამატება</span>
 		</div>
 		<div id="addSub" style="visibility: hidden">
 			<div class="sub">
 				<div onclick="createText();" class="circle">
 					<i class="icon1 fa  fa-edit fa-lg"></i> <i
-						class="icon2 fa fa-plus fa-lg"></i><span>Text</span>
+						class="icon2 fa fa-plus fa-lg"></i><span>ტექსტი</span>
 				</div>
 				<div onclick="createImage();" class="circle">
 					<i class="icon1 fa fa-photo fa-lg"></i> <i
-						class="icon2 fa fa-plus fa-lg"></i> <span>Image</span>
+						class="icon2 fa fa-plus fa-lg"></i> <span>სურათი</span>
 				</div>
 				<div onclick="createCommentBox();" class="circle">
 					<i class="icon1 fa  fa-comments-o fa-lg"></i> <i
-						class="icon2 fa fa-plus fa-lg"></i> <span>Comments Box</span>
+						class="icon2 fa fa-plus fa-lg"></i> <span>კომენტარები</span>
 				</div>
 
 				<div onclick="createGallery();" class="circle">
 					<i class="icon1 fa fa-tasks fa-lg"></i> <i
-						class="icon2 fa fa-plus fa-lg"></i> <span>Slider Gallery</span>
+						class="icon2 fa fa-plus fa-lg"></i> <span>გალერეა-სლაიდერი</span>
 				</div>
 				<div onclick="createVideo();" class="circle">
 					<i class="icon1 fa fa-youtube-play fa-lg"></i> <i
-						class="icon2 fa fa-plus fa-lg"></i> <span>Youtube Video</span>
+						class="icon2 fa fa-plus fa-lg"></i> <span>Youtube ვიდეო</span>
 				</div>
 
 
@@ -586,52 +627,46 @@ Your Text
 		<div id="save" onclick="save()" class="circle"
 			style="top: 120px; background: #FF2F2F;">
 			<i class="icon1 fa fa-save fa-lg"></i> <i
-				class="icon2 fa fa-star fa-lg"></i> <span> Save</span>
+				class="icon2 fa fa-star fa-lg"></i> <span> დამახსოვრება</span>
 		</div>
 
 		<div id="view" onclick="view()" class="circle"
 			style="top: 215px; background: #2BDA25;">
 			<i class="icon1 fa fa-globe  fa-lg"></i> <i
-				class="icon2 fa fa-star fa-lg"></i> <span> View</span>
+				class="icon2 fa fa-star fa-lg"></i> <span> ნახვა</span>
 		</div>
 		<div id="statistik" onclick="st()" class="circle"
 			style="top: 310px; background: #FFCC00;">
 			<i class="icon1 fa  fa-bar-chart-o fa-lg"></i> <i
-				class="icon2 fa fa-star fa-lg"></i> <span> Show statistic </span>
+				class="icon2 fa fa-star fa-lg"></i> <span> სტატისტიკა </span>
 		</div>
 
 
 		<div id="theme" onclick="changeTheme()" class="circle"
 			style="top: 405px; background: #33CCFF;">
 			<i class="icon1 fa fa-th-large  fa-lg"></i> <i
-				class="icon2 fa fa-star fa-lg"></i> <span> Change Theme
-				BackGround</span>
+				class="icon2 fa fa-star fa-lg"></i> <span> თემა</span>
 		</div>
 		<div id="setting" onclick="set()" class="circle"
 			style="top: 500px; background: #CC33FF;">
 			<i class="icon1 fa fa-wrench fa-lg"></i> <i
-				class="icon2 fa fa-star fa-lg"></i> <span> Settings </span>
+				class="icon2 fa fa-star fa-lg"></i> <span> პარამეტრები </span>
 		</div>
 		<select id="themeselect" onchange="changeBackground()"
 			style="position: absolute; visibility: hidden; top: 460px; left: 110px;">
-			<option value="">None
+			<option value="">არაფერი
 			<option
-				value="http://img72.imageshack.us/img72/999/background62column.jpg">Red
-				Columns
+				value="http://img72.imageshack.us/img72/999/background62column.jpg">წითელი სვეტები
 			<option
-				value="http://www.unsigneddesign.com/Seamless_background_textures/thumbs/seamlesstexture21_1200.jpg">Simple
-				Gray
-			<option value="http://media.24ways.org/2011/verou/8.png">Green
-				Lines
+				value="http://www.unsigneddesign.com/Seamless_background_textures/thumbs/seamlesstexture21_1200.jpg">ნაცრისფერი ბაზისი
+			<option value="http://media.24ways.org/2011/verou/8.png">მწვანე ზოლები
 			<option
-				value="http://blog.boxedart.com/images-vd/repeat-background.gif">Simple
-				blue
+				value="http://blog.boxedart.com/images-vd/repeat-background.gif">მარტივი ლურჯი
 			<option
-				value="http://janeblogs.net/cutesify/backgrounds/dollydaze3col.jpg">Blue
-				columns
-			<option value="http://i.stack.imgur.com/z3PLR.png">Rainbow
+				value="http://janeblogs.net/cutesify/backgrounds/dollydaze3col.jpg">ლურჯი სვეტები
+			<option value="http://i.stack.imgur.com/z3PLR.png">ცისარტყელა
 			<option
-				value="http://i960.photobucket.com/albums/ae84/homebakedblogs/ramona_sisters_column3.jpg">flowers
+				value="http://i960.photobucket.com/albums/ae84/homebakedblogs/ramona_sisters_column3.jpg">ყვავილები
 
 
 
@@ -641,7 +676,7 @@ Your Text
 
 			
 			<option
-				value="http://1.bp.blogspot.com/_JR1wtGyGotU/S8U_5R3ktHI/AAAAAAAAAo8/iDlD4cK2D6A/s1600/Perfectly+Pink+2.gif">Pink
+				value="http://1.bp.blogspot.com/_JR1wtGyGotU/S8U_5R3ktHI/AAAAAAAAAo8/iDlD4cK2D6A/s1600/Perfectly+Pink+2.gif">ვარდისფერობა
 
 
 
@@ -651,7 +686,7 @@ Your Text
 
 			
 			<option
-				value="http://i221.photobucket.com/albums/dd189/txnbyubabe/backgrounds/gray-grid.jpg">kletka
+				value="http://i221.photobucket.com/albums/dd189/txnbyubabe/backgrounds/gray-grid.jpg">კლეტკა
 
 
 

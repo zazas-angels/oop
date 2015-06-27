@@ -46,12 +46,14 @@ public class LoginServlet extends HttpServlet {
             if (dbConnection.getUser(email, password) != null) {
                 user = (User) dbConnection.getUser(email, password);
             }
+            
             if (user != null ) {
             	if(dbConnection.isActiveUser(user.getID())){
 	                loginUser(request, response, user, context);
 	                notAlreadyForwarded = false;
             	}else{
-            		request.getRequestDispatcher("ConfirmSent.html").forward(request, response);
+            		request.getSession().setAttribute("user", user);
+            		request.getRequestDispatcher("GenAndSendConf").forward(request, response);
             		notAlreadyForwarded = false;
             	}
             }

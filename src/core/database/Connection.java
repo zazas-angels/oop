@@ -15,6 +15,7 @@ import core.user.UserInterface;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Vector;
 
 public interface Connection {
 	public ResultSet getUsers();
@@ -131,4 +132,7 @@ public interface Connection {
 
 	User addUser(String name, String email, String password, String url,
 			Type type);
+	
+	public void addUserCategories(int id, Vector<Integer> categories);
+
 }
