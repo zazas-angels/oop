@@ -51,10 +51,6 @@
 
 <% if (request.getSession().getAttribute("registration") != null && !(Boolean) request.getSession().getAttribute("registration")) {
     request.getSession().setAttribute("registration", null);%>
-
-<script>
-    $("#registration-block").show();
-</script>
 <%
         }
     }

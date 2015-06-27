@@ -67,8 +67,6 @@ public interface Connection {
 
 	public UserInterface getUser(String email, String password);
 
-	public boolean existsUser(String email);
-
 	public AdminInterface getAdmin(String email, String password, CategoryTree categoryTree);
 
 	public void insertUserConfCode(int UserId, String confCode);
@@ -83,7 +81,17 @@ public interface Connection {
 
 	public AdminInterface addAdmin(String mail, String password, CategoryTree categoryTree);
 
+
 	public boolean existsAdministrator(String mail);
+
+	/*
+	 * Checks if user exist in database by email (non-Javadoc)
+	 *
+	 * @see core.database.Connection#existsUser(java.lang.String)
+	 */
+	boolean existsUserWithMail(String email);
+
+	boolean existsUserWithUrl(String url);
 
 	public ResultSet getReports();
 
@@ -118,7 +126,9 @@ public interface Connection {
 	public void deleteAdmin(int adminID);
 
 	public void deleteWantedCategory(int wcID);
+
+	public void deleteReport(int reportID);
+
 	User addUser(String name, String email, String password, String url,
 			Type type);
-
 }

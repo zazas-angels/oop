@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,18 +24,25 @@ public class RegistrationServlet extends HttpServlet {
      * else forwards back
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String password = request.getParameter("password");
+        String password = request.getParameter("password");
         String email = request.getParameter("email");
         ServletContext context = request.getServletContext();
         DBConnection dbConnection = (DBConnection) context.getAttribute("database");
-        
+
 
         String url = request.getParameter("url");
         String name = request.getParameter("name");
         boolean b = true;
         if (name != null && password != null && email != null && url != null && checkName(name) && checkMail(email) && checkPassword(password) && !url.equals("")) {
-            if (dbConnection.existsUser(email)) {
-                request.getSession().setAttribute("busy email", email);
+            boolean existsMail = dbConnection.existsUserWithMail(email);
+            boolean existsUrl = dbConnection.existsUserWithUrl(url);
+            System.out.println(existsMail);
+            System.out.println(existsUrl);
+            if (existsMail || existsUrl) {
+                if (existsMail)
+                    request.getSession().setAttribute("message", email + SiteConstants.BUSY_MAIL);
+                else
+                    request.getSession().setAttribute("message", SiteConstants.BUSY_URL);
                 request.getSession().setAttribute("registration", true);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
                 b = false;

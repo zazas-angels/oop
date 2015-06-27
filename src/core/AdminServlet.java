@@ -33,6 +33,9 @@ public class AdminServlet extends HttpServlet {
                 case "delete-wc":
                     admin.deleteWantedCategory(Integer.parseInt(request.getParameter("wcID")));
                     break;
+                case "delete-report":
+                    admin.deleteReport(Integer.parseInt(request.getParameter("ID")));
+                    break;
                 case "addCategory":
                     try {
                         admin.addCategory(request.getParameter("name"), Integer.parseInt(request.getParameter("parentID")));
@@ -88,8 +91,10 @@ public class AdminServlet extends HttpServlet {
                         userObj.addProperty("rating", set.getDouble("raiting"));
                         list.add(userObj);
                     }
+
+                    response.setContentType("application/json; charset=UTF-8");
                     PrintWriter out = response.getWriter();
-                    response.setContentType("application/json");
+
                     out.println(list);
                 } catch (SQLException e) {
                     e.printStackTrace();

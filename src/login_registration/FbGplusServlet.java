@@ -61,7 +61,7 @@ public class FbGplusServlet extends HttpServlet {
             id = "gp" + id;
         }
 
-        if (dbConnection.existsUser(id)) {
+        if (dbConnection.existsUserWithMail(id)) {
             User user = (User) dbConnection.getUser(id, "");
             loginUser(user, request, response, context);
         } else {

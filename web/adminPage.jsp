@@ -18,7 +18,12 @@ To change this template use File | Settings | File Templates.
     <link rel="stylesheet" type="text/css" href="adminPageStyle.css">
 </head>
 <body>
+
+<%if (request.getSession().getAttribute("superAdmin") != null && (Boolean) request.getSession().getAttribute("superAdmin")) {%>
 <h1>ადმინისტრატორის გვერდი</h1>
+<%} else {%>
+<h1>სუპერ-ადმინისტრატორის გვერდი</h1>
+<%}%>
 
 <div id="upPanel">
     <div id="logout">
@@ -38,7 +43,7 @@ To change this template use File | Settings | File Templates.
                         <a style="color:white" href="#" id="enableExtended">გაფართოებული ძებნა</a>
                     </td>
                     <td>
-                        <input type="button" style="color: black" value="ძებნა" onclick="searchByName()">
+                        <input type="button" class="btn btn-primary" value="ძებნა" onclick="searchByName()">
                     </td>
                 </tr>
             </table>
@@ -92,7 +97,7 @@ To change this template use File | Settings | File Templates.
                     <td><a style="color:white" href="#" id="disableExtended">სახელით ძებნა</a></td>
                     <td></td>
                     <td>
-                        <input type="button" style="color: rgba(17, 17, 17, 0.64)" value="ძებნა"
+                        <input type="button" class="btn btn-primary" value="ძებნა"
                                onclick="extendedSearch()">
                     </td>
                 </tr>
@@ -193,7 +198,5 @@ To change this template use File | Settings | File Templates.
     </div>
 </div>
 <div class="modal-backdrop fade in" id="bann-background" style="display: none;"></div>
-
-
 </body>
 </html>

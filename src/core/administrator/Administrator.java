@@ -158,4 +158,9 @@ public class Administrator implements AdminInterface {
     public void deleteWantedCategory(int wcID) {
         dbConnection.deleteWantedCategory(wcID);
     }
+
+    @Override
+    public void deleteReport(int reportID) {
+        dbConnection.deleteReport(reportID);
+    }
 }

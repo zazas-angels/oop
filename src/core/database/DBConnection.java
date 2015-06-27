@@ -317,13 +317,36 @@ public class DBConnection implements core.database.Connection {
          }
     }
 
+    /**
+     * deletes wanted category from wantedCategories table
+     * @param wcID id of wanted category to be deleted
+     */
     @Override
     public void deleteWantedCategory(int wcID) {
+       deleteByID("wantedCategories", wcID);
+    }
+
+    /**
+     * deletes report from reports table
+     * @param reportID id of report to be deleted
+     */
+    @Override
+    public void deleteReport(int reportID) {
+        deleteByID("reports", reportID);
+    }
+
+    /**
+     * deletes from table with name tableName, row which has id given ID
+     * @param tableName identifies table
+     * @param ID identifies row
+     */
+    private void deleteByID(String tableName, int ID){
         PreparedStatement stmt = null;
         try {
+            String query = "delete from "+tableName+" where ID = ?;";
             stmt = dataBaseConnection
-                    .prepareStatement("delete from wantedCategories where ID = ?;");
-            stmt.setInt(1, wcID);
+                    .prepareStatement(query);
+            stmt.setInt(1, ID);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -484,6 +507,8 @@ public class DBConnection implements core.database.Connection {
         }
         return existResult;
     }
+
+
 
     /**
      * @param on if(on) we search banned users, else "bannless" users
@@ -1102,26 +1127,35 @@ public class DBConnection implements core.database.Connection {
 	 * @see core.database.Connection#existsUser(java.lang.String)
 	 */
 	@Override
-	public boolean existsUser(String email) {
-		ResultSet results = null;
-		boolean existResult = false;
-		try {
-			int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
-			PreparedStatement statement = dataBaseConnection
-					.prepareStatement("select * from users"
-							+ " Where mail=?;");
-			statement.setString(temp, email);
-			results = statement.executeQuery();
-			if (results != null)
-				existResult = results.next();
-		} catch (SQLException e) {
-			// ignore
-			e.printStackTrace();
-		}
-		return existResult;
+	public boolean existsUserWithMail(String email) {
+		return existsUser("mail", email);
 	}
 
-	@Override
+    @Override
+    public boolean existsUserWithUrl(String url) {
+        return existsUser("url", url);
+    }
+
+    private boolean existsUser(String column, String value) {
+        ResultSet results = null;
+        boolean existResult = false;
+        try {
+            String stmt = "select * from users"
+                    + " Where "+ column+"=?;";
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement(stmt);
+            statement.setString(1, value);
+            results = statement.executeQuery();
+            if (results != null)
+                existResult = results.next();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+        return existResult;
+    }
+
+    @Override
 	/*
 	 * Changing page data for this user id
 	 * (non-Javadoc)
@@ -1167,6 +1201,4 @@ public class DBConnection implements core.database.Connection {
 		return res;
 		
 	}
-
-
 }

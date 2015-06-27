@@ -16,11 +16,14 @@
             <tbody>
             <tr>
                 <%
-                    if (request.getSession().getAttribute("busy email") != null) {
-                        String prevEmail = (String) request.getSession().getAttribute("busy email");
-                        request.getSession().setAttribute("busy email", null);
+                    if (request.getSession().getAttribute("message") != null) {
+                        String message = (String) request.getSession().getAttribute("message");
+                        request.getSession().setAttribute("message", null);
                 %>
-                <td colspan="2"><%=prevEmail%> დაკავებულია</td>
+                <td colspan="2" style="color: red;"><%=message%></td>
+                <script>
+                    $("#registration-block").show();
+                </script>
                 <%}%>
             </tr>
             <tr>

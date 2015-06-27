@@ -93,6 +93,16 @@ function deleteWantedCategory(wcID){
 }
 
 
+function deleteReport(ID){
+    $.post("admin",
+        {requestType: "delete-report", ID: ID},
+        function (data) {
+        }
+    );
+    updateReports();
+}
+
+
 function updateWantedCategories() {
     var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=wc";
     $.get(link)
@@ -140,7 +150,8 @@ function updateReports() {
                     } else {
                         tmp += "<a href='" + url + "'> " + report.author + "</a>";
                     }
-                    tmp += "<p>" + report.text + "<br>" + report.date + "</p>";
+                    tmp += "<p>" + report.text + "<br>" + report.date;
+                    tmp += "<button onclick=deleteReport('" + report.ID + "');>წაშლა</button></p>";
                     data += tmp;
                     data += "<br>";
                 }

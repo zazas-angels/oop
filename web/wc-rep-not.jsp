@@ -1,7 +1,6 @@
 <%@ page import="com.google.gson.JsonArray" %>
 <%@ page import="com.google.gson.JsonObject" %>
 <%@ page import="core.administrator.Administrator" %>
-<%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.SQLException" %>
 <%--
@@ -17,7 +16,7 @@
     String toUpdate = request.getParameter("toUpdate");
     if (toUpdate.equals("rep") || toUpdate.equals("wc") || toUpdate.equals("not")) {
         if (toUpdate.equals("rep")) {
-            set = admin.getReports(31);
+            set = admin.getReports(31);// select last
         } else {
             if (toUpdate.equals("wc")) {
                 set = admin.getWantedCategories();
@@ -33,6 +32,7 @@
                 while (set.next()) {
                     userObj = new JsonObject();
                     if (toUpdate.equals("rep")) {
+                        userObj.addProperty("ID", set.getString("ID"));
                         userObj.addProperty("author", set.getString("authorName"));
                         userObj.addProperty("url", set.getString("authorUrl"));
                         userObj.addProperty("text", set.getString("text"));
@@ -53,7 +53,7 @@
                     }
                     list.add(userObj);
                 }
-                response.setContentType("application/json");
+                response.setContentType("application/json; charset=UTF-8");
                 out.println(list);
             } catch (SQLException e) {
                 e.printStackTrace();

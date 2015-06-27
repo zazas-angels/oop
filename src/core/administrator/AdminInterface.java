@@ -34,4 +34,6 @@ public interface AdminInterface {
     public void releaseBann(int userID);
 
     public void deleteWantedCategory(int wcID);
+
+    public void deleteReport(int reportID);
 }
