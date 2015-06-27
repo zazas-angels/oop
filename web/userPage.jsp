@@ -35,7 +35,7 @@
 <script type="text/javascript" src="ControlFunctions.js"></script>
 <script type="text/javascript">
 	var numElements = 33;//Jesus <3
-	var viewMode=false;
+	var viewMode = false;
 	window.onload = function() {
 		alert(1);
 		$.post("UserPageData", {
@@ -76,9 +76,9 @@
 			var element = elements[i];
 			element.setAttribute("val", element.value);
 		}
-		var wasVisible = (document.getElementById("control").style.visibility =="visible") ;
+		var wasVisible = (document.getElementById("control").style.visibility == "visible");
 		document.getElementById("control").style.visibility = "hidden";
-		
+
 		document.getElementById("themeselect").style.visibility = "hidden";
 		document.getElementById("edit").style.visibility = "hidden";
 		document.getElementById("addSub").style.visibility = "hidden";
@@ -90,8 +90,8 @@
 		}, function(result) {
 			alert(1);
 		});
-		if(wasVisible)
-		document.getElementById("control").style.visibility = "visible";
+		if (wasVisible)
+			document.getElementById("control").style.visibility = "visible";
 
 	}
 	function createImage() {
@@ -180,7 +180,7 @@
 			element.style.fontSize = size + "px";
 
 	}
-	
+
 	function createGallery() {
 		numElements += 1;
 		alert(1);
@@ -257,7 +257,7 @@
 		document.body.appendChild(div);
 		alert(2);
 	}
-	
+
 	function uploadVideo(id) {
 		var link = document.getElementById("videoLink" + id).value;
 		if (link.substring(0, 32) == "https://www.youtube.com/watch?v=") {
@@ -333,9 +333,8 @@
 
 <%--upload --%>
 <script type="text/javascript">
-	
 	function makeEdition() {
-		viewMode=false;
+		viewMode = false;
 		alert(0);
 		document.getElementById("control").style.visibility = "visible";
 		document.getElementById("edit").style.visibility = "hidden";
@@ -361,7 +360,6 @@
 					&& element.getAttribute("ch") == "1") {
 				element.checked = true;
 			}
-	
 
 		}
 		elements = document.getElementsByTagName("opac");
@@ -369,7 +367,7 @@
 			var element = elements[i];
 			element.style.visibility = "visible";
 			if (element.className == "close") {
-				element.innerHTML="x";
+				element.innerHTML = "x";
 			}
 		}
 		elements = document.getElementsByTagName("textArea");
@@ -379,9 +377,7 @@
 				element.readOnly = false;
 			}
 
-
 		}
-
 
 	}
 
@@ -408,7 +404,7 @@
 			changeBackground();
 		}
 		jscolor.init();
-	alert("Aq");
+		alert("Aq");
 
 	}
 </script>
@@ -521,23 +517,23 @@
 		alert(2);
 		xhr.onreadystatechange = function(e) {
 			if (xhr.readyState == 4 && xhr.status == 200) {
+				alert(1);
+				alert(this.responseText);
+				//document.body.innerHTML += '<img style=\"width: 100%; height: 100%;\" src="data:image/jpg;base64,'
+				//		+ this.responseText + '">';
 				if (multi == 0) {
 					alert(5);
-					image.innerHTML = xhr.responseText;
+					image.innerHTML = '<img style=\"width: 100%; height: 100%;\" src="data:image/jpg;base64,'
+							+ this.responseText + '">';
 				} else {
 					//var text = document.getElementById("imageText" + id);
 					//alert(text.value);
-					/* alert("qeia+");
-					var additionalText = "";
-					if (text.value != "") {
-						alert("no");
-						additionalText = '<span class="caption">'
-								+ text.value + '</span>';
-					} */
+
 					alert(3);
 					numElements += 1;
 					slider.innerHTML += '<li id='+numElements+'>'
-							+ this.responseText + '</li>';
+							+ '<img style=\"width: 100%; height: 100%;\" src="data:image/jpg;base64,'
+							+ this.responseText + '">' + '</li>';
 					document.getElementById('select' + id).innerHTML += '<option value='+numElements+'>'
 							+ sampleFile.name + '</option>';
 
@@ -656,17 +652,24 @@ Your Text
 			style="position: absolute; visibility: hidden; top: 460px; left: 110px;">
 			<option value="">არაფერი
 			<option
-				value="http://img72.imageshack.us/img72/999/background62column.jpg">წითელი სვეტები
+				value="http://img72.imageshack.us/img72/999/background62column.jpg">წითელი
+				სვეტები
 			<option
-				value="http://www.unsigneddesign.com/Seamless_background_textures/thumbs/seamlesstexture21_1200.jpg">ნაცრისფერი ბაზისი
-			<option value="http://media.24ways.org/2011/verou/8.png">მწვანე ზოლები
+				value="http://www.unsigneddesign.com/Seamless_background_textures/thumbs/seamlesstexture21_1200.jpg">ნაცრისფერი
+				ბაზისი
+			<option value="http://media.24ways.org/2011/verou/8.png">მწვანე
+				ზოლები
 			<option
-				value="http://blog.boxedart.com/images-vd/repeat-background.gif">მარტივი ლურჯი
+				value="http://blog.boxedart.com/images-vd/repeat-background.gif">მარტივი
+				ლურჯი
 			<option
-				value="http://janeblogs.net/cutesify/backgrounds/dollydaze3col.jpg">ლურჯი სვეტები
+				value="http://janeblogs.net/cutesify/backgrounds/dollydaze3col.jpg">ლურჯი
+				სვეტები
 			<option value="http://i.stack.imgur.com/z3PLR.png">ცისარტყელა
+			
 			<option
 				value="http://i960.photobucket.com/albums/ae84/homebakedblogs/ramona_sisters_column3.jpg">ყვავილები
+
 
 
 
@@ -684,9 +687,11 @@ Your Text
 
 
 
+
 			
 			<option
 				value="http://i221.photobucket.com/albums/dd189/txnbyubabe/backgrounds/gray-grid.jpg">კლეტკა
+
 
 
 
