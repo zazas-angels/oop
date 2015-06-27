@@ -476,7 +476,7 @@ public class DBConnection implements core.database.Connection {
         SuperAdministrator superAdmin = null;
         try {
             PreparedStatement statement = dataBaseConnection
-                    .prepareStatement("insert into superadmins (mail, password) values (?,?);");
+                    .prepareStatement("insert into superAdmins (mail, password) values (?,?);");
             statement.setString(1, mail);
             statement.setString(2, password);
             statement.executeUpdate();
@@ -484,7 +484,7 @@ public class DBConnection implements core.database.Connection {
             // I do this, for get admin id
             ResultSet results = null;
             statement = dataBaseConnection
-                    .prepareStatement("SELECT * from superadmins where mail = ? and password = ?;");
+                    .prepareStatement("SELECT * from superAdmins where mail = ? and password = ?;");
             int tmp = 1;
             statement.setString(tmp++, mail);
             statement.setString(tmp++, password);
@@ -951,7 +951,7 @@ public class DBConnection implements core.database.Connection {
         DBConnection db = new DBConnection();
         //	db.addUser(new User("nika", "nika@yahoo.com", "paroli", "ragaca.com", SiteConstants.Type.email));
         //	db.changeData(3, "ooo");
-        db.activateUser(7);
+        db.addSuperAdmin("nika", generatePassword("paroli12"), null);
         System.out.println("a");
         System.out.println(db.getData(1));
     }

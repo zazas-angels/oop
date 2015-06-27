@@ -16,6 +16,10 @@ To change this template use File | Settings | File Templates.
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="adminScripts.js"></script>
     <link rel="stylesheet" type="text/css" href="adminPageStyle.css">
+
+    <%if (request.getSession().getAttribute("type") != null && request.getSession().getAttribute("type").equals("superAdmin")) {%>
+    <script src="superAdminScripts.js"></script>
+    <%}%>
 </head>
 <body>
 
@@ -43,7 +47,8 @@ To change this template use File | Settings | File Templates.
                         <a style="color:white" href="#" id="enableExtended">გაფართოებული ძებნა</a>
                     </td>
                     <td>
-                        <input type="button" class="btn btn-primary" value="ძებნა" onclick="searchByName()">
+                        <input type="button" class="btn btn-danger btn-sm" value="მომხმარებლების ძებნა"
+                               onclick="searchByName()">
                     </td>
                 </tr>
             </table>
@@ -97,7 +102,7 @@ To change this template use File | Settings | File Templates.
                     <td><a style="color:white" href="#" id="disableExtended">სახელით ძებნა</a></td>
                     <td></td>
                     <td>
-                        <input type="button" class="btn btn-primary" value="ძებნა"
+                        <input type="button" class="btn btn-danger btn-sm" value="მომხმარებლების ძებნა"
                                onclick="extendedSearch()">
                     </td>
                 </tr>
@@ -126,7 +131,13 @@ To change this template use File | Settings | File Templates.
     <div id="notifications">
     </div>
 </div>
-<h2>მომხმარებლები:</h2>
+<h2>მომხმარებლები:
+    <%if (request.getSession().getAttribute("type") != null && request.getSession().getAttribute("type").equals("superAdmin")) {%>
+    <button type="button" class="btn btn-danger" style="float: right" onclick="showDeleteAdmin()">წაშლა</button>
+    <button type="button" class="btn btn-success" style="float: right" onclick="showAddAdmin()">დანიშვნა</button>
+    <label style="float: right;">ადმინის:</label>
+    <%}%>
+</h2>
 
 <div id=main-section>
     <script>searchByName();</script>
@@ -197,6 +208,61 @@ To change this template use File | Settings | File Templates.
         </div>
     </div>
 </div>
+
+<%if (request.getSession().getAttribute("type") != null && request.getSession().getAttribute("type").equals("superAdmin")) {%>
+<div class="modal fade in" id="addAdmin-section" role="dialog" aria-hidden="false"
+     style="display: none; padding-right: 15px;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="hideAddAdmin()">×</button>
+                <h4 class="modal-title">ადმინისტრატორის დამატება</h4>
+            </div>
+            <div class="modal-body">
+                <label style="margin-right: 70px;">ახალი ადმინის ID:</label>
+                <input type="text" class="form-control" id="newAdminID" name="newAdmin" required=""
+                       placeholder="ახალი ადმინის ID" title="ახალი ადმინის ID">
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-success" value="ადმინის დამატება" onclick="addAdmin()">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade in" id="deleteAdmin-section" role="dialog" aria-hidden="false"
+     style="display: none; padding-right: 15px;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="hideDeleteAdmin()">×</button>
+                <h4 class="modal-title">ადმინის წაშლა</h4>
+            </div>
+            <div class="modal-body">
+                <label style="margin-right: 70px;">აირჩიეთ ადმინი</label>
+                <select id="adminCombo" style="color: rgba(17, 17, 17, 0.64); max-width: 250px !important;">
+                    <option value=-1>აირჩიეთ ადმინი</option>
+                    <%
+                        set = database.getAdmins();
+                        if (set != null) {
+                            while (set.next()) {
+                                String mail = set.getString("mail");
+                                String adminID = set.getString("ID");
+                    %>
+                    <option value="<%=adminID%>"><%=mail%>
+                    </option>
+                    <%
+                            }
+                        }
+                    %>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="ადმინის წაშლა" onclick="deleteAdmin()">
+            </div>
+        </div>
+    </div>
+</div>
+<%}%>
 <div class="modal-backdrop fade in" id="bann-background" style="display: none;"></div>
 </body>
 </html>

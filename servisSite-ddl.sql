@@ -51,6 +51,7 @@ CREATE TABLE user_page (
   unique(UserId),
   PRIMARY KEY (ID),
   FOREIGN KEY (UserId) REFERENCES users (ID)
+    ON DELETE CASCADE
 );
 
 
@@ -77,6 +78,14 @@ CREATE TABLE admins (
   PRIMARY KEY (ID)
 );
 
+##superAdmins
+DROP TABLE IF EXISTS superAdmins;
+CREATE TABLE superAdmins (
+  ID       INT NOT NULL AUTO_INCREMENT,
+  mail     VARCHAR(64),
+  password VARCHAR(64),
+  PRIMARY KEY (ID)
+);
 
 ##reports
 DROP TABLE IF EXISTS reports;
