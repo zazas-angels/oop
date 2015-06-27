@@ -59,6 +59,11 @@ public class Administrator implements AdminInterface {
     }
 
     @Override
+    public void addCategory(String name, int ID) throws SQLException {
+        addCategory(name, new Category(ID, name));
+    }
+
+    @Override
     public void setCategoryTree(CategoryTree categoryTree) {
         this.categoryTree = categoryTree;
     }

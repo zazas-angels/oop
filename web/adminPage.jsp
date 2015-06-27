@@ -108,7 +108,10 @@ To change this template use File | Settings | File Templates.
 
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-    <h2 class="title">მოთხოვნილი კატეგორიები</h2>
+    <div>
+        <h2 class="title">მოთხოვნილი კატეგორიები</h2>
+        <button class="btn btn-primary btn-large" onclick="showAddCategory()">კატეგორიის დამატება</button>
+    </div>
 
     <div id="wantedCategories" style="overflow-y: scroll; max-height:300px;"></div>
 </div>
@@ -119,6 +122,7 @@ To change this template use File | Settings | File Templates.
     </div>
 </div>
 <h2>მომხმარებლები:</h2>
+
 <div id=main-section>
     <script>searchByName();</script>
 </div>
@@ -132,10 +136,10 @@ To change this template use File | Settings | File Templates.
                 <h4 class="modal-title">ბანის დადება</h4>
             </div>
             <div class="modal-body">
-                <label style="margin-right: 50px;">მომხმარებელი:</label><label id="bann-userName">სახელი</label><br>
-                <label style="margin-right: 90px;">ლინკი: </label><label id="bann-userLink">სახელი</label><br>
+                <label style="margin-right: 70px;">მომხმარებელი:</label><label id="bann-userName">სახელი</label><br>
+                <label style="margin-right: 128px;">ლინკი: </label><label id="bann-userLink">სახელი</label><br>
                 <label style="margin-right: 40px;" id="bann-userIsActive"></label><br>
-                <label style="margin-right: 30px;">მომხმარებლის ტიპი </label><label id="bann-userType"></label><br>
+                <label style="margin-right: 40px;">მომხმარებლის ტიპი </label><label id="bann-userType"></label><br>
                 <label style="margin-right: 10px;">მომხმარებლის რეიტინგი </label><label
                     id="bann-userRating"></label><br>
 
@@ -148,6 +152,42 @@ To change this template use File | Settings | File Templates.
             </div>
             <div class="modal-footer">
                 <input type="submit" class="btn btn-primary" value="ბანის დადება" onclick="addBann()">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade in" id="addCategory-section" role="dialog" aria-hidden="false"
+     style="display: none; padding-right: 15px;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="hideAddCategory()">×</button>
+                <h4 class="modal-title">კატეგორიის დამატება</h4>
+            </div>
+            <div class="modal-body">
+                <label style="margin-right: 70px;">კატეგორიის სახელი:</label>
+                <input type="text" class="form-control" id="newCategotyName" name="username" required=""
+                       placeholder="ახალი კატეგორიის სახელი" title="შეიყვანეთ ახალი კატეგორიის სახელი">
+                <select id="addCategoryCombo" style="color: rgba(17, 17, 17, 0.64); max-width: 250px !important;">
+                    <option value=-1>მშობლის გარეშე</option>
+                    <%
+                        set = database.getCategories();
+                        if (set != null) {
+                            while (set.next()) {
+                                String category = set.getString("name");
+                                String categoryId = set.getString("ID");
+                    %>
+                    <option value="<%=categoryId%>"><%=category%>
+                    </option>
+                    <%
+                            }
+                        }
+                    %>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="კატეგორიის დამატება" onclick="addCategory()">
             </div>
         </div>
     </div>

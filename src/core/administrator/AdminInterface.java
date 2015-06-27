@@ -13,6 +13,8 @@ public interface AdminInterface {
 
     public void addCategory(String name, CategoryInterface parentCategory) throws SQLException;
 
+    void addCategory(String name, int ID) throws SQLException;
+
     public void setCategoryTree(CategoryTree categoryTree);
 
     public ResultSet getReports();

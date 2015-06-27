@@ -33,6 +33,12 @@ public class AdminServlet extends HttpServlet {
                 case "delete-wc":
                     admin.deleteWantedCategory(Integer.parseInt(request.getParameter("wcID")));
                     break;
+                case "addCategory":
+                    try {
+                        admin.addCategory(request.getParameter("name"), Integer.parseInt(request.getParameter("parentID")));
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 default:
                     System.out.println("zazaaaaa");
             }
