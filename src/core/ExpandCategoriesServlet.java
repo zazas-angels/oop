@@ -51,6 +51,7 @@ public class ExpandCategoriesServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/plain;; charset=UTF-8");
 		PrintWriter writer = response.getWriter();
 		String idSting = request.getParameter("id");
 		int id;

@@ -34,10 +34,11 @@
 	var numElements = 33;//Jesus <3
 	var viewMode = false;
 	window.onload = function() {
-		//alert(1);
+		alert( 1);
 		$.post("UserPageData", {
 			data : "",
-			view : 1
+			id:<%= request.getParameter("id")%>,
+			view : 2
 		}, function(result) {
 			//alert(result);
 			document.body.innerHTML = result;
@@ -61,6 +62,47 @@
 
 		});
 	};
+	function save() {
+		alert(0);
+
+		var elements = document.getElementsByTagName("input");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			if (element.className != "comment") {
+				element.setAttribute("val", element.value);
+			}
+		}
+		elements = document.getElementsByTagName("textarea");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			if (element.className != "comment") {
+				element.setAttribute("val", element.value);
+			}
+		}
+
+		elements = document.getElementsByTagName("select");
+		for (var i = 0; i < elements.length; i++) {
+			var element = elements[i];
+			element.setAttribute("val", element.value);
+		}
+		document.getElementById("control").style.visibility = "hidden";
+		var wasVisible = document.getElementById("control").style.visibility =="visible" ;
+		document.getElementById("themeselect").style.visibility = "hidden";
+		document.getElementById("edit").style.visibility = "hidden";
+		document.getElementById("addSub").style.visibility = "hidden";
+		var txt = document.body.innerHTML;
+		alert(txt);
+		$.post("UserPageData", {
+			data : txt,
+			id:<%= request.getParameter("id")%>,
+			view : 0
+		}, function(result) {
+			alert(1);
+		});
+		if(wasVisible)
+		document.getElementById("control").style.visibility = "visible";
+
+	}
 </script>
 
 <%--upload --%>

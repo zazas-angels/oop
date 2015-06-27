@@ -51,6 +51,8 @@ public class UsersServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		response.setContentType("text/plain;; charset=UTF-8");
 		PrintWriter writer =response.getWriter();
 		String idSting = request.getParameter("categoryId");
 		System.out.println(idSting);

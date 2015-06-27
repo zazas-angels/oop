@@ -47,6 +47,7 @@ public class CategoriesServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("text/plain;; charset=UTF-8");
 		PrintWriter writer =response.getWriter();
 		String idSting = request.getParameter("id");
 		int id;

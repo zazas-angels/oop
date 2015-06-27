@@ -8,6 +8,7 @@
 <%-- Author glaba13 --%>
 <%-- Java script fuctions --%>
 <%-- dummy --%>
+<link rel="stylesheet" type="text/css" href="Uploader.css">
 <script src="NextCategories.js"></script>
 <script>
 	//set for checked id's: this technique as set is from http://stackoverflow.com/questions/7958292/mimicking-sets-in-javascript
@@ -16,6 +17,22 @@
 	 * From stack overflow
 	 http://stackoverflow.com/questions/2015041/two-differents-onclick-on-two-divs-one-over-the-other
 	 */
+
+	function send() {
+		var result = "";
+		var elements = document.getElementsByTagName("input");
+		for (var i = 0; i < elements.length; i++) {
+			//alert(1);
+			var elem = elements[i];
+			if (elem.getAttribute("type") == "checkbox" && elem.checked) {
+				result += elem.getAttribute("id") + "#";
+			}
+		}
+		alert(result);
+		document.getElementById("choosed").value =result; 
+		document.forms["form"].submit();
+
+	}
 	function amIclicked(e, id) {
 		e = e || event;
 		var target = e.target || e.srcElement;
@@ -216,5 +233,14 @@
 	<%="</ul>"%>
 	<h1>არჩეული კატეგორიები:</h1>
 	<ul id="addedCategories"></ul>
+	<form id="form" action="CategorySave" method="POST">
+
+		<input id="choosed" name="choosed" type="hidden" value="zura"></input>
+	</form>
+	<input id="send" type="button" value="გაგრძელება" style="float: right;"
+		onclick="send()"></input>
+
+
+
 </body>
 </html>

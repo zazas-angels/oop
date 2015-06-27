@@ -46,45 +46,7 @@ function changeBackground() {
 	document.body.style.backgroundImage = 'url("'
 			+ document.getElementById("themeselect").value + '")';
 }
-function save() {
-	alert(0);
 
-	var elements = document.getElementsByTagName("input");
-	for (var i = 0; i < elements.length; i++) {
-		var element = elements[i];
-		if (element.className != "comment") {
-			element.setAttribute("val", element.value);
-		}
-	}
-	elements = document.getElementsByTagName("textarea");
-	for (var i = 0; i < elements.length; i++) {
-		var element = elements[i];
-		if (element.className != "comment") {
-			element.setAttribute("val", element.value);
-		}
-	}
-
-	elements = document.getElementsByTagName("select");
-	for (var i = 0; i < elements.length; i++) {
-		var element = elements[i];
-		element.setAttribute("val", element.value);
-	}
-	document.getElementById("control").style.visibility = "hidden";
-
-	document.getElementById("themeselect").style.visibility = "hidden";
-	document.getElementById("edit").style.visibility = "hidden";
-	document.getElementById("addSub").style.visibility = "hidden";
-	var txt = document.body.innerHTML;
-	alert(txt);
-	$.post("UserPageData", {
-		data : txt,
-		view : 0
-	}, function(result) {
-		alert(1);
-	});
-	document.getElementById("control").style.visibility = "visible";
-
-}
 function view() {
 	viewMode = true;
 	var elements = document.getElementsByTagName("div");
