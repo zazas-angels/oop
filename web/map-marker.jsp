@@ -12,9 +12,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%
-    int userID;
-
-    userID = Integer.parseInt((String) request.getSession().getAttribute("userId"));
+    int userID = Integer.parseInt("" + request.getSession().getAttribute("userId"));
 
     ServletContext context = request.getServletContext();
     DBConnection dbConnection = (DBConnection) context.getAttribute("database");
