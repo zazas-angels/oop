@@ -138,4 +138,10 @@ public interface Connection {
 	public void addUserCategories(int id, Vector<Integer> categories);
 
 	public boolean existsUserWithID(int id);
+
+	public boolean isBannedUser(int userID);
+
+	public boolean checkBannDate(int userID);
+
+	public void bannUserByDays(int userID, int days);
 }

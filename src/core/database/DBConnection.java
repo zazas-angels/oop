@@ -342,29 +342,6 @@ public class DBConnection implements core.database.Connection {
 	}
 
 	/**
-	 * sets isBanned column value given boolean(bannedStatus)
-	 *
-	 * @param userID
-	 *            identifies user
-	 * @param bannedStatus
-	 *            new value for isBanned column
-	 */
-	@Override
-	public synchronized void setBannedStatus(int userID, boolean bannedStatus) {
-		try {
-			int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
-			PreparedStatement statement = dataBaseConnection
-					.prepareStatement("update users set isBanned = ? WHERE ID = ?;");
-			statement.setBoolean(1, bannedStatus);
-			statement.setInt(2, userID);
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			// ignore
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * @param column
 	 *            column if users table in database
 	 * @param value
@@ -387,6 +364,26 @@ public class DBConnection implements core.database.Connection {
 		return results;
 	}
 
+    /**
+     * sets isBanned column value given boolean(bannedStatus)
+     *
+     * @param userID       identifies user
+     * @param bannedStatus new value for isBanned column
+     */
+    @Override
+    public synchronized void setBannedStatus(int userID, boolean bannedStatus) {
+        try {
+            int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("update users set isBanned = ?, bannDuration = -1  WHERE ID = ?;");
+            statement.setBoolean(1, bannedStatus);
+            statement.setInt(2, userID);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+    }
 	/**
 	 * returns all users with given name
 	 *
@@ -987,15 +984,6 @@ public class DBConnection implements core.database.Connection {
 		return set;
 	}
 
-	public static void main(String[] args) {
-		DBConnection db = new DBConnection();
-		// db.addUser(new User("nika", "nika@yahoo.com", "paroli", "ragaca.com",
-		// SiteConstants.Type.email));
-		// db.changeData(3, "ooo");
-		db.addSuperAdmin("nika", generatePassword("paroli12"), null);
-		System.out.println("a");
-		System.out.println(db.getData(1));
-	}
 
 	@Override
 	public synchronized String getConf(int userId) {
@@ -1034,7 +1022,7 @@ public class DBConnection implements core.database.Connection {
 		ResultSet set = getUsers(userID);
 		try {
 			if (set.next()) {
-				administrator = (Administrator) addAdmin(set.getString("name"),
+				administrator = (Administrator) addAdmin(set.getString("mail"),
 						set.getString("password"), categoryTree);
 				deleteUser(userID);
 			}
@@ -1101,6 +1089,16 @@ public class DBConnection implements core.database.Connection {
 		return getResults("texts");
 	}
 
+    public static void main(String[] args) {
+        DBConnection db = new DBConnection();
+        //	db.addUser(new User("nika", "nika@yahoo.com", "paroli", "ragaca.com", SiteConstants.Type.email));
+        //	db.changeData(3, "ooo");
+        //db.activateUser(8);
+        //db.bannUserByDays(3, 30);
+        System.out.println(db.checkBannDate(3));
+        System.out.println("a");
+        System.out.println(db.getData(1));
+    }
 	@Override
 	public synchronized ResultSet getElementsInfo() {
 		return getResults("elements_info");
@@ -1261,6 +1259,82 @@ public class DBConnection implements core.database.Connection {
 		return existsUser("ID", "" + id);
 	}
 
+
+    /**
+     * checks if user is banned
+     * @param id identifies
+     * @return true if user is banned else false
+     */
+    @Override
+    public boolean isBannedUser(int id) {
+        boolean b = false;
+        ResultSet results = null;
+        try {
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("select * from users" + " Where ID=?;");
+            statement.setInt(1, id);
+            results = statement.executeQuery();
+            if (results != null && results.next()) {
+                if (results.getBoolean("isBanned") == true) {
+                    b = true;
+                }
+            }
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+        return b;
+    }
+
+    @Override
+    public boolean checkBannDate(int userID) {
+        boolean b = false;
+        ResultSet results = null;
+        try {
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("select DATEDIFF(now(), bannDate) as dateDifference, bannDuration from users where id = ?;");
+            statement.setInt(1, userID);
+            results = statement.executeQuery();
+            if (results != null){
+                if(results.next()){
+                    int bannDuration = results.getInt("bannDuration");
+                    if(bannDuration >= 0){
+                        int dateDifference = results.getInt("dateDifference");
+                        if(dateDifference >= bannDuration){
+                            setBannedStatus(userID, false);
+                            b = true;
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+
+        return b;
+    }
+
+    /**
+     * banns user by days, after given days user will release from bann
+     * @param userID identifies user
+     * @param days bann duration
+     */
+    @Override
+    public void bannUserByDays(int userID, int days) {
+        try {
+            int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("update users set isBanned = ?,bannDuration = ?, bannDate = now()  WHERE ID = ?;");
+            statement.setBoolean(1, true);
+            statement.setInt(2, days);
+            statement.setInt(3, userID);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+    }
 	private synchronized boolean existsUser(String column, String value) {
 
 		ResultSet results = null;
