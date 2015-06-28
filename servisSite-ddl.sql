@@ -12,6 +12,8 @@ CREATE TABLE users (
   type       VARCHAR(64),
   isActive   BOOL                                    DEFAULT FALSE,
   isBanned   BOOL                                    DEFAULT FALSE,
+  bannDuration int default -1,
+  bannDate   date default '2015-01-01',
   password   VARCHAR(64),
   raiting    DOUBLE                                  DEFAULT 0,
   avatarFile CHAR(64) DEFAULT "default.png" NOT NULL,
