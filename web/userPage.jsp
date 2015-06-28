@@ -30,6 +30,26 @@
 <link href='http://fonts.googleapis.com/css?family=Comfortaa'
 	rel='stylesheet' type='text/css'>
 
+	<style>
+        #map-canvas {
+            width: 500px;
+            height: 300px;
+            float: right; !important;
+            position: absolute; !important;
+            bottom: 10px;
+            right: 10px;
+            display: none;
+        }
+        #googleMap-button {
+            position: absolute; !important;
+             bottom: 10px;
+             right: 10px;
+            z-index: 999;
+         }
+	</style>
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js"></script>
+	<script src="google-maps.js"></script>
 <script type="text/javascript" src="slider.js"></script>
 
 <script type="text/javascript" src="ControlFunctions.js"></script>
@@ -48,11 +68,19 @@
 				alert("div" + document.getElementsByTagName("div").length)
 				numElements += document.getElementsByTagName("div").length;
 			}
+            $("#map-canvas").remove();
+            document.body.innerHTML += '<div id="map-canvas"></div>';
 			makeEdition();
 			initValElems();
 			document.getElementById("logout").style.visibility = "visible";
+			googleMap();
+			addMarkers();
 
+            $("#map-canvas").toggle();
+
+		//	googleMap();
 		});
+
 	};
 	function save() {
 		alert(0);
@@ -554,7 +582,7 @@
 
 <body>
 	<%--text --%>
-	<%-- 
+	<%--
 	<div class="drsElement"
 		style="left: 50px; top: 150px; width: 350px; height: 90px; background: white; text-align: center">
 		<div class="drsMoveHandle">Text:</div>
@@ -562,7 +590,7 @@
 			Font: <input id="zaz" size="5" class="color" colorType="font"
 				labelId="7" value="000000"> Back: <input id="zaz" size="5"
 				class="color" colorType="back" labelId="7" value="FFFFFF">
-				
+
 			Size:<input id="size7" size="1" value="18" onkeydown="changeSize(7);"
 				onpaste="changeSize(7);" oninput="changeSize(7);"> Bold: <input
 				type="checkbox" id="bold7" onclick="changeBold(7);">
@@ -570,13 +598,14 @@
 		<textarea id="7"style="  text-align: center; width: calc(100% - 6px); height: calc(100% - 53px); resize:none;">
 Your Text
 </textarea>
-		
+
 	</div>
 --%>
 
 
 
 
+    <input id="googleMap-button" val="google-map"  type="button" onclick="googleMap()" value="google-map">
 	<%@include file="logout.jsp"%>
 
 	<%--control panel --%>
@@ -668,7 +697,7 @@ Your Text
 				value="http://janeblogs.net/cutesify/backgrounds/dollydaze3col.jpg">ლურჯი
 				სვეტები
 			<option value="http://i.stack.imgur.com/z3PLR.png">ცისარტყელა
-			
+
 			<option
 				value="http://i960.photobucket.com/albums/ae84/homebakedblogs/ramona_sisters_column3.jpg">ყვავილები
 
@@ -679,7 +708,7 @@ Your Text
 
 
 
-			
+
 			<option
 				value="http://1.bp.blogspot.com/_JR1wtGyGotU/S8U_5R3ktHI/AAAAAAAAAo8/iDlD4cK2D6A/s1600/Perfectly+Pink+2.gif">ვარდისფერობა
 
@@ -690,7 +719,7 @@ Your Text
 
 
 
-			
+
 			<option
 				value="http://i221.photobucket.com/albums/dd189/txnbyubabe/backgrounds/gray-grid.jpg">კლეტკა
 
@@ -702,13 +731,13 @@ Your Text
 
 
 
-			
+
 		</select>
 
 	</div>
 
 	<%--image --%>
-	<%-- 
+	<%--
 	<div class="drsElement "
 		style="left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center">
 
@@ -721,7 +750,7 @@ Your Text
 				value="Upload" onClick="performAjaxSubmit(0,1);"></input>
 
 		</form>
-		
+
 		<div class="drsMoveHandle " style="background: #DFC;width:100%; height:calc(100% - 50px);" id="image1"  >
 			<img alt="noImage" src="noImage.png " style="width: 100%;height:100%;">
 		</div>
@@ -770,7 +799,7 @@ Enter text here...</textarea>
 
 
 	<%-- gallery --%>
-	<%-- 
+	<%--
 	<div class="drsElement"
 		style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">
 		<div class="drsMoveHandle" style="background: #DFC">Slider</div>
@@ -784,7 +813,7 @@ Enter text here...</textarea>
 		</form>
 		<div style="width: 550px; height: 300px;">
 			<div  class="slider">
-				
+
 				<img src="images/image-slider-3.jpg" />
 				<img src="images/image-slider-1.jpg" />
 			</div>

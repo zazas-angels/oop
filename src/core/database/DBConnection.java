@@ -914,6 +914,7 @@ public class DBConnection implements core.database.Connection {
      */
     @Override
     public synchronized void addMarker(String name, String address, double lat, double lng, int userID) throws SQLException {
+        System.out.println("DBConnection.addMarker");
         PreparedStatement statement = dataBaseConnection
                 .prepareStatement("insert into markers (name, address, lat, lng, userID) values " +
                         "(?, ?, ?, ?, ?);");
@@ -951,7 +952,8 @@ public class DBConnection implements core.database.Connection {
         DBConnection db = new DBConnection();
         //	db.addUser(new User("nika", "nika@yahoo.com", "paroli", "ragaca.com", SiteConstants.Type.email));
         //	db.changeData(3, "ooo");
-        db.addSuperAdmin("nika", generatePassword("paroli12"), null);
+        db.activateUser(8);
+        //db.addSuperAdmin("nika", generatePassword("paroli12"), null);
         System.out.println("a");
         System.out.println(db.getData(1));
     }
