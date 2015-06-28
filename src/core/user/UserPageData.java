@@ -61,7 +61,7 @@ public class UserPageData extends HttpServlet {
 		if(request.getParameter("id")!=null){
 			userId=Integer.parseInt(request.getParameter("id"));
 		}else{
-		userId=((User) request.getSession().getAttribute("user")).getID();
+		userId=((int) request.getSession().getAttribute("userId"));
 		}
 		if(needViewMassage.equals("0")){
 			//res=webData.getData(); 

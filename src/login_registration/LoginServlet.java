@@ -153,6 +153,7 @@ public class LoginServlet extends HttpServlet {
         request.getSession().setAttribute("logged in", true);
         request.getSession().setAttribute("type", "email");
         request.getSession().setAttribute("user", user);
+        request.getSession().setAttribute("userId", user.getID());
 
         addCookie(request, response, context, user);
         request.getRequestDispatcher("userPage.jsp").forward(request, response);

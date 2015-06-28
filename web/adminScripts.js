@@ -237,7 +237,7 @@ function update(response) {
         for (var i = 0; i < arr.length; i++) {
             var user = arr[i];
             var url = user.url;
-            var tmp = "<li><a class='normal' href='" + url + "'><img src=\"" + user.avatarFile + "\" alt=\"" + user.name + " \"style=\"width:180px;height:180px\" x='0px' y='0px'></a>";
+            var tmp = "<li><a class='normal' href='" + "/UsersForAdmins" + "'><img src=\"" + user.avatarFile + "\" alt=\"" + user.name + " \"style=\"width:180px;height:180px\" x='0px' y='0px'></a>";
             tmp += "<div class='info'><h3>"
                 + user.name + "</h3><p>"
                 + "ID  =  " + user.ID + "<br>"

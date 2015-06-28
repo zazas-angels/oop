@@ -18,7 +18,6 @@
 	function makeNextCategories(id) {
 		alert('it works!'); 
 		var list = document.getElementById("categories");
-
 		var xmlHttp;
 		if (window.XMLHttpRequest) {
 			// code for IE7+, Firefox, Chrome, Opera, Safari

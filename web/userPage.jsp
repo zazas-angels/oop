@@ -12,7 +12,8 @@
 
 <link rel="stylesheet" type="text/css" href="DragResizeStyle.css">
 <link rel="stylesheet" type="text/css" href="CloseButton.css">
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  
 <link rel="stylesheet" type="text/css" href="gallery.css">
 <link rel="stylesheet" type="text/css" href="body.css">
 <link rel="stylesheet" type="text/css" href="commentStyle.css">
@@ -50,6 +51,7 @@
 			}
 			makeEdition();
 			initValElems();
+			document.getElementById("logout").style.visibility = "visible";
 
 		});
 	};
@@ -81,6 +83,7 @@
 
 		document.getElementById("themeselect").style.visibility = "hidden";
 		document.getElementById("edit").style.visibility = "hidden";
+		document.getElementById("logout").style.visibility = "hidden";
 		document.getElementById("addSub").style.visibility = "hidden";
 		var txt = document.body.innerHTML;
 		alert(txt);
@@ -90,8 +93,10 @@
 		}, function(result) {
 			alert(1);
 		});
-		if (wasVisible)
+		if (wasVisible){
 			document.getElementById("control").style.visibility = "visible";
+			document.getElementById("logout").style.visibility = "visible";
+		}
 
 	}
 	function createImage() {
@@ -573,14 +578,12 @@ Your Text
 
 
 
-	<%
-		
-	%>
+	<%@include file="logout.jsp"%>
 
 	<%--control panel --%>
 
 	<div id="edit" onclick="makeEdition()" class="circle"
-		style="position: fixed; visibility: hidden; left: 20px; background: #FF3399;">
+		style="position: fixed; visibility: hidden;top:50px; left: 20px; background: #FF3399;">
 		<i class="icon1 fa fa-edit fa-lg"></i> <i
 			class="icon2 fa fa-star fa-lg"></i> <span> შეცვლა</span>
 	</div>
