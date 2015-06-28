@@ -45,19 +45,19 @@ public class CategoryTree implements CategoryTreeInterface {
 	}
 
 	@Override
-	public List<CategoryInterface> getChilds(int id) {
+	public synchronized List<CategoryInterface> getChilds(int id) {
 		Category fake = new Category(id, "");
 		return map.get(fake);
 	}
 
 	@Override
-	public List<CategoryInterface> getRoots() {
+	public synchronized List<CategoryInterface> getRoots() {
 
 		return roots;
 	}
 
 	@Override
-	public void add(CategoryInterface newOne, CategoryInterface parent) {
+	public synchronized void add(CategoryInterface newOne, CategoryInterface parent) {
 		if (parent == null) {
 			roots.add(newOne);
 		} else {
@@ -71,7 +71,7 @@ public class CategoryTree implements CategoryTreeInterface {
 	}
 	
 	@Override
-	public void add(CategoryInterface newOne, int parentID) {
+	public synchronized void add(CategoryInterface newOne, int parentID) {
 		CategoryInterface parent = null;
 		if(parentID == -1){
 			roots.add(newOne);
@@ -92,14 +92,14 @@ public class CategoryTree implements CategoryTreeInterface {
 
 	@Override
 	//this method returns parent of current category, if given one is root it returns false
-	public CategoryInterface getParent(CategoryInterface cur) {
+	public synchronized CategoryInterface getParent(CategoryInterface cur) {
 		return chParent.get(cur);
 	}
 
 
 	@Override
 	//amas gonia racxa akliaa :/
-	public void remove(CategoryInterface cur) {
+	public synchronized void remove(CategoryInterface cur) {
 		if (roots.contains(cur)) {
 			roots.remove(cur);
 			ArrayList<CategoryInterface> temp = map.remove(cur);
@@ -121,14 +121,14 @@ public class CategoryTree implements CategoryTreeInterface {
 
 
 	@Override
-	public List<CategoryInterface> getChildBush(int id) {
+	public synchronized List<CategoryInterface> getChildBush(int id) {
 		CategoryInterface obj = new Category(id, db.get(id));
 		List<CategoryInterface> cur = new ArrayList<CategoryInterface>();
 		fillChildBush(cur, obj);
 		return cur;
 	}
 	
-	private void fillChildBush(List<CategoryInterface> list, CategoryInterface cat){
+	private synchronized void fillChildBush(List<CategoryInterface> list, CategoryInterface cat){
 		List<CategoryInterface> temp = this.getChilds(cat.getId());
 		list.add(cat);
 		if(temp == null) return;
@@ -138,7 +138,7 @@ public class CategoryTree implements CategoryTreeInterface {
 	}
 
 	@Override
-	public List<CategoryInterface> getParentBranch(int id) {
+	public synchronized List<CategoryInterface> getParentBranch(int id) {
 		List<CategoryInterface> cur = new ArrayList<CategoryInterface>();
 		CategoryInterface obj = new Category(id, "");
 		while(chParent.containsKey(obj)){
@@ -149,7 +149,7 @@ public class CategoryTree implements CategoryTreeInterface {
 	}
 
 	@Override
-	public boolean hasChilds(int id) {
+	public synchronized boolean hasChilds(int id) {
 		CategoryInterface obj = new Category(id, "");
 		if(map.containsKey(obj)) return true;
 		return false;

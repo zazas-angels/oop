@@ -41,7 +41,7 @@ public class Administrator implements AdminInterface {
     }
 
     @Override
-    public ResultSet findUser(String name, String bann, String active, String categoryName) {
+    public synchronized ResultSet findUser(String name, String bann, String active, String categoryName) {
         ResultSet set = null;
         if (name != null && bann != null && categoryName != null && active != null) {
             if (dbConnection != null) {
@@ -52,50 +52,50 @@ public class Administrator implements AdminInterface {
     }
 
     @Override
-    public void addCategory(String name, CategoryInterface parentCategory) throws SQLException {
+    public synchronized void addCategory(String name, CategoryInterface parentCategory) throws SQLException {
         int id = dbConnection.addCategory(name, parentCategory.getId());
         Category category = new Category(id, name);
         categoryTree.add(category, parentCategory);
     }
 
     @Override
-    public void addCategory(String name, int ID) throws SQLException {
+    public synchronized void addCategory(String name, int ID) throws SQLException {
         addCategory(name, new Category(ID, name));
     }
 
     @Override
-    public void setCategoryTree(CategoryTree categoryTree) {
+    public synchronized void setCategoryTree(CategoryTree categoryTree) {
         this.categoryTree = categoryTree;
     }
 
     @Override
-    public boolean equals(Object object) {
+    public synchronized boolean equals(Object object) {
         Administrator admin = (Administrator) object;
         return email.equals(admin.getEmail()) && password.equals(admin.getPassword());
     }
 
-    public String getEmail() {
+    public synchronized String getEmail() {
         return email;
     }
 
-    public String getPassword() {
+    public synchronized String getPassword() {
         return password;
     }
 
-    public int getId() {
+    public synchronized int getId() {
         return id;
     }
 
-    public DBConnection getDbConnection() {
+    public synchronized DBConnection getDbConnection() {
         return dbConnection;
     }
 
-    public CategoryTree getCategoryTree() {
+    public synchronized CategoryTree getCategoryTree() {
         return categoryTree;
     }
 
     @Override
-    public ResultSet getReports() {
+    public synchronized ResultSet getReports() {
         ResultSet set = null;
         if (dbConnection != null) {
             set = dbConnection.getReports();
@@ -104,7 +104,7 @@ public class Administrator implements AdminInterface {
     }
 
     @Override
-    public ResultSet getReports(int days) {
+    public synchronized ResultSet getReports(int days) {
         ResultSet set = null;
         if (dbConnection != null) {
             set = dbConnection.getReports(days);
@@ -113,7 +113,7 @@ public class Administrator implements AdminInterface {
     }
 
     @Override
-    public ResultSet getWantedCategories() {
+    public synchronized ResultSet getWantedCategories() {
         ResultSet set = null;
         if (dbConnection != null) {
             set = dbConnection.getWantedCategories();
@@ -122,7 +122,7 @@ public class Administrator implements AdminInterface {
     }
 
     @Override
-    public ResultSet getWantedCategories(int days) {
+    public synchronized ResultSet getWantedCategories(int days) {
         ResultSet set = null;
         if (dbConnection != null) {
             set = dbConnection.getWantedCategories(days);
@@ -131,7 +131,7 @@ public class Administrator implements AdminInterface {
     }
 
     @Override
-    public ResultSet getNotifications() {
+    public synchronized ResultSet getNotifications() {
         ResultSet set = null;
         if (dbConnection != null) {
             set = dbConnection.getNotifications();
@@ -140,27 +140,27 @@ public class Administrator implements AdminInterface {
     }
 
     @Override
-    public void bannUser(int userID) {
+    public synchronized void bannUser(int userID) {
         dbConnection.setBannedStatus(userID, true);
     }
 
     @Override
-    public void bannUser(int userID, int days) {
+    public synchronized void bannUser(int userID, int days) {
 
     }
 
     @Override
-    public void releaseBann(int userID) {
+    public synchronized void releaseBann(int userID) {
         dbConnection.setBannedStatus(userID, false);
     }
 
     @Override
-    public void deleteWantedCategory(int wcID) {
+    public synchronized void deleteWantedCategory(int wcID) {
         dbConnection.deleteWantedCategory(wcID);
     }
 
     @Override
-    public void deleteReport(int reportID) {
+    public synchronized void deleteReport(int reportID) {
         dbConnection.deleteReport(reportID);
     }
 }

@@ -12,8 +12,7 @@
 
 <link rel="stylesheet" type="text/css" href="DragResizeStyle.css">
 <link rel="stylesheet" type="text/css" href="CloseButton.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  
+
 <link rel="stylesheet" type="text/css" href="gallery.css">
 <link rel="stylesheet" type="text/css" href="body.css">
 <link rel="stylesheet" type="text/css" href="commentStyle.css">

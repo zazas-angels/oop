@@ -50,7 +50,7 @@ public class DBConnection implements core.database.Connection {
      * This method executes use quary for using this database:same as in
      * assignment 3.
      */
-    private void executeUseQueary(Connection dataBaseConnection) {
+    private synchronized void executeUseQueary(Connection dataBaseConnection) {
         Statement useStatment;
         try {
             useStatment = dataBaseConnection.createStatement();
@@ -67,7 +67,7 @@ public class DBConnection implements core.database.Connection {
     /*
      * This method close connections
      */
-    public void closeConection() {
+    public synchronized void closeConection() {
         // now is dummy but let it be
         // can be commented
         if (dataBaseConnection != null)
@@ -82,7 +82,7 @@ public class DBConnection implements core.database.Connection {
     /**
      * This method returns all results form table
      */
-    private ResultSet getResults(String tableName) {
+    private synchronized ResultSet getResults(String tableName) {
         ResultSet results = null;
         try {
             PreparedStatement statement = dataBaseConnection
@@ -99,7 +99,7 @@ public class DBConnection implements core.database.Connection {
     /**
      * This method returns all results form table with specified id
      */
-    private ResultSet getResults(String tableName, int id) {
+    private synchronized ResultSet getResults(String tableName, int id) {
         ResultSet results = null;
         try {
             int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
@@ -116,27 +116,27 @@ public class DBConnection implements core.database.Connection {
     }
 
     @Override
-    public ResultSet getUsers() {
+    public synchronized ResultSet getUsers() {
         return getResults("users");
     }
 
     @Override
-    public ResultSet getCategories() {
+    public synchronized ResultSet getCategories() {
         return getResults("categories");
     }
 
     @Override
-    public ResultSet getUsersCategories() {
+    public synchronized ResultSet getUsersCategories() {
         return getResults("users_categories");
     }
 
     @Override
-    public ResultSet getPictures() {
+    public synchronized ResultSet getPictures() {
         return getResults("pictures");
     }
 
     @Override
-    public ResultSet getColors() {
+    public synchronized ResultSet getColors() {
         return getResults("colors");
     }
 
@@ -146,7 +146,7 @@ public class DBConnection implements core.database.Connection {
      * @see core.database.Connection#addUser(core.user.UserInterface)
      */
     @Override
-    public User addUser(String name, String email, String password, String url,
+    public synchronized User addUser(String name, String email, String password, String url,
                         SiteConstants.Type type) {
 
         User user = null;
@@ -190,7 +190,7 @@ public class DBConnection implements core.database.Connection {
     }
 
 
-    private ResultSet getFromTable(String table, String email, String password) {
+    private synchronized ResultSet getFromTable(String table, String email, String password) {
         ResultSet results = null;
         try {
             // ricxvebze mixurebs setString-s rom gadavcem da nu cvlit ra..
@@ -210,7 +210,7 @@ public class DBConnection implements core.database.Connection {
     }
 
     @Override
-    public void insertUserConfCode(int UserId, String confCode) {
+    public synchronized void insertUserConfCode(int UserId, String confCode) {
         try {
             // at first remove(if exists) older confcode from database
             deleteUserConfCode(UserId);
@@ -232,7 +232,7 @@ public class DBConnection implements core.database.Connection {
      * @see core.database.Connection#getUser(java.lang.String, java.lang.String)
      */
     @Override
-    public UserInterface getUser(String mail, String password) {
+    public synchronized UserInterface getUser(String mail, String password) {
         ResultSet results = getFromTable("users", mail,
                 generatePassword(password));
         if (results == null)
@@ -253,7 +253,7 @@ public class DBConnection implements core.database.Connection {
 
 
     @Override
-    public boolean isActiveUser(int id) {
+    public synchronized boolean isActiveUser(int id) {
         boolean b = false;
         ResultSet results = null;
         try {
@@ -274,12 +274,12 @@ public class DBConnection implements core.database.Connection {
     }
 
     @Override
-    public AdminInterface getAdmin(String email, String password, CategoryTree categoryTree) {
+    public synchronized AdminInterface getAdmin(String email, String password, CategoryTree categoryTree) {
         return getAdmin(email, password, categoryTree, false);
     }
 
     @Override
-    public void activateUser(int id) {
+    public synchronized void activateUser(int id) {
         PreparedStatement stmt = null;
         try {
             stmt = dataBaseConnection
@@ -292,11 +292,11 @@ public class DBConnection implements core.database.Connection {
     }
 
     @Override
-    public SuperAdministrator getSuperAdmin(String email, String password, CategoryTree categoryTree) {
+    public synchronized SuperAdministrator getSuperAdmin(String email, String password, CategoryTree categoryTree) {
         return (SuperAdministrator) getAdmin(email, password, categoryTree, true);
     }
 
-    private AdminInterface getAdmin(String email, String password, CategoryTree categoryTree, boolean superAmin) {
+    private synchronized AdminInterface getAdmin(String email, String password, CategoryTree categoryTree, boolean superAmin) {
         ResultSet results;
         if (superAmin)
             results = getFromTable("superAdmins", email, generatePassword(password));
@@ -322,7 +322,7 @@ public class DBConnection implements core.database.Connection {
     }
 
     @Override
-    public void deleteUserConfCode(int userId) {
+    public synchronized void deleteUserConfCode(int userId) {
         PreparedStatement stmt = null;
         try {
             stmt = dataBaseConnection
@@ -341,7 +341,7 @@ public class DBConnection implements core.database.Connection {
      * @param bannedStatus new value for isBanned column
      */
     @Override
-    public void setBannedStatus(int userID, boolean bannedStatus) {
+    public synchronized void setBannedStatus(int userID, boolean bannedStatus) {
         try {
             int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
             PreparedStatement statement = dataBaseConnection
@@ -360,7 +360,7 @@ public class DBConnection implements core.database.Connection {
      * @param value  wanted value
      * @return
      */
-    private ResultSet getUsersBy(String column, String value) {
+    private synchronized ResultSet getUsersBy(String column, String value) {
         ResultSet results = null;
         try {
             int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
@@ -382,7 +382,7 @@ public class DBConnection implements core.database.Connection {
      * @param name user's wanted name
      * @return ResultSet of rows from users table
      */
-    public ResultSet getUsersByName(String name) {
+    public synchronized ResultSet getUsersByName(String name) {
         return getUsersBy("name", name);
     }
 
@@ -393,7 +393,7 @@ public class DBConnection implements core.database.Connection {
      * there went something wrong, returns false.
      */
     @Override
-    public AdminInterface addAdmin(String mail, String password,
+    public synchronized AdminInterface addAdmin(String mail, String password,
                                    CategoryTree categoryTree) {
         Administrator admin = null;
         try {
@@ -432,7 +432,7 @@ public class DBConnection implements core.database.Connection {
      * @param wcID id of wanted category to be deleted
      */
     @Override
-    public void deleteWantedCategory(int wcID) {
+    public synchronized void deleteWantedCategory(int wcID) {
         deleteByID("wantedCategories", wcID);
     }
 
@@ -442,7 +442,7 @@ public class DBConnection implements core.database.Connection {
      * @param reportID id of report to be deleted
      */
     @Override
-    public void deleteReport(int reportID) {
+    public synchronized void deleteReport(int reportID) {
         deleteByID("reports", reportID);
     }
 
@@ -452,7 +452,7 @@ public class DBConnection implements core.database.Connection {
      * @param tableName identifies table
      * @param ID        identifies row
      */
-    private void deleteByID(String tableName, int ID) {
+    private synchronized void deleteByID(String tableName, int ID) {
         PreparedStatement stmt = null;
         try {
             String query = "delete from " + tableName + " where ID = ?;";
@@ -471,7 +471,7 @@ public class DBConnection implements core.database.Connection {
      * @return returns just added administrator as Administrator(class), if
      * there went something wrong, returns false.
      */
-    public AdminInterface addSuperAdmin(String mail, String password,
+    public synchronized AdminInterface addSuperAdmin(String mail, String password,
                                         CategoryTree categoryTree) {
         SuperAdministrator superAdmin = null;
         try {
@@ -510,7 +510,7 @@ public class DBConnection implements core.database.Connection {
      * @return true if is already registrired, otherwise false;
      */
     @Override
-    public boolean existsAdministrator(String mail) {
+    public synchronized boolean existsAdministrator(String mail) {
         ResultSet results = null;
         boolean existResult = false;
         try {
@@ -547,7 +547,7 @@ public class DBConnection implements core.database.Connection {
      *               trues and falses too
      * @return ResultSet of apropriate users
      */
-    private ResultSet getUsersBy(String name, String bann, String active) {
+    private synchronized ResultSet getUsersBy(String name, String bann, String active) {
         ResultSet results = null;
         if (name != null && bann != null && active != null) {
             try {
@@ -596,7 +596,7 @@ public class DBConnection implements core.database.Connection {
      * @param categoryID category
      * @return ResultSet of apropriate users
      */
-    public ResultSet getUsersByCriterias(String name, String bann,
+    public synchronized ResultSet getUsersByCriterias(String name, String bann,
                                          String active, String categoryID) {
         ResultSet set = null;
         if (name != null && bann != null && categoryID != null
@@ -618,7 +618,7 @@ public class DBConnection implements core.database.Connection {
      * @param on if(on) we search banned users, else "bannless" users
      * @return all banned or "bannless" users
      */
-    public ResultSet getUsersByBann(boolean on) {
+    public synchronized ResultSet getUsersByBann(boolean on) {
         String bann = "off";
         if (on) bann = "on";
         return getUsersBy("", bann, "all");
@@ -638,7 +638,7 @@ public class DBConnection implements core.database.Connection {
      * @param categoryID category
      * @return ResultSet of apropriate users
      */
-    private ResultSet getUsersByCategoryAndCriterias(String categoryID,
+    private synchronized ResultSet getUsersByCategoryAndCriterias(String categoryID,
                                                      String name, String bann, String active) {
         ResultSet results = null;
         if (categoryID != null && name != null && bann != null
@@ -679,22 +679,22 @@ public class DBConnection implements core.database.Connection {
     }
 
     @Override
-    public ResultSet getReports() {
+    public synchronized ResultSet getReports() {
         return reports(-1);
     }
 
     @Override
-    public ResultSet getReports(int days) {
+    public synchronized ResultSet getReports(int days) {
         return reports(days);
     }
 
     @Override
-    public ResultSet getWantedCategories(int days) {
+    public synchronized ResultSet getWantedCategories(int days) {
         return wantedCategories(days);
     }
 
     @Override
-    public ResultSet getWantedCategories() {
+    public synchronized ResultSet getWantedCategories() {
         return wantedCategories(-1);// -1 means, that date isn't limit
     }
 
@@ -708,7 +708,7 @@ public class DBConnection implements core.database.Connection {
      * @throws SQLException if something went wrong we throw exception
      */
     @Override
-    public int addCategory(String name, int parentCategoryId)
+    public synchronized int addCategory(String name, int parentCategoryId)
             throws SQLException {
         PreparedStatement statement = dataBaseConnection
                 .prepareStatement("insert into categories (name, ParentId) values (?,?);");
@@ -743,7 +743,7 @@ public class DBConnection implements core.database.Connection {
      * @throws SQLException
      */
     @Override
-    public void addReport(String authorName, String authorUrl, String text)
+    public synchronized void addReport(String authorName, String authorUrl, String text)
             throws SQLException {
         PreparedStatement statement = dataBaseConnection
                 .prepareStatement("insert into reports (authorName, text, postDate, authorUrl) values (?, ?, now(), ?);");
@@ -763,7 +763,7 @@ public class DBConnection implements core.database.Connection {
      * @throws SQLException
      */
     @Override
-    public void addWantedCategory(String authorName, String authorUrl,
+    public synchronized void addWantedCategory(String authorName, String authorUrl,
                                   String categoryName, String parentCategoryID) throws SQLException {
         PreparedStatement statement = dataBaseConnection
                 .prepareStatement("insert into wantedCategories (authorName, authorUrl, categoryName, postDate, parentCategoryID) values (?, ?, ?, now(), ?);");
@@ -783,7 +783,7 @@ public class DBConnection implements core.database.Connection {
      * @throws SQLException
      */
     @Override
-    public void addNotification(String userName, String userUrl,
+    public synchronized void addNotification(String userName, String userUrl,
                                 SiteConstants.Notification notification) throws SQLException {
         PreparedStatement statement = dataBaseConnection
                 .prepareStatement("insert into notifications (notification, userName, userUrl, postDate) values "
@@ -800,7 +800,7 @@ public class DBConnection implements core.database.Connection {
      * @return ResultSet of all notifications
      */
     @Override
-    public ResultSet getNotifications() {
+    public synchronized ResultSet getNotifications() {
         return notifications(-1);
     }
 
@@ -810,14 +810,14 @@ public class DBConnection implements core.database.Connection {
      * @return ResultSet of all notifications
      */
     @Override
-    public ResultSet getNotifications(int days) {
+    public synchronized ResultSet getNotifications(int days) {
         return notifications(days);
     }
 
     /**
      * if days == -1 it means that we need all data, date isn't limit
      */
-    private ResultSet notifications(int days) {
+    private synchronized ResultSet notifications(int days) {
         return getByTable("notifications", days);
     }
 
@@ -827,7 +827,7 @@ public class DBConnection implements core.database.Connection {
      * @param days the most old information age(in days) to select
      * @return ResultSet from information from table
      */
-    private ResultSet getByTable(String table, int days) {
+    private synchronized ResultSet getByTable(String table, int days) {
         ResultSet results = null;
         try {
             String dateLimit = "";
@@ -849,7 +849,7 @@ public class DBConnection implements core.database.Connection {
     /**
      * if days == -1 it means that we need all data, date isn't limit
      */
-    private ResultSet wantedCategories(int days) {
+    private synchronized ResultSet wantedCategories(int days) {
         ResultSet results = null;
         try {
             String dateLimit = "";
@@ -876,7 +876,7 @@ public class DBConnection implements core.database.Connection {
      * @param userID identifies to which user belongs this marker
      */
     @Override
-    public void removeMarker(double lat, double lang, int userID) {
+    public synchronized void removeMarker(double lat, double lang, int userID) {
         PreparedStatement stmt = null;
         try {
             stmt = dataBaseConnection
@@ -897,7 +897,7 @@ public class DBConnection implements core.database.Connection {
      * @param days the most old report age(in days) to select
      * @return ResultSet from reports table
      */
-    private ResultSet reports(int days) {
+    private synchronized ResultSet reports(int days) {
         return getByTable("reports", days);
     }
 
@@ -913,7 +913,7 @@ public class DBConnection implements core.database.Connection {
      * @throws SQLException
      */
     @Override
-    public void addMarker(String name, String address, double lat, double lng, int userID) throws SQLException {
+    public synchronized void addMarker(String name, String address, double lat, double lng, int userID) throws SQLException {
         PreparedStatement statement = dataBaseConnection
                 .prepareStatement("insert into markers (name, address, lat, lng, userID) values " +
                         "(?, ?, ?, ?, ?);");
@@ -932,7 +932,7 @@ public class DBConnection implements core.database.Connection {
      * @return resultset of markers table
      */
     @Override
-    public ResultSet getMarkers(int userID) {
+    public synchronized ResultSet getMarkers(int userID) {
         ResultSet set = null;
         PreparedStatement stmt = null;
         try {
@@ -957,7 +957,7 @@ public class DBConnection implements core.database.Connection {
     }
 
     @Override
-    public String getConf(int userId) {
+    public synchronized String getConf(int userId) {
         String confCode = "";
         ResultSet results = null;
         try {
@@ -985,7 +985,7 @@ public class DBConnection implements core.database.Connection {
      * @return new Administrator if everything went ok, else null
      */
     @Override
-    public Administrator setAdmin(int userID, CategoryTree categoryTree) {
+    public synchronized Administrator setAdmin(int userID, CategoryTree categoryTree) {
         Administrator administrator = null;
         ResultSet set = getUsers(userID);
         try {
@@ -1006,7 +1006,7 @@ public class DBConnection implements core.database.Connection {
      * @param adminID identifies administrator in admins table
      */
     @Override
-    public void deleteAdmin(int adminID) {
+    public synchronized void deleteAdmin(int adminID) {
         PreparedStatement stmt;
         try {
             stmt = dataBaseConnection
@@ -1023,7 +1023,7 @@ public class DBConnection implements core.database.Connection {
      *
      * @param userID identifies user in users table
      */
-    private void deleteUser(int userID) {
+    private synchronized void deleteUser(int userID) {
         PreparedStatement stmt;
         try {
             stmt = dataBaseConnection
@@ -1036,133 +1036,133 @@ public class DBConnection implements core.database.Connection {
     }
 
     @Override
-    public ResultSet getFonts() {
+    public synchronized ResultSet getFonts() {
         return getResults("fonts");
     }
 
     @Override
-    public ResultSet getThemes() {
+    public synchronized ResultSet getThemes() {
         return getResults("themes");
     }
 
     @Override
-    public ResultSet getElements() {
+    public synchronized ResultSet getElements() {
         return getResults("elements");
     }
 
     @Override
-    public ResultSet getTexts() {
+    public synchronized ResultSet getTexts() {
         return getResults("texts");
     }
 
     @Override
-    public ResultSet getElementsInfo() {
+    public synchronized ResultSet getElementsInfo() {
         return getResults("elements_info");
     }
 
     @Override
-    public ResultSet getAlboms() {
+    public synchronized ResultSet getAlboms() {
         return getResults("alboms");
     }
 
     @Override
-    public ResultSet getAlbomsElements() {
+    public synchronized ResultSet getAlbomsElements() {
         return getResults("alboms_elements");
     }
 
     @Override
-    public ResultSet getAlbomsPictures() {
+    public synchronized  ResultSet getAlbomsPictures() {
         return getResults("alboms_pictures");
     }
 
     @Override
-    public ResultSet getElementsPictures() {
+    public synchronized ResultSet getElementsPictures() {
         return getResults("elements_pictures");
     }
 
     @Override
-    public ResultSet getAdmins() {
+    public synchronized ResultSet getAdmins() {
         return getResults("admins");
 
     }
 
     @Override
-    public ResultSet getUsersByCategories(List<CategoryInterface> categories) {
+    public synchronized ResultSet getUsersByCategories(List<CategoryInterface> categories) {
         return null;
     }
 
     @Override
-    public ResultSet getUsers(int id) {
+    public synchronized ResultSet getUsers(int id) {
         return getResults("users", id);
     }
 
     @Override
-    public ResultSet getCategories(int id) {
+    public synchronized ResultSet getCategories(int id) {
         return getResults("categories", id);
     }
 
     @Override
-    public ResultSet getUsersCategories(int id) {
+    public synchronized ResultSet getUsersCategories(int id) {
         return getResults("users_categories", id);
     }
 
     @Override
-    public ResultSet getPictures(int id) {
+    public synchronized ResultSet getPictures(int id) {
         return getResults("pictures", id);
     }
 
     @Override
-    public ResultSet getColors(int id) {
+    public synchronized ResultSet getColors(int id) {
         return getResults("colors", id);
     }
 
     @Override
-    public ResultSet getFonts(int id) {
+    public synchronized ResultSet getFonts(int id) {
         return getResults("fonts", id);
     }
 
     @Override
-    public ResultSet getThemes(int id) {
+    public synchronized ResultSet getThemes(int id) {
         return getResults("themes", id);
     }
 
     @Override
-    public ResultSet getElements(int id) {
+    public synchronized ResultSet getElements(int id) {
         return getResults("elements", id);
     }
 
     @Override
-    public ResultSet getTexts(int id) {
+    public synchronized ResultSet getTexts(int id) {
         return getResults("texts", id);
     }
 
     @Override
-    public ResultSet getElementsInfo(int id) {
+    public synchronized ResultSet getElementsInfo(int id) {
         return getResults("elements_info", id);
     }
 
     @Override
-    public ResultSet getAlboms(int id) {
+    public synchronized ResultSet getAlboms(int id) {
         return getResults("alboms", id);
     }
 
     @Override
-    public ResultSet getAlbomsElements(int id) {
+    public synchronized ResultSet getAlbomsElements(int id) {
         return getResults("alboms_elements", id);
     }
 
     @Override
-    public ResultSet getAlbomsPictures(int id) {
+    public synchronized ResultSet getAlbomsPictures(int id) {
         return getResults("alboms_pictures", id);
     }
 
     @Override
-    public ResultSet getElementsPictures(int id) {
+    public synchronized ResultSet getElementsPictures(int id) {
         return getResults("elements_pictures", id);
     }
 
     @Override
-    public ResultSet getAdmins(int id) {
+    public synchronized ResultSet getAdmins(int id) {
         return getResults("admins", id);
 
     }
@@ -1180,16 +1180,16 @@ public class DBConnection implements core.database.Connection {
      * @see core.database.Connection#existsUser(java.lang.String)
      */
     @Override
-    public boolean existsUserWithMail(String email) {
+    public synchronized boolean existsUserWithMail(String email) {
         return existsUser("mail", email);
     }
 
     @Override
-    public boolean existsUserWithUrl(String url) {
+    public  synchronized boolean existsUserWithUrl(String url) {
         return existsUser("url", url);
     }
 
-    private boolean existsUser(String column, String value) {
+    private synchronized boolean existsUser(String column, String value) {
         ResultSet results = null;
         boolean existResult = false;
         try {
@@ -1214,7 +1214,7 @@ public class DBConnection implements core.database.Connection {
 	 * (non-Javadoc)
 	 * @see core.database.Connection#changeData(int, java.lang.String)
 	 */
-    public void changeData(int id, String data) {
+    public synchronized void changeData(int id, String data) {
         // TODO Auto-generated method stub
         try {
             PreparedStatement statement = dataBaseConnection
@@ -1235,7 +1235,7 @@ public class DBConnection implements core.database.Connection {
 	 * 
 	 * @see core.database.Connection#getData(int)
 	 */
-    public String getData(int id) {
+    public synchronized String getData(int id) {
         // TODO Auto-generated method stub
         ResultSet results = null;
 
@@ -1262,7 +1262,7 @@ public class DBConnection implements core.database.Connection {
      * @see core.database.Connection#addUserCategories(int, java.util.Vector)
      */
     @Override
-    public void addUserCategories(int id, Vector<Integer> categories) {
+    public synchronized void addUserCategories(int id, Vector<Integer> categories) {
         // TODO Auto-generated method stub
 
         try {

@@ -9,26 +9,26 @@ public class Category implements CategoryInterface {
 		this.id = id;
 	}
 
-	public String getName() {
+	public synchronized String getName() {
 		return this.name;
 	}
 
-	public int getId() {
+	public synchronized int getId() {
 		return this.id;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public synchronized boolean equals(Object obj) {
 		return this.id == ((Category) obj).id;
 	}
 
 	@Override
-	public int hashCode() {
+	public synchronized int hashCode() {
 		return ((Integer) id).hashCode();
 	}
 
 	@Override
-	public String toString() {
+	public synchronized String toString() {
 		// TODO Auto-generated method stub
 		return this.id + " : " + this.name;
 	}

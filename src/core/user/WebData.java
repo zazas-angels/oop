@@ -18,21 +18,21 @@ public class WebData {
 /*
  * Change data which is like constructor and mchanges data and it's view as null
  */
-	public void changeData(String data) {
+	public synchronized void changeData(String data) {
 		this.data = data;
 		dataView = null;
 	}
 /*
  * This method returned data (updated , last one)
  */
-	public String getData() {
+	public synchronized String getData() {
 		return data;
 	}
 /*
  * This method returns all defined inner tags elements concatenations.
  * This use lazy computation: computes only when needed.
  */
-	public String getDataView() {
+	public synchronized String getDataView() {
 		if (dataView != null)
 			return dataView;
 		if (data == null)
