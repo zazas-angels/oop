@@ -137,4 +137,5 @@ public interface Connection {
 	
 	public void addUserCategories(int id, Vector<Integer> categories);
 
+	public boolean existsUserWithID(int id);
 }

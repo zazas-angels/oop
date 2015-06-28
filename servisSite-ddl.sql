@@ -92,7 +92,7 @@ DROP TABLE IF EXISTS reports;
 CREATE TABLE reports (
   ID         INT NOT NULL AUTO_INCREMENT,
   authorName VARCHAR(64),
-  authorUrl  VARCHAR(64)  DEFAULT "#",
+  authorID  int  DEFAULT -1,
   text       VARCHAR(2000),
   postDate   DATETIME,
   PRIMARY KEY (ID)
@@ -103,7 +103,7 @@ DROP TABLE IF EXISTS wantedCategories;
 CREATE TABLE wantedCategories (
   ID               INT NOT NULL AUTO_INCREMENT,
   authorName       VARCHAR(64),
-  authorUrl        VARCHAR(64)  DEFAULT "#",
+  authorID  int  DEFAULT -1,
   categoryName VARCHAR(64),
   parentCategoryID INT          DEFAULT NULL,
   postDate         DATE,
@@ -118,7 +118,7 @@ CREATE TABLE notifications (
   ID           INT NOT NULL AUTO_INCREMENT,
   notification ENUM ('createdUser'),
   userName     VARCHAR(64),
-  userUrl      VARCHAR(64)  DEFAULT "#",
+  userID  int  DEFAULT -1,
   postDate     DATETIME,
   PRIMARY KEY (ID)
 );
@@ -130,7 +130,7 @@ CREATE TRIGGER addNotification After INSERT ON users
 FOR EACH ROW
   BEGIN
     INSERT INTO notifications
-    SET notification = 'createdUser', userName = NEW.name, userUrl = NEW.url, postDate = now();
+    SET notification = 'createdUser', userName = NEW.name, userID = NEW.ID, postDate = now();
     INSERT INTO user_page   SET page = '', UserId = NEW.ID;
 
   END;

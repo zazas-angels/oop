@@ -11,8 +11,6 @@ function addAdmin() {
         $.post("superAdmin",
             {requestType: "addAdmin", userID: id},
             function (data) {
-                console.log(data.ID);
-                console.log(data.mail);
                 $("#adminCombo").append('<option value="' + data.ID + '">' + data.mail + '</option>');
             }
         );

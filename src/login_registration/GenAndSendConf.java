@@ -1,24 +1,19 @@
 package login_registration;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import core.database.DBConnection;
+import core.user.User;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.sun.xml.internal.bind.CycleRecoverable.Context;
-
-import core.database.DBConnection;
-import core.user.User;
-
-import javax.servlet.ServletContext;
+import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Servlet implementation class GenAndSendConf
@@ -44,7 +39,8 @@ public class GenAndSendConf extends HttpServlet {
 		User user = (User)request.getSession().getAttribute("user");
 		
 		String conf = genConf("" + user.getID());
-		String link = "http://localhost:8080/oop/ConfirmUser?conf=" + user.getID() + DELIMITER + conf;
+		String link = "http://localhost:8080/" +
+				"ConfirmUser?conf=" + user.getID() + DELIMITER + conf;
 		ServletContext context = request.getServletContext();
 		DBConnection dbConnection = (DBConnection) context.getAttribute("database");
 		dbConnection.insertUserConfCode(user.getID(), conf);

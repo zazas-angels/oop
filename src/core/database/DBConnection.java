@@ -1189,7 +1189,14 @@ public class DBConnection implements core.database.Connection {
         return existsUser("url", url);
     }
 
+   
+    @Override
+    public boolean existsUserWithID(int id) {
+        return existsUser("ID", ""+id);
+    }
+
     private synchronized boolean existsUser(String column, String value) {
+
         ResultSet results = null;
         boolean existResult = false;
         try {
