@@ -1,4 +1,3 @@
-<%@ page import="core.user.User" %>
 <%--
   Created by IntelliJ IDEA.
   User: nika
@@ -23,10 +22,8 @@
 </head>
 <body>
 
-
 ასდასდადსასდ
 <div id="map-canvas"></div>
-adsdsadsada
 <input id="googleMap-button" type="button" onclick="googleMap()" value="google-map">
 </body>
 </html>
