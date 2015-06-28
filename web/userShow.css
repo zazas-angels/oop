@@ -1,0 +1,81 @@
+@CHARSET "ISO-8859-1";
+.athlete-list ul li img {
+    width: 150px;
+      height: 150px;
+}
+
+.athlete-list ul li span {
+    background-color: #EFEFEF;
+    color: #F15A00;
+    display: block;
+    line-height: 2;
+    text-align: center;
+    width: 100%;
+}
+
+a, .a, .builder .summary-list .show-specifications {
+    color: #F15A00;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.athlete-list ul li {
+    display: inline-block;
+}
+
+.athlete-list ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+
+.athlete-list #list-holder {
+    display: inline-block;
+}
+
+.athlete-list.with-buttons {
+    display: inline-block;
+    //overflow-x: hidden;
+}
+.athlete-list {
+    overflow-x: scroll;
+    white-space: nowrap;
+    width: 100%;
+}
+.athletes-list-wrapper .nav-block.left:before {
+    content: "<";
+}
+.athletes-list-wrapper .nav-block.left {
+    left: 0;
+}
+.athletes-list-wrapper .nav-block {
+    background-color: #F15A00;
+    color: #FFFFFF;
+    cursor: pointer;
+    height: 182px;
+    line-height: 182px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    vertical-align: top;
+    width: 40px;
+}
+
+.athletes-list-wrapper .nav-block.right:before {
+    content: ">";
+}
+.athletes-list-wrapper .nav-block.right {
+    right: 0;
+}
+.athletes-list-wrapper {
+    padding: 0 40px;
+    position: relative;
+    white-space: nowrap;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+body
+{
+  text-align: center;
+}

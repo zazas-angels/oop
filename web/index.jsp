@@ -4,19 +4,24 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 <link rel="stylesheet" type="text/css" href="style.css">
 <meta charset="UTF-8">
 <title></title>
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script src="registration.js"></script>
- 
+<link rel="stylesheet" type="text/css" href="userShow.css">
+
+
 <%-- Java script fuctions --%>
 <script src="NextCategories.js"></script>
 <script>
 	//sending request is from W3School tutorial
 	//make next categories and make button (set it disabled or not)
 	function makeNextCategories(id) {
-		alert('it works!'); 
+		alert('it works!');
 		var list = document.getElementById("categories");
 		var xmlHttp;
 		if (window.XMLHttpRequest) {
@@ -43,7 +48,7 @@
 	//make users which are connected to these categoreis
 	function makeUsersForCategory(id) {
 		alert('users works!');
-		var list = document.getElementById("users");
+		var list = document.getElementById("athlete-images");
 		var xmlHttp;
 		if (window.XMLHttpRequest) {
 			// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -55,6 +60,8 @@
 
 		xmlHttp.onreadystatechange = function() {
 			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+				alert(1);
+				alert(xmlHttp.responseText);
 				list.innerHTML = xmlHttp.responseText;
 			}
 		};
@@ -107,30 +114,43 @@ img {
 	<%="</li>"%>
 	<%
 		}
-	%> 
+	%>
 	<%="</ul>"%>
 
-	<%-- Shows all users by rating --%>
-	<%
-		Connection database = (Connection) request.getServletContext()
-				.getAttribute("database");
-	%><%= "<ul id=\"users\" >"%><% 
-		ResultSet users = database.getUsers();
 
-		if (users != null) {
-			while (users.next()) {
-				%><%="<li>"%><%=("<a href='Visitor.jsp?id="+users.getString("ID")+"' > "
-						+ "<img src=\""
-						+ users.getString("avatarFile")
-						+ "\" height=\""
-						+ SiteConstants.USER_IMG_HEIGTH
-						+ "\" width=\""
-						+ SiteConstants.USER_IMG_WIDTH
-						+ "\"> " + users.getString("name") + " </a>")%><%=
-				"</li>"%><% 
+	<%="<div class=\"athletes-list-wrapper\">"%>
+			<%="<div class=\"nav-block left\"></div>"%>
+					<%="<div class=\"athlete-list with-buttons\">"%>
+							<%="<div id=\"list-holder\">"%>
+									<%="	<ul id=\"athlete-images\">"%>
+					
+		
+	
+		<%-- Shows all users by rating --%>
+		<%
+			Connection database = (Connection) request.getServletContext()
+					.getAttribute("database");
+		%><%="<ul id=\"users\" >"%>
+		<%
+			ResultSet users = database.getUsers();
+
+			if (users != null) {
+				while (users.next()) {
+		%><%="<li>"%><%="<a href='Visitor.jsp?id="
+							+ users.getString("ID") + "' > " + "<img src=\""
+							+ users.getString("avatarFile") + "\""  + "> <span>"
+							+ users.getString("name") + "</span> </a>"%><%=
+				"</li>"%>
+		<% 
 
 			}
-		}%><%="</ul>"
-	%>
+		}%>
+			<%="	</ul>"%>
+					<%="</div>"%>
+							<%="</div>"%>
+									<%="<div class=\"nav-block right\"></div>"%>
+											<%="</div>"%>
+		
+		<script type="text/javascript" src="userShow.js"></script>
 </body>
 </html>

@@ -22,14 +22,11 @@
     <script src="google-maps.js"></script>
 </head>
 <body>
-<h1>
-    Wellcome <%=((User) request.getSession().getAttribute("user")).getName()%>
-</h1>
+
 
 ასდასდადსასდ
 <div id="map-canvas"></div>
 adsdsadsada
 <input id="googleMap-button" type="button" onclick="googleMap()" value="google-map">
 </body>
-<%@include file="logout.jsp" %>
 </html>
