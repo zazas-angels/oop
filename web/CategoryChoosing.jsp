@@ -189,11 +189,23 @@
 	pointer-events: none;
 	cursor: default;
 }
+
+#firstDiv {
+	float: left;
+	width: 50%;
+	font-family: sans-serif;
+}
+
+#secondDiv {
+	float: left;
+	width: 50%;
+	font-family: sans-serif;
+}
 </style>
 <title>Category Chooser</title>
 </head>
 <body>
-	<h1>აირჩიეთ კატეგორია:</h1>
+
 	<%-- shows all root categories --%>
 	<%@ page import="core.category.CategoryTreeInterface"%>
 	<%@ page import="core.category.CategoryInterface"%>
@@ -206,6 +218,7 @@
 		List<CategoryInterface> roots = categories.getRoots();
 		PrintWriter writer = response.getWriter();
 	%>
+	<%="<div id=\"firstDiv\"><h1>აირჩიეთ კატეგორია:</h1>"%>
 	<%="<ul id=\"categories\" >"%>
 	<%
 		for (int i = 0; i < roots.size(); i++) {
@@ -230,17 +243,17 @@
 	<%
 		}
 	%>
-	<%="</ul>"%>
+	<%="</ul></div><div id=\"secondDiv\">"%>
 	<h1>არჩეული კატეგორიები:</h1>
 	<ul id="addedCategories"></ul>
+
+	<%="</div>"%>
+
 	<form id="form" action="CategorySave" method="POST">
 
 		<input id="choosed" name="choosed" type="hidden" value="zura"></input>
 	</form>
-	<input id="send" type="button" value="გაგრძელება" style="float: right;"
-		onclick="send()"></input>
-
-
-
+	<input id="send" type="button" value="გაგრძელება"
+		style="position: absolute; right: 4px; bottom: 10px;" onclick="send()"></input>
 </body>
 </html>
