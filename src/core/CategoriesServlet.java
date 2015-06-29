@@ -80,7 +80,7 @@ public class CategoriesServlet extends HttpServlet {
 			String href="";
 			int currId = childCategories.get(i).getId();
 			if(categories.hasChilds(currId))
-			href= " href='#' onclick=\"makeNextCategories("+currId+");\"";
+			href= " href='#' class=\"outfitshome\" onclick=\"makeNextCategories("+currId+");\"";
 			writer.print("<a"+href+"> "+ childCategories.get(i).getName()+" </a>");
 			writer.print("</li>");
 		}

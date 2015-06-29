@@ -1,0 +1,50 @@
+@CHARSET "ISO-8859-1";
+.box{
+  height:300px;
+  width:100%;
+  border-radius:10px; 
+  border:2px solid #666;
+  padding:6px 0px;
+  background:#ccc;
+}
+
+.box-content{
+  height:290px; 
+
+  overflow:auto;
+  border-radius:8px;
+}
+
+#categories li a {
+  padding: .5% 1%;
+  display: block;
+  background-color: #02abfd;
+  color: black;
+  margin: 10px;
+  text-align: center;
+  list-style: none;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+#categories li a.outfitshome:hover {
+  background-color: #FFFFFF;
+}
+
+#categories li a.interiors:hover {
+  background-color: #FFFFFF;
+}
+
+#categories li a.quotes:hover {
+  background-color: #FFFFFF;
+}
+
+#categories li a.randoms:hover {
+  background-color: #FFFFFF;
+}
+
+#categories li a.finds:hover {
+  background-color: #FFFFFF;
+}
+ 

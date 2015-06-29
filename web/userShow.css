@@ -6,7 +6,7 @@
 
 .athlete-list ul li span {
     background-color: #EFEFEF;
-    color: #F15A00;
+    color: #0000ff;
     display: block;
     line-height: 2;
     text-align: center;
@@ -14,7 +14,7 @@
 }
 
 a, .a, .builder .summary-list .show-specifications {
-    color: #F15A00;
+    color: #02abfd;
     cursor: pointer;
     text-decoration: none;
 }
@@ -49,7 +49,7 @@ a, .a, .builder .summary-list .show-specifications {
     left: 0;
 }
 .athletes-list-wrapper .nav-block {
-    background-color: #F15A00;
+    background-color: #02abfd;
     color: #FFFFFF;
     cursor: pointer;
     height: 182px;

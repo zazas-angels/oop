@@ -7,12 +7,15 @@
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
+<link rel="stylesheet" type="text/css" href="userShow.css">
+<link rel="stylesheet" type="text/css" href="categoryView.css">
 <link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="back.css">
 <meta charset="UTF-8">
 <title></title>
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="http://ricostacruz.com/jquery.transit/jquery.transit.min.js"></script>
 <script src="registration.js"></script>
-<link rel="stylesheet" type="text/css" href="userShow.css">
 
 
 <%-- Java script fuctions --%>
@@ -22,7 +25,7 @@
 	//make next categories and make button (set it disabled or not)
 	function makeNextCategories(id) {
 		alert('it works!');
-		var list = document.getElementById("categories");
+		var list = document.getElementById("cat");
 		var xmlHttp;
 		if (window.XMLHttpRequest) {
 			// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -43,7 +46,7 @@
 		makeUsersForCategory(id);
 		if (id == 0)
 			document.getElementById("upButton").disabled = true;
-		alert(items.length);
+		
 	}
 	//make users which are connected to these categoreis
 	function makeUsersForCategory(id) {
@@ -76,7 +79,7 @@
 img {
 	padding: 4px;
 	border: 4px solid;
-	border-color: red;
+	border-color: #02abfd;
 	box-shadow: 10px 10px 5px grey;
 	border-radius: 50%;
 	cursor: pointer;
@@ -103,19 +106,22 @@ img {
 		List<CategoryInterface> roots = categories.getRoots();
 		PrintWriter writer = response.getWriter();
 	%>
-	<%="<ul id=\"categories\" >"%>
+	<%="<div class=\"box\">"%>
+			<%=" <div  class=\"box-content\">"%>
+					<%="  <div id=\"categories\">"%>
+	<%="<ul id=\"cat\" >"%>
 	<%
 		for (int i = 0; i < roots.size(); i++) {
 	%>
 	<%="<li>"%>
-	<%="<a href='#' onclick=\"makeNextCategories("
+	<%="<a class=\"outfitshome\" href='#' onclick=\"makeNextCategories("
 						+ roots.get(i).getId() + ");\"> "
 						+ roots.get(i).getName() + " </a>"%>
 	<%="</li>"%>
 	<%
 		}
 	%>
-	<%="</ul>"%>
+	<%="</ul></div></div></div>"%>
 
 
 	<%="<div class=\"athletes-list-wrapper\">"%>
@@ -152,5 +158,6 @@ img {
 											<%="</div>"%>
 		
 		<script type="text/javascript" src="userShow.js"></script>
+		<script type="text/javascript" src="back.js"></script>
 </body>
 </html>
