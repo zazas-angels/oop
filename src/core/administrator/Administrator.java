@@ -146,7 +146,7 @@ public class Administrator implements AdminInterface {
 
     @Override
     public synchronized void bannUser(int userID, int days) {
-
+        dbConnection.bannUserByDays(userID, days);
     }
 
     @Override
@@ -162,5 +162,10 @@ public class Administrator implements AdminInterface {
     @Override
     public synchronized void deleteReport(int reportID) {
         dbConnection.deleteReport(reportID);
+    }
+
+    @Override
+    public void deleteUser(int userID) {
+        dbConnection.deleteUser(userID);
     }
 }

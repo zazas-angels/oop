@@ -132,13 +132,14 @@ To change this template use File | Settings | File Templates.
     <div id="notifications">
     </div>
 </div>
-<h2>მომხმარებლები:
+<h4><label style="float: left">მომხმარებლები:</label>
+    <button type="button" class="btn btn-danger" style="float: left" onclick="showDeleteUser()">წაშლა</button>
     <%if (request.getSession().getAttribute("type") != null && request.getSession().getAttribute("type").equals("superAdmin")) {%>
     <button type="button" class="btn btn-danger" style="float: right" onclick="showDeleteAdmin()">წაშლა</button>
     <button type="button" class="btn btn-success" style="float: right" onclick="showAddAdmin()">დანიშვნა</button>
     <label style="float: right;">ადმინის:</label>
     <%}%>
-</h2>
+</h4>
 
 <div id=main-section>
     <script>searchByName();</script>
@@ -205,6 +206,25 @@ To change this template use File | Settings | File Templates.
             </div>
             <div class="modal-footer">
                 <input type="submit" class="btn btn-primary" value="კატეგორიის დამატება" onclick="addCategory()">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade in" id="deleteUser-section" role="dialog" aria-hidden="false"
+     style="display: none; padding-right: 15px;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="hideDeleteUser()">×</button>
+                <h4 class="modal-title">მომხმარებლის წაშლა</h4>
+            </div>
+            <div class="modal-body">
+                <label style="margin-right: 80px;">წასაშლელი მომხმარებლის ID:</label>
+                <input type="text" class="form-control" id="deleteUserID" name="deleteUser" required=""
+                       placeholder="წასაშლელი მომხმარებლის ID" title="წასაშლელი მომხმარებლის ID">
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-success" value="მომხმარებლის წაშლა" onclick="deleteUser()">
             </div>
         </div>
     </div>

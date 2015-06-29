@@ -31,7 +31,6 @@ public class LoginServlet extends HttpServlet {
      * else forwards to same page, and sets wrong try login attribute true.
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("LoginServlet.doPost");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         ServletContext context = request.getServletContext();
@@ -44,7 +43,16 @@ public class LoginServlet extends HttpServlet {
             user = (User) dbConnection.getUser(email, password);
             if (user != null) {
                 if (dbConnection.isActiveUser(user.getID())) {
-                    loginUser(request, response, user, context);
+                    if (dbConnection.isBannedUser(user.getID())) {
+                        if(dbConnection.checkBannDate(user.getID())){
+                            loginUser(request, response, user, context);
+                        } else {
+                            request.getSession().setAttribute("user", user);
+                            request.getRequestDispatcher("AccountIsBanned.html").forward(request, response);
+                        }
+                    } else {
+                        loginUser(request, response, user, context);
+                    }
                     notAlreadyForwarded = false;
                 } else {
                     request.getSession().setAttribute("user", user);
@@ -76,7 +84,6 @@ public class LoginServlet extends HttpServlet {
      * or refresh logged in state
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("loginservlet doget");
         if (request.getSession().getAttribute("logged in") != null && (boolean) (request.getSession().getAttribute("logged in")) && request.getSession().getAttribute("type") != null) {
             if (request.getSession().getAttribute("type").equals("admin") && request.getSession().getAttribute("admin") != null) {
                 request.getRequestDispatcher("adminPage.jsp").forward(request, response);

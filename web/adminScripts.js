@@ -36,6 +36,17 @@ function showAddCategory() {
     $("#bann-background").show();
 }
 
+
+function hideDeleteUser() {
+    $("#deleteUser-section").hide();
+    $("#bann-background").hide();
+}
+
+function showDeleteUser() {
+    $("#deleteUser-section").show();
+    $("#bann-background").show();
+}
+
 function showBannSection(username, url, isActive, type, rating, ID) {
     userID = ID;
     $("#bann-userName").text(username);
@@ -89,6 +100,24 @@ function deleteWantedCategory(wcID){
         }
     );
     updateWantedCategories();
+}
+
+
+function deleteUser() {
+    var id = $("#deleteUserID").val();
+    if (id.length > 0) {
+        $.post("admin",
+            {requestType: "deleteUser", userID: id}
+        );
+        hideDeleteUser();
+        setTimeout(function () {
+            if ($('#extendedSearch').css('display') == 'none') {
+                searchByName();
+            } else {
+                extendedSearch();
+            }
+        }, 100);
+    }
 }
 
 
