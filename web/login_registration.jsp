@@ -1,4 +1,8 @@
 <%@ page import="core.SiteConstants" %>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <%--
   Created by IntelliJ IDEA.
   User: nika
@@ -37,10 +41,10 @@
         <tr>
 
             <td>
-                <button id="login-button">შესვლა</button>
+                <button id="login-button" type="button" class="btn btn-info">შესვლა</button>
             </td>
             <td>
-                <button id="reg-button">რეგისტრაცია</button>
+                <button id="reg-button" type="button" class="btn btn-info">რეგისტრაცია</button>
             </td>
         </tr>
     </table>

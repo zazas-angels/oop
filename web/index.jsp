@@ -17,7 +17,6 @@
 <script src="http://ricostacruz.com/jquery.transit/jquery.transit.min.js"></script>
 <script src="registration.js"></script>
 
-
 <%-- Java script fuctions --%>
 <script src="NextCategories.js"></script>
 <script>
@@ -84,10 +83,19 @@ img {
 	border-radius: 50%;
 	cursor: pointer;
 }
+.siteName { color: #fff; font-family: 'Righteous', cursive; font-size: 65px; font-weight: normal; line-height: 60px; margin: 10px 0 20px; text-transform: uppercase; text-shadow: 2px 2px 0 #000; margin: 10px 0 24px; text-align: right; }
 </style>
 </head>
+
 <body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+
+<div id="header">
+
 	<%@include file="login_registration.jsp"%>
+	<h1 class="siteName">arran.ge</h1>
+	<%-- <div style="position:absolute;right:0; top:0;"class="logopt"></div>--%>
+	</div>
 	<%@ page import="core.category.CategoryTreeInterface"%>
 	<%@ page import="core.category.CategoryInterface"%>
 	<%@ page import="core.database.Connection"%>
