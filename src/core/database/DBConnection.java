@@ -107,7 +107,7 @@ public class DBConnection implements core.database.Connection {
 			int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
 			PreparedStatement statement = dataBaseConnection
 					.prepareStatement("select * from " + tableName
-							+ " Where id=?;");
+                            + " Where id=?;");
 			statement.setInt(temp, id);
 			results = statement.executeQuery();
 		} catch (SQLException e) {
@@ -144,7 +144,7 @@ public class DBConnection implements core.database.Connection {
 
 	/*
 	 * Add user in database (non-Javadoc)
-	 * 
+	 *
 	 * @see core.database.Connection#addUser(core.user.UserInterface)
 	 */
 	@Override
@@ -200,7 +200,7 @@ public class DBConnection implements core.database.Connection {
 			int temp2 = 2;
 			PreparedStatement statement = dataBaseConnection
 					.prepareStatement("select * from " + table
-							+ " Where mail=? and password =?;");
+                            + " Where mail=? and password =?;");
 			statement.setString(temp1, email);
 			statement.setString(temp2, password);
 			results = statement.executeQuery();
@@ -230,7 +230,7 @@ public class DBConnection implements core.database.Connection {
 
 	/*
 	 * getUsers if not exist return null (non-Javadoc)
-	 * 
+	 *
 	 * @see core.database.Connection#getUser(java.lang.String, java.lang.String)
 	 */
 	@Override
@@ -354,7 +354,7 @@ public class DBConnection implements core.database.Connection {
 			int temp = 1; // 1s ro gadavcem metods mixurebs ratomgac
 			PreparedStatement statement = dataBaseConnection
 					.prepareStatement("select * from users" + " Where "
-							+ column + "=?;");
+                            + column + "=?;");
 			statement.setString(temp, value);
 			results = statement.executeQuery();
 		} catch (SQLException e) {
@@ -568,7 +568,7 @@ public class DBConnection implements core.database.Connection {
 			try {
 				PreparedStatement statement = dataBaseConnection
 						.prepareStatement("select * from users"
-								+ " Where name like ? and isBanned like ? and isActive like ?;");
+                                + " Where name like ? and isBanned like ? and isActive like ?;");
 
 				statement.setString(1, name + "%");
 				if (bann.equals("on")) {
@@ -669,9 +669,9 @@ public class DBConnection implements core.database.Connection {
 			try {
 				PreparedStatement statement = dataBaseConnection
 						.prepareStatement("select * from users u, users_categories, categories c "
-								+ "where u.ID = UserID and CategoryID = c.ID and c.ID = ? and u.name like ? "
-								+ "and u.isBanned like ? and u.isActive like ? "
-								+ "group by u.ID");
+                                + "where u.ID = UserID and CategoryID = c.ID and c.ID = ? and u.name like ? "
+                                + "and u.isBanned like ? and u.isActive like ? "
+                                + "group by u.ID");
 
 				statement.setString(1, categoryID);
 				statement.setString(2, name + "%");
@@ -818,7 +818,7 @@ public class DBConnection implements core.database.Connection {
 			SiteConstants.Notification notification) throws SQLException {
 		PreparedStatement statement = dataBaseConnection
 				.prepareStatement("insert into notifications (notification, userName, userUrl, postDate) values "
-						+ "(?, ?, ?, now());");
+                        + "(?, ?, ?, now());");
 		statement.setString(1, String.valueOf(notification));
 		statement.setString(2, userName);
 		statement.setString(3, userUrl);
@@ -868,7 +868,7 @@ public class DBConnection implements core.database.Connection {
 			}
 			PreparedStatement statement = dataBaseConnection
 					.prepareStatement("select * from " + table + " "
-							+ dateLimit + " order by postDate desc;");
+                            + dateLimit + " order by postDate desc;");
 
 			results = statement.executeQuery();
 		} catch (SQLException e) {
@@ -890,7 +890,7 @@ public class DBConnection implements core.database.Connection {
 			}
 			PreparedStatement statement = dataBaseConnection
 					.prepareStatement("select * from wantedCategories "
-							+ dateLimit + " order by postDate desc;");
+                            + dateLimit + " order by postDate desc;");
 
 			results = statement.executeQuery();
 		} catch (SQLException e) {
@@ -954,7 +954,7 @@ public class DBConnection implements core.database.Connection {
 			double lng, int userID) throws SQLException {
 		PreparedStatement statement = dataBaseConnection
 				.prepareStatement("insert into markers (name, address, lat, lng, userID) values "
-						+ "(?, ?, ?, ?, ?);");
+                        + "(?, ?, ?, ?, ?);");
 		int tmp = 1;
 		statement.setString(tmp++, name);
 		statement.setString(tmp++, address);
@@ -992,7 +992,7 @@ public class DBConnection implements core.database.Connection {
 		try {
 			PreparedStatement statement = dataBaseConnection
 					.prepareStatement("select * from users_confcodes"
-							+ " Where userId=?;");
+                            + " Where userId=?;");
 			statement.setInt(1, userId);
 			results = statement.executeQuery();
 			if (results.next()) {
@@ -1095,9 +1095,7 @@ public class DBConnection implements core.database.Connection {
         //	db.changeData(3, "ooo");
         //db.activateUser(8);
         //db.bannUserByDays(3, 30);
-        System.out.println(db.checkBannDate(3));
-        System.out.println("a");
-        System.out.println(db.getData(1));
+        db.addSuperAdmin("nika", generatePassword("paroli12"), null);
     }
 	@Override
 	public synchronized ResultSet getElementsInfo() {
@@ -1148,7 +1146,7 @@ public class DBConnection implements core.database.Connection {
 			System.out.println(statementString);
 			PreparedStatement statement = dataBaseConnection
 					.prepareStatement(statementString);
-			
+
 			results = statement.executeQuery();
 		} catch (SQLException e) {
 			// ignore
@@ -1241,7 +1239,7 @@ public class DBConnection implements core.database.Connection {
 
 	/*
 	 * Checks if user exist in database by email (non-Javadoc)
-	 * 
+	 *
 	 * @see core.database.Connection#existsUser(java.lang.String)
 	 */
 	@Override
@@ -1335,8 +1333,27 @@ public class DBConnection implements core.database.Connection {
             e.printStackTrace();
         }
     }
-	private synchronized boolean existsUser(String column, String value) {
 
+    /**
+     * adds tag in database
+     * @param userId identifies user
+     * @param name name of tag
+     */
+    @Override
+    public void addTag(int userId, String name) {
+        try {
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("insert into tags (name, userID) values (?,?);");
+            statement.setString(1, name);
+            statement.setInt(2, userId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+    }
+
+    private synchronized boolean existsUser(String column, String value) {
 		ResultSet results = null;
 		boolean existResult = false;
 		try {
@@ -1404,7 +1421,7 @@ public class DBConnection implements core.database.Connection {
 
 	/*
 	 * Adds all categories id's for users (non-Javadoc)
-	 * 
+	 *
 	 * @see core.database.Connection#addUserCategories(int, java.util.Vector)
 	 */
 	@Override

@@ -15,7 +15,7 @@ public class DBInfo {
 
 	public static final String MYSQL_USERNAME = "root";
 
-	public static final String MYSQL_PASSWORD = "io1234";
+	public static final String MYSQL_PASSWORD = "paroli";
 
 	public static final String MYSQL_DATABASE_NAME = "ServisSite";
 	public static final String MYSQL_DATABASE_SERVER = "localhost:3306/"

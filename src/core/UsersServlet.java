@@ -2,10 +2,12 @@ package core;
 /*
  * Author guri
  */
-import core.SiteConstants;
+
 import core.category.CategoryInterface;
 import core.category.CategoryTree;
 import core.database.Connection;
+import core.database.DBConnection;
+import core.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +40,10 @@ public class UsersServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if(request.getParameter("addTag") != null){
+			DBConnection dbConnection = (DBConnection) request.getServletContext().getAttribute(SiteConstants.DATABASE);
+			dbConnection.addTag(((User) request.getSession().getAttribute("user")).getID(), request.getParameter("addTag"));
+		}
 	}
 
 	/**
