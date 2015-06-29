@@ -62,7 +62,7 @@ function showBannSection(username, url, isActive, type, rating, ID) {
 }
 
 function updateNotifications() {
-    var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=not";
+    var link = "wc-rep-not.jsp?toUpdate=not";
     $.get(link)
         .done(function (response) {
             var data = "";
@@ -132,7 +132,7 @@ function deleteReport(ID){
 
 
 function updateWantedCategories() {
-    var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=wc";
+    var link = "wc-rep-not.jsp?toUpdate=wc";
     $.get(link)
         .done(function (response) {
             var data = "";
@@ -161,7 +161,7 @@ function updateWantedCategories() {
 }
 
 function updateReports() {
-    var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=rep";
+    var link = "wc-rep-not.jsp?toUpdate=rep";
     $.get(link)
         .done(function (response) {
             var data = "";
@@ -188,7 +188,7 @@ function updateReports() {
 }
 
 function searchByName() {
-    var link = "http://localhost:8080/admin?name=" + $("#name").val() + "&category=default&bann=all&active=all";
+    var link = "admin?name=" + $("#name").val() + "&category=default&bann=all&active=all";
     $.get(link)
         .done(function (response) {
             update(response);
@@ -199,7 +199,7 @@ function searchByName() {
 }
 
 function extendedSearch() {
-    var link = "http://localhost:8080/admin?name=" + $("#nameExtendedSearch").val() + "&category=" + $("#categoryCombo").val() + "&bann=" + $("#bannCombo").val() + "&active=" + $("#activeCombo").val();
+    var link = "admin?name=" + $("#nameExtendedSearch").val() + "&category=" + $("#categoryCombo").val() + "&bann=" + $("#bannCombo").val() + "&active=" + $("#activeCombo").val();
     $.get(link)
         .done(function (response) {
             update(response);

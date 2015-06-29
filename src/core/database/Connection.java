@@ -144,4 +144,6 @@ public interface Connection {
 	public boolean checkBannDate(int userID);
 
 	public void bannUserByDays(int userID, int days);
+
+	public void addTag(int userId, String name);
 }

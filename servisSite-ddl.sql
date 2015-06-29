@@ -152,3 +152,15 @@ CREATE TABLE markers (
   FOREIGN KEY (userID) REFERENCES users (ID)
     ON DELETE CASCADE
 );
+
+
+##tags for search
+DROP TABLE IF EXISTS tags;
+CREATE TABLE tags (
+  ID      INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name    VARCHAR(60) NOT NULL,
+  userID  INT         NOT NULL,
+  UNIQUE (userID, name),
+  FOREIGN KEY (userID) REFERENCES users (ID)
+    ON DELETE CASCADE
+);

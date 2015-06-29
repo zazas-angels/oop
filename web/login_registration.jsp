@@ -15,9 +15,11 @@
     boolean b = true;
     if (request.getSession().getAttribute("logged in") != null && (Boolean) request.getSession().getAttribute("logged in")) {
         String nextPage = "userPage.jsp";
-        if (request.getSession().getAttribute("type").equals("admin")) {
-            nextPage = "adminPage.jsp";
-        }
+        if (request.getSession().getAttribute("type") != null){
+            if (request.getSession().getAttribute("type").equals("admin") || request.getSession().getAttribute("type").equals("superAdmin") ) {
+                nextPage = "adminPage.jsp";
+            }
+    }
         request.getRequestDispatcher(nextPage).forward(request, response);
     } else {
         Cookie[] cookies = request.getCookies();
