@@ -163,4 +163,9 @@ public class Administrator implements AdminInterface {
     public synchronized void deleteReport(int reportID) {
         dbConnection.deleteReport(reportID);
     }
+
+    @Override
+    public void deleteUser(int userID) {
+        dbConnection.deleteUser(userID);
+    }
 }

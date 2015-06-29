@@ -36,6 +36,9 @@ public class AdminServlet extends HttpServlet {
                 case "delete-report":
                     admin.deleteReport(Integer.parseInt(request.getParameter("ID")));
                     break;
+                case "deleteUser":
+                    admin.deleteUser(Integer.parseInt(request.getParameter("userID")));
+                    break;
                 case "addCategory":
                     try {
                         admin.addCategory(request.getParameter("name"), Integer.parseInt(request.getParameter("parentID")));

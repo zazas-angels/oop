@@ -1057,7 +1057,7 @@ public class DBConnection implements core.database.Connection {
 	 * @param userID
 	 *            identifies user in users table
 	 */
-	private synchronized void deleteUser(int userID) {
+	public synchronized void deleteUser(int userID) {
 		PreparedStatement stmt;
 		try {
 			stmt = dataBaseConnection
