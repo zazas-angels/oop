@@ -175,41 +175,41 @@
                     makeRemovedChoosedCategy(id);
                 }
             }
+        }
+        //This functuon removed added category and unchecked suitable checkboxs and make remove from set
+        function makeRemovedChoosedCategy(id) {
+            var checkBox = document.getElementById("check" + id);
+            if (checkBox != null)
+                checkBox.checked = false;
+            delete checkedSet["check" + id];
+            removeAddedCategory(id);
+        }
+        //This function just removes category from addedCatgeory view list
+        function removeAddedCategory(id) {
+            var choosedCategory = document.getElementById("addedCategory" + id);
+            var subList = choosedCategory.getElementsByTagName("li");
+            //adds checked if it was checked
+            while (subList.length != 0) {
+                var subCategory = subList[0];//beacause it's removing
+                makeRemovedChoosedCategy(subCategory.getAttribute("id").substring(
+                        13));
+            }
+            choosedCategory.parentNode.removeChild(choosedCategory);
+        }
 
 
-	}
-	//This functuon removed added category and unchecked suitable checkboxs and make remove from set
-	function makeRemovedChoosedCategy(id) {
-		var checkBox = document.getElementById("check" + id);
-		if (checkBox != null)
-			checkBox.checked = false;
-		delete checkedSet["check" + id];
-		removeAddedCategory(id);
-	}
-	//This function just removes category from addedCatgeory view list
-	function removeAddedCategory(id) {
-		var choosedCategory = document.getElementById("addedCategory" + id);
-		var subList = choosedCategory.getElementsByTagName("li");
-		//adds checked if it was checked
-		while (subList.length != 0) {
-			var subCategory = subList[0];//beacause it's removing
-			makeRemovedChoosedCategy(subCategory.getAttribute("id").substring(
-					13));
-		}
-		choosedCategory.parentNode.removeChild(choosedCategory);
-	}
-	  function addTag() {
-          var newTag = $("#newTagInput").val();
-          if (newTag.length > 3) {
-              var link = "UsersServlet?addTag=" + newTag;
-              $.get(link)
-                      .done(function (response) {
-                          $("#newTagInput").val("")
-                      });
-              $('#addedTags').text($('#addedTags').text() + "  " + newTag);
-          }
-      }
-</script>
+        function addTag() {
+            var newTag = $("#newTagInput").val();
+            if (newTag.length > 2) {
+                var link = "UsersServlet?addTag=" + newTag;
+                $.get(link)
+                        .done(function (response) {
+                            $("#newTagInput").val("")
+                        });
+                $('#addedTags').text($('#addedTags').text() + "  " + newTag);
+            }
+        }
+    </script>
 <style type="text/css">
 .not-active {
 	pointer-events: none;
@@ -250,12 +250,11 @@
 <body>
 
 	<%-- shows all root categories --%>
-	<%@ page import="core.category.CategoryTreeInterface"%>
 	<%@ page import="core.category.CategoryInterface"%>
-	<%@ page import="java.util.ArrayList"%>
-	<%@ page import="java.util.List"%>
+	<%@ page import="core.category.CategoryTreeInterface"%>
 	<%@ page import="java.io.PrintWriter"%>
-	<%
+	<%@ page import="java.util.List"%>
+    <%
 		CategoryTreeInterface categories = (CategoryTreeInterface) request
 				.getServletContext().getAttribute("categories");
 		List<CategoryInterface> roots = categories.getRoots();
@@ -294,7 +293,7 @@
 
 
 	<input id="send"  type="button" class="btn btn-danger" value="გაგრძელება"
-		style="position: absolute; right: 4px; bottom: 10px;" onclick="send()"></input>
+		style="position: absolute; right: 4px; bottom: 10px;" onclick="send()">
 
 <form id="form" action="CategorySave" method="POST">
 

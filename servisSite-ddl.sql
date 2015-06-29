@@ -108,7 +108,7 @@ CREATE TABLE wantedCategories (
   authorID  int  DEFAULT -1,
   categoryName VARCHAR(64),
   parentCategoryID INT          DEFAULT NULL,
-  postDate         DATE,
+  postDate         datetime,
   PRIMARY KEY (ID),
   FOREIGN KEY (parentCategoryID) REFERENCES categories (ID)
 );
@@ -121,7 +121,7 @@ CREATE TABLE notifications (
   notification ENUM ('createdUser'),
   userName     VARCHAR(64),
   userID  int  DEFAULT -1,
-  postDate     DATETIME,
+  postDate     datetime,
   PRIMARY KEY (ID)
 );
 
@@ -135,6 +135,40 @@ FOR EACH ROW
     SET notification = 'createdUser', userName = NEW.name, userID = NEW.ID, postDate = now();
     INSERT INTO user_page   SET page = '', UserId = NEW.ID;
 
+  END;
+//
+DELIMITER ;
+DELIMITER //
+
+
+CREATE TRIGGER addNotificationOnDelete After DELETE on users
+FOR EACH ROW
+  BEGIN
+    INSERT INTO notifications
+    SET notification = 'deletedUser', userName = OLD.name, userID = -1, postDate = now();
+  END;
+//
+DELIMITER ;
+
+DELIMITER //
+
+
+CREATE TRIGGER addNotificationOnAddAdmin After INSERT ON admins
+FOR EACH ROW
+  BEGIN
+    INSERT INTO notifications
+    SET notification = 'addedAdmin', userName = NEW.mail, userID = -1, postDate = now();
+  END;
+//
+DELIMITER ;
+DELIMITER //
+
+
+CREATE TRIGGER addNotificationOnDeleteAdmin After DELETE on admins
+FOR EACH ROW
+  BEGIN
+    INSERT INTO notifications
+    SET notification = 'deletedAdmin', userName = OLD.mail, userID = -1, postDate = now();
   END;
 //
 DELIMITER ;
