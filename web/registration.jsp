@@ -62,7 +62,7 @@
                 <td> Url:</td>
                 <td><input type="text" placeholder="მინ. 1 სიმბოლო" autocomplete="off" id="url" name="url"/></td>
                 <td>
-                    <div id="urlCheck">.chveniSaiti.ge</div>
+                    <div id="urlCheck">.arran.ge</div>
                 </td>
             </tr>
             <tr>
