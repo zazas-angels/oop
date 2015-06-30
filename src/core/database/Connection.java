@@ -147,4 +147,7 @@ public interface Connection {
 
 	public void addTag(int userId, String name);
 	public boolean existsTag(String tag);
+	public ResultSet getUsersByCriterias(String name, String bann,
+			String active, String categoryName);
+	public void deleteUser(int userID);
 }
