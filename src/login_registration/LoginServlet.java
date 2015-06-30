@@ -31,7 +31,6 @@ public class LoginServlet extends HttpServlet {
      * else forwards to same page, and sets wrong try login attribute true.
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("LoginServlet.doPost");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         ServletContext context = request.getServletContext();
@@ -44,7 +43,16 @@ public class LoginServlet extends HttpServlet {
             user = (User) dbConnection.getUser(email, password);
             if (user != null) {
                 if (dbConnection.isActiveUser(user.getID())) {
-                    loginUser(request, response, user, context);
+                    if (dbConnection.isBannedUser(user.getID())) {
+                        if(dbConnection.checkBannDate(user.getID())){
+                            loginUser(request, response, user, context);
+                        } else {
+                            request.getSession().setAttribute("user", user);
+                            request.getRequestDispatcher("AccountIsBanned.html").forward(request, response);
+                        }
+                    } else {
+                        loginUser(request, response, user, context);
+                    }
                     notAlreadyForwarded = false;
                 } else {
                     request.getSession().setAttribute("user", user);
@@ -76,7 +84,6 @@ public class LoginServlet extends HttpServlet {
      * or refresh logged in state
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("loginservlet doget");
         if (request.getSession().getAttribute("logged in") != null && (boolean) (request.getSession().getAttribute("logged in")) && request.getSession().getAttribute("type") != null) {
             if (request.getSession().getAttribute("type").equals("admin") && request.getSession().getAttribute("admin") != null) {
                 request.getRequestDispatcher("adminPage.jsp").forward(request, response);
@@ -100,7 +107,6 @@ public class LoginServlet extends HttpServlet {
                         HashMap<String, AdminInterface> mapSessionAd = (HashMap<String, AdminInterface>) context.getAttribute(SiteConstants.SESSIONS_MAP_ADMINS);
                         AdminInterface admin = mapSessionAd.get(cookie.getValue());
                         if (admin != null) {
-                            System.out.println(admin.getClass());
                             loginAdmin(request, response, admin, context, false);
                             notAlreadyForwarded = false;
                         }
@@ -151,8 +157,9 @@ public class LoginServlet extends HttpServlet {
      */
     private void loginUser(HttpServletRequest request, HttpServletResponse response, UserInterface user, ServletContext context) throws ServletException, IOException {
         request.getSession().setAttribute("logged in", true);
-        request.getSession().setAttribute("type", "email");
+        request.getSession().setAttribute("type", "user");
         request.getSession().setAttribute("user", user);
+        request.getSession().setAttribute("userId", user.getID());
 
         addCookie(request, response, context, user);
         request.getRequestDispatcher("userPage.jsp").forward(request, response);

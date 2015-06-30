@@ -1,0 +1,21 @@
+@CHARSET "ISO-8859-1";
+body {
+		margin: 0;
+		padding: 0;
+		height: 100%;
+		width: 100%;
+	}
+
+canvas {
+	  display: block; 
+	  position: absolute;
+	  background: -moz-radial-gradient(center, ellipse cover,  rgba(171,209,234,0.5) 0%, rgba(125,185,232,0.75) 100%); /* FF3.6+ */
+	  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(171,209,234,0.5)), color-stop(100%,rgba(125,185,232,0.75))); /* Chrome,Safari4+ */
+	  background: -webkit-radial-gradient(center, ellipse cover,  rgba(171,209,234,0.5) 0%,rgba(125,185,232,0.75) 100%); /* Chrome10+,Safari5.1+ */
+	  background: -o-radial-gradient(center, ellipse cover,  rgba(171,209,234,0.5) 0%,rgba(125,185,232,0.75) 100%); /* Opera 12+ */
+	  background: -ms-radial-gradient(center, ellipse cover,  rgba(171,209,234,0.5) 0%,rgba(125,185,232,0.75) 100%); /* IE10+ */
+	  background: radial-gradient(ellipse at center,  rgba(171,209,234,0.5) 0%,rgba(125,185,232,0.75) 100%); /* W3C */
+	  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#80abd1ea', endColorstr='#bf7db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+	  
+
+	}

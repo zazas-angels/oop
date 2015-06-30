@@ -36,4 +36,6 @@ public interface AdminInterface {
     public void deleteWantedCategory(int wcID);
 
     public void deleteReport(int reportID);
+
+    public void deleteUser(int userID);
 }

@@ -30,31 +30,62 @@
 <link href='http://fonts.googleapis.com/css?family=Comfortaa'
 	rel='stylesheet' type='text/css'>
 
+<style>
+#map-canvas {
+	width: 500px;
+	height: 300px;
+	float: right; ! important;
+	position: absolute; ! important;
+	bottom: 10px;
+	right: 10px;
+	display: none;
+}
+
+#googleMap-button {
+	position: absolute; ! important;
+	bottom: 10px;
+	right: 10px;
+	z-index: 999;
+}
+</style>
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="google-maps.js"></script>
+
 <script type="text/javascript" src="slider.js"></script>
 
 <script type="text/javascript" src="ControlFunctions.js"></script>
 <script type="text/javascript">
 	var numElements = 33;//Jesus <3
-	var viewMode=false;
+	var viewMode = false;
 	window.onload = function() {
-		alert(1);
+	//	alert(1);
 		$.post("UserPageData", {
 			data : "",
 			view : 1
 		}, function(result) {
-			alert(result);
+			//alert(result);
 			if (result != "") {
 				document.body.innerHTML = result;
-				alert("div" + document.getElementsByTagName("div").length)
+				//alert("div" + document.getElementsByTagName("div").length)
 				numElements += document.getElementsByTagName("div").length;
 			}
+            $("#map-canvas").remove();
+            document.body.innerHTML += '<div id="map-canvas"></div>';
 			makeEdition();
 			initValElems();
+			document.getElementById("logout").style.visibility = "visible";
+			googleMap();
+			addMarkers();
 
+            $("#map-canvas").toggle();
+
+		//	googleMap();
 		});
+
 	};
 	function save() {
-		alert(0);
+		//alert(0);
 
 		var elements = document.getElementsByTagName("input");
 		for (var i = 0; i < elements.length; i++) {
@@ -76,28 +107,31 @@
 			var element = elements[i];
 			element.setAttribute("val", element.value);
 		}
-		var wasVisible = (document.getElementById("control").style.visibility =="visible") ;
+		var wasVisible = (document.getElementById("control").style.visibility == "visible");
 		document.getElementById("control").style.visibility = "hidden";
-		
+
 		document.getElementById("themeselect").style.visibility = "hidden";
 		document.getElementById("edit").style.visibility = "hidden";
+		document.getElementById("logout").style.visibility = "hidden";
 		document.getElementById("addSub").style.visibility = "hidden";
 		var txt = document.body.innerHTML;
-		alert(txt);
+		//alert(txt);
 		$.post("UserPageData", {
 			data : txt,
 			view : 0
 		}, function(result) {
-			alert(1);
+			//alert(1);
 		});
-		if(wasVisible)
-		document.getElementById("control").style.visibility = "visible";
+		if (wasVisible){
+			document.getElementById("control").style.visibility = "visible";
+			document.getElementById("logout").style.visibility = "visible";
+		}
 
 	}
 	function createImage() {
 
 		numElements += 1;
-		alert(1);
+		//alert(1);
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += '<div  class="drsElement"'
@@ -119,12 +153,12 @@
 				+ '		<img alt="noImage" src="noImage.png " style="width: 100%;height:100%;">'
 				+ '	</div> </innerElement>' + '		</div>';
 		document.body.appendChild(div);
-		alert(2);
+		//alert(2);
 	}
 
 	function createText() {
 		numElements += 1;
-		alert(1);
+		//alert(1);
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML = "<div class=\"drsElement\""
@@ -169,7 +203,7 @@
 				+ 'ტექსტი' + '</textarea> </innerElement>' + '</div>';
 		document.body.appendChild(div);
 		jscolor.init();
-		alert(2);
+		//alert(2);
 	}
 	function changeSize(id) {
 		var element = document.getElementById(id);
@@ -180,10 +214,10 @@
 			element.style.fontSize = size + "px";
 
 	}
-	
+
 	function createGallery() {
 		numElements += 1;
-		alert(1);
+		//alert(1);
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += '<div class="drsElement"'
@@ -220,7 +254,7 @@
 	function createCommentBox() {
 
 		numElements += 1;
-		alert(1);
+		//alert(1);
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += ' <div class="drsElement"'
@@ -255,15 +289,13 @@
 
 				+ '	</div>	<innerElement>' + '</div>';
 		document.body.appendChild(div);
-		alert(2);
+		//alert(2);
 	}
-	
+
 	function uploadVideo(id) {
 		var link = document.getElementById("videoLink" + id).value;
 		if (link.substring(0, 32) == "https://www.youtube.com/watch?v=") {
-			alert('<iframe width="560" height="315" src="https://www.youtube.com/embed/'
-					+ link.substring(32)
-					+ '" frameborder="0" allowfullscreen></iframe>');
+			
 			document.getElementById("video" + id).innerHTML = '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/'
 					+ link.substring(32)
 					+ '" frameborder="0" allowfullscreen></iframe>';
@@ -293,7 +325,7 @@
 	function createVideo() {
 
 		numElements += 1;
-		alert(1);
+	//	alert(1);
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += '<div type="video" class="drsElement"'
@@ -333,19 +365,18 @@
 
 <%--upload --%>
 <script type="text/javascript">
-	
 	function makeEdition() {
-		viewMode=false;
-		alert(0);
+		viewMode = false;
+		//alert(0);
 		document.getElementById("control").style.visibility = "visible";
 		document.getElementById("edit").style.visibility = "hidden";
 		document.getElementById("themeselect").style.visibility = "hidden";
 		document.getElementById("addSub").style.visibility = "hidden";
 		var elements = document.getElementsByTagName("div");
-		alert("len: " + elements.length)
+		//alert("len: " + elements.length)
 		for (var i = 0; i < elements.length; i++) {
 			var element = elements[i];
-			alert(element.className)
+			//alert(element.className)
 			if (element.className == "dummyHand") {
 				element.className = "drsMoveHandle";
 			}
@@ -361,7 +392,6 @@
 					&& element.getAttribute("ch") == "1") {
 				element.checked = true;
 			}
-	
 
 		}
 		elements = document.getElementsByTagName("opac");
@@ -369,7 +399,7 @@
 			var element = elements[i];
 			element.style.visibility = "visible";
 			if (element.className == "close") {
-				element.innerHTML="x";
+				element.innerHTML = "x";
 			}
 		}
 		elements = document.getElementsByTagName("textArea");
@@ -379,14 +409,12 @@
 				element.readOnly = false;
 			}
 
-
 		}
-
 
 	}
 
 	function initValElems() {
-		alert("iq");
+		//alert("iq");
 		var elements = document.getElementsByTagName("input");
 		for (var i = 0; i < elements.length; i++) {
 			var element = elements[i];
@@ -408,10 +436,11 @@
 			changeBackground();
 		}
 		jscolor.init();
-	alert("Aq");
+		//alert("Aq");
 
 	}
 </script>
+
 <%--uploader style --%>
 <link rel="stylesheet" type="text/css" href="Uploader.css">
 <script type="text/javascript">
@@ -488,7 +517,7 @@
 
 <script type="text/javascript">
 	function performAjaxSubmit(multi, id) {
-		alert("movida");
+		//alert("movida");
 		var sampleFile = document.getElementById("sampleFile" + id).files[0];
 
 		var formdata = new FormData();
@@ -499,50 +528,50 @@
 		if (multi == 0) {
 			image = document.getElementById("image" + id);
 		} else {
-			alert("Das");
+		//	alert("Das");
 			slider = document.getElementById("slider" + id);
-			alert("bol");
+			//alert("bol");
 		}
 
 		formdata.append("sampleFile", sampleFile);
-		alert(1);
+		//alert(1);
 		if (window.XMLHttpRequest) {
 			// code for IE7+, Firefox, Chrome, Opera, Safari
 			xhr = new XMLHttpRequest();
-			alert("pirveli");
+		//	alert("pirveli");
 		} else {
 			// code for IE6, IE5
-			alert("meore");
+			//alert("meore");
 			xhr = new ActiveXObject("Microsoft.XMLHTTP");
 		}
 
 		xhr.open("POST", "FileUploader", true);
 		xhr.send(formdata);
-		alert(2);
+		//alert(2);
 		xhr.onreadystatechange = function(e) {
 			if (xhr.readyState == 4 && xhr.status == 200) {
+			//	alert(1);
+				//alert(this.responseText);
+				//document.body.innerHTML += '<img style=\"width: 100%; height: 100%;\" src="data:image/jpg;base64,'
+				//		+ this.responseText + '">';
 				if (multi == 0) {
-					alert(5);
-					image.innerHTML = xhr.responseText;
+				//	alert(5);
+					image.innerHTML = '<img style=\"width: 100%; height: 100%;\" src="data:image/jpg;base64,'
+							+ this.responseText + '">';
 				} else {
 					//var text = document.getElementById("imageText" + id);
 					//alert(text.value);
-					/* alert("qeia+");
-					var additionalText = "";
-					if (text.value != "") {
-						alert("no");
-						additionalText = '<span class="caption">'
-								+ text.value + '</span>';
-					} */
-					alert(3);
+
+				//	alert(3);
 					numElements += 1;
 					slider.innerHTML += '<li id='+numElements+'>'
-							+ this.responseText + '</li>';
+							+ '<img style=\"width: 100%; height: 100%;\" src="data:image/jpg;base64,'
+							+ this.responseText + '">' + '</li>';
 					document.getElementById('select' + id).innerHTML += '<option value='+numElements+'>'
 							+ sampleFile.name + '</option>';
 
 				}
-				alert(this.responseText);
+				//alert(this.responseText);
 
 			}
 
@@ -554,7 +583,7 @@
 
 <body>
 	<%--text --%>
-	<%-- 
+	<%--
 	<div class="drsElement"
 		style="left: 50px; top: 150px; width: 350px; height: 90px; background: white; text-align: center">
 		<div class="drsMoveHandle">Text:</div>
@@ -562,7 +591,7 @@
 			Font: <input id="zaz" size="5" class="color" colorType="font"
 				labelId="7" value="000000"> Back: <input id="zaz" size="5"
 				class="color" colorType="back" labelId="7" value="FFFFFF">
-				
+
 			Size:<input id="size7" size="1" value="18" onkeydown="changeSize(7);"
 				onpaste="changeSize(7);" oninput="changeSize(7);"> Bold: <input
 				type="checkbox" id="bold7" onclick="changeBold(7);">
@@ -570,21 +599,23 @@
 		<textarea id="7"style="  text-align: center; width: calc(100% - 6px); height: calc(100% - 53px); resize:none;">
 Your Text
 </textarea>
-		
+
 	</div>
 --%>
 
 
 
 
-	<%
-		
-	%>
+	<input
+		style="background-color: red; cursor: pointer; padding: 5px 25px; background: red; border: 1px solid #33842a; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .75); -moz-box-shadow: 0 0 4px rgba(0, 0, 0, .75); box-shadow: 0 0 4px rgba(0, 0, 0, .75); color: #f3f3f3; font-size: 1.1em;"
+		id="googleMap-button" val="google-map" type="button"
+		onclick="googleMap()" value="google-map">
+	<%@include file="logout.jsp"%>
 
 	<%--control panel --%>
 
 	<div id="edit" onclick="makeEdition()" class="circle"
-		style="position: fixed; visibility: hidden; left: 20px; background: #FF3399;">
+		style="position: fixed; visibility: hidden; top: 50px; left: 20px; background: #FF3399;">
 		<i class="icon1 fa fa-edit fa-lg"></i> <i
 			class="icon2 fa fa-star fa-lg"></i> <span> შეცვლა</span>
 	</div>
@@ -656,17 +687,26 @@ Your Text
 			style="position: absolute; visibility: hidden; top: 460px; left: 110px;">
 			<option value="">არაფერი
 			<option
-				value="http://img72.imageshack.us/img72/999/background62column.jpg">წითელი სვეტები
+				value="http://img72.imageshack.us/img72/999/background62column.jpg">წითელი
+				სვეტები
 			<option
-				value="http://www.unsigneddesign.com/Seamless_background_textures/thumbs/seamlesstexture21_1200.jpg">ნაცრისფერი ბაზისი
-			<option value="http://media.24ways.org/2011/verou/8.png">მწვანე ზოლები
+				value="http://www.unsigneddesign.com/Seamless_background_textures/thumbs/seamlesstexture21_1200.jpg">ნაცრისფერი
+				ბაზისი
+			<option value="http://media.24ways.org/2011/verou/8.png">მწვანე
+				ზოლები
 			<option
-				value="http://blog.boxedart.com/images-vd/repeat-background.gif">მარტივი ლურჯი
+				value="http://blog.boxedart.com/images-vd/repeat-background.gif">მარტივი
+				ლურჯი
 			<option
-				value="http://janeblogs.net/cutesify/backgrounds/dollydaze3col.jpg">ლურჯი სვეტები
+				value="http://janeblogs.net/cutesify/backgrounds/dollydaze3col.jpg">ლურჯი
+				სვეტები
 			<option value="http://i.stack.imgur.com/z3PLR.png">ცისარტყელა
+
+			
 			<option
 				value="http://i960.photobucket.com/albums/ae84/homebakedblogs/ramona_sisters_column3.jpg">ყვავილები
+
+
 
 
 
@@ -677,6 +717,8 @@ Your Text
 			
 			<option
 				value="http://1.bp.blogspot.com/_JR1wtGyGotU/S8U_5R3ktHI/AAAAAAAAAo8/iDlD4cK2D6A/s1600/Perfectly+Pink+2.gif">ვარდისფერობა
+
+
 
 
 
@@ -695,13 +737,15 @@ Your Text
 
 
 
+
+
 			
 		</select>
 
 	</div>
 
 	<%--image --%>
-	<%-- 
+	<%--
 	<div class="drsElement "
 		style="left: 150px; top: 280px; width: 350px; height: 150px; background: #DFC; text-align: center">
 
@@ -714,7 +758,7 @@ Your Text
 				value="Upload" onClick="performAjaxSubmit(0,1);"></input>
 
 		</form>
-		
+
 		<div class="drsMoveHandle " style="background: #DFC;width:100%; height:calc(100% - 50px);" id="image1"  >
 			<img alt="noImage" src="noImage.png " style="width: 100%;height:100%;">
 		</div>
@@ -763,7 +807,7 @@ Enter text here...</textarea>
 
 
 	<%-- gallery --%>
-	<%-- 
+	<%--
 	<div class="drsElement"
 		style="left: 150px; top: 280px; width: 50px; height: 100px; background: #DFC; text-align: center">
 		<div class="drsMoveHandle" style="background: #DFC">Slider</div>
@@ -777,7 +821,7 @@ Enter text here...</textarea>
 		</form>
 		<div style="width: 550px; height: 300px;">
 			<div  class="slider">
-				
+
 				<img src="images/image-slider-3.jpg" />
 				<img src="images/image-slider-1.jpg" />
 			</div>

@@ -36,6 +36,17 @@ function showAddCategory() {
     $("#bann-background").show();
 }
 
+
+function hideDeleteUser() {
+    $("#deleteUser-section").hide();
+    $("#bann-background").hide();
+}
+
+function showDeleteUser() {
+    $("#deleteUser-section").show();
+    $("#bann-background").show();
+}
+
 function showBannSection(username, url, isActive, type, rating, ID) {
     userID = ID;
     $("#bann-userName").text(username);
@@ -51,7 +62,7 @@ function showBannSection(username, url, isActive, type, rating, ID) {
 }
 
 function updateNotifications() {
-    var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=not";
+    var link = "wc-rep-not.jsp?toUpdate=not";
     $.get(link)
         .done(function (response) {
             var data = "";
@@ -61,28 +72,43 @@ function updateNotifications() {
             } else {
                 for (var i = 0; i < arr.length; i++) {
                     var notification = arr[i];
-                    var url = notification.url;
+                    var userID = notification.userID;
                     var tmp = "";
+                    console.log(notification.notification);
                     if (notification.notification === "createdUser") {
                         tmp += "ახალი მომხმარებელი: ";
                     } else {
-                        tmp += notification.notification + " ";
+                        if (notification.notification === "deletedUser") {
+                            tmp += "წაიშალა მომხმარებელი ";
+                        }
+                        else {
+                            if (notification.notification === "deletedAdmin") {
+                                tmp += "წაიშალა ადმინი ";
+                            }
+                            else {
+                                if (notification.notification === "addedAdmin") {
+                                    tmp += "დაინიშნა ადმინი ";
+                                }
+                                else {
+                                    tmp += notification.notification + " ";
+                                }
+                            }
+                        }
                     }
-                    if (url === "#") {
+                    if (userID == -1) {
                         tmp += notification.author;
                     } else {
-                        tmp += "<a href='" + url + "'> " + notification.author + "</a>";
+                        tmp += "<a href='/UsersForAdmins?ID=" + userID + "'> " + notification.author + "</a>";
                     }
                     data += tmp;
-                    data += "<br><br>"
+                    data += "<br><br>";
                 }
             }
             $('#notifications').html(data);
         });
 }
 
-function deleteWantedCategory(wcID){
-
+function deleteWantedCategory(wcID) {
     $.post("admin",
         {requestType: "delete-wc", wcID: wcID},
         function (data) {
@@ -93,7 +119,25 @@ function deleteWantedCategory(wcID){
 }
 
 
-function deleteReport(ID){
+function deleteUser() {
+    var id = $("#deleteUserID").val();
+    if (id.length > 0) {
+        $.post("admin",
+            {requestType: "deleteUser", userID: id}
+        );
+        hideDeleteUser();
+        setTimeout(function () {
+            if ($('#extendedSearch').css('display') == 'none') {
+                searchByName();
+            } else {
+                extendedSearch();
+            }
+        }, 100);
+    }
+}
+
+
+function deleteReport(ID) {
     $.post("admin",
         {requestType: "delete-report", ID: ID},
         function (data) {
@@ -104,7 +148,7 @@ function deleteReport(ID){
 
 
 function updateWantedCategories() {
-    var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=wc";
+    var link = "wc-rep-not.jsp?toUpdate=wc";
     $.get(link)
         .done(function (response) {
             var data = "";
@@ -114,12 +158,12 @@ function updateWantedCategories() {
             } else {
                 for (var i = 0; i < arr.length; i++) {
                     var wantedCategory = arr[i];
-                    var url = wantedCategory.url;
+
                     var tmp = "<div>ავტორი: ";
-                    if (url === "#") {
+                    if (wantedCategory.userID == -1) {
                         tmp += wantedCategory.author;
                     } else {
-                        tmp += "<a href='" + url + "'> " + wantedCategory.author + "</a>";
+                        tmp += "<a href='/UsersForAdmins?ID=" + wantedCategory.userID + "'>" + wantedCategory.author + "</a>";
                     }
                     tmp += "<br>კატეგორია:   " + wantedCategory.categoryName + "" +
                         "<br>";
@@ -133,7 +177,7 @@ function updateWantedCategories() {
 }
 
 function updateReports() {
-    var link = "http://localhost:8080/wc-rep-not.jsp?toUpdate=rep";
+    var link = "wc-rep-not.jsp?toUpdate=rep";
     $.get(link)
         .done(function (response) {
             var data = "";
@@ -143,12 +187,11 @@ function updateReports() {
             } else {
                 for (var i = 0; i < arr.length; i++) {
                     var report = arr[i];
-                    var url = report.url;
                     var tmp = "";
-                    if (url === "#") {
+                    if (report.userID == -1) {
                         tmp += report.author + "";
                     } else {
-                        tmp += "<a href='" + url + "'> " + report.author + "</a>";
+                        tmp += "<a href='/UsersForAdmins?ID=" + report.userID + "'> " + report.author + "</a>";
                     }
                     tmp += "<p>" + report.text + "<br>" + report.date;
                     tmp += "<button onclick=deleteReport('" + report.ID + "');>წაშლა</button></p>";
@@ -161,7 +204,7 @@ function updateReports() {
 }
 
 function searchByName() {
-    var link = "http://localhost:8080/admin?name=" + $("#name").val() + "&category=default&bann=all&active=all";
+    var link = "admin?name=" + $("#name").val() + "&category=default&bann=all&active=all";
     $.get(link)
         .done(function (response) {
             update(response);
@@ -172,7 +215,7 @@ function searchByName() {
 }
 
 function extendedSearch() {
-    var link = "http://localhost:8080/admin?name=" + $("#nameExtendedSearch").val() + "&category=" + $("#categoryCombo").val() + "&bann=" + $("#bannCombo").val() + "&active=" + $("#activeCombo").val();
+    var link = "admin?name=" + $("#nameExtendedSearch").val() + "&category=" + $("#categoryCombo").val() + "&bann=" + $("#bannCombo").val() + "&active=" + $("#activeCombo").val();
     $.get(link)
         .done(function (response) {
             update(response);
@@ -182,7 +225,7 @@ function extendedSearch() {
         });
 }
 
-function addCategory(){
+function addCategory() {
     var name = $("#newCategotyName").val();
     var parentID = $("#addCategoryCombo").val();
     $.post("admin",
@@ -238,8 +281,10 @@ function update(response) {
         for (var i = 0; i < arr.length; i++) {
             var user = arr[i];
             var url = user.url;
-            var tmp = "<li><a class='normal' href='" + url + "'><img src=\"" + user.avatarFile + "\" alt=\"" + user.name + " \"style=\"width:180px;height:180px\" x='0px' y='0px'></a>";
-            tmp += "<div class='info'><h3>" + user.name + "</h3><p>"
+            var tmp = "<li><a class='normal' href='/UsersForAdmins?ID=" + user.ID + "'><img src=\"" + user.avatarFile + "\" alt=\"" + user.name + " \"style=\"width:180px;height:180px\" x='0px' y='0px'></a>";
+            tmp += "<div class='info'><h3>"
+                + user.name + "</h3><p>"
+                + "ID  =  " + user.ID + "<br>"
                 + url + "<br>"
                 + user.isBanned + "<br>"
                 + user.isActive + "<br>"

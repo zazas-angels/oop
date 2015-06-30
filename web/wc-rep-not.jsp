@@ -34,7 +34,7 @@
                     if (toUpdate.equals("rep")) {
                         userObj.addProperty("ID", set.getString("ID"));
                         userObj.addProperty("author", set.getString("authorName"));
-                        userObj.addProperty("url", set.getString("authorUrl"));
+                        userObj.addProperty("userID", set.getString("authorID"));
                         userObj.addProperty("text", set.getString("text"));
                         userObj.addProperty("date", set.getString("postDate"));
                     } else {
@@ -42,11 +42,11 @@
                         if (toUpdate.equals("wc")) {
                             userObj.addProperty("ID", set.getString("ID"));
                             userObj.addProperty("author", set.getString("authorName"));
-                            userObj.addProperty("url", set.getString("authorUrl"));
+                            userObj.addProperty("userID", set.getString("authorID"));
                             userObj.addProperty("categoryName", set.getString("categoryName"));
                         } else {
                             userObj.addProperty("author", set.getString("userName"));
-                            userObj.addProperty("url", set.getString("userUrl"));
+                            userObj.addProperty("userID", set.getString("userID"));
                             userObj.addProperty("notification", set.getString("notification"));
                             userObj.addProperty("date", set.getString("postDate"));
                         }

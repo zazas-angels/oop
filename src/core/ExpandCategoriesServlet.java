@@ -84,9 +84,9 @@ public class ExpandCategoriesServlet extends HttpServlet {
 		}
 		if (childCategories == null)
 			return;
-		writer.print("<ul>");
+		writer.print("<ul class=\"list-group\"  >");
 		for (int i = 0; i < childCategories.size(); i++) {
-			writer.print("<li>");
+			writer.print("<li  class=\"list-group-item list-group-item-info\">");
 			boolean hasChilds = false;
 			String style = " style=\"cursor:pointer;\" ";// can be "" beacuse of
 															// super has this
@@ -113,7 +113,7 @@ public class ExpandCategoriesServlet extends HttpServlet {
 					+ ");\""
 					+ "> "
 					+ categoryName
-					+ " <input type=\"checkbox\" onclick=\"changeCheckedSet(event,"
+					+ " <input  class=\"checkbox-circle\" type=\"checkbox\" onclick=\"changeCheckedSet(event,"
 					+ currId + ",0);\" parentId=\""+id+"\" id=\"check" + currId + "\">");
 			writer.print("</li>");
 		}

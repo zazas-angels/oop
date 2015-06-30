@@ -16,15 +16,17 @@
         <table>
             <tbody>
             <tr>
+                <td colspan="2" style="color: red;"><label id = "errorMessage">
                 <%
                     if (request.getSession().getAttribute("message") != null) {
                         String message = (String) request.getSession().getAttribute("message");
                         request.getSession().setAttribute("message", null);
-                %>
-                <td colspan="2" style="color: red;"><%=message%></td>
+                %><%=message%></label></td>
                 <script>
                     $("#registration-block").show();
                 </script>
+                <%} else {%>
+                </label></td>
                 <%}%>
             </tr>
             <tr>
@@ -61,13 +63,13 @@
                 <td> Url:</td>
                 <td><input type="text" placeholder="მინ. 1 სიმბოლო" autocomplete="off" id="url" name="url"/></td>
                 <td>
-                    <div id="urlCheck">.chveniSaiti.ge</div>
+                    <div id="urlCheck">.arran.ge</div>
                 </td>
             </tr>
             <tr>
                 <td></td>
                 <td colspan="2">
-                    <button name="registration" onclick="return trySignUp()">რეგისტრაცია</button>
+                    <button name="registration" type="submit" class="btn btn-success" onclick="return trySignUp()">რეგისტრაცია</button>
                 </td>
             </tr>
             </tbody>

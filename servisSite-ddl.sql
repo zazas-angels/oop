@@ -12,6 +12,8 @@ CREATE TABLE users (
   type       VARCHAR(64),
   isActive   BOOL                                    DEFAULT FALSE,
   isBanned   BOOL                                    DEFAULT FALSE,
+  bannDuration int default -1,
+  bannDate   date default '2015-01-01',
   password   VARCHAR(64),
   raiting    DOUBLE                                  DEFAULT 0,
   avatarFile CHAR(64) DEFAULT "default.png" NOT NULL,
@@ -51,6 +53,7 @@ CREATE TABLE user_page (
   unique(UserId),
   PRIMARY KEY (ID),
   FOREIGN KEY (UserId) REFERENCES users (ID)
+    ON DELETE CASCADE
 );
 
 
@@ -77,13 +80,21 @@ CREATE TABLE admins (
   PRIMARY KEY (ID)
 );
 
+##superAdmins
+DROP TABLE IF EXISTS superAdmins;
+CREATE TABLE superAdmins (
+  ID       INT NOT NULL AUTO_INCREMENT,
+  mail     VARCHAR(64),
+  password VARCHAR(64),
+  PRIMARY KEY (ID)
+);
 
 ##reports
 DROP TABLE IF EXISTS reports;
 CREATE TABLE reports (
   ID         INT NOT NULL AUTO_INCREMENT,
   authorName VARCHAR(64),
-  authorUrl  VARCHAR(64)  DEFAULT "#",
+  authorID  int  DEFAULT -1,
   text       VARCHAR(2000),
   postDate   DATETIME,
   PRIMARY KEY (ID)
@@ -94,10 +105,10 @@ DROP TABLE IF EXISTS wantedCategories;
 CREATE TABLE wantedCategories (
   ID               INT NOT NULL AUTO_INCREMENT,
   authorName       VARCHAR(64),
-  authorUrl        VARCHAR(64)  DEFAULT "#",
+  authorID  int  DEFAULT -1,
   categoryName VARCHAR(64),
   parentCategoryID INT          DEFAULT NULL,
-  postDate         DATE,
+  postDate         datetime,
   PRIMARY KEY (ID),
   FOREIGN KEY (parentCategoryID) REFERENCES categories (ID)
 );
@@ -109,8 +120,8 @@ CREATE TABLE notifications (
   ID           INT NOT NULL AUTO_INCREMENT,
   notification ENUM ('createdUser'),
   userName     VARCHAR(64),
-  userUrl      VARCHAR(64)  DEFAULT "#",
-  postDate     DATETIME,
+  userID  int  DEFAULT -1,
+  postDate     datetime,
   PRIMARY KEY (ID)
 );
 
@@ -121,9 +132,43 @@ CREATE TRIGGER addNotification After INSERT ON users
 FOR EACH ROW
   BEGIN
     INSERT INTO notifications
-    SET notification = 'createdUser', userName = NEW.name, userUrl = NEW.url, postDate = now();
+    SET notification = 'createdUser', userName = NEW.name, userID = NEW.ID, postDate = now();
     INSERT INTO user_page   SET page = '', UserId = NEW.ID;
 
+  END;
+//
+DELIMITER ;
+DELIMITER //
+
+
+CREATE TRIGGER addNotificationOnDelete After DELETE on users
+FOR EACH ROW
+  BEGIN
+    INSERT INTO notifications
+    SET notification = 'deletedUser', userName = OLD.name, userID = -1, postDate = now();
+  END;
+//
+DELIMITER ;
+
+DELIMITER //
+
+
+CREATE TRIGGER addNotificationOnAddAdmin After INSERT ON admins
+FOR EACH ROW
+  BEGIN
+    INSERT INTO notifications
+    SET notification = 'addedAdmin', userName = NEW.mail, userID = -1, postDate = now();
+  END;
+//
+DELIMITER ;
+DELIMITER //
+
+
+CREATE TRIGGER addNotificationOnDeleteAdmin After DELETE on admins
+FOR EACH ROW
+  BEGIN
+    INSERT INTO notifications
+    SET notification = 'deletedAdmin', userName = OLD.mail, userID = -1, postDate = now();
   END;
 //
 DELIMITER ;
@@ -138,6 +183,18 @@ CREATE TABLE markers (
   lng     DOUBLE      NOT NULL,
   userID  INT         NOT NULL,
   UNIQUE (userId, lat, lng),
+  FOREIGN KEY (userID) REFERENCES users (ID)
+    ON DELETE CASCADE
+);
+
+
+##tags for search
+DROP TABLE IF EXISTS tags;
+CREATE TABLE tags (
+  ID      INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name    VARCHAR(60) NOT NULL,
+  userID  INT         NOT NULL,
+  UNIQUE (userID, name),
   FOREIGN KEY (userID) REFERENCES users (ID)
     ON DELETE CASCADE
 );

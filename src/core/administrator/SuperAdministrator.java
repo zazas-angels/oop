@@ -16,11 +16,11 @@ public class SuperAdministrator extends Administrator {
     }
 
 
-    public Administrator setAdmin(int userID, CategoryTree categoryTree) {
+    public synchronized Administrator setAdmin(int userID, CategoryTree categoryTree) {
         return this.getDbConnection().setAdmin(userID, categoryTree);
     }
 
-    public void deleteAdmin(int adminID) {
+    public synchronized void deleteAdmin(int adminID) {
         this.getDbConnection().deleteAdmin(adminID);
     }
 }

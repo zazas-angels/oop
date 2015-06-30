@@ -64,7 +64,7 @@ public class CategoriesServlet extends HttpServlet {
 		if(parent!=null)
 			parentID=parent.getId();
 		System.out.println("id = "+id);;
-		writer.print("<button id=\"upButton\" onclick=\"makeNextCategories("+parentID+")\">Up</button>");
+		writer.print("<button  type=\"button\" class=\"btn btn-danger\" id=\"upButton\" onclick=\"makeNextCategories("+parentID+")\">Up</button>");
 		List<CategoryInterface> childCategories;
 		if(id==0){
 			childCategories=categories.getRoots();
@@ -80,7 +80,7 @@ public class CategoriesServlet extends HttpServlet {
 			String href="";
 			int currId = childCategories.get(i).getId();
 			if(categories.hasChilds(currId))
-			href= " href='#' onclick=\"makeNextCategories("+currId+");\"";
+			href= " href='#' class=\"outfitshome\" onclick=\"makeNextCategories("+currId+");\"";
 			writer.print("<a"+href+"> "+ childCategories.get(i).getName()+" </a>");
 			writer.print("</li>");
 		}

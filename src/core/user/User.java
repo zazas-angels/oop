@@ -24,12 +24,12 @@ public class User implements UserInterface {
     }
 
 
-    public int getID() {
+    public synchronized int getID() {
         return ID;
     }
 
 
-    public static String generatePassword(String password) {
+    public  static String generatePassword(String password) {
         password = "/" + password;
 
 
@@ -60,17 +60,17 @@ public class User implements UserInterface {
     }
 
     @Override
-    public String getEmail() {
+    public synchronized String getEmail() {
         return mail;
     }
 
     @Override
-    public String getPassword() {
+    public synchronized String getPassword() {
         return password;
     }
 
     @Override
-    public String getURL() {
+    public synchronized String getURL() {
         return url;
     }
 
@@ -80,12 +80,12 @@ public class User implements UserInterface {
      * @see core.user.UserInterface#getName()
      */
     @Override
-    public String getName() {
+    public synchronized String getName() {
         return name;
     }
 
 
-    public SiteConstants.Type getType() {
+    public synchronized SiteConstants.Type getType() {
         return type;
     }
 
@@ -96,9 +96,8 @@ public class User implements UserInterface {
     }
 
     @Override
-    public int hashCode() {
+    public synchronized int hashCode() {
         return getEmail().hashCode();
     }
-
 
 }

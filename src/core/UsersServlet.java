@@ -2,10 +2,12 @@ package core;
 /*
  * Author guri
  */
-import core.SiteConstants;
+
 import core.category.CategoryInterface;
 import core.category.CategoryTree;
 import core.database.Connection;
+import core.database.DBConnection;
+import core.user.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,7 +40,10 @@ public class UsersServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if(request.getParameter("addTag") != null){
+			DBConnection dbConnection = (DBConnection) request.getServletContext().getAttribute(SiteConstants.DATABASE);
+			dbConnection.addTag(((User) request.getSession().getAttribute("user")).getID(), request.getParameter("addTag"));
+		}
 	}
 
 	/**
@@ -74,7 +79,11 @@ public class UsersServlet extends HttpServlet {
 		List<CategoryInterface> parentsBranch = categories.getParentBranch(id);
 		if(parentsBranch!=null)
 		connectedCategories.addAll(parentsBranch);
-	
+		for (int i = 0; i < connectedCategories.size(); i++) {
+			System.out.println(connectedCategories.get(i).getId());
+		}
+		
+		
 		results = database.getUsersByCategories(connectedCategories);
 		}else{
 			results = database.getUsers();
@@ -82,10 +91,12 @@ public class UsersServlet extends HttpServlet {
 		if (results != null) {
 			try {
 				while (results.next()) {
+					System.out.println("kio");
 					writer.print("<li>");
-
-					writer.print("<a href='#' onclick=\"alert('notImlemented yet')\"> "
-							+ "<img src=\"" + results.getString("avatarFile") + "\" height=\"" + SiteConstants.USER_IMG_HEIGTH + "\" width=\"" + SiteConstants.USER_IMG_WIDTH + "\"> " + results.getString("name") + " </a>");
+					writer.print("<a href='Visitor.jsp?id="
+							+ results.getString("ID") + "' > " + "<img src=\""
+							+ results.getString("avatarFile") + "\""  + "> <span>"
+							+ results.getString("name") + "</span> </a>");
 					writer.print("</li>");
 
 				}
@@ -94,6 +105,7 @@ public class UsersServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		System.out.println("ola");
 		
 	}
 

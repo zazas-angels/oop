@@ -37,7 +37,10 @@ public class FbGplusServlet extends HttpServlet {
             SiteConstants.Type tp = SiteConstants.getType(type);
             User user = dbConnection.addUser(name, id, "", url, SiteConstants.getType(type));
             dbConnection.activateUser(user.getID());
-            loginUser(user, request, response, context);
+            request.getSession().setAttribute("user", user);
+            request.getSession().setAttribute("userId", user.getID());
+            request.getRequestDispatcher("CategoryChoosing.jsp").forward(request, response);
+            //loginUser(user, request, response, context);
         } else {
             request.getRequestDispatcher("fbG+Registration.jsp").forward(request, response);
         }
@@ -72,6 +75,7 @@ public class FbGplusServlet extends HttpServlet {
             } else {
                 request.getSession().setAttribute("id", id);
                 request.getSession().setAttribute("type", type);
+                //request.getSession().setAttribute("userId", user.getID());
                 request.getRequestDispatcher("fbG+Registration.jsp").forward(request, response);
             }
         }
@@ -83,6 +87,7 @@ public class FbGplusServlet extends HttpServlet {
     private void loginAdmin(Administrator admin, HttpServletRequest request, HttpServletResponse response, ServletContext context) throws ServletException, IOException {
         request.getSession().setAttribute("logged in", true);
         request.getSession().setAttribute("admin", admin);
+        request.getSession().setAttribute("type", "admin");
         LoginServlet.addCookie(request, response, context, admin);
         //LoginServlet.addCookie(request, response, context, admin);
         request.getRequestDispatcher("adminPage.jsp").forward(request, response);
@@ -94,6 +99,7 @@ public class FbGplusServlet extends HttpServlet {
     private void loginUser(UserInterface user, HttpServletRequest request, HttpServletResponse response, ServletContext context) throws ServletException, IOException {
         request.getSession().setAttribute("logged in", true);
         request.getSession().setAttribute("user", user);
+        request.getSession().setAttribute("userId", user.getID());
         LoginServlet.addCookie(request, response, context, user);
         request.getRequestDispatcher("userPage.jsp").forward(request, response);
     }
