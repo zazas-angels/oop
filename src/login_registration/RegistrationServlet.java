@@ -24,6 +24,7 @@ public class RegistrationServlet extends HttpServlet {
      * else forwards back
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         ServletContext context = request.getServletContext();
@@ -33,11 +34,9 @@ public class RegistrationServlet extends HttpServlet {
         String url = request.getParameter("url");
         String name = request.getParameter("name");
         boolean b = true;
-        if (name != null && password != null && email != null && url != null && checkName(name) && checkMail(email) && checkPassword(password) && !url.equals("")) {
+        if (name != null && password != null && email != null && url != null && checkName(name) && checkMail(email) && checkPassword(password) && !url.matches( "/^[a-zA-Z ]+$/i")) {
             boolean existsMail = dbConnection.existsUserWithMail(email);
             boolean existsUrl = dbConnection.existsUserWithUrl(url);
-            System.out.println(existsMail);
-            System.out.println(existsUrl);
             if (existsMail || existsUrl) {
                 if (existsMail)
                     request.getSession().setAttribute("message", email + SiteConstants.BUSY_MAIL);

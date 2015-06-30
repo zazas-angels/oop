@@ -18,7 +18,6 @@
 <script src="registration.js"></script>
 
 <%-- Java script fuctions --%>
-<script src="NextCategories.js"></script>
 <script>
 	//sending request is from W3School tutorial
 	//make next categories and make button (set it disabled or not)
@@ -96,18 +95,16 @@ img {
 	<h1 class="siteName">arran.ge</h1>
 	<%-- <div style="position:absolute;right:0; top:0;"class="logopt"></div>--%>
 	</div>
-	<%@ page import="core.category.CategoryTreeInterface"%>
 	<%@ page import="core.category.CategoryInterface"%>
+	<%@ page import="core.category.CategoryTreeInterface"%>
 	<%@ page import="core.database.Connection"%>
-	<%@ page import="java.util.ArrayList"%>
-	<%@ page import="java.util.List"%>
 	<%@ page import="java.io.PrintWriter"%>
 	<%@ page import="java.sql.ResultSet"%>
-	<%@ page import="core.SiteConstants"%>
+	<%@ page import="java.util.List"%>
 
-	<div id=button></div>
+<div id=button></div>
 
-	<%-- shows all root categories --%>
+<%-- shows all root categories --%>
 	<%
 		CategoryTreeInterface categories = (CategoryTreeInterface) request
 				.getServletContext().getAttribute("categories");

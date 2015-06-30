@@ -15,15 +15,17 @@
         <table>
             <tbody>
             <tr>
+                <td colspan="2" style="color: red;"><label id = "errorMessage">
                 <%
                     if (request.getSession().getAttribute("message") != null) {
                         String message = (String) request.getSession().getAttribute("message");
                         request.getSession().setAttribute("message", null);
-                %>
-                <td colspan="2" style="color: red;"><%=message%></td>
+                %><%=message%></label></td>
                 <script>
                     $("#registration-block").show();
                 </script>
+                <%} else {%>
+                </label></td>
                 <%}%>
             </tr>
             <tr>
