@@ -34,7 +34,7 @@ public class RegistrationServlet extends HttpServlet {
         String url = request.getParameter("url");
         String name = request.getParameter("name");
         boolean b = true;
-        if (name != null && password != null && email != null && url != null && checkName(name) && checkMail(email) && checkPassword(password) && !url.matches( "/^[a-zA-Z ]+$/i")) {
+        if (name != null && password != null && email != null && url != null && checkName(name) && checkMail(email) && checkPassword(password) && !url.matches( "")) {
             boolean existsMail = dbConnection.existsUserWithMail(email);
             boolean existsUrl = dbConnection.existsUserWithUrl(url);
             if (existsMail || existsUrl) {
