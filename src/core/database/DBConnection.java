@@ -8,8 +8,10 @@ import core.SiteConstants;
 import core.administrator.AdminInterface;
 import core.administrator.Administrator;
 import core.administrator.SuperAdministrator;
+import core.category.Category;
 import core.category.CategoryInterface;
 import core.category.CategoryTree;
+import core.category.CategoryTreeInterface;
 import core.user.User;
 import core.user.UserInterface;
 
@@ -608,40 +610,7 @@ public class DBConnection implements core.database.Connection {
 		return results;
 	}
 
-	/**
-	 * searchs in database users by given criterias
-	 *
-	 * @param name
-	 *            name of user, if name.equals(''), we assume that we don't need
-	 *            to specify search by name.
-	 * @param bann
-	 *            if bann.equals("on"), we assume that user's isActived field is
-	 *            true, if bann.equals("off") - false, otherwise we search trues
-	 *            and falses too
-	 * @param active
-	 *            if active.equals("on") we assume that user's isActived field
-	 *            is true, if active.equals("off") - false, otherwise we search
-	 *            trues and falses too
-	 * @param categoryID
-	 *            category
-	 * @return ResultSet of apropriate users
-	 */
-	public synchronized ResultSet getUsersByCriterias(String name, String bann,
-			String active, String categoryID) {
-		ResultSet set = null;
-		if (name != null && bann != null && categoryID != null
-				&& active != null) {
-			if (categoryID.equals("default") || categoryID.equals("")) {
-				set = getUsersBy(name, bann, active);
-			} else {
-				set = getUsersByCategoryAndCriterias(categoryID, name, bann,
-						active);
-				// need to join
-			}
-
-		}
-		return set;
-	}
+	
 
 	/**
 	 * @param on
@@ -1109,8 +1078,12 @@ public class DBConnection implements core.database.Connection {
         //	db.changeData(3, "ooo");
         //db.activateUser(8);
         //db.bannUserByDays(3, 30);
-        db.addSuperAdmin("nika", generatePassword("paroli12"), null);
+        //db.addSuperAdmin("nika", generatePassword("paroli12"), null);
+        User user = db.addUser("bondo", "ddd@ddd.aa", "123456", "mevdawiwini", SiteConstants.getType("email"));
+        db.activateUser(user.getID());
     }
+    
+    
 	@Override
 	public synchronized ResultSet getElementsInfo() {
 		return getResults("elements_info");
@@ -1385,6 +1358,42 @@ public class DBConnection implements core.database.Connection {
 		return existResult;
 	}
 
+
+   
+
+    /**
+     * searchs in database users by given criterias
+     *
+     * @param name       name of user, if name.equals(''), we assume that we don't need
+     *                   to specify search by name.
+     * @param bann       if bann.equals("on"), we assume that user's isActived field is
+     *                   true, if bann.equals("off") - false, otherwise we search trues
+     *                   and falses too
+     * @param active     if active.equals("on") we assume that user's isActived field
+     *                   is true, if active.equals("off") - false, otherwise we search
+     *                   trues and falses too
+     * @param categoryID category
+     * @return ResultSet of apropriate users
+     */
+    public synchronized ResultSet getUsersByCriterias(String name, String bann,
+                                         String active, String categoryID) {
+        ResultSet set = null;
+        if (name != null && bann != null && categoryID != null
+                && active != null) {
+            if (categoryID.equals("default") || categoryID.equals("")) {
+                set = getUsersBy(name, bann, active);
+            } else {
+                set = getUsersByCategoryAndCriterias(categoryID, name, bann,
+                        active);
+                // need to join
+            }
+
+        }
+        return set;
+    }
+
+
+    
 	@Override
 	/*
 	 * Changing page data for this user id (non-Javadoc)
@@ -1466,5 +1475,48 @@ public class DBConnection implements core.database.Connection {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+    public synchronized void updateName(int userID, String name) {
+        try {
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("update users set name = ?  WHERE ID = ?;");
+            statement.setString(1, name);
+            statement.setInt(2, userID);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+    }
+	
+	@Override
+    public synchronized void updateMail(int userID, String mail) {
+        try {
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("update users set mail = ?  WHERE ID = ?;");
+            statement.setString(1, mail);
+            statement.setInt(2, userID);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+    }
+	
+	@Override
+    public synchronized void updatePassword(int userID, String paswrd) {
+		System.out.println(paswrd+userID);
+        try {
+            PreparedStatement statement = dataBaseConnection
+                    .prepareStatement("update users set password = ?  WHERE ID = ?;");
+            statement.setString(1, paswrd);
+            statement.setInt(2, userID);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            // ignore
+            e.printStackTrace();
+        }
+    }
 
 }

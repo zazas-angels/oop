@@ -466,6 +466,24 @@ public class StubDBConnection implements Connection {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void updateName(int userID, String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updatePassword(int userID, String paswrd) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateMail(int userID, String mail) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 
 }
