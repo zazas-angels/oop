@@ -119,12 +119,23 @@ public class DBConnection implements core.database.Connection {
 
 	@Override
 	public synchronized ResultSet getUsers() {
-		return getResults("users");
+		ResultSet results = null;
+		try {
+			PreparedStatement statement = dataBaseConnection
+					.prepareStatement("select * from users where isActive=1"  + ";");
+
+			results = statement.executeQuery();
+		} catch (SQLException e) {
+			// ignore
+			e.printStackTrace();
+		}
+		return results;
 	}
 
 	@Override
 	public synchronized ResultSet getCategories() {
 		return getResults("categories");
+		
 	}
 
 	@Override
@@ -1138,7 +1149,7 @@ public class DBConnection implements core.database.Connection {
 		String statementString = " select DISTINCT u.* from users as u "+
 "inner join users_categories as uc "+
 "on u.ID=uc.UserID "+
-"where uc.CategoryID  in (";
+"where u.isActive=1 and uc.CategoryID  in (";
 		for (int i = 0; i <categories.size(); i++) {
 			statementString+=categories.get(i).getId();
 			if(i!=categories.size()-1)
