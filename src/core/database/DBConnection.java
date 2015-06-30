@@ -1465,4 +1465,11 @@ public class DBConnection implements core.database.Connection {
 
 	}
 
+	@Override
+	//just for teasting 
+	public boolean existsTag(String tag) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
