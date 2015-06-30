@@ -8,7 +8,26 @@ import java.security.NoSuchAlgorithmException;
 public class User implements UserInterface {
     private String name;
     private String mail;
-    private String password;
+    public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = generatePassword(password);
+	}
+
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	private String password;
     private String url;
     private SiteConstants.Type type;
     private int ID;

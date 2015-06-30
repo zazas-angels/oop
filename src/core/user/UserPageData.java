@@ -52,9 +52,9 @@ public class UserPageData extends HttpServlet {
 		if(needViewMassage==null)return;
 		
 		WebData webData = (WebData) request.getSession().getAttribute("webData");
-		webData.changeData(data);
+		//webData.changeData(data);
 		
-		System.out.println("ა");
+		System.out.println("áƒ�");
 		String res="";
 		Connection database = (Connection) request.getServletContext().getAttribute("database");
 		int userId;

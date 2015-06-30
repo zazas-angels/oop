@@ -27,9 +27,9 @@
 			<form class="form" action="?p=register" method="post" role="form" >
 				<div class="row">
 					<div class="col-sm-6">
-					<label>სახელწოდება:    </label><label id = "oldName"><%= "user.getName()" %>,</label><a href="#changeName-section" onclick="showChangeName()"> შეცვლა</a>
-						
-					<label>მეილი:    </label><label id = "oldMail"><%= "user.getEmail()" %>,</label><a href="#changeMail-section" onclick="showChangeMail()"> შეცვლა</a>
+					<label>სახელწოდება:    </label><label id = "oldName"><%= user.getName() %>,</label><a href="#changeName-section" onclick="showChangeName()"> შეცვლა</a>
+						<br>
+					<label>მეილი:    </label><label id = "oldMail"><%= user.getEmail() %>,</label><a href="#changeMail-section" onclick="showChangeMail()"> შეცვლა</a>
 						<br>
 					<label>პაროლი:    </label><a href="#changeMail-section" onclick="showChangePassword()"> შეცვლა</a>
 						
@@ -57,7 +57,7 @@
             <div class="modal-body">
                 <div class="form-group">
 							<label class="control-label"> ახალი დასახელება:</label>
-							<input type="text" class="form-control" placeholder=<%= "user.getName()" %>  autocomplete="off" id="name" name="name">
+							<input type="text" class="form-control" placeholder=<%= user.getName() %>  autocomplete="off" id="name" name="name">
 							<div id="checkName"></div>
 				</div>
             </div>
@@ -77,13 +77,14 @@
                 <button type="button" class="close" data-dismiss="modal" onclick="hideChangeMail()">×</button>
                 <h4 class="modal-title">მაილის შეცვლა</h4>
             </div>
+            <label id="errorMessageMail"></label>
             <div class="modal-body">
                 <div class="form-group">
 							<label class="control-label"> ახალი ელ-ფოსტის მისამართი:</label>
 
 							<div class="input-group">
 								<span class="input-group-addon">@</span>
-								<input type="text" class="form-control" name="email" autocomplete="off" id="email" placeholder=<%="user.getEmail()" %> onkeyup="checkMails()" >
+								<input type="text" class="form-control" name="email" autocomplete="off" id="email" placeholder=<%=user.getEmail() %> onkeyup="checkMails()" >
 								
 							</div>
 							<div id="checkEmail"> </div>

@@ -1,6 +1,7 @@
 package login_registration;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,7 +24,6 @@ import core.user.User;
 @WebServlet(value = "/Settings", name = "Settings")
 public class Settings extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -36,35 +36,50 @@ public class Settings extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		if(request.getParameter("requestType").equals("showSettings")){
+			request.getRequestDispatcher("Settings.jsp").forward(request, response);
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		 System.out.println("settings");
 		 String type = request.getParameter("requestType");
 		 ServletContext context = request.getServletContext();
 		 DBConnection db = (DBConnection) context.getAttribute(SiteConstants.DATABASE);
-		 User user = (User)request.getAttribute("user");
+		 User user = (User)request.getSession().getAttribute("user");
 	        if (type != null) {
 	            switch (type){
 	                case "changeMail":
 	                    String newMail = request.getParameter("mail");
 	                    if(checkMail(newMail)){
-	                    	
+	                    	if(db.existsUserWithMail(newMail)){
+	                    		response.setContentType("text/html; charset=UTF-8");
+	                    		PrintWriter out = response.getWriter();
+	                            out.println("ეს მაილი დაკავებულია");
+	                    	}else{
+	                    		user.setMail(newMail);
+	                    		db.updateMail(user.getID(), newMail);
+	                    	}
 	                    }
 	                    break;
 	                case "changeName":
 	                	String newName = request.getParameter("name");
 	                	if(checkName(newName)){
-	                		
+	                		db.updateName(user.getID(), newName);
+	                		user.setName(newName);
 	                	}
 	                    break;
-	                case "chengaPassword":
+	                case "changePassword":
 	                    String newPaswrd = request.getParameter("password");
+	                    System.out.println("77zaza");
 	                    if(checkPassword(newPaswrd)){
-	                    	
+	                    	 System.out.println("66zaza");
+	                    	String paswrd = user.generatePassword(newPaswrd);
+	                    	db.updatePassword(user.getID(), paswrd);
+	                    	user.setPassword(newPaswrd);
 	                    }
 	                    break;
 	               
@@ -73,6 +88,8 @@ public class Settings extends HttpServlet {
 	            }
 	        }
 	}
+	
+	 
 	
 	/**
      * checks if given password has enough length

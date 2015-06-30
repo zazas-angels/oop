@@ -60,10 +60,11 @@ function changeName(){
 	    $.post("Settings",
 	        {requestType: "changeName", name: name},
 	        function (data) {
-	
+	        	location.reload();
 	        }
 	    );
 	    hideChangeName();
+	    $("#name").val("");
 	}
 }
 
@@ -73,23 +74,31 @@ function changeMail(){
 	    $.post("Settings",
 	        {requestType: "changeMail", mail: mail},
 	        function (data) {
-	
+	        	if(data.length > 0){
+	        		$("#errorMessageMail").text(data);
+	        	}else{
+	        		location.reload();
+	        	    hideChangeMail();
+	        	}
+        		$("#email").val("");
+        		$("#re-email").val("");
 	        }
 	    );
-	    hideChangeMail();
     }
 }
 
 function changePassword(){
-    var paswrd = $("#email").val();
+    var paswrd = $("#password").val();
     if(checkPasswords()){
 	    $.post("Settings",
 	        {requestType: "changePassword", password: paswrd},
 	        function (data) {
-	
+	        	
 	        }
 	    );
 	    hideChangePassword();
+	    $("#password").val("");
+		$("#passwordRepeat").val("");
     }
 }
 

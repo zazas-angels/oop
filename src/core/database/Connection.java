@@ -147,4 +147,7 @@ public interface Connection {
 
 	public void addTag(int userId, String name);
 	public boolean existsTag(String tag);
+	public void updateName(int userID, String name);
+	public void updatePassword(int userID, String paswrd);
+	public void updateMail(int userID, String mail);
 }

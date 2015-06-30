@@ -4,7 +4,7 @@
 <html>
 <head>
 <%-- Author: glaba13 --%>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>User Page</title>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -578,6 +578,8 @@
 		};
 
 	}
+	
+	
 </script>
 </head>
 
@@ -678,11 +680,14 @@ Your Text
 			<i class="icon1 fa fa-th-large  fa-lg"></i> <i
 				class="icon2 fa fa-star fa-lg"></i> <span> თემა</span>
 		</div>
-		<div id="setting" onclick="set()" class="circle"
+		
+		<a href="Settings.jsp" id="setting"  class="circle"
 			style="top: 500px; background: #CC33FF;">
 			<i class="icon1 fa fa-wrench fa-lg"></i> <i
-				class="icon2 fa fa-star fa-lg"></i> <span> პარამეტრები </span>
-		</div>
+				class="icon2 fa fa-star fa-lg"></i> <span> პარამეტრები  </span>
+		</a>
+		
+		
 		<select id="themeselect" onchange="changeBackground()"
 			style="position: absolute; visibility: hidden; top: 460px; left: 110px;">
 			<option value="">არაფერი
