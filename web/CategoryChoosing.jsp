@@ -305,7 +305,7 @@
     იმისთვის, რომ ვიზიტორმა ადვილად გიპოვოთ ჩაწერეთ ის სიტყვები(ტეგები), რომლების მიხედვითაც შეეძლება მომხმარებელს
     თქვენი ძებნა.(სახელის ჩაწერა არაა საჭირო)
     <br>ტეგები დაამატეთ სათითაოდ!<br>
-    <input type="text" id="newTagInput" placeholder="ჩაწერეთ ტეგი">
+    <input style="color:black" type="text" id="newTagInput" placeholder="ჩაწერეთ ტეგი">
     <input  type="button" class="btn btn-danger"value="ტეგის დამატება" onclick="addTag()">
     <br><h4>დამატებული ტაგები:</h4>
     <label id=addedTags></label>

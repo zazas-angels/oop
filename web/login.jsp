@@ -34,7 +34,7 @@
             <tr>
                 <td></td>
                 <td>
-                    <button  type="button" class="btn btn-success" name="loginButton">შესვლა</button>
+                    <button  type="submit" class="btn btn-success" name="loginButton">შესვლა</button>
                 </td>
             </tr>
             </tbody>

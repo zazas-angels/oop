@@ -30,26 +30,28 @@
 <link href='http://fonts.googleapis.com/css?family=Comfortaa'
 	rel='stylesheet' type='text/css'>
 
-	<style>
-        #map-canvas {
-            width: 500px;
-            height: 300px;
-            float: right; !important;
-            position: absolute; !important;
-            bottom: 10px;
-            right: 10px;
-            display: none;
-        }
-        #googleMap-button {
-            position: absolute; !important;
-             bottom: 10px;
-             right: 10px;
-            z-index: 999;
-         }
-	</style>
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js"></script>
-	<script src="google-maps.js"></script>
+<style>
+#map-canvas {
+	width: 500px;
+	height: 300px;
+	float: right; ! important;
+	position: absolute; ! important;
+	bottom: 10px;
+	right: 10px;
+	display: none;
+}
+
+#googleMap-button {
+	position: absolute; ! important;
+	bottom: 10px;
+	right: 10px;
+	z-index: 999;
+}
+</style>
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script src="google-maps.js"></script>
+
 <script type="text/javascript" src="slider.js"></script>
 
 <script type="text/javascript" src="ControlFunctions.js"></script>
@@ -440,6 +442,7 @@
 
 	}
 </script>
+
 <%--uploader style --%>
 <link rel="stylesheet" type="text/css" href="Uploader.css">
 <script type="text/javascript">
@@ -605,13 +608,16 @@ Your Text
 
 
 
-    <input id="googleMap-button" val="google-map"  type="button" onclick="googleMap()" value="google-map">
+	<input
+		style="background-color: red; cursor: pointer; padding: 5px 25px; background: red; border: 1px solid #33842a; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .75); -moz-box-shadow: 0 0 4px rgba(0, 0, 0, .75); box-shadow: 0 0 4px rgba(0, 0, 0, .75); color: #f3f3f3; font-size: 1.1em;"
+		id="googleMap-button" val="google-map" type="button"
+		onclick="googleMap()" value="google-map">
 	<%@include file="logout.jsp"%>
 
 	<%--control panel --%>
 
 	<div id="edit" onclick="makeEdition()" class="circle"
-		style="position: fixed; visibility: hidden;top:50px; left: 20px; background: #FF3399;">
+		style="position: fixed; visibility: hidden; top: 50px; left: 20px; background: #FF3399;">
 		<i class="icon1 fa fa-edit fa-lg"></i> <i
 			class="icon2 fa fa-star fa-lg"></i> <span> შეცვლა</span>
 	</div>
@@ -698,6 +704,7 @@ Your Text
 				სვეტები
 			<option value="http://i.stack.imgur.com/z3PLR.png">ცისარტყელა
 
+			
 			<option
 				value="http://i960.photobucket.com/albums/ae84/homebakedblogs/ramona_sisters_column3.jpg">ყვავილები
 
@@ -709,6 +716,7 @@ Your Text
 
 
 
+			
 			<option
 				value="http://1.bp.blogspot.com/_JR1wtGyGotU/S8U_5R3ktHI/AAAAAAAAAo8/iDlD4cK2D6A/s1600/Perfectly+Pink+2.gif">ვარდისფერობა
 
@@ -720,6 +728,7 @@ Your Text
 
 
 
+			
 			<option
 				value="http://i221.photobucket.com/albums/dd189/txnbyubabe/backgrounds/gray-grid.jpg">კლეტკა
 
@@ -732,6 +741,7 @@ Your Text
 
 
 
+			
 		</select>
 
 	</div>
