@@ -74,36 +74,41 @@ function updateNotifications() {
                     var notification = arr[i];
                     var userID = notification.userID;
                     var tmp = "";
+                    console.log(notification.notification);
                     if (notification.notification === "createdUser") {
                         tmp += "ახალი მომხმარებელი: ";
                     } else {
-                        if(notification.notification === "deletedUser")
+                        if (notification.notification === "deletedUser") {
                             tmp += "წაიშალა მომხმარებელი ";
-                        else
-                            if((notification.notification === "deletedAdmin"))
+                        }
+                        else {
+                            if (notification.notification === "deletedAdmin") {
                                 tmp += "წაიშალა ადმინი ";
-                            else
-                                if(notification.notification === "addedAdmin")
+                            }
+                            else {
+                                if (notification.notification === "addedAdmin") {
                                     tmp += "დაინიშნა ადმინი ";
-                                else
+                                }
+                                else {
                                     tmp += notification.notification + " ";
-
-
+                                }
+                            }
+                        }
                     }
                     if (userID == -1) {
                         tmp += notification.author;
                     } else {
-                        tmp += "<a href='/UsersForAdmins?ID="+ userID + "'> " + notification.author + "</a>";
+                        tmp += "<a href='/UsersForAdmins?ID=" + userID + "'> " + notification.author + "</a>";
                     }
                     data += tmp;
-                    data += "<br><br>"
+                    data += "<br><br>";
                 }
             }
             $('#notifications').html(data);
         });
 }
 
-function deleteWantedCategory(wcID){
+function deleteWantedCategory(wcID) {
     $.post("admin",
         {requestType: "delete-wc", wcID: wcID},
         function (data) {
@@ -132,7 +137,7 @@ function deleteUser() {
 }
 
 
-function deleteReport(ID){
+function deleteReport(ID) {
     $.post("admin",
         {requestType: "delete-report", ID: ID},
         function (data) {
@@ -158,7 +163,7 @@ function updateWantedCategories() {
                     if (wantedCategory.userID == -1) {
                         tmp += wantedCategory.author;
                     } else {
-                        tmp += "<a href='/UsersForAdmins?ID="+ wantedCategory.userID + "'>" + wantedCategory.author + "</a>";
+                        tmp += "<a href='/UsersForAdmins?ID=" + wantedCategory.userID + "'>" + wantedCategory.author + "</a>";
                     }
                     tmp += "<br>კატეგორია:   " + wantedCategory.categoryName + "" +
                         "<br>";
@@ -186,7 +191,7 @@ function updateReports() {
                     if (report.userID == -1) {
                         tmp += report.author + "";
                     } else {
-                        tmp += "<a href='/UsersForAdmins?ID="+ report.userID + "'> " + report.author + "</a>";
+                        tmp += "<a href='/UsersForAdmins?ID=" + report.userID + "'> " + report.author + "</a>";
                     }
                     tmp += "<p>" + report.text + "<br>" + report.date;
                     tmp += "<button onclick=deleteReport('" + report.ID + "');>წაშლა</button></p>";
@@ -220,7 +225,7 @@ function extendedSearch() {
         });
 }
 
-function addCategory(){
+function addCategory() {
     var name = $("#newCategotyName").val();
     var parentID = $("#addCategoryCombo").val();
     $.post("admin",
@@ -276,7 +281,7 @@ function update(response) {
         for (var i = 0; i < arr.length; i++) {
             var user = arr[i];
             var url = user.url;
-            var tmp = "<li><a class='normal' href='/UsersForAdmins?ID="+ user.ID + "'><img src=\"" + user.avatarFile + "\" alt=\"" + user.name + " \"style=\"width:180px;height:180px\" x='0px' y='0px'></a>";
+            var tmp = "<li><a class='normal' href='/UsersForAdmins?ID=" + user.ID + "'><img src=\"" + user.avatarFile + "\" alt=\"" + user.name + " \"style=\"width:180px;height:180px\" x='0px' y='0px'></a>";
             tmp += "<div class='info'><h3>"
                 + user.name + "</h3><p>"
                 + "ID  =  " + user.ID + "<br>"

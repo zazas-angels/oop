@@ -1036,7 +1036,7 @@ public class DBConnection implements core.database.Connection {
 		ResultSet set = getUsers(userID);
 		try {
 			if (set.next()) {
-				administrator = (Administrator) addAdmin(set.getString("mail"),
+				administrator = (Administrator) addAdmin(set.getString("name"),
 						set.getString("password"), categoryTree);
 				deleteUser(userID);
 			}
