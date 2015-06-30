@@ -64,7 +64,7 @@ public class CategoriesServlet extends HttpServlet {
 		if(parent!=null)
 			parentID=parent.getId();
 		System.out.println("id = "+id);;
-		writer.print("<button id=\"upButton\" onclick=\"makeNextCategories("+parentID+")\">Up</button>");
+		writer.print("<button  type=\"button\" class=\"btn btn-danger\" id=\"upButton\" onclick=\"makeNextCategories("+parentID+")\">Up</button>");
 		List<CategoryInterface> childCategories;
 		if(id==0){
 			childCategories=categories.getRoots();

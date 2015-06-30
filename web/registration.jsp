@@ -66,7 +66,7 @@
             <tr>
                 <td></td>
                 <td colspan="2">
-                    <button name="registration" onclick="return trySignUp()">რეგისტრაცია</button>
+                    <button name="registration" type="button" class="btn btn-success" onclick="return trySignUp()">რეგისტრაცია</button>
                 </td>
             </tr>
             </tbody>

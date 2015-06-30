@@ -80,7 +80,7 @@ img {
 	border: 4px solid;
 	border-color: #02abfd;
 	box-shadow: 10px 10px 5px grey;
-	border-radius: 50%;
+
 	cursor: pointer;
 }
 .siteName { color: #fff; font-family: 'Righteous', cursive; font-size: 65px; font-weight: normal; line-height: 60px; margin: 10px 0 20px; text-transform: uppercase; text-shadow: 2px 2px 0 #000; margin: 10px 0 24px; text-align: right; }
@@ -132,7 +132,7 @@ img {
 	<%="</ul></div></div></div>"%>
 
 
-	<%="<div class=\"athletes-list-wrapper\">"%>
+	<%="<div style=\"background-color: rgba(252, 252, 252, 0.86);\" class=\"athletes-list-wrapper\">"%>
 			<%="<div class=\"nav-block left\"></div>"%>
 					<%="<div class=\"athlete-list with-buttons\">"%>
 							<%="<div id=\"list-holder\">"%>
