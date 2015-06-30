@@ -107,7 +107,6 @@ public class LoginServlet extends HttpServlet {
                         HashMap<String, AdminInterface> mapSessionAd = (HashMap<String, AdminInterface>) context.getAttribute(SiteConstants.SESSIONS_MAP_ADMINS);
                         AdminInterface admin = mapSessionAd.get(cookie.getValue());
                         if (admin != null) {
-                            System.out.println(admin.getClass());
                             loginAdmin(request, response, admin, context, false);
                             notAlreadyForwarded = false;
                         }
@@ -158,7 +157,7 @@ public class LoginServlet extends HttpServlet {
      */
     private void loginUser(HttpServletRequest request, HttpServletResponse response, UserInterface user, ServletContext context) throws ServletException, IOException {
         request.getSession().setAttribute("logged in", true);
-        request.getSession().setAttribute("type", "email");
+        request.getSession().setAttribute("type", "user");
         request.getSession().setAttribute("user", user);
         request.getSession().setAttribute("userId", user.getID());
 

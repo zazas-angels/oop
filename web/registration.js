@@ -65,7 +65,13 @@ function checkPasswords() {
 var chveniSaiti = ".chveniSaiti.ge";
 function checkURL() {
     var url = document.getElementById("url");
-    var enoughRegex = new RegExp("(?=.{1,}).*", "g");
+    var enoughRegex = /^[a-zA-Z ]+$/i;
+    var bool = enoughRegex.test(url.value);
+    if(!bool){
+        document.getElementById("errorMessage").innerHTML = "url-ში დაშვებულია მხოლოდ ლათინური სიმბოლოები";
+    } else {
+        document.getElementById("errorMessage").innerHTML = "";
+    }
     return enoughRegex.test(url.value);
 }
 
