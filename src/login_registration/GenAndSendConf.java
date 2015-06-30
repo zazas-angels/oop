@@ -44,7 +44,7 @@ public class GenAndSendConf extends HttpServlet {
 		User user = (User)request.getSession().getAttribute("user");
 		
 		String conf = genConf("" + user.getID());
-		String link = "http://localhost:8080/oop/ConfirmUser?conf=" + user.getID() + DELIMITER + conf;
+		String link = "http://localhost:8080/OOP/ConfirmUser?conf=" + user.getID() + DELIMITER + conf;
 		ServletContext context = request.getServletContext();
 		DBConnection dbConnection = (DBConnection) context.getAttribute("database");
 		dbConnection.insertUserConfCode(user.getID(), conf);

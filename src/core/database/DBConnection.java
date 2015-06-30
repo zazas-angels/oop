@@ -8,8 +8,10 @@ import core.SiteConstants;
 import core.administrator.AdminInterface;
 import core.administrator.Administrator;
 import core.administrator.SuperAdministrator;
+import core.category.Category;
 import core.category.CategoryInterface;
 import core.category.CategoryTree;
+import core.category.CategoryTreeInterface;
 import core.user.User;
 import core.user.UserInterface;
 
@@ -951,9 +953,14 @@ public class DBConnection implements core.database.Connection {
         DBConnection db = new DBConnection();
         //	db.addUser(new User("nika", "nika@yahoo.com", "paroli", "ragaca.com", SiteConstants.Type.email));
         //	db.changeData(3, "ooo");
-        db.activateUser(7);
-        System.out.println("a");
-        System.out.println(db.getData(1));
+       // db.activateUser(7);
+        //System.out.println("a");
+        //System.out.println(db.getData(1));
+        CategoryTreeInterface tree = new CategoryTree(db.getCategories());
+        ArrayList arr = (ArrayList) tree.getRoots();
+        for(int i = 0; i < arr.size(); i++){
+        	System.out.println( ((Category)arr.get(i)).getId() + " : " +  ((Category)arr.get(i)).getName());
+        }
     }
 
     @Override

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<script type = "text/javascript"  src="registration.js"></script>
 <div id="registration-block" style="display: none">
     <h1>
         რეგისტრაცია

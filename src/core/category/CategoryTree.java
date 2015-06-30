@@ -17,30 +17,32 @@ public class CategoryTree implements CategoryTreeInterface {
 		roots = new ArrayList<CategoryInterface>();
 		chParent = new HashMap<CategoryInterface, CategoryInterface>();
 		map = new HashMap<CategoryInterface, ArrayList<CategoryInterface>>();
-		try {
-			while (s.next()) {
-				int id = Integer.parseInt(s.getString("ID"));
-				String name = s.getString("name");
-				Category cur = new Category(id, name);
-				db.put(id, name);
-				String pId = s.getString("ParentId");
-				if (pId == null) {
-					roots.add(cur);
-				} else {
-					CategoryInterface par = new Category(Integer.parseInt(pId), db.get(Integer.parseInt(pId)));
-					chParent.put(cur, par);
-					ArrayList<CategoryInterface> temp;
-					if (map.containsKey(par)) {
-						temp = map.get(par);
+		if(s != null){
+			try {
+				while (s.next()) {
+					int id = Integer.parseInt(s.getString("ID"));
+					String name = s.getString("name");
+					Category cur = new Category(id, name);
+					db.put(id, name);
+					String pId = s.getString("ParentId");
+					if (pId == null) {
+						roots.add(cur);
 					} else {
-						temp = new ArrayList<CategoryInterface>();
+						CategoryInterface par = new Category(Integer.parseInt(pId), db.get(Integer.parseInt(pId)));
+						chParent.put(cur, par);
+						ArrayList<CategoryInterface> temp;
+						if (map.containsKey(par)) {
+							temp = map.get(par);
+						} else {
+							temp = new ArrayList<CategoryInterface>();
+						}
+						temp.add(cur);
+						map.put(par, temp);
 					}
-					temp.add(cur);
-					map.put(par, temp);
 				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 

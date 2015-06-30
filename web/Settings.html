@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en"><head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>პარამეტრების შეცვლა</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link href="./slider/css/slider.css" rel="stylesheet">
+	<link href="./css/myStyle.css?2" rel="stylesheet">
+	<link rel="shortcut icon" href="./images/favicon.png">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCV5GY_rX3bllx63o8Y4tZ3F-YQL8aEbdA">
+	</script><script src="https://maps.gstatic.com/maps-api-v3/api/js/21/5a/main.js"></script>
+<script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/maps-api-v3/api/js/21/5a/common.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/maps-api-v3/api/js/21/5a/util.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/maps-api-v3/api/js/21/5a/stats.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps/api/js/AuthenticationService.Authenticate?1shttp%3A%2F%2Fvano-test.softgen.ge%2F%3Fp%3Dregister&amp;4sAIzaSyCV5GY_rX3bllx63o8Y4tZ3F-YQL8aEbdA&amp;5e1&amp;callback=_xdc_._bdlf29&amp;token=50737"></script></head>
+<body>
+<div class="rootContainer">
+
+	<section name="register" class="banner screen" style="height: 1571px;">
+	<div class="container">
+		<div class="jumbotron shadow transparent" style="padding: 50px;">
+			<h2>პარამეტრები</h2>
+
+			<form class="form" action="?p=register" method="post" role="form" onsubmit="return registerUser(this);">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="form-group">
+							<label class="control-label">* ახალი დასახელება:</label>
+							<input type="text" class="form-control" name="first_name" autofocus="" required="" value="">
+						</div>
+						<div class="form-group">
+							<label class="control-label">* ახილი ელ-ფოსტის მისამართი:</label>
+
+							<div class="input-group">
+								<span class="input-group-addon">@</span>
+								<input type="email" class="form-control" name="email" placeholder="ipuli@example.com"  required="" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label">* გაიმეორეთ ელ. ფოსტა:</label>
+
+							<div class="input-group">
+								<span class="input-group-addon">@</span>
+								<input type="email" class="form-control" name="re-email"  required="" value="">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label">* პაროლი:</label>
+							<input type="password" class="form-control" name="password" required="" value="">
+						</div>
+						<div class="form-group">
+							<label class="control-label">* გაიმეორეთ პაროლი:</label>
+							<input type="password" class="form-control" name="re-password" required="" value="">
+						</div>
+						
+						<br><br>
+						<button type="submit" name="register" class="btn btn-default" disabled="">დადასტურება</button>
+					</div>
+					
+				</div>
+
+			</form>
+		</div>
+	</div>
+</section>
+
+<script>
+	$('input[type=checkbox][name=agree]').bind("change", function () {
+		if ($(this).is(':checked')) {
+			$('button[name=register]').removeAttr('disabled');
+		} else {
+			$('button[name=register]').attr('disabled', 'disabled');
+		}
+	});
+</script>
+	
+
+
+<script src="./slider/js/bootstrap-slider.js?1"></script>
+<script src="js/my.js?3"></script>
+
+</body></html>

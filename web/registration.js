@@ -51,6 +51,8 @@ function passwordsMatch() {
     }
 }
 
+
+
 function checkPasswords() {
     var pwd1 = document.getElementById("password");
     var pwd2 = document.getElementById("passwordRepeat");
