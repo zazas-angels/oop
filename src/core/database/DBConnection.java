@@ -567,25 +567,26 @@ public class DBConnection implements core.database.Connection {
 		if (name != null && bann != null && active != null) {
 			try {
 				PreparedStatement statement = dataBaseConnection
-						.prepareStatement("select * from users"
-                                + " Where name like ? and isBanned like ? and isActive like ?;");
+						.prepareStatement("select * from users left join tags on users.ID = tags.userID" +
+								" Where (users.name like ? or tags.name like ?) and isBanned like ? and isActive like ? group by users.ID;");
 
 				statement.setString(1, name + "%");
+				statement.setString(2, name + "%");
 				if (bann.equals("on")) {
-					statement.setBoolean(2, true);
-				} else {
-					if (bann.equals("off"))
-						statement.setBoolean(2, false);
-					else
-						statement.setString(2, "%");
-				}
-				if (active.equals("on")) {
 					statement.setBoolean(3, true);
 				} else {
-					if (active.equals("off"))
+					if (bann.equals("off"))
 						statement.setBoolean(3, false);
 					else
 						statement.setString(3, "%");
+				}
+				if (active.equals("on")) {
+					statement.setBoolean(4, true);
+				} else {
+					if (active.equals("off"))
+						statement.setBoolean(4, false);
+					else
+						statement.setString(4, "%");
 				}
 				results = statement.executeQuery();
 			} catch (SQLException e) {
@@ -668,29 +669,31 @@ public class DBConnection implements core.database.Connection {
 				&& active != null) {
 			try {
 				PreparedStatement statement = dataBaseConnection
-						.prepareStatement("select * from users u, users_categories, categories c "
-                                + "where u.ID = UserID and CategoryID = c.ID and c.ID = ? and u.name like ? "
-                                + "and u.isBanned like ? and u.isActive like ? "
-                                + "group by u.ID");
+						.prepareStatement("select * from users u left join tags as t on u.ID = t.userID " +
+								"inner join users_categories as uc on u.ID = uc.UserID " +
+								"inner join categories as c on uc.CategoryID = c.ID "
+                                + "where u.ID = uc.UserID and CategoryID = c.ID and c.ID = ? and " +
+								"(u.name like ? or t.name like ?) and u.isBanned like ? and u.isActive like ? group by u.ID;");
 
 				statement.setString(1, categoryID);
 				statement.setString(2, name + "%");
+				statement.setString(3, name + "%");
 
 				if (bann.equals("on")) {
 					statement.setBoolean(3, true);
 				} else {
 					if (bann.equals("off"))
-						statement.setBoolean(3, false);
-					else
-						statement.setString(3, "%");
-				}
-				if (active.equals("on")) {
-					statement.setBoolean(4, true);
-				} else {
-					if (active.equals("off"))
 						statement.setBoolean(4, false);
 					else
 						statement.setString(4, "%");
+				}
+				if (active.equals("on")) {
+					statement.setBoolean(5, true);
+				} else {
+					if (active.equals("off"))
+						statement.setBoolean(5, false);
+					else
+						statement.setString(5, "%");
 				}
 				results = statement.executeQuery();
 			} catch (SQLException e) {

@@ -77,7 +77,18 @@ function updateNotifications() {
                     if (notification.notification === "createdUser") {
                         tmp += "ახალი მომხმარებელი: ";
                     } else {
-                        tmp += notification.notification + " ";
+                        if(notification.notification === "deletedUser")
+                            tmp += "წაიშალა მომხმარებელი ";
+                        else
+                            if((notification.notification === "deletedAdmin"))
+                                tmp += "წაიშალა ადმინი ";
+                            else
+                                if(notification.notification === "addedAdmin")
+                                    tmp += "დაინიშნა ადმინი ";
+                                else
+                                    tmp += notification.notification + " ";
+
+
                     }
                     if (userID == -1) {
                         tmp += notification.author;
