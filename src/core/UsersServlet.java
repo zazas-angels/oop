@@ -1,4 +1,5 @@
 package core;
+
 /*
  * Author guri
  */
@@ -27,38 +28,48 @@ import java.util.List;
 @WebServlet("/UsersServlet")
 public class UsersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public UsersServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("addTag") != null){
-			DBConnection dbConnection = (DBConnection) request.getServletContext().getAttribute(SiteConstants.DATABASE);
-			dbConnection.addTag(((User) request.getSession().getAttribute("user")).getID(), request.getParameter("addTag"));
+	public UsersServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if (request.getParameter("addTag") != null) {
+			Connection dbConnection = (Connection) request
+					.getServletContext().getAttribute(SiteConstants.DATABASE);
+			dbConnection.addTag(
+					((User) request.getSession().getAttribute("user")).getID(),
+					request.getParameter("addTag"));
 		}
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	/*
 	 * writes all users which is connected which defined categories
 	 * (non-Javadoc)
-	 * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 * 
+	 * @see
+	 * javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest
+	 * , javax.servlet.http.HttpServletResponse)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+
 		response.setContentType("text/plain;; charset=UTF-8");
-		PrintWriter writer =response.getWriter();
+		PrintWriter writer = response.getWriter();
 		String idSting = request.getParameter("categoryId");
 		System.out.println(idSting);
 		int id;
@@ -67,27 +78,48 @@ public class UsersServlet extends HttpServlet {
 		} catch (NumberFormatException e) {
 			id = -1;
 		}
-		if(id<0)return;
-		Connection database = (Connection)request.getServletContext().getAttribute("database");
-		ResultSet results=null;
-		if(id!=0){
-		CategoryTree categories = (CategoryTree) getServletContext().getAttribute("categories");
-		List<CategoryInterface> connectedCategories = new ArrayList<CategoryInterface>();
-		List<CategoryInterface> childBush= categories.getChildBush(id);
-		if(childBush!=null)
-		connectedCategories.addAll(childBush);
-		List<CategoryInterface> parentsBranch = categories.getParentBranch(id);
-		if(parentsBranch!=null)
-		connectedCategories.addAll(parentsBranch);
-		for (int i = 0; i < connectedCategories.size(); i++) {
-			System.out.println(connectedCategories.get(i).getId());
-		}
+		if (id < 0)
+			return;
+		writeUsers(id,request,writer);
 		
-		
-		results = database.getUsersByCategories(connectedCategories);
-		}else{
+	}
+	/*
+	 * Gets all users from database and writs for suitable form
+	 */
+
+	private void writeUsers(int id, HttpServletRequest request, PrintWriter writer) {
+		// TODO Auto-generated method stub
+		Connection database = (Connection) request.getServletContext()
+				.getAttribute("database");
+		ResultSet results = null;
+		if (id != 0) {
+			CategoryTree categories = (CategoryTree) getServletContext()
+					.getAttribute("categories");
+			List<CategoryInterface> connectedCategories = new ArrayList<CategoryInterface>();
+			List<CategoryInterface> childBush = categories.getChildBush(id);
+			if (childBush != null)
+				connectedCategories.addAll(childBush);
+			List<CategoryInterface> parentsBranch = categories
+					.getParentBranch(id);
+			if (parentsBranch != null)
+				connectedCategories.addAll(parentsBranch);
+			for (int i = 0; i < connectedCategories.size(); i++) {
+				System.out.println(connectedCategories.get(i).getId());
+			}
+
+			results = database.getUsersByCategories(connectedCategories);
+		} else {
 			results = database.getUsers();
 		}
+		writeUsersForHTML(results,writer);
+		
+
+	}
+/*
+ * Writes user for ready html tagging
+ */
+	private void writeUsersForHTML(ResultSet results, PrintWriter writer) {
+		// TODO Auto-generated method stub
 		if (results != null) {
 			try {
 				while (results.next()) {
@@ -95,8 +127,9 @@ public class UsersServlet extends HttpServlet {
 					writer.print("<li>");
 					writer.print("<a href='Visitor.jsp?id="
 							+ results.getString("ID") + "' > " + "<img src=\""
-							+ results.getString("avatarFile") + "\""  + "> <span>"
-							+ results.getString("name") + "</span> </a>");
+							+ results.getString("avatarFile") + "\""
+							+ "> <span>" + results.getString("name")
+							+ "</span> </a>");
 					writer.print("</li>");
 
 				}
@@ -105,8 +138,6 @@ public class UsersServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		System.out.println("ola");
-		
 	}
 
 }
