@@ -23,7 +23,7 @@
 	//sending request is from W3School tutorial
 	//make next categories and make button (set it disabled or not)
 	function makeNextCategories(id) {
-		alert('it works!');
+		//alert('it works!');
 		var list = document.getElementById("cat");
 		var xmlHttp;
 		if (window.XMLHttpRequest) {
@@ -49,7 +49,7 @@
 	}
 	//make users which are connected to these categoreis
 	function makeUsersForCategory(id) {
-		alert('users works!');
+		//alert('users works!');
 		var list = document.getElementById("athlete-images");
 		var xmlHttp;
 		if (window.XMLHttpRequest) {
@@ -62,8 +62,8 @@
 
 		xmlHttp.onreadystatechange = function() {
 			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-				alert(1);
-				alert(xmlHttp.responseText);
+			//	alert(1);
+			//	alert(xmlHttp.responseText);
 				list.innerHTML = xmlHttp.responseText;
 			}
 		};
@@ -94,7 +94,7 @@ img {
 
 	<%@include file="login_registration.jsp"%>
 	<h1 class="siteName">arran.ge</h1>
-	<%-- <div style="position:absolute;right:0; top:0;"class="logopt"></div>--%>
+	<div style="position:absolute;right:0; top:0;"class="logopt"></div>
 	</div>
 	<%@ page import="core.category.CategoryTreeInterface"%>
 	<%@ page import="core.category.CategoryInterface"%>

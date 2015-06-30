@@ -1,12 +1,12 @@
 var SPEED = 5;
 function nunfzaza(){
-  alert(1);
+  //alert(1);
  document.getElementById("athlete-images").innerHTML+= '<li><a href="" alt=""><img alt="" src="http://i.imgur.com/WT1ty1F.jpg"><span>Guri</span></a></li><li><a href="" alt=""><img alt="" src="http://i.imgur.com/WT1ty1F.jpg"><span>John Person</span></a></li>';
 }
 (function($athList,context){
 	
 	context.scroll = function(e) {
-		alert(1);
+		//alert(1);
 		if (e.target == context.leftArrow[0]) {
 			//left
 			$athList.scrollLeft($athList.scrollLeft() - SPEED);

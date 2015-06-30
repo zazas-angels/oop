@@ -14,12 +14,12 @@ function changeRating(num) {
 	}
 	//var sumVote=parseInt(element.sumVote);
 	save();
-	alert(numVote);
-	alert(sumVote);
+//	alert(numVote);
+	//alert(sumVote);
 }
 
 function comment(id) {
-	alert(1);
+	//alert(1);
 	numElements += 1;
 	var text = document.getElementById("textcom" + id).value;
 	var name = document.getElementById("input" + id).value;
@@ -50,16 +50,16 @@ function changeBackground() {
 function view() {
 	viewMode = true;
 	var elements = document.getElementsByTagName("div");
-	alert("len: " + elements.length)
+	//alert("len: " + elements.length)
 	for (var i = 0; i < elements.length; i++) {
 		var element = elements[i];
 		//var innerEl = element.getElementsByTagName("innerElement");
-		alert(element.className)
+	//	alert(element.className)
 		if (element.className == "drsMoveHandle") {
 			element.className = "dummyHand";
 		}
 		if (element.className == "drsElement") {
-			alert("opa");
+			//alert("opa");
 			element.style.visibility = "hidden";
 			//innerEl.style.visible="visible";
 			element.getElementsByTagName("innerElement")[0].style.visibility = "visible";

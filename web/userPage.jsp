@@ -59,15 +59,15 @@
 	var numElements = 33;//Jesus <3
 	var viewMode = false;
 	window.onload = function() {
-		alert(1);
+	//	alert(1);
 		$.post("UserPageData", {
 			data : "",
 			view : 1
 		}, function(result) {
-			alert(result);
+			//alert(result);
 			if (result != "") {
 				document.body.innerHTML = result;
-				alert("div" + document.getElementsByTagName("div").length)
+				//alert("div" + document.getElementsByTagName("div").length)
 				numElements += document.getElementsByTagName("div").length;
 			}
             $("#map-canvas").remove();
@@ -85,7 +85,7 @@
 
 	};
 	function save() {
-		alert(0);
+		//alert(0);
 
 		var elements = document.getElementsByTagName("input");
 		for (var i = 0; i < elements.length; i++) {
@@ -115,12 +115,12 @@
 		document.getElementById("logout").style.visibility = "hidden";
 		document.getElementById("addSub").style.visibility = "hidden";
 		var txt = document.body.innerHTML;
-		alert(txt);
+		//alert(txt);
 		$.post("UserPageData", {
 			data : txt,
 			view : 0
 		}, function(result) {
-			alert(1);
+			//alert(1);
 		});
 		if (wasVisible){
 			document.getElementById("control").style.visibility = "visible";
@@ -131,7 +131,7 @@
 	function createImage() {
 
 		numElements += 1;
-		alert(1);
+		//alert(1);
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += '<div  class="drsElement"'
@@ -153,12 +153,12 @@
 				+ '		<img alt="noImage" src="noImage.png " style="width: 100%;height:100%;">'
 				+ '	</div> </innerElement>' + '		</div>';
 		document.body.appendChild(div);
-		alert(2);
+		//alert(2);
 	}
 
 	function createText() {
 		numElements += 1;
-		alert(1);
+		//alert(1);
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML = "<div class=\"drsElement\""
@@ -203,7 +203,7 @@
 				+ 'ტექსტი' + '</textarea> </innerElement>' + '</div>';
 		document.body.appendChild(div);
 		jscolor.init();
-		alert(2);
+		//alert(2);
 	}
 	function changeSize(id) {
 		var element = document.getElementById(id);
@@ -217,7 +217,7 @@
 
 	function createGallery() {
 		numElements += 1;
-		alert(1);
+		//alert(1);
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += '<div class="drsElement"'
@@ -254,7 +254,7 @@
 	function createCommentBox() {
 
 		numElements += 1;
-		alert(1);
+		//alert(1);
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += ' <div class="drsElement"'
@@ -289,15 +289,13 @@
 
 				+ '	</div>	<innerElement>' + '</div>';
 		document.body.appendChild(div);
-		alert(2);
+		//alert(2);
 	}
 
 	function uploadVideo(id) {
 		var link = document.getElementById("videoLink" + id).value;
 		if (link.substring(0, 32) == "https://www.youtube.com/watch?v=") {
-			alert('<iframe width="560" height="315" src="https://www.youtube.com/embed/'
-					+ link.substring(32)
-					+ '" frameborder="0" allowfullscreen></iframe>');
+			
 			document.getElementById("video" + id).innerHTML = '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/'
 					+ link.substring(32)
 					+ '" frameborder="0" allowfullscreen></iframe>';
@@ -327,7 +325,7 @@
 	function createVideo() {
 
 		numElements += 1;
-		alert(1);
+	//	alert(1);
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += '<div type="video" class="drsElement"'
@@ -369,16 +367,16 @@
 <script type="text/javascript">
 	function makeEdition() {
 		viewMode = false;
-		alert(0);
+		//alert(0);
 		document.getElementById("control").style.visibility = "visible";
 		document.getElementById("edit").style.visibility = "hidden";
 		document.getElementById("themeselect").style.visibility = "hidden";
 		document.getElementById("addSub").style.visibility = "hidden";
 		var elements = document.getElementsByTagName("div");
-		alert("len: " + elements.length)
+		//alert("len: " + elements.length)
 		for (var i = 0; i < elements.length; i++) {
 			var element = elements[i];
-			alert(element.className)
+			//alert(element.className)
 			if (element.className == "dummyHand") {
 				element.className = "drsMoveHandle";
 			}
@@ -416,7 +414,7 @@
 	}
 
 	function initValElems() {
-		alert("iq");
+		//alert("iq");
 		var elements = document.getElementsByTagName("input");
 		for (var i = 0; i < elements.length; i++) {
 			var element = elements[i];
@@ -438,7 +436,7 @@
 			changeBackground();
 		}
 		jscolor.init();
-		alert("Aq");
+		//alert("Aq");
 
 	}
 </script>
@@ -519,7 +517,7 @@
 
 <script type="text/javascript">
 	function performAjaxSubmit(multi, id) {
-		alert("movida");
+		//alert("movida");
 		var sampleFile = document.getElementById("sampleFile" + id).files[0];
 
 		var formdata = new FormData();
@@ -530,41 +528,41 @@
 		if (multi == 0) {
 			image = document.getElementById("image" + id);
 		} else {
-			alert("Das");
+		//	alert("Das");
 			slider = document.getElementById("slider" + id);
-			alert("bol");
+			//alert("bol");
 		}
 
 		formdata.append("sampleFile", sampleFile);
-		alert(1);
+		//alert(1);
 		if (window.XMLHttpRequest) {
 			// code for IE7+, Firefox, Chrome, Opera, Safari
 			xhr = new XMLHttpRequest();
-			alert("pirveli");
+		//	alert("pirveli");
 		} else {
 			// code for IE6, IE5
-			alert("meore");
+			//alert("meore");
 			xhr = new ActiveXObject("Microsoft.XMLHTTP");
 		}
 
 		xhr.open("POST", "FileUploader", true);
 		xhr.send(formdata);
-		alert(2);
+		//alert(2);
 		xhr.onreadystatechange = function(e) {
 			if (xhr.readyState == 4 && xhr.status == 200) {
-				alert(1);
-				alert(this.responseText);
+			//	alert(1);
+				//alert(this.responseText);
 				//document.body.innerHTML += '<img style=\"width: 100%; height: 100%;\" src="data:image/jpg;base64,'
 				//		+ this.responseText + '">';
 				if (multi == 0) {
-					alert(5);
+				//	alert(5);
 					image.innerHTML = '<img style=\"width: 100%; height: 100%;\" src="data:image/jpg;base64,'
 							+ this.responseText + '">';
 				} else {
 					//var text = document.getElementById("imageText" + id);
 					//alert(text.value);
 
-					alert(3);
+				//	alert(3);
 					numElements += 1;
 					slider.innerHTML += '<li id='+numElements+'>'
 							+ '<img style=\"width: 100%; height: 100%;\" src="data:image/jpg;base64,'
@@ -573,7 +571,7 @@
 							+ sampleFile.name + '</option>';
 
 				}
-				alert(this.responseText);
+				//alert(this.responseText);
 
 			}
 

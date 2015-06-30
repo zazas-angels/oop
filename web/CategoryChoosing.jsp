@@ -42,7 +42,7 @@
                     result += elem.getAttribute("id") + "#";
                 }
             }
-            alert(result);
+           // alert(result);
             document.getElementById("choosed").value = result;
             document.forms["form"].submit();
 
