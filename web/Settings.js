@@ -24,6 +24,16 @@ function mailsMatch() {
     }
 }
 
+function hideChangeURL(){
+	$("#changeURL-section").hide();
+    $("#bann-background").hide();
+}
+
+function showChangeURL(){
+	$("#changeURL-section").show();
+    $("#bann-background").show();
+}
+
 function hideChangePassword() {
     $("#changePassword-section").hide();
     $("#bann-background").hide();
@@ -66,6 +76,38 @@ function changeName(){
 	    hideChangeName();
 	    $("#name").val("");
 	}
+}
+
+//to change as .domain
+var chveniSaiti = ".chveniSaiti.ge";
+function checkURL() {
+    var url = document.getElementById("url");
+    var enoughRegex = /^[a-zA-Z ]+$/i;
+    var bool = enoughRegex.test(url.value);
+    if(!bool){
+        document.getElementById("errorMessage").innerHTML = "url-ში დაშვებულია მხოლოდ ლათინური სიმბოლოები";
+    } else {
+        document.getElementById("errorMessage").innerHTML = "";
+    }
+    return enoughRegex.test(url.value);
+}
+
+function changeURL(){
+    var url = $("#url").val();
+    if(checkURL()){
+	    $.post("Settings",
+	        {requestType: "changeURL", url: url},
+	        function (data) {
+	        	if(data.length > 0){
+	        		$("#errorMessageURL").text(data);
+	        	}else{
+	        		location.reload();
+	        	    hideChangeMail();
+	        	}
+        		$("#url").val("");
+	        }
+	    );
+    }
 }
 
 function changeMail(){

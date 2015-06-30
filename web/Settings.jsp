@@ -31,8 +31,9 @@
 						<br>
 					<label>მეილი:    </label><label id = "oldMail"><%= user.getEmail() %>,</label><a href="#changeMail-section" onclick="showChangeMail()"> შეცვლა</a>
 						<br>
-					<label>პაროლი:    </label><a href="#changeMail-section" onclick="showChangePassword()"> შეცვლა</a>
-						
+					<label>პაროლი:    </label><a href="#changePassword-section" onclick="showChangePassword()"> შეცვლა</a>
+						<br>
+					<label>URL:    </label><label id = "oldURL"><%= user.getURL() %>,</label><a href="#changeURL-section" onclick="showChangeURL()"> შეცვლა</a>	
 						
 						<br><br>
 						<button type="submit" name="register" class="btn btn-default" >დადასტურება</button>
@@ -130,6 +131,30 @@
             </div>
             <div class="modal-footer">
                 <input type="submit" class="btn btn-primary" value="დადასტურება" onclick="changePassword()">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade in" id="bann-background" style="display: none;"></div>
+
+<div class="modal fade in" id="changeURL-section" role="dialog" aria-hidden="false"
+     style="display: none; padding-right: 15px;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" onclick="hideChangeURL()">×</button>
+                <h4 class="modal-title">Url</h4>
+            </div>
+            <label id="errorMessageURL"></label>
+            <div class="modal-body">
+                <div class="form-group">
+							<label class="control-label"> ახალი Url:</label>
+							<input type="text" class="form-control" placeholder=<%=user.getURL()%>  autocomplete="off" id="url" name="url">
+							<div id="errorMessage"></div>
+				</div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="დადასტურება" onclick="changeURL()">
             </div>
         </div>
     </div>
