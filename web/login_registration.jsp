@@ -19,7 +19,7 @@
             if (request.getSession().getAttribute("type").equals("admin") || request.getSession().getAttribute("type").equals("superAdmin") ) {
                 nextPage = "adminPage.jsp";
             }
-    }
+        }
         request.getRequestDispatcher(nextPage).forward(request, response);
     } else {
         Cookie[] cookies = request.getCookies();
