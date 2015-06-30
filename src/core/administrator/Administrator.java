@@ -66,7 +66,7 @@ public class Administrator implements AdminInterface {
     }
 
     @Override
-    public synchronized void setCategoryTree(CategoryTree categoryTree) {
+    public synchronized void setCategoryTree(CategoryTreeInterface categoryTree) {
         this.categoryTree = categoryTree;
     }
 

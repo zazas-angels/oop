@@ -17,7 +17,7 @@ public interface AdminInterface {
 
     void addCategory(String name, int ID) throws SQLException;
 
-    public void setCategoryTree(CategoryTree categoryTree);
+    public void setCategoryTree(CategoryTreeInterface tree1);
 
     public ResultSet getReports();
 

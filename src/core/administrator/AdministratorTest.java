@@ -286,5 +286,24 @@ public class AdministratorTest {
 		assertEquals(setForTree.contains("zaza"), true);
 
 	}
-
+	@Test
+	public void testSetCategoryTree(){
+		CategoryTreeInterface tree = new StubCategoryTree();
+		CategoryTreeInterface tree1 = new StubCategoryTree();
+		Connection con = new StubDBConnection();
+		AdminInterface admin = new Administrator(1, "zaza@gmail.com", "paroli",
+				con, tree){
+			private CategoryTreeInterface catTree=tree;
+			@Override
+			public void setCategoryTree(CategoryTreeInterface newTree){
+				catTree=newTree;
+			}
+			@Override
+			public CategoryTreeInterface getCategoryTree(){
+				return catTree;
+			}
+		};
+		admin.setCategoryTree(tree1);
+		assertEquals(tree1,admin.getCategoryTree() );
+	}
 }
