@@ -90,7 +90,7 @@ public class CategoryTree implements CategoryTreeInterface {
 		}
 		
 	}
-
+	
 
 	@Override
 	//this method returns parent of current category, if given one is root it returns false
