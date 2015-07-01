@@ -35,9 +35,16 @@ public class CategorySave extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
-        // ignored
+        String type = request.getParameter("requestType");
+        if (type != null && type.equals("addCategory")) {
+            int newCategory = Integer.parseInt(request.getParameter("categoryID"));
+            int userID = Integer.parseInt(""+request.getSession().getAttribute("userId"));
+            DBConnection dbConnection = (DBConnection) request.getServletContext().getAttribute(SiteConstants.DATABASE);
+            Vector<Integer> v = new Vector<Integer>();
+            v.add(newCategory);
+            dbConnection.addUserCategories(userID, v    );
+        }
     }
-
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
      * response)
