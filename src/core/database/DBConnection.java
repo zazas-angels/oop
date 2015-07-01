@@ -8,6 +8,7 @@ import core.SiteConstants;
 import core.administrator.AdminInterface;
 import core.administrator.Administrator;
 import core.administrator.SuperAdministrator;
+import core.category.Category;
 import core.category.CategoryInterface;
 import core.category.CategoryTree;
 import core.user.User;
@@ -1080,8 +1081,15 @@ private static DBConnection dbConnection = new DBConnection();
         //db.activateUser(8);
         //db.bannUserByDays(3, 30);
         //db.addSuperAdmin("nika", generatePassword("paroli12"), null);
-        User user = db.addUser("bondo", "ddd@ddd.aa", "123456", "mevdawiwini", SiteConstants.getType("email"));
-        db.activateUser(user.getID());
+        //User user = db.addUser("bondo", "ddd@ddd.aa", "123456", "mevdawiwini", SiteConstants.getType("email"));
+        //db.activateUser(user.getID());
+        CategoryTree tree = new CategoryTree(null);
+        Category cur = new Category(1, "zgarbi");
+        tree.add(cur, null);
+        ArrayList<CategoryInterface> arr = (ArrayList<CategoryInterface>)tree.getRoots();
+        for(int i = 0; i < arr.size(); i++){
+        	System.out.println(arr.get(i));
+        }
     }
     
     
