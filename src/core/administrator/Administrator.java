@@ -3,6 +3,8 @@ package core.administrator;
 import core.category.Category;
 import core.category.CategoryInterface;
 import core.category.CategoryTree;
+import core.category.CategoryTreeInterface;
+import core.database.Connection;
 import core.database.DBConnection;
 
 import java.sql.ResultSet;
@@ -18,15 +20,15 @@ public class Administrator implements AdminInterface {
     private int id;
     private String email;
     private String password;
-    private DBConnection dbConnection;
-    private CategoryTree categoryTree;
+    private Connection dbConnection;
+    private CategoryTreeInterface categoryTree;
 
-    public Administrator(int id, String email, String password, DBConnection dbConnection, CategoryTree categoryTree) {
+    public Administrator(int id, String email, String password, Connection con, CategoryTreeInterface tree) {
         this.id = id;
         this.email = email;
         this.password = generatePassword(password);
-        this.dbConnection = dbConnection;
-        this.categoryTree = categoryTree;
+        this.dbConnection = con;
+        this.categoryTree = tree;
     }
 
     public Administrator(int id, String email, String password, boolean alreadyHashedPassword, DBConnection dbConnection, CategoryTree categoryTree) {
@@ -64,7 +66,7 @@ public class Administrator implements AdminInterface {
     }
 
     @Override
-    public synchronized void setCategoryTree(CategoryTree categoryTree) {
+    public synchronized void setCategoryTree(CategoryTreeInterface categoryTree) {
         this.categoryTree = categoryTree;
     }
 
@@ -73,24 +75,24 @@ public class Administrator implements AdminInterface {
         Administrator admin = (Administrator) object;
         return email.equals(admin.getEmail()) && password.equals(admin.getPassword());
     }
-
+    @Override
     public synchronized String getEmail() {
         return email;
     }
-
+    @Override
     public synchronized String getPassword() {
         return password;
     }
-
+    @Override
     public synchronized int getId() {
         return id;
     }
-
-    public synchronized DBConnection getDbConnection() {
+    @Override
+    public synchronized Connection getDbConnection() {
         return dbConnection;
     }
-
-    public synchronized CategoryTree getCategoryTree() {
+    @Override
+    public synchronized CategoryTreeInterface getCategoryTree() {
         return categoryTree;
     }
 

@@ -1,13 +1,15 @@
 package core.administrator;
 
 import core.category.CategoryTree;
+import core.category.CategoryTreeInterface;
+import core.database.Connection;
 import core.database.DBConnection;
 
 /**
  * Created by nika on 6/23/15.
  */
 public class SuperAdministrator extends Administrator {
-    public SuperAdministrator(int id, String email, String password, DBConnection dbConnection, CategoryTree categoryTree) {
+    public SuperAdministrator(int id, String email, String password, Connection dbConnection, CategoryTreeInterface categoryTree) {
         super(id, email, password, dbConnection, categoryTree);
     }
 

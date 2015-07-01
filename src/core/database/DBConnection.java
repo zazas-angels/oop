@@ -8,10 +8,8 @@ import core.SiteConstants;
 import core.administrator.AdminInterface;
 import core.administrator.Administrator;
 import core.administrator.SuperAdministrator;
-import core.category.Category;
 import core.category.CategoryInterface;
 import core.category.CategoryTree;
-import core.category.CategoryTreeInterface;
 import core.user.User;
 import core.user.UserInterface;
 
@@ -1385,7 +1383,6 @@ public class DBConnection implements core.database.Connection {
             } else {
                 set = getUsersByCategoryAndCriterias(categoryID, name, bann,
                         active);
-                // need to join
             }
 
         }

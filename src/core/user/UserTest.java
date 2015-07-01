@@ -8,7 +8,10 @@ import core.SiteConstants;
 
 public class UserTest {
 
-
+/**
+ * test constructor and some gett options
+ * simple and empty tests
+ */
 	@Test
 	public void testConstructorAndGetters() {
 		User tmp = new User("asdf", "asdf@a.a", "1234", "zaza", SiteConstants.Type.email, 1);
@@ -54,6 +57,10 @@ public class UserTest {
 		assertEquals(tmp5.getID(), 1);
 		
 	}
+	/**
+	 * testing equal method
+	 * simple and weird tests
+	 */
 	public void testEquals(){
 		User tmp = new User("asdf", "asdf@a.a", "1234", "zaza", SiteConstants.Type.email, 1);
 		User tmp2 = new User("asdf", "asdf@a.a", "1234", "zaza", SiteConstants.Type.email, 1);

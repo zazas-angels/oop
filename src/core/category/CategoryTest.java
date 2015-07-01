@@ -6,6 +6,10 @@ import org.junit.Test;
 
 public class CategoryTest {
 	
+	/**
+	 * testing constructor and some getting opperations
+	 * simple tests and null tests
+	 */
 	@Test
 	public void testConstructorAndGetters() {
 		
@@ -58,6 +62,9 @@ public class CategoryTest {
 		Category tmp9 = new Category(42,"lashas mama");
 		assertTrue(tmp8.equals(tmp9));
 	}
+	/**
+	 * test toString method
+	 */
 	public void testToString(){
 		Category tmp = new Category(0, "lashas mama");
 		assertEquals(tmp.toString(),"0:lashas mama");

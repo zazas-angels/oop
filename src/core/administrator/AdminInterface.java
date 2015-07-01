@@ -2,6 +2,8 @@ package core.administrator;
 
 import core.category.CategoryInterface;
 import core.category.CategoryTree;
+import core.category.CategoryTreeInterface;
+import core.database.Connection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +17,7 @@ public interface AdminInterface {
 
     void addCategory(String name, int ID) throws SQLException;
 
-    public void setCategoryTree(CategoryTree categoryTree);
+    public void setCategoryTree(CategoryTreeInterface tree1);
 
     public ResultSet getReports();
 
@@ -38,4 +40,14 @@ public interface AdminInterface {
     public void deleteReport(int reportID);
 
     public void deleteUser(int userID);
+
+	String getEmail();
+
+	String getPassword();
+
+	int getId();
+
+	Connection getDbConnection();
+
+	CategoryTreeInterface getCategoryTree();
 }

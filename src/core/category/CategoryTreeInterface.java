@@ -23,4 +23,6 @@ public interface CategoryTreeInterface {
 	public List<CategoryInterface> getParentBranch(int id);
 	//returnes if it has childs
 	public boolean hasChilds(int id);
+
+	public void deleteWantedCategory(int wcID);
 }
