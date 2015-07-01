@@ -39,6 +39,7 @@
 	bottom: 10px;
 	right: 10px;
 	display: none;
+	z-index: 998;
 }
 
 #googleMap-button {
