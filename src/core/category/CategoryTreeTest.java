@@ -69,5 +69,17 @@ public class CategoryTreeTest {
 		tree.hasChilds(14);
 		assertTrue(set.contains(5));
 	}
-
+	@Test
+	public void testAdd() {
+		Set<Integer> set = new HashSet<Integer>();
+		CategoryTreeInterface tree = new StubCategoryTree(){
+			private Set<Integer> setForDB = set;
+			@Override
+			public void add(CategoryInterface newOne, CategoryInterface parent){
+				setForDB.add(5);
+			}
+		};
+		tree.add(null,null);
+		assertTrue(set.contains(5));
+	}
 }
