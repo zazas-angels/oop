@@ -311,20 +311,20 @@ public class AdministratorTest {
 	@Test
 	public void testBannUser() {
 		CategoryTreeInterface tree = new StubCategoryTree();
-
+		Set<Integer> set = new HashSet<Integer>();
 		Connection con = new StubDBConnection() {
-			boolean status = false;
+			private Set<Integer> setForDB = set;
 
 			@Override
 			public void setBannedStatus(int userId, boolean value) {
-				status = value;
+				if(value) setForDB.add(5);
 			}
 		};
 		AdminInterface admin = new Administrator(1, "zaza@gmail.com", "paroli",
 				con, tree) ;
 		admin.bannUser(5);
-
 		con.setBannedStatus(5, true);
+		assertTrue(set.contains(5));
 
 	}
 
