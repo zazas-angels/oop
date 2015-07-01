@@ -16,8 +16,10 @@ public final class SiteConstants {
 	public static final String DATABASE = "database";
 	public static final String CATEGORY_TREE = "categories";
 
-	public static final String BUSY_MAIL = " áƒ”áƒ¡ áƒ›áƒ”áƒ˜áƒšáƒ˜ áƒ’áƒ�áƒ›áƒ�áƒ§áƒ”áƒœáƒ”áƒ‘áƒ£áƒšáƒ˜áƒ� ";
-	public static final String BUSY_URL = " áƒ�áƒ¡áƒ”áƒ—áƒ˜ url áƒ“áƒ�áƒ™áƒ�áƒ•áƒ”áƒ‘áƒ£áƒšáƒ˜áƒ�";
+
+
+	public static final String BUSY_MAIL = " ეს მეილი უკვე გამოყენებულია ";
+	public static final String BUSY_URL = " ასეთი url დაკავებულია ";
 
 
 	public enum Notification {

@@ -27,7 +27,15 @@
     <form action="fbG+Servlet" , method="post">
         <table>
             <tbody>
-            <td colspan="2" style="color: red;"><label id = "errorMessage"></label></td>
+            <td colspan="2" style="color: red;"><label id = "errorMessage">
+                <%
+                    if (request.getSession().getAttribute("message") != null) {
+                        String message = (String) request.getSession().getAttribute("message");
+                        request.getSession().setAttribute("message", null);
+                %><%=message%></label></td>
+            <%} else {%>
+            </label></td>
+            <%}%>
             <tr>
                 <td>დასახელება:</td>
                 <td><input type="text" placeholder="მინ. 1 სიმბოლო"

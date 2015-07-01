@@ -34,13 +34,18 @@ public class FbGplusServlet extends HttpServlet {
         String id = (String) request.getSession().getAttribute("id");
         String type = (String) request.getSession().getAttribute("type");
         if (name != null && url != null && checkName(name) && !url.equals("")) {
-            SiteConstants.Type tp = SiteConstants.getType(type);
-            User user = dbConnection.addUser(name, id, "", url, SiteConstants.getType(type));
-            dbConnection.activateUser(user.getID());
-            request.getSession().setAttribute("user", user);
-            request.getSession().setAttribute("userId", user.getID());
-            request.getRequestDispatcher("CategoryChoosing.jsp").forward(request, response);
-            //loginUser(user, request, response, context);
+            if (dbConnection.existsUserWithUrl(url)) {
+                request.getSession().setAttribute("message", SiteConstants.BUSY_URL);
+                request.getRequestDispatcher("fbG+Registration.jsp").forward(request, response);
+            } else {
+                SiteConstants.Type tp = SiteConstants.getType(type);
+                User user = dbConnection.addUser(name, id, "", url, SiteConstants.getType(type));
+                dbConnection.activateUser(user.getID());
+                request.getSession().setAttribute("user", user);
+                request.getSession().setAttribute("userId", user.getID());
+                request.getRequestDispatcher("CategoryChoosing.jsp").forward(request, response);
+                //loginUser(user, request, response, context);
+            }
         } else {
             request.getRequestDispatcher("fbG+Registration.jsp").forward(request, response);
         }
@@ -50,6 +55,7 @@ public class FbGplusServlet extends HttpServlet {
      * as parameter only passed email, so that isn't problem when called doGet and not doPost
      * this method is called while login or start registration
      */
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         String type = request.getParameter("type");
