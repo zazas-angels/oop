@@ -41,6 +41,33 @@ public class CategoryTreeTest {
 		tree.getRoots();
 		assertTrue(set.contains(5));
 	}
-	
+	@Test
+	public void testGetParent() {
+		Set<Integer> set = new HashSet<Integer>();
+		CategoryTreeInterface tree = new StubCategoryTree(){
+			private Set<Integer> setForDB = set;
+			@Override
+			public CategoryInterface getParent(CategoryInterface cur){
+				setForDB.add(5);
+				return null;
+			}
+		};
+		tree.getParent(null);
+		assertTrue(set.contains(5));
+	}
+	@Test
+	public void testHasChilds() {
+		Set<Integer> set = new HashSet<Integer>();
+		CategoryTreeInterface tree = new StubCategoryTree(){
+			private Set<Integer> setForDB = set;
+			@Override
+			public boolean hasChilds(int id){
+				setForDB.add(5);
+				return true;
+			}
+		};
+		tree.hasChilds(14);
+		assertTrue(set.contains(5));
+	}
 
 }
