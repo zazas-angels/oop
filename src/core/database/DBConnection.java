@@ -1548,6 +1548,6 @@ public class DBConnection implements core.database.Connection {
 			e.printStackTrace();
 		}
 		
-	}
+	}  
 
 }
