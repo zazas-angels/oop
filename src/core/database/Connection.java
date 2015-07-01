@@ -35,6 +35,8 @@ public interface Connection {
 	public ResultSet getElementsPictures();
 	public ResultSet getAdmins();
 	
+	//adds image for user
+	public void addImage(int id, String image);
 	
 	//get users by categories list, ordered by rating 
 	public ResultSet getUsersByCategories(List<CategoryInterface>  categories);

@@ -1532,5 +1532,25 @@ public class DBConnection implements core.database.Connection {
 	        }
 		
 	}
+/*
+ * This emthod sets user Image
+ * (non-Javadoc)
+ * @see core.database.Connection#addImage(int, java.lang.String)
+ */
+	@Override
+	public synchronized void addImage(int id, String image) {
+		// TODO Auto-generated method stub
+		PreparedStatement stmt = null;
+		try {
+			stmt = dataBaseConnection
+					.prepareStatement("update users set avatarFile = ? where ID = ?;");
+			stmt.setString(1, image);
+			stmt.setInt(2, id);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 }

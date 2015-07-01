@@ -20,6 +20,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
+import core.database.Connection;
+import core.database.DBConnection;
+
 /**
  * Servlet to handle File upload request from Client
  * 
@@ -27,14 +30,32 @@ import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
  */
 @WebServlet("/FileUploader")
 public class FileUploader extends HttpServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final String UPLOAD_DIRECTORY = "C:/zaza";
 
+	
+	/**
+	 * It also adds in database and returnes image
+	 * 
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
 	@Override
-	protected void doPost(HttpServletRequest request,
+	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void makeImage(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		// TODO Auto-generated method stub
 
 		// process only if its multipart content
-		//response.setContentType("image/jpeg");
+		// response.setContentType("image/jpeg");
 		String imageHTML = "";
 		File f = null;
 		if (ServletFileUpload.isMultipartContent(request)) {
@@ -55,7 +76,7 @@ public class FileUploader extends HttpServlet {
 							System.out.println("image");
 							f = new File(pathImage);
 							item.write(f);
-							
+
 							imageHTML = "<img src=\""
 									+ "C:\\zaza\\"
 									+ name
@@ -80,16 +101,16 @@ public class FileUploader extends HttpServlet {
 		}
 		if (!imageHTML.equals("")) {
 			BufferedImage image = ImageIO.read(f);
-		     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		     ImageIO.write(image, "png", baos);
-		     String encodedImage = Base64.encode(baos.toByteArray());
-			//BufferedImage bi = ImageIO.read(f);
-			//OutputStream out = response.getOutputStream();
-			//ImageIO.write(bi, "jpg", out);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(image, "png", baos);
+			String encodedImage = Base64.encode(baos.toByteArray());
+			// BufferedImage bi = ImageIO.read(f);
+			// OutputStream out = response.getOutputStream();
+			// ImageIO.write(bi, "jpg", out);
+
 			response.getWriter().print(encodedImage);
-			//out.close();
-		} else {
-			// response.getWriter().write("Error Uploading");
+			
+			// out.close();
 		}
 		System.out.println("morcha ha");
 	}
@@ -116,6 +137,12 @@ public class FileUploader extends HttpServlet {
 		return extension.equals("png") || extension.equals("jpg")
 				|| extension.equals("jpeg") || extension.equals("gif");
 
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		makeImage(request, response);
 	}
 
 }
