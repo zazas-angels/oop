@@ -120,7 +120,9 @@ private static DBConnection dbConnection = new DBConnection();
 		}
 		return results;
 	}
-
+	/**
+	 * returns users set
+	 */
 	@Override
 	public synchronized ResultSet getUsers() {
 		ResultSet results = null;
@@ -135,23 +137,31 @@ private static DBConnection dbConnection = new DBConnection();
 		}
 		return results;
 	}
-
+	/**
+	 * returns categories set
+	 */
 	@Override
 	public synchronized ResultSet getCategories() {
 		return getResults("categories");
 		
 	}
-
+	/**
+	 * returns Users_categories
+	 */
 	@Override
 	public synchronized ResultSet getUsersCategories() {
 		return getResults("users_categories");
 	}
-
+	/**
+	 * returns pictures set
+	 */
 	@Override
 	public synchronized ResultSet getPictures() {
 		return getResults("pictures");
 	}
-
+	/**
+	 * returns resultSet of colors
+	 */
 	@Override
 	public synchronized ResultSet getColors() {
 		return getResults("colors");
@@ -225,7 +235,9 @@ private static DBConnection dbConnection = new DBConnection();
 		}
 		return results;
 	}
-
+	/**
+	 * confirmation code
+	 */
 	@Override
 	public synchronized void insertUserConfCode(int UserId, String confCode) {
 		try {
@@ -267,7 +279,9 @@ private static DBConnection dbConnection = new DBConnection();
 		}
 		return user;
 	}
-
+	/**
+	 * checks user active status
+	 */
 	@Override
 	public synchronized boolean isActiveUser(int id) {
 		boolean b = false;
@@ -288,13 +302,17 @@ private static DBConnection dbConnection = new DBConnection();
 		}
 		return b;
 	}
-
+	/**
+	 * return admin
+	 */
 	@Override
 	public synchronized AdminInterface getAdmin(String email, String password,
 			CategoryTree categoryTree) {
 		return getAdmin(email, password, categoryTree, false);
 	}
-
+	/**
+	 * activate user
+	 */
 	@Override
 	public synchronized void activateUser(int id) {
 		PreparedStatement stmt = null;
@@ -307,14 +325,23 @@ private static DBConnection dbConnection = new DBConnection();
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * returns super administrator
+	 */
 	@Override
 	public synchronized SuperAdministrator getSuperAdmin(String email,
 			String password, CategoryTree categoryTree) {
 		return (SuperAdministrator) getAdmin(email, password, categoryTree,
 				true);
 	}
-
+	/**
+	 * 
+	 * @param email
+	 * @param password
+	 * @param categoryTree
+	 * @param superAmin
+	 * @return
+	 */
 	private synchronized AdminInterface getAdmin(String email, String password,
 			CategoryTree categoryTree, boolean superAmin) {
 		ResultSet results;
@@ -342,7 +369,9 @@ private static DBConnection dbConnection = new DBConnection();
 		}
 		return admin;
 	}
-
+	/**
+	 * deletes user confirmation code
+	 */
 	@Override
 	public synchronized void deleteUserConfCode(int userId) {
 		PreparedStatement stmt = null;
@@ -723,20 +752,26 @@ private static DBConnection dbConnection = new DBConnection();
 			throws SQLException {
 		PreparedStatement statement = dataBaseConnection
 				.prepareStatement("insert into categories (name, ParentId) values (?,?);");
+		if(parentCategoryId < 0){
+			statement = dataBaseConnection
+					.prepareStatement("insert into categories (name) values (?);");
+
+		}
 		statement.setString(1, name);
-		if (parentCategoryId < 0) {
-			statement.setObject(2, null);
-		} else {
-			statement.setInt(2, parentCategoryId);
+		if (parentCategoryId > 0) {
+			statement.setObject(2, parentCategoryId);
 		}
 		statement.executeUpdate();
 
-		PreparedStatement stmt = dataBaseConnection
-				.prepareStatement("select ID from categories where name = ? and ParentId = ?;");
-		stmt.setString(1, name);
+		PreparedStatement stmt;
 		if (parentCategoryId < 0) {
-			stmt.setObject(2, null);
+			stmt = dataBaseConnection
+					.prepareStatement("select ID from categories where name = ? and ParentId is null;");
+			stmt.setString(1, name);
 		} else {
+			stmt = dataBaseConnection
+					.prepareStatement("select ID from categories where name = ? and ParentId = ?;");
+			stmt.setString(1, name);
 			stmt.setInt(2, parentCategoryId);
 		}
 
@@ -781,11 +816,10 @@ private static DBConnection dbConnection = new DBConnection();
 			String authorUrl, String categoryName, String parentCategoryID)
 			throws SQLException {
 		PreparedStatement statement = dataBaseConnection
-				.prepareStatement("insert into wantedCategories (authorName, authorUrl, categoryName, postDate, parentCategoryID) values (?, ?, ?, now(), ?);");
+				.prepareStatement("insert into wantedCategories (authorName, authorID, categoryName, postDate) values (?, ?, ?, now());");
 		statement.setString(1, authorName);
 		statement.setString(2, authorUrl);
 		statement.setString(3, categoryName);
-		statement.setString(4, parentCategoryID);
 		statement.executeUpdate();
 	}
 
@@ -1007,7 +1041,7 @@ private static DBConnection dbConnection = new DBConnection();
 		ResultSet set = getUsers(userID);
 		try {
 			if (set.next()) {
-				administrator = (Administrator) addAdmin(set.getString("name"),
+				administrator = (Administrator) addAdmin(set.getString("mail"),
 						set.getString("password"), categoryTree);
 				deleteUser(userID);
 			}
@@ -1080,6 +1114,7 @@ private static DBConnection dbConnection = new DBConnection();
         //	db.changeData(3, "ooo");
         //db.activateUser(8);
         //db.bannUserByDays(3, 30);
+
         //db.addSuperAdmin("nika", generatePassword("paroli12"), null);
         //User user = db.addUser("bondo", "ddd@ddd.aa", "123456", "mevdawiwini", SiteConstants.getType("email"));
         //db.activateUser(user.getID());
@@ -1090,6 +1125,10 @@ private static DBConnection dbConnection = new DBConnection();
         for(int i = 0; i < arr.size(); i++){
         	System.out.println(arr.get(i));
         }
+
+        db.addSuperAdmin("nika", generatePassword("paroli12"), null);
+ //       User user = db.addUser("bondo", "ddd@ddd.aa", "123456", "mevdawiwini", SiteConstants.getType("email"));
+   //     db.activateUser(user.getID());
     }
     
     

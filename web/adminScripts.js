@@ -11,11 +11,11 @@ $(document).ready(function () {
         $('#searchByName').toggle();
     });
 
-    updateReports();
+   // updateReports();
     updateWantedCategories();
     updateNotifications();
     setInterval(function () {
-        updateReports();
+    //    updateReports();
         updateWantedCategories();
         updateNotifications();
     }, 10000);

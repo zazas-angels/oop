@@ -113,11 +113,11 @@ To change this template use File | Settings | File Templates.
 </div>
 
 <div id="left-panel">
-    <h2 class="title">რეპორტები</h2>
+    <!--h2 class="title">რეპორტები</h2>
 
-    <div id="reports"></div>
+    <!--div id="reports"></div>
 
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br-->
 
     <div>
         <h2 class="title">მოთხოვნილი კატეგორიები</h2>

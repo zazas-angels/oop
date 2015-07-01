@@ -55,14 +55,22 @@ public class Administrator implements AdminInterface {
 
     @Override
     public synchronized void addCategory(String name, CategoryInterface parentCategory) throws SQLException {
-        int id = dbConnection.addCategory(name, parentCategory.getId());
+        int id;
+        if(parentCategory == null){
+            id = dbConnection.addCategory(name, 0);
+        }else {
+        id = dbConnection.addCategory(name, parentCategory.getId());
+        }
         Category category = new Category(id, name);
-        categoryTree.add(category, parentCategory);
+        //categoryTree.add(category, parentCategory);
     }
 
     @Override
     public synchronized void addCategory(String name, int ID) throws SQLException {
-        addCategory(name, new Category(ID, name));
+        if (id == -1) {
+            addCategory(name, null);
+        } else
+            addCategory(name, new Category(ID, name));
     }
 
     @Override
@@ -75,22 +83,27 @@ public class Administrator implements AdminInterface {
         Administrator admin = (Administrator) object;
         return email.equals(admin.getEmail()) && password.equals(admin.getPassword());
     }
+
     @Override
     public synchronized String getEmail() {
         return email;
     }
+
     @Override
     public synchronized String getPassword() {
         return password;
     }
+
     @Override
     public synchronized int getId() {
         return id;
     }
+
     @Override
     public synchronized Connection getDbConnection() {
         return dbConnection;
     }
+
     @Override
     public synchronized CategoryTreeInterface getCategoryTree() {
         return categoryTree;

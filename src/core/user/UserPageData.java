@@ -66,8 +66,10 @@ public class UserPageData extends HttpServlet {
 		if(needViewMassage.equals("0")){
 			//res=webData.getData(); 
 		//	if(res!=null)
+			if(data.length()>4&&data.substring(0,4).equals("<zor")){
 			database.changeData( userId,data);
 			System.out.println("save");
+			}
 			
 			
 			//System.out.println(webData.getDataView());

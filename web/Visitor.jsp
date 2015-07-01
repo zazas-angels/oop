@@ -58,7 +58,7 @@
         var numElements = 33;//Jesus <3
         var viewMode = false;
         window.onload = function () {
-            alert(1);
+            //alert(1);
             $.post("UserPageData", {
                 data: "",
                 id:<%= request.getParameter("id")%>,
@@ -92,7 +92,7 @@
             });
         };
         function save() {
-            alert(0);
+            //alert(0);
 
             var elements = document.getElementsByTagName("input");
             for (var i = 0; i < elements.length; i++) {
@@ -120,13 +120,13 @@
             document.getElementById("edit").style.visibility = "hidden";
             document.getElementById("addSub").style.visibility = "hidden";
             var txt = document.body.innerHTML;
-            alert(txt);
+            //alert(txt);
             $.post("UserPageData", {
                 data: txt,
                 id:<%= request.getParameter("id")%>,
                 view: 0
             }, function (result) {
-                alert(1);
+                //alert(1);
             });
             if (wasVisible)
                 document.getElementById("control").style.visibility = "visible";

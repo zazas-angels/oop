@@ -3,7 +3,11 @@ package core;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import core.administrator.Administrator;
+import core.category.CategoryTree;
+import core.category.CategoryTreeInterface;
+import core.database.DBConnection;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,7 +45,16 @@ public class AdminServlet extends HttpServlet {
                     break;
                 case "addCategory":
                     try {
+                        System.out.println(request.getParameter("parentID"));
                         admin.addCategory(request.getParameter("name"), Integer.parseInt(request.getParameter("parentID")));
+
+                        ServletContext servletCont = request.getServletContext();
+                        DBConnection database = (DBConnection) servletCont.getAttribute(SiteConstants.DATABASE);
+
+                        ResultSet set = database.getCategories();
+                        CategoryTreeInterface categories = new CategoryTree(set);
+
+                        servletCont.setAttribute(SiteConstants.CATEGORY_TREE, categories);
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
