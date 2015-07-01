@@ -119,7 +119,9 @@ private static DBConnection dbConnection = new DBConnection();
 		}
 		return results;
 	}
-
+	/**
+	 * returns users set
+	 */
 	@Override
 	public synchronized ResultSet getUsers() {
 		ResultSet results = null;
@@ -134,23 +136,31 @@ private static DBConnection dbConnection = new DBConnection();
 		}
 		return results;
 	}
-
+	/**
+	 * returns categories set
+	 */
 	@Override
 	public synchronized ResultSet getCategories() {
 		return getResults("categories");
 		
 	}
-
+	/**
+	 * returns Users_categories
+	 */
 	@Override
 	public synchronized ResultSet getUsersCategories() {
 		return getResults("users_categories");
 	}
-
+	/**
+	 * returns pictures set
+	 */
 	@Override
 	public synchronized ResultSet getPictures() {
 		return getResults("pictures");
 	}
-
+	/**
+	 * returns resultSet of colors
+	 */
 	@Override
 	public synchronized ResultSet getColors() {
 		return getResults("colors");
@@ -224,7 +234,9 @@ private static DBConnection dbConnection = new DBConnection();
 		}
 		return results;
 	}
-
+	/**
+	 * confirmation code
+	 */
 	@Override
 	public synchronized void insertUserConfCode(int UserId, String confCode) {
 		try {
@@ -266,7 +278,9 @@ private static DBConnection dbConnection = new DBConnection();
 		}
 		return user;
 	}
-
+	/**
+	 * checks user active status
+	 */
 	@Override
 	public synchronized boolean isActiveUser(int id) {
 		boolean b = false;
@@ -287,13 +301,17 @@ private static DBConnection dbConnection = new DBConnection();
 		}
 		return b;
 	}
-
+	/**
+	 * return admin
+	 */
 	@Override
 	public synchronized AdminInterface getAdmin(String email, String password,
 			CategoryTree categoryTree) {
 		return getAdmin(email, password, categoryTree, false);
 	}
-
+	/**
+	 * activate user
+	 */
 	@Override
 	public synchronized void activateUser(int id) {
 		PreparedStatement stmt = null;
@@ -306,14 +324,23 @@ private static DBConnection dbConnection = new DBConnection();
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * returns super administrator
+	 */
 	@Override
 	public synchronized SuperAdministrator getSuperAdmin(String email,
 			String password, CategoryTree categoryTree) {
 		return (SuperAdministrator) getAdmin(email, password, categoryTree,
 				true);
 	}
-
+	/**
+	 * 
+	 * @param email
+	 * @param password
+	 * @param categoryTree
+	 * @param superAmin
+	 * @return
+	 */
 	private synchronized AdminInterface getAdmin(String email, String password,
 			CategoryTree categoryTree, boolean superAmin) {
 		ResultSet results;
@@ -341,7 +368,9 @@ private static DBConnection dbConnection = new DBConnection();
 		}
 		return admin;
 	}
-
+	/**
+	 * deletes user confirmation code
+	 */
 	@Override
 	public synchronized void deleteUserConfCode(int userId) {
 		PreparedStatement stmt = null;
