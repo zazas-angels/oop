@@ -23,7 +23,7 @@ public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         // TODO Auto-generated method stub
-        Connection database = new DBConnection();
+        Connection database = DBConnection.getInstance();
         ServletContext servletCont = servletContextEvent.getServletContext();
         ResultSet set = database.getCategories();
         CategoryTreeInterface categories = new CategoryTree(set);

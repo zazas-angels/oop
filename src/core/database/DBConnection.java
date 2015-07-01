@@ -25,15 +25,18 @@ import static core.user.User.generatePassword;
  * like (similar code) as in assignment 3.
  */
 public class DBConnection implements core.database.Connection {
-
-    Connection dataBaseConnection;
+private static DBConnection dbConnection = new DBConnection();
+    private Connection dataBaseConnection;
     private ArrayList<String> allCategoriesNames;
-
+    
+    public static DBConnection getInstance( ) {
+        return dbConnection;
+     }
 
 	/*
 	 * Constructor: it connects (tries) database using MyDBINfo informations.
 	 */
-	public DBConnection() {
+	private DBConnection() {
 		dataBaseConnection = null;
 
 		try {
