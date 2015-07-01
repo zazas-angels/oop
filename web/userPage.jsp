@@ -57,10 +57,18 @@
 
 <script type="text/javascript" src="ControlFunctions.js"></script>
 <script type="text/javascript">
-	var numElements = 33;//Jesus <3
+	function st() {
+		var elem = document.getElementById("statistic");
+		if (elem.style.visibility == "visible") {
+			elem.style.visibility = "hidden";
+		} else {
+			elem.style.visibility = "visible";
+		}
+	}
+	var numElements = 13;//Jesus <3
 	var viewMode = false;
 	window.onload = function() {
-	//	alert(1);
+		//	alert(1);
 		$.post("UserPageData", {
 			data : "",
 			view : 1
@@ -71,17 +79,17 @@
 				//alert("div" + document.getElementsByTagName("div").length)
 				numElements += document.getElementsByTagName("div").length;
 			}
-            $("#map-canvas").remove();
-            document.body.innerHTML += '<div id="map-canvas"></div>';
+			$("#map-canvas").remove();
+			document.body.innerHTML += '<div id="map-canvas"></div>';
 			makeEdition();
 			initValElems();
 			document.getElementById("logout").style.visibility = "visible";
 			googleMap();
 			addMarkers();
 
-            $("#map-canvas").toggle();
+			$("#map-canvas").toggle();
 
-		//	googleMap();
+			//	googleMap();
 		});
 
 	};
@@ -115,6 +123,7 @@
 		document.getElementById("edit").style.visibility = "hidden";
 		document.getElementById("logout").style.visibility = "hidden";
 		document.getElementById("addSub").style.visibility = "hidden";
+		document.getElementById("statistic").style.visibility = "hidden";
 		var txt = document.body.innerHTML;
 		//alert(txt);
 		$.post("UserPageData", {
@@ -123,7 +132,7 @@
 		}, function(result) {
 			//alert(1);
 		});
-		if (wasVisible){
+		if (wasVisible) {
 			document.getElementById("control").style.visibility = "visible";
 			document.getElementById("logout").style.visibility = "visible";
 		}
@@ -296,7 +305,7 @@
 	function uploadVideo(id) {
 		var link = document.getElementById("videoLink" + id).value;
 		if (link.substring(0, 32) == "https://www.youtube.com/watch?v=") {
-			
+
 			document.getElementById("video" + id).innerHTML = '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/'
 					+ link.substring(32)
 					+ '" frameborder="0" allowfullscreen></iframe>';
@@ -326,7 +335,7 @@
 	function createVideo() {
 
 		numElements += 1;
-	//	alert(1);
+		//	alert(1);
 		var div = document.createElement('div');
 		div.setAttribute("id", "element" + numElements);
 		div.innerHTML += '<div type="video" class="drsElement"'
@@ -529,7 +538,7 @@
 		if (multi == 0) {
 			image = document.getElementById("image" + id);
 		} else {
-		//	alert("Das");
+			//	alert("Das");
 			slider = document.getElementById("slider" + id);
 			//alert("bol");
 		}
@@ -539,7 +548,7 @@
 		if (window.XMLHttpRequest) {
 			// code for IE7+, Firefox, Chrome, Opera, Safari
 			xhr = new XMLHttpRequest();
-		//	alert("pirveli");
+			//	alert("pirveli");
 		} else {
 			// code for IE6, IE5
 			//alert("meore");
@@ -551,19 +560,19 @@
 		//alert(2);
 		xhr.onreadystatechange = function(e) {
 			if (xhr.readyState == 4 && xhr.status == 200) {
-			//	alert(1);
+				//	alert(1);
 				//alert(this.responseText);
 				//document.body.innerHTML += '<img style=\"width: 100%; height: 100%;\" src="data:image/jpg;base64,'
 				//		+ this.responseText + '">';
 				if (multi == 0) {
-				//	alert(5);
+					//	alert(5);
 					image.innerHTML = '<img style=\"width: 100%; height: 100%;\" src="data:image/jpg;base64,'
 							+ this.responseText + '">';
 				} else {
 					//var text = document.getElementById("imageText" + id);
 					//alert(text.value);
 
-				//	alert(3);
+					//	alert(3);
 					numElements += 1;
 					slider.innerHTML += '<li id='+numElements+'>'
 							+ '<img style=\"width: 100%; height: 100%;\" src="data:image/jpg;base64,'
@@ -579,8 +588,6 @@
 		};
 
 	}
-	
-	
 </script>
 </head>
 
@@ -681,15 +688,12 @@ Your Text
 			<i class="icon1 fa fa-th-large  fa-lg"></i> <i
 				class="icon2 fa fa-star fa-lg"></i> <span> თემა</span>
 		</div>
-		
-		<a href="Settings.jsp" id="setting"  class="circle"
-			style="top: 500px; background: #CC33FF;">
-			<i class="icon1 fa fa-wrench fa-lg"></i> <i
-				class="icon2 fa fa-star fa-lg"></i> <span> პარამეტრები  </span>
-		</a>
-		
-		
-		<select id="themeselect" onchange="changeBackground()"
+
+		<a href="Settings.jsp" id="setting" class="circle"
+			style="top: 500px; background: #CC33FF;"> <i
+			class="icon1 fa fa-wrench fa-lg"></i> <i
+			class="icon2 fa fa-star fa-lg"></i> <span> პარამეტრები </span>
+		</a> <select id="themeselect" onchange="changeBackground()"
 			style="position: absolute; visibility: hidden; top: 460px; left: 110px;">
 			<option value="">არაფერი
 			<option
@@ -708,9 +712,11 @@ Your Text
 				სვეტები
 			<option value="http://i.stack.imgur.com/z3PLR.png">ცისარტყელა
 
+
 			
 			<option
 				value="http://i960.photobucket.com/albums/ae84/homebakedblogs/ramona_sisters_column3.jpg">ყვავილები
+
 
 
 
@@ -732,9 +738,11 @@ Your Text
 
 
 
+
 			
 			<option
 				value="http://i221.photobucket.com/albums/dd189/txnbyubabe/backgrounds/gray-grid.jpg">კლეტკა
+
 
 
 
@@ -869,6 +877,17 @@ Youtube link: <input id="videoLink1" type="text" /> <br><input
 		<div id="video1" style="width:100%;height:calc(100% - 75px);"></div>
 </div>
 --%>
+	<div id="statistic"
+		style="position: absolute;visibility:hidden; bottom: 10px; left: 170px; visibility: visible;">
+		<a href="http://www.freecounterstat.com" title="hit counter"><img
+			src="http://counter8.bestfreecounterstat.com/private/freecounterstat.php?c=53f19623e9995c72c85766e326e1c0cc"
+			border="0" title="hit counter" alt="hit counter"></a>
+		<noscript>
+			<a href="http://www.freecounterstat.com" title="hit counter"><img
+				src="http://counter8.bestfreecounterstat.com/private/freecounterstat.php?c=53f19623e9995c72c85766e326e1c0cc"
+				border="0" title="hit counter" alt="hit counter"></a>
+		</noscript>
+	</div>
 
 </body>
 </html>
