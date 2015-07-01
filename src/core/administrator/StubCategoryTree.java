@@ -61,4 +61,10 @@ public class StubCategoryTree implements CategoryTreeInterface{
 		return false;
 	}
 
+	@Override
+	public void deleteWantedCategory(int wcID) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

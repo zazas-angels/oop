@@ -262,48 +262,147 @@ public class AdministratorTest {
 		CategoryTreeInterface tree = new StubCategoryTree() {
 			private Set<String> set = setForTree;
 
-		 @Override
-			public void add(CategoryInterface base,
-					CategoryInterface cat) {
-					set.add(base.getName());
-				
-				} 
+			@Override
+			public void add(CategoryInterface base, CategoryInterface cat) {
+				set.add(base.getName());
+
+			}
 		};
 		Connection con = new StubDBConnection() {
 			private Set<String> set = setForDB;
 
-			public int addCategory(String name,
-					int id) {
+			public int addCategory(String name, int id) {
 				set.add(name);
 				return 0;
 			}
 		};
 		AdminInterface admin = new Administrator(1, "zaza@gmail.com", "paroli",
 				con, tree);
-		admin.addCategory("zaza",1);
+		admin.addCategory("zaza", 1);
 		assertEquals(setForDB.contains("zaza"), true);
 		assertEquals(setForDB.contains("cxoveli"), false);
 		assertEquals(setForTree.contains("zaza"), true);
 
 	}
+
 	@Test
-	public void testSetCategoryTree(){
+	public void testSetCategoryTree() {
 		CategoryTreeInterface tree = new StubCategoryTree();
 		CategoryTreeInterface tree1 = new StubCategoryTree();
 		Connection con = new StubDBConnection();
 		AdminInterface admin = new Administrator(1, "zaza@gmail.com", "paroli",
-				con, tree){
-			private CategoryTreeInterface catTree=tree;
+				con, tree) {
+			private CategoryTreeInterface catTree = tree;
+
 			@Override
-			public void setCategoryTree(CategoryTreeInterface newTree){
-				catTree=newTree;
+			public void setCategoryTree(CategoryTreeInterface newTree) {
+				catTree = newTree;
 			}
+
 			@Override
-			public CategoryTreeInterface getCategoryTree(){
+			public CategoryTreeInterface getCategoryTree() {
 				return catTree;
 			}
 		};
 		admin.setCategoryTree(tree1);
-		assertEquals(tree1,admin.getCategoryTree() );
+		assertEquals(tree1, admin.getCategoryTree());
 	}
+
+	@Test
+	public void testBannUser() {
+		CategoryTreeInterface tree = new StubCategoryTree();
+
+		Connection con = new StubDBConnection() {
+			boolean status = false;
+
+			@Override
+			public void setBannedStatus(int userId, boolean value) {
+				status = value;
+			}
+		};
+		AdminInterface admin = new Administrator(1, "zaza@gmail.com", "paroli",
+				con, tree) ;
+		admin.bannUser(5);
+
+		con.setBannedStatus(5, true);
+
+	}
+
+	@Test
+	public void testBannUserByDays() {
+		CategoryTreeInterface tree = new StubCategoryTree();
+
+		Connection con = new StubDBConnection() {
+
+			int days = -1;
+
+			@Override
+			public void bannUserByDays(int userId, int value) {
+				days = value;
+			}
+		};
+		AdminInterface admin = new Administrator(1, "zaza@gmail.com", "paroli",
+				con, tree) ;
+		admin.bannUser(5, 7);
+		con.bannUserByDays(5, 7);
+
+	}
+
+	@Test
+	public void testReleaseBann() {
+		CategoryTreeInterface tree = new StubCategoryTree();
+
+		Connection con = new StubDBConnection() {
+
+			boolean status = true;
+
+			@Override
+			public void setBannedStatus(int userId, boolean value) {
+				status = value;
+			}
+		};
+		AdminInterface admin = new Administrator(1, "zaza@gmail.com", "paroli",
+				con, tree);
+		admin.bannUser(5);
+		con.setBannedStatus(5, false);
+
+	}
+
+	@Test
+	public void testDeleteWantedCategory() {
+		Connection con = new StubDBConnection() {
+			//Set<String> setForDB = new HashSet<String>();
+			Set<String> setForTree = new HashSet<String>();
+			CategoryTreeInterface tree = new StubCategoryTree() {
+				private Set<String> removedCategories = setForTree;
+
+				@Override
+				public void deleteWantedCategory(int wcID) {
+					removedCategories.remove(wcID);
+
+				}
+			};
+		
+
+		};
+		/**
+		 * AdminInterface admin = new Administrator(1, "zaza@gmail.com",
+		 
+				"paroli", con, tree);
+		*/
+		con.deleteWantedCategory(12);
+	}
+	@Test
+	public void testDeleteReport(){
+		Connection con = new StubDBConnection() {
+			Set<String> reportsForDB = new HashSet<String>();
+			@Override
+			public void deleteReport(int reporteId){
+				reportsForDB.remove(reporteId);
+			}
+		};
+		
+		con.deleteReport(5);
+	}
+	
 }
