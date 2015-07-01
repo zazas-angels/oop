@@ -82,7 +82,17 @@ public class Settings extends HttpServlet {
 	                    	user.setPassword(newPaswrd);
 	                    }
 	                    break;
-	               
+	                case "changeURL":
+	                	String url = request.getParameter("url");
+	                	if(db.existsUserWithUrl(url)){
+	                		response.setContentType("text/html; charset=UTF-8");
+                    		PrintWriter out = response.getWriter();
+                            out.println("ეს URL დაკავებულია");
+	                	}else{
+	                		user.setUrl(url +"."+SiteConstants.DOMAIN);
+	                		db.updateURL(user.getID(), url);
+	                	}
+	                	break;
 	                default:
 	                    System.out.println("zazaaaaa");
 	            }

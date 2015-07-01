@@ -6,7 +6,7 @@ package core;
 public final class SiteConstants {
 	public static final double USER_IMG_HEIGTH = 80;
 	public static final double USER_IMG_WIDTH = 80;
-	public static final String DOMAIN = "chveniSaiti.ge";
+	public static final String DOMAIN = "arran.ge";
 
 	public static final String ADMINS_MAP_NAME = "admins_map";
 	public static final String USERS_MAP_NAME = "users_map";
@@ -16,8 +16,8 @@ public final class SiteConstants {
 	public static final String DATABASE = "database";
 	public static final String CATEGORY_TREE = "categories";
 
-	public static final String BUSY_MAIL = " ეს მეილი გამოყენებულია ";
-	public static final String BUSY_URL = " ასეთი url დაკავებულია ";
+	public static final String BUSY_MAIL = " áƒ”áƒ¡ áƒ›áƒ”áƒ˜áƒšáƒ˜ áƒ’áƒ�áƒ›áƒ�áƒ§áƒ”áƒœáƒ”áƒ‘áƒ£áƒšáƒ˜áƒ� ";
+	public static final String BUSY_URL = " áƒ�áƒ¡áƒ”áƒ—áƒ˜ url áƒ“áƒ�áƒ™áƒ�áƒ•áƒ”áƒ‘áƒ£áƒšáƒ˜áƒ� ";
 
 
 	public enum Notification {

@@ -1519,4 +1519,18 @@ public class DBConnection implements core.database.Connection {
         }
     }
 
+	public synchronized void updateURL(int id, String url) {
+		 try {
+	            PreparedStatement statement = dataBaseConnection
+	                    .prepareStatement("update users set url = ?  WHERE ID = ?;");
+	            statement.setString(1, url);
+	            statement.setInt(2, id);
+	            statement.executeUpdate();
+	        } catch (SQLException e) {
+	            // ignore
+	            e.printStackTrace();
+	        }
+		
+	}
+
 }
