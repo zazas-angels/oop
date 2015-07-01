@@ -99,7 +99,10 @@ function checkMail() {
     return validateEmail(email);
 }
 
+
+
 function trySignUp() {
+	_gaq.push(['_trackEvent', 'button3', 'clicked']);
     return checkPasswords() && checkMail() && checkURL() && checkName();
 }
 
