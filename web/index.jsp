@@ -101,6 +101,7 @@
                         }
                         $('#athlete-images').html(data);
                     });
+            $("#searchInput").val("");
         }
     </script>
     <title>Categories</title>

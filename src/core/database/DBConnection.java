@@ -165,7 +165,7 @@ public class DBConnection implements core.database.Connection {
 		User user = null;
 		try {
 			PreparedStatement statement = dataBaseConnection
-					.prepareStatement("insert into users (name, url, mail, password, type) values (?,?,?,?,?);");
+					.prepareStatement("insert into users (name, url, mail, password, type, avatarFile) values (?,?,?,?,?, \"default.png\");");
 			statement.setString(1, name);
 			statement.setString(2, url);
 			statement.setString(3, email);
