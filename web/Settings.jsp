@@ -18,9 +18,24 @@
 
 </head>
 <body>
+	<%@ page import="core.category.CategoryInterface"%>
+	<%@ page import="core.category.CategoryTreeInterface"%>
+	<%@ page import="core.database.Connection"%>
+	<%@ page import="java.io.PrintWriter"%>
+	<%@ page import="java.sql.ResultSet"%>
+	<%@ page import="java.util.List"%>
 	<%
-		User user = (User) request.getSession().getAttribute("user");
+		Connection database = (Connection) request.getServletContext()
+				.getAttribute("database");
 	%>
+	<%
+		ResultSet users = database.getUsers((int) request.getSession()
+				.getAttribute("userId"));
+
+		if (users != null) {
+			if (users.next()) {
+	%>
+
 	<div class="rootContainer">
 
 		<section name="changeParametres" class="banner screen"
@@ -29,16 +44,23 @@
 			<div class="jumbotron shadow transparent" style="padding: 50px;">
 				<h2>პარამეტრები</h2>
 
-				<form class="form" action="?p=register" method="post" role="form">
+				<form class="form" action="userPage.jsp" method="" role="form">
 					<div class="row">
 						<div class="col-sm-6">
-							<label>სახელწოდება: </label><label id="oldName"><%=user.getName()%>,</label><a
+							<label>სახელწოდება: </label><label id="oldName"><%=users.getString("name")%>,</label><a
 								href="#changeName-section" onclick="showChangeName()">
-								შეცვლა</a> <br> <label>მეილი: </label><label id="oldMail"><%=user.getEmail()%>,</label><a
+								შეცვლა</a> <br>
+							<%
+								if (users.getString("type").equals("email")) {
+							%>
+							<label>მეილი: </label><label id="oldMail"><%=users.getString("mail")%>,</label><a
 								href="#changeMail-section" onclick="showChangeMail()">
 								შეცვლა</a> <br> <label>პაროლი: </label><a
 								href="#changePassword-section" onclick="showChangePassword()">
-								შეცვლა</a> <br> <label>URL: </label><label id="oldURL"><%=user.getURL()%>,</label><a
+								შეცვლა</a>
+							<%
+								}
+							%><br> <label>URL: </label><label id="oldURL"><%=users.getString("url")%>,</label><a
 								href="#changeURL-section" onclick="showChangeURL()"> შეცვლა</a>
 
 							<br> <br>
@@ -66,8 +88,8 @@
 					<div class="form-group">
 						<label class="control-label"> ახალი დასახელება:</label> <input
 							type="text" class="form-control"
-							placeholder=<%=user.getName()%> autocomplete="off" id="name"
-							name="name">
+							placeholder=<%=users.getString("name")%> autocomplete="off"
+							id="name" name="name">
 						<div id="checkName"></div>
 					</div>
 				</div>
@@ -98,7 +120,7 @@
 						<div class="input-group">
 							<span class="input-group-addon">@</span> <input type="text"
 								class="form-control" name="email" autocomplete="off" id="email"
-								placeholder=<%=user.getEmail()%> onkeyup="checkMails()">
+								placeholder=<%=users.getString("mail")%> onkeyup="checkMails()">
 
 						</div>
 						<div id="checkEmail"></div>
@@ -171,8 +193,9 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label class="control-label"> ახალი Url:</label> <input
-							type="text" class="form-control" placeholder=<%=user.getURL()%>
-							autocomplete="off" id="url" name="url">
+							type="text" class="form-control"
+							placeholder=<%=users.getString("url")%> autocomplete="off"
+							id="url" name="url">
 						<div id="errorMessage"></div>
 					</div>
 				</div>
@@ -198,7 +221,14 @@
 	<div
 		style="height: 200px; width: 225px; position: absolute; top: 5px; right: 150px;"
 		id="image">
-		<img style="height: 200px; xwidth: 225px;" src="default.png"></img>
+
+		<img style="height: 200px; xwidth: 225px;"
+			src="<%=users.getString("avatarFile")%>"></img>
+		<%
+			}
+			}
+		%>
+
 	</div>
 
 
@@ -240,22 +270,15 @@
 			};
 
 		}
-		function saveImage(image) {
-			alert(image);
-			
-			var xmlhttp;
-			if (window.XMLHttpRequest) {
-				// code for IE7+, Firefox, Chrome, Opera, Safari
-				xmlhttp = new XMLHttpRequest();
-			} else {
-				// code for IE6, IE5
-				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-			alert(1);
-			xmlhttp.open("POST", "SaveImage", true);
-			xmlhttp.setRequestHeader("Content-type",
-					"application/x-www-form-urlencoded");
-			xmlhttp.send("image="+image);
+		function saveImage(imageText) {
+			alert(imageText);
+
+			$.post("SaveImage", {
+				image : imageText,
+				view : 0
+			}, function(result) {
+				//alert(1);
+			});
 
 		}
 	</script>

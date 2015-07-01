@@ -49,7 +49,7 @@ public class Settings extends HttpServlet {
 		 String type = request.getParameter("requestType");
 		 ServletContext context = request.getServletContext();
 		 DBConnection db = (DBConnection) context.getAttribute(SiteConstants.DATABASE);
-		 User user = (User)request.getSession().getAttribute("user");
+		int id=(int) request.getSession().getAttribute("userId");
 	        if (type != null) {
 	            switch (type){
 	                case "changeMail":
@@ -58,18 +58,18 @@ public class Settings extends HttpServlet {
 	                    	if(db.existsUserWithMail(newMail)){
 	                    		response.setContentType("text/html; charset=UTF-8");
 	                    		PrintWriter out = response.getWriter();
-	                            out.println("ეს მაილი დაკავებულია");
+	                            out.println("áƒ”áƒ¡ áƒ›áƒ�áƒ˜áƒšáƒ˜ áƒ“áƒ�áƒ™áƒ�áƒ•áƒ”áƒ‘áƒ£áƒšáƒ˜áƒ�");
 	                    	}else{
-	                    		user.setMail(newMail);
-	                    		db.updateMail(user.getID(), newMail);
+	                    		
+	                    		db.updateMail(id, newMail);
 	                    	}
 	                    }
 	                    break;
 	                case "changeName":
 	                	String newName = request.getParameter("name");
 	                	if(checkName(newName)){
-	                		db.updateName(user.getID(), newName);
-	                		user.setName(newName);
+	                		db.updateName(id, newName);
+	                		
 	                	}
 	                    break;
 	                case "changePassword":
@@ -77,9 +77,9 @@ public class Settings extends HttpServlet {
 	                    System.out.println("77zaza");
 	                    if(checkPassword(newPaswrd)){
 	                    	 System.out.println("66zaza");
-	                    	String paswrd = user.generatePassword(newPaswrd);
-	                    	db.updatePassword(user.getID(), paswrd);
-	                    	user.setPassword(newPaswrd);
+	                    	String paswrd = User.generatePassword(newPaswrd);
+	                    	db.updatePassword(id, paswrd);
+	                    	
 	                    }
 	                    break;
 	                case "changeURL":
@@ -87,10 +87,9 @@ public class Settings extends HttpServlet {
 	                	if(db.existsUserWithUrl(url)){
 	                		response.setContentType("text/html; charset=UTF-8");
                     		PrintWriter out = response.getWriter();
-                            out.println("ეს URL დაკავებულია");
+                            out.println("áƒ”áƒ¡ URL áƒ“áƒ�áƒ™áƒ�áƒ•áƒ”áƒ‘áƒ£áƒšáƒ˜áƒ�");
 	                	}else{
-	                		user.setUrl(url +"."+SiteConstants.DOMAIN);
-	                		db.updateURL(user.getID(), url);
+	                		db.updateURL(id, url);
 	                	}
 	                	break;
 	                default:

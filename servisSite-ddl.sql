@@ -134,7 +134,6 @@ FOR EACH ROW
     INSERT INTO notifications
     SET notification = 'createdUser', userName = NEW.name, userID = NEW.ID, postDate = now();
     INSERT INTO user_page   SET page = '', UserId = NEW.ID;
-	Update users set avatarFile="default.png" where id=NEW.ID;
   END;
 //
 DELIMITER ;
