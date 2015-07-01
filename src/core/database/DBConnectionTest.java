@@ -119,6 +119,72 @@ public class DBConnectionTest {
 		};
 		con.getTexts(3);
 		assertTrue(set.contains(9));
+		
+		con = new StubDBConnection(){
+			private Set<Integer> setForDB = set;
+			@Override
+			public ResultSet getElementsInfo(int id){
+				setForDB.add(10);
+				return null;
+			}
+		};
+		con.getElementsInfo(3);
+		assertTrue(set.contains(10));
+		
+		con = new StubDBConnection(){
+			private Set<Integer> setForDB = set;
+			@Override
+			public ResultSet getAlbomsElements(int id){
+				setForDB.add(11);
+				return null;
+			}
+		};
+		con.getAlbomsElements(3);
+		assertTrue(set.contains(11));
+		
+		con = new StubDBConnection(){
+			private Set<Integer> setForDB = set;
+			@Override
+			public ResultSet getAlboms(int id){
+				setForDB.add(12);
+				return null;
+			}
+		};
+		con.getAlboms(3);
+		assertTrue(set.contains(12));
+		
+		con = new StubDBConnection(){
+			private Set<Integer> setForDB = set;
+			@Override
+			public ResultSet getAlbomsPictures(int id){
+				setForDB.add(13);
+				return null;
+			}
+		};
+		con.getAlbomsPictures(3);
+		assertTrue(set.contains(13));
+		
+		con = new StubDBConnection(){
+			private Set<Integer> setForDB = set;
+			@Override
+			public ResultSet getElementsPictures(int id){
+				setForDB.add(14);
+				return null;
+			}
+		};
+		con.getElementsPictures(3);
+		assertTrue(set.contains(14));
+		
+		con = new StubDBConnection(){
+			private Set<Integer> setForDB = set;
+			@Override
+			public ResultSet getAdmins(int id){
+				setForDB.add(15);
+				return null;
+			}
+		};
+		con.getAdmins(3);
+		assertTrue(set.contains(15));
 	}
 
 }
