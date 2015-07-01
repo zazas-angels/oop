@@ -16,7 +16,7 @@ CREATE TABLE users (
   bannDate   date default '2015-01-01',
   password   VARCHAR(64),
   raiting    DOUBLE                                  DEFAULT 0,
-  avatarFile CHAR(64) DEFAULT "default.png" NOT NULL,
+  avatarFile LONGTEXT  ,
 
   PRIMARY KEY (ID),
   UNIQUE (url),
@@ -134,7 +134,7 @@ FOR EACH ROW
     INSERT INTO notifications
     SET notification = 'createdUser', userName = NEW.name, userID = NEW.ID, postDate = now();
     INSERT INTO user_page   SET page = '', UserId = NEW.ID;
-
+	Update users set avatarFile="default.png" where id=NEW.ID;
   END;
 //
 DELIMITER ;
