@@ -38,8 +38,8 @@
                         userObj.addProperty("lng", set.getDouble("lng"));
                         list.add(userObj);
                     }
+                    response.setContentType("application/json; charset=utf-8");
                     PrintWriter out1 = response.getWriter();
-                    response.setContentType("application/json");
                     out1.println(list);
                 }
             }

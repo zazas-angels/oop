@@ -40,6 +40,10 @@
                 <h2>პარამეტრები</h2>
                 <h4><a href="#" onclick="showAddCategorySection()">კატეგორიის დამატება</a></h4>
 
+                <br>
+                <label>კატეგორიის მოთხოვნა</label><input id = "wc" type="text"><button onclick="addWantedCategory()">მოთხოვნა</button>
+                <br>
+
                 <form class="form" action="userPage.jsp" method="" role="form">
                     <div class="row">
                         <div class="col-sm-6">
@@ -279,7 +283,7 @@
         style="height: 200px; width: 225px; position: absolute; top: 5px; right: 150px;"
         id="image">
 
-    <img style="height: 200px; xwidth: 225px;"
+    <img style="height: 200px; width: 225px;"
          src="<%=users.getString("avatarFile")%>">
     <%
             }
@@ -327,7 +331,7 @@
 
     }
     function saveImage(imageText) {
-        alert(imageText);
+        //alert(imageText);
 
         $.post("SaveImage", {
             image: imageText,

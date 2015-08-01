@@ -28,6 +28,17 @@ function addCategoryToUser() {
     }
 }
 
+function addWantedCategory() {
+    var category = $("#wc").val();
+    if (category.length > 0) {
+        var link = "CategorySave?requestType=wc&categoryName=" + category;
+        $.get(link)
+            .done(function (response) {
+            });
+        $("#wc").val("");
+    }
+}
+
 
 function mailsMatch() {
     var pwd1 = document.getElementById("email");

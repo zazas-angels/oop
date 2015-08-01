@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Vector;
 
 /**
@@ -36,15 +38,32 @@ public class CategorySave extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
         String type = request.getParameter("requestType");
-        if (type != null && type.equals("addCategory")) {
-            int newCategory = Integer.parseInt(request.getParameter("categoryID"));
-            int userID = Integer.parseInt(""+request.getSession().getAttribute("userId"));
-            DBConnection dbConnection = (DBConnection) request.getServletContext().getAttribute(SiteConstants.DATABASE);
-            Vector<Integer> v = new Vector<Integer>();
-            v.add(newCategory);
-            dbConnection.addUserCategories(userID, v    );
+        if (type != null) {
+            if (type.equals("addCategory")) {
+                int newCategory = Integer.parseInt(request.getParameter("categoryID"));
+                int userID = Integer.parseInt("" + request.getSession().getAttribute("userId"));
+                DBConnection dbConnection = (DBConnection) request.getServletContext().getAttribute(SiteConstants.DATABASE);
+                Vector<Integer> v = new Vector<Integer>();
+                v.add(newCategory);
+                dbConnection.addUserCategories(userID, v);
+            } else {
+                if (type.equals("wc")) {
+                    String newCategory = request.getParameter("categoryName");
+                    DBConnection dbConnection = (DBConnection) request.getServletContext().getAttribute(SiteConstants.DATABASE);
+                    int userID = Integer.parseInt("" + request.getSession().getAttribute("userId"));
+                    ResultSet set = dbConnection.getUsers(userID);
+                    try {
+                        if(set!= null && set.next()){
+                            dbConnection.addWantedCategory(set.getString("name"), ""+userID, newCategory, "");
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
     }
+
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
      * response)

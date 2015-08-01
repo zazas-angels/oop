@@ -722,20 +722,26 @@ private static DBConnection dbConnection = new DBConnection();
 			throws SQLException {
 		PreparedStatement statement = dataBaseConnection
 				.prepareStatement("insert into categories (name, ParentId) values (?,?);");
+		if(parentCategoryId < 0){
+			statement = dataBaseConnection
+					.prepareStatement("insert into categories (name) values (?);");
+
+		}
 		statement.setString(1, name);
-		if (parentCategoryId < 0) {
-			statement.setObject(2, null);
-		} else {
-			statement.setInt(2, parentCategoryId);
+		if (parentCategoryId > 0) {
+			statement.setObject(2, parentCategoryId);
 		}
 		statement.executeUpdate();
 
-		PreparedStatement stmt = dataBaseConnection
-				.prepareStatement("select ID from categories where name = ? and ParentId = ?;");
-		stmt.setString(1, name);
+		PreparedStatement stmt;
 		if (parentCategoryId < 0) {
-			stmt.setObject(2, null);
+			stmt = dataBaseConnection
+					.prepareStatement("select ID from categories where name = ? and ParentId is null;");
+			stmt.setString(1, name);
 		} else {
+			stmt = dataBaseConnection
+					.prepareStatement("select ID from categories where name = ? and ParentId = ?;");
+			stmt.setString(1, name);
 			stmt.setInt(2, parentCategoryId);
 		}
 
@@ -780,11 +786,10 @@ private static DBConnection dbConnection = new DBConnection();
 			String authorUrl, String categoryName, String parentCategoryID)
 			throws SQLException {
 		PreparedStatement statement = dataBaseConnection
-				.prepareStatement("insert into wantedCategories (authorName, authorUrl, categoryName, postDate, parentCategoryID) values (?, ?, ?, now(), ?);");
+				.prepareStatement("insert into wantedCategories (authorName, authorID, categoryName, postDate) values (?, ?, ?, now());");
 		statement.setString(1, authorName);
 		statement.setString(2, authorUrl);
 		statement.setString(3, categoryName);
-		statement.setString(4, parentCategoryID);
 		statement.executeUpdate();
 	}
 
@@ -1006,7 +1011,7 @@ private static DBConnection dbConnection = new DBConnection();
 		ResultSet set = getUsers(userID);
 		try {
 			if (set.next()) {
-				administrator = (Administrator) addAdmin(set.getString("name"),
+				administrator = (Administrator) addAdmin(set.getString("mail"),
 						set.getString("password"), categoryTree);
 				deleteUser(userID);
 			}
@@ -1079,9 +1084,9 @@ private static DBConnection dbConnection = new DBConnection();
         //	db.changeData(3, "ooo");
         //db.activateUser(8);
         //db.bannUserByDays(3, 30);
-        //db.addSuperAdmin("nika", generatePassword("paroli12"), null);
-        User user = db.addUser("bondo", "ddd@ddd.aa", "123456", "mevdawiwini", SiteConstants.getType("email"));
-        db.activateUser(user.getID());
+        db.addSuperAdmin("nika", generatePassword("paroli12"), null);
+ //       User user = db.addUser("bondo", "ddd@ddd.aa", "123456", "mevdawiwini", SiteConstants.getType("email"));
+   //     db.activateUser(user.getID());
     }
     
     
